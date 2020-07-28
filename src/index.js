@@ -8,7 +8,7 @@ import {
   KeyFactsEdit,
 } from './components';
 
-const applyConfig = (config) => {
+export default (config) => {
   console.log('config', config);
   config.views = {
     ...config.views,
@@ -43,5 +43,3 @@ const applyConfig = (config) => {
   };
   return config;
 };
-
-export default applyConfig;

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { SidebarPortal, InlineForm } from '@plone/volto/components'; // EditBlock
+import { SidebarPortal } from '@plone/volto/components'; // EditBlock
+import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
 // import { BlockEditForm } from 'volto-addons/BlockForm';
 
 import schema from './schema';
