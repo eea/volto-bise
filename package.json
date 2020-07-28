@@ -1,0 +1,20 @@
+{
+  "name": "volto-bise",
+  "version": "1.0.0",
+  "description": "Volto theme and integration for BISE",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eea/volto-bise.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eea/volto-bise/issues"
+  },
+  "homepage": "https://github.com/eea/volto-bise#readme",
+  "customizationsPath": "src/customizations"
+}
