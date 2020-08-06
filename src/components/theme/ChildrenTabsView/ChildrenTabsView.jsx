@@ -13,7 +13,7 @@ import {
   hasBlocksData,
 } from '@plone/volto/helpers';
 
-const renderTab = content => {
+const renderTab = (content) => {
   const blocksFieldname = getBlocksFieldname(content);
   const blocksLayoutFieldname = getBlocksLayoutFieldname(content);
   const location = content['@id']
@@ -22,9 +22,9 @@ const renderTab = content => {
 
   return hasBlocksData(content) ? (
     <div>
-      {map(content[blocksLayoutFieldname].items, block => {
+      {map(content[blocksLayoutFieldname].items, (block) => {
         const Block =
-          blocks.blocksConfig[(content[blocksFieldname]?.[block]?.['@type'])]?.[
+          blocks.blocksConfig[content[blocksFieldname]?.[block]?.['@type']]?.[
             'view'
           ] || null;
         return Block !== null ? (
@@ -68,7 +68,7 @@ class ChildrenTabsView extends Component {
             menu={{ attached: false, tabular: false }}
             panes={
               this.props.content.items &&
-              this.props.content.items.map(child => ({
+              this.props.content.items.map((child) => ({
                 menuItem: child.title,
                 render: () => (
                   <Tab.Pane key={child['@id']}>{renderTab(child)}</Tab.Pane>

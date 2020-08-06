@@ -110,8 +110,7 @@ class App extends Component {
   render() {
     const path = getBaseUrl(this.props.pathname);
     const action = getView(this.props.pathname);
-    const headerImage =
-      this.props.content?.image?.download;
+    const headerImage = this.props.content?.image?.download;
 
     return (
       <Fragment>
@@ -183,15 +182,55 @@ export const __test__ = connect(
   {},
 )(App);
 
+// export default compose(
+//   asyncConnect([
+//     {
+//       key: 'breadcrumbs',
+//       promise: ({ location, store: { dispatch } }) => {
+//         __SERVER__ &&
+//           !settings.minimizeNetworkFetch &&
+//           dispatch(getBreadcrumbs(getBaseUrl(location.pathname)));
+//       },
+//     },
+//     {
+//       key: 'content',
+//       promise: ({ location, store: { dispatch } }) =>
+//         __SERVER__ && dispatch(getContent(getBaseUrl(location.pathname))),
+//     },
+//     {
+//       key: 'navigation',
+//       promise: ({ location, store: { dispatch } }) =>
+//         __SERVER__ && dispatch(getNavigation(getBaseUrl(location.pathname))),
+//     },
+//     {
+//       key: 'types',
+//       promise: ({ location, store: { dispatch } }) =>
+//         __SERVER__ && dispatch(getTypes(getBaseUrl(location.pathname))),
+//     },
+//     {
+//       key: 'workflow',
+//       promise: ({ location, store: { dispatch } }) =>
+//         __SERVER__ &&
+//         !settings.minimizeNetworkFetch &&
+//         dispatch(getWorkflow(getBaseUrl(location.pathname))),
+//     },
+//   ]),
+//   connect(
+//     (state, props) => ({
+//       pathname: props.location.pathname,
+//       content: state.content.data,
+//       navigation: state.navigation.items,
+//     }),
+//     {},
+//   ),
+// )(App);
+
 export default compose(
   asyncConnect([
     {
       key: 'breadcrumbs',
-      promise: ({ location, store: { dispatch } }) => {
-        __SERVER__ &&
-          !settings.minimizeNetworkFetch &&
-          dispatch(getBreadcrumbs(getBaseUrl(location.pathname)));
-      },
+      promise: ({ location, store: { dispatch } }) =>
+        __SERVER__ && dispatch(getBreadcrumbs(getBaseUrl(location.pathname))),
     },
     {
       key: 'content',
@@ -201,7 +240,10 @@ export default compose(
     {
       key: 'navigation',
       promise: ({ location, store: { dispatch } }) =>
-        __SERVER__ && dispatch(getNavigation(getBaseUrl(location.pathname))),
+        __SERVER__ &&
+        dispatch(
+          getNavigation(getBaseUrl(location.pathname), settings.navDepth),
+        ),
     },
     {
       key: 'types',
@@ -211,15 +253,20 @@ export default compose(
     {
       key: 'workflow',
       promise: ({ location, store: { dispatch } }) =>
-        __SERVER__ &&
-        !settings.minimizeNetworkFetch &&
-        dispatch(getWorkflow(getBaseUrl(location.pathname))),
+        __SERVER__ && dispatch(getWorkflow(getBaseUrl(location.pathname))),
+    },
+    {
+      key: 'navigation',
+      promise: ({ location, store: { dispatch } }) =>
+        __SERVER__ && dispatch(getNavigation(getBaseUrl(location.pathname))),
     },
   ]),
   connect(
     (state, props) => ({
       pathname: props.location.pathname,
       content: state.content.data,
+      apiError: state.apierror.error,
+      connectionRefused: state.apierror.connectionRefused,
       navigation: state.navigation.items,
     }),
     {},

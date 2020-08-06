@@ -6,7 +6,6 @@ const modify = (config, { target, dev }, webpack) => {
     '../../theme.config$'
   ] = `${__dirname}/theme/theme.config`;
 
-  console.log('config', config.resolve.alias);
   return config;
 };
 
