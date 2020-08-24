@@ -78,9 +78,6 @@ class App extends Component {
    * @returns {undefined}
    */
   UNSAFE_componentWillReceiveProps(nextProps) {
-    // // console.log(nextProps.pathname === this.props.pathname);
-    // console.log(this.props.pathname);
-    // console.log(nextProps.pathname);
     if (nextProps.pathname !== this.props.pathname) {
       if (this.state.hasError) {
         this.setState({ hasError: false });

@@ -9,7 +9,6 @@ import {
 } from './components';
 
 export default (config) => {
-  console.log('config', config);
   config.views = {
     ...config.views,
     contentTypesViews: {
@@ -41,5 +40,6 @@ export default (config) => {
       view: [],
     },
   };
+  console.log('config', config);
   return config;
 };
