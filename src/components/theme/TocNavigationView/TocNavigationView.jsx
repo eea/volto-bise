@@ -53,78 +53,80 @@ let BlocksWithToc = ({ blockIds, blocksContent, intl, content, location }) => {
   return (
     <div>
       <Grid className="toc-navigation">
-        <Grid.Column width={3}>
-          <div className="toc-sidebar">
-            <div className="toc-nav">
-              {map(blockIds, (blockId) => {
-                const block = blocksContent[blockId];
-                if (!block.text) return null;
-                const draftBlock = block.text.blocks[0];
-                const { text, type, key } = draftBlock;
-                const tocSubTitle = type === 'header-four';
-                if (!HEADLINES.includes(type)) return null;
-                return (
-                  <div key={key}>
-                    {!tocSubTitle ? (
-                      <AnchorLink
-                        href={`#${key}`}
-                        offset={10}
-                        className={cx(`toc-nav-header link-${type}`, {
-                          selected: activeId === key,
-                        })}
-                      >
-                        {text}
-                      </AnchorLink>
-                    ) : (
-                      <span className="toc-description">{text}</span>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </Grid.Column>
-        <Grid.Column width={9} className="toc-content">
-          {map(blockIds, (blockId) => {
-            const Block =
-              blocks.blocksConfig[blocksContent?.[blockId]?.['@type']]?.[
-                'view'
-              ] || null;
-            return Block !== null ? (
-              <VisibilitySensor
-                scrollCheck={true}
-                resizeCheck={true}
-                scrollThrottle={100}
-                minTopValue={500}
-                partialVisibility={true}
-                offset={{ top: 10 }}
-                intervalDelay={3000}
-                key={blockId}
-              >
-                {({ isVisible }) => {
-                  const [textKey, text] = extractTextKey(
-                    blocksContent[blockId],
-                  );
-                  if (textKey && isVisible) customSetActive(textKey);
+        <Grid.Row>
+          <Grid.Column width={3}>
+            <div className="toc-sidebar">
+              <div className="toc-nav">
+                {map(blockIds, (blockId) => {
+                  const block = blocksContent[blockId];
+                  if (!block.text) return null;
+                  const draftBlock = block.text.blocks[0];
+                  const { text, type, key } = draftBlock;
+                  const tocSubTitle = type === 'header-four';
+                  if (!HEADLINES.includes(type)) return null;
                   return (
-                    <Block
-                      key={blockId}
-                      properties={content}
-                      data={blocksContent[blockId]}
-                      path={getBaseUrl(location?.pathname || '')}
-                    />
+                    <div key={key}>
+                      {!tocSubTitle ? (
+                        <AnchorLink
+                          href={`#${key}`}
+                          offset={10}
+                          className={cx(`toc-nav-header link-${type}`, {
+                            selected: activeId === key,
+                          })}
+                        >
+                          {text}
+                        </AnchorLink>
+                      ) : (
+                        <span className="toc-description">{text}</span>
+                      )}
+                    </div>
                   );
-                }}
-              </VisibilitySensor>
-            ) : (
-              <div key={blockId}>
-                {intl.formatMessage(messages.unknownBlock, {
-                  block: blocksContent?.[blockId]?.['@type'],
                 })}
               </div>
-            );
-          })}
-        </Grid.Column>
+            </div>
+          </Grid.Column>
+          <Grid.Column width={9} className="toc-content">
+            {map(blockIds, (blockId) => {
+              const Block =
+                blocks.blocksConfig[blocksContent?.[blockId]?.['@type']]?.[
+                  'view'
+                ] || null;
+              return Block !== null ? (
+                <VisibilitySensor
+                  scrollCheck={true}
+                  resizeCheck={true}
+                  scrollThrottle={100}
+                  minTopValue={500}
+                  partialVisibility={true}
+                  offset={{ top: 10 }}
+                  intervalDelay={3000}
+                  key={blockId}
+                >
+                  {({ isVisible }) => {
+                    const [textKey, text] = extractTextKey(
+                      blocksContent[blockId],
+                    );
+                    if (textKey && isVisible) customSetActive(textKey);
+                    return (
+                      <Block
+                        key={blockId}
+                        properties={content}
+                        data={blocksContent[blockId]}
+                        path={getBaseUrl(location?.pathname || '')}
+                      />
+                    );
+                  }}
+                </VisibilitySensor>
+              ) : (
+                <div key={blockId}>
+                  {intl.formatMessage(messages.unknownBlock, {
+                    block: blocksContent?.[blockId]?.['@type'],
+                  })}
+                </div>
+              );
+            })}
+          </Grid.Column>
+        </Grid.Row>
       </Grid>
     </div>
   );
