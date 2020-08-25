@@ -136,6 +136,7 @@ class App extends Component {
           navigationItems={this.props.navigation}
           pathname={path}
           defaultHeaderImage={headerImage}
+          {...this.props.content}
         />
 
         <Segment basic className="content-area">

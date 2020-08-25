@@ -118,7 +118,7 @@ class Header extends Component {
             {!this.state.isHomepage && (
               <div style={{ position: 'relative' }}>
                 <Breadcrumbs pathname={this.props.pathname} />
-                <HeaderImage url={headerImageUrl} />
+                <HeaderImage url={headerImageUrl} {...this.props} />
               </div>
             )}
           </div>

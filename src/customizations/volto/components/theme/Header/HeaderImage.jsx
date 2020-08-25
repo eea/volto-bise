@@ -1,7 +1,7 @@
 import React from 'react';
 import { flattenToAppURL } from '@plone/volto/helpers';
 
-function HeaderImage(props) {
+const HeaderImage = ({ ...props }) => {
   return (
     <div>
       {props.url && (
@@ -15,13 +15,15 @@ function HeaderImage(props) {
                 }}
               />
               <div className="image-layer" />
-              <div className="ui container image-content" />
+              <div className="ui container image-content">
+                <h1 className="leadimage-title">{props.title}</h1>
+                <p>{props.description}</p>
+              </div>
             </div>
           </div>
         </div>
       )}
     </div>
   );
-}
-
+};
 export default HeaderImage;
