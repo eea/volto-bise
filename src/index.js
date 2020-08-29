@@ -40,6 +40,6 @@ export default (config) => {
       view: [],
     },
   };
-  console.log('config', config);
+  // console.log('config', config);
   return config;
 };
