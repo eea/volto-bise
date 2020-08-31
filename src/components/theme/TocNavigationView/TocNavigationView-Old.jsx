@@ -1,3 +1,7 @@
+/**
+ * TocNavigationView for Draft Blocks
+ */
+
 import { defineMessages, injectIntl } from 'react-intl';
 import React, { useState } from 'react';
 import cx from 'classnames';
@@ -23,16 +27,27 @@ const splitBlocksByTOC = (blockIds, blocksContent) => {
   // find position of first block id where block content is text with h2
 
   let cursor = blockIds.findIndex((blockId, index) => {
-    if (blocksContent[blockId]['@type'] !== 'slate') return false;
+    if (blocksContent[blockId]['@type'] !== 'text') return false;
 
     const content = blocksContent[blockId];
-    const blockType = content.value[0].type;
-    return blockType === 'h2';
+    const blockType = content.text.blocks[0].type;
+    return blockType === 'header-two';
   });
   return [blockIds.slice(0, cursor), blockIds.slice(cursor)];
 };
 
-const HEADLINES = ['h2', 'h3'];
+const extractTextKey = (block) => {
+  if (block['@type'] !== 'text') return [];
+
+  const draftBlock = block.text.blocks[0];
+  const { text, type, key } = draftBlock;
+
+  if (!HEADLINES.includes(type)) return [];
+
+  return [key, text];
+};
+
+const HEADLINES = ['header-two', 'header-three', 'header-four'];
 
 let BlocksWithToc = ({ blockIds, blocksContent, intl, content, location }) => {
   let [activeId, setActiveId] = useState(null);
@@ -43,67 +58,66 @@ let BlocksWithToc = ({ blockIds, blocksContent, intl, content, location }) => {
     <div>
       <Grid className="toc-navigation">
         <Grid.Row>
-          <Grid.Column width={3} className="sidebar-wrapper">
+          <Grid.Column width={3}>
             <div className="toc-sidebar">
               <div className="toc-nav">
-                {map(blockIds, (blockId, index) => {
+                {map(blockIds, (blockId) => {
                   const block = blocksContent[blockId];
-                  if (!block.value) return null;
-                  const slateBlock = block.value[0];
-                  const { type } = slateBlock;
-                  const text = slateBlock.children[0].text;
-                  const textId = 'tocNav-'+ index;
-                  const tocSubTitle = type === 'h2';
+                  if (!block.text) return null;
+                  const draftBlock = block.text.blocks[0];
+                  const { text, type, key } = draftBlock;
+                  const tocSubTitle = type === 'header-four';
                   if (!HEADLINES.includes(type)) return null;
                   return (
-                    <AnchorLink
-                      key={blockId}
-                      href={'#' + textId}
-                      offset={10}
-                      className={cx(`toc-nav-header link-${type}`, {
-                        selected: activeId === textId,
-                      })}
-                      >
-                      {text}
-                    </AnchorLink>
+                    <div key={key}>
+                      {!tocSubTitle ? (
+                        <AnchorLink
+                          href={`#${key}`}
+                          offset={10}
+                          className={cx(`toc-nav-header link-${type}`, {
+                            selected: activeId === key,
+                          })}
+                        >
+                          {text}
+                        </AnchorLink>
+                      ) : (
+                        <span className="toc-description">{text}</span>
+                      )}
+                    </div>
                   );
                 })}
               </div>
             </div>
           </Grid.Column>
           <Grid.Column width={9} className="toc-content">
-            {map(blockIds, (blockId, index) => {
+            {map(blockIds, (blockId) => {
               const Block =
                 blocks.blocksConfig[blocksContent?.[blockId]?.['@type']]?.[
                   'view'
                 ] || null;
-              const block = blocksContent[blockId];
-              const slateBlock = block.value[0];
-              const { type } = slateBlock;
-              const textId = 'tocNav-'+ index;
-              const isheadline = HEADLINES.includes(type);
               return Block !== null ? (
                 <VisibilitySensor
                   scrollCheck={true}
                   resizeCheck={true}
                   scrollThrottle={100}
-                  minTopValue={800}
+                  minTopValue={500}
                   partialVisibility={true}
                   offset={{ top: 10 }}
                   intervalDelay={3000}
                   key={blockId}
                 >
                   {({ isVisible }) => {
-                    if (isheadline && textId && isVisible) customSetActive(textId);
+                    const [textKey, text] = extractTextKey(
+                      blocksContent[blockId],
+                    );
+                    if (textKey && isVisible) customSetActive(textKey);
                     return (
-                      <div id={`${isheadline? textId : ""}`}>
-                        <Block
-                          key={blockId}
-                          properties={content}
-                          data={blocksContent[blockId]}
-                          path={getBaseUrl(location?.pathname || '')}
-                          />
-                      </div>
+                      <Block
+                        key={blockId}
+                        properties={content}
+                        data={blocksContent[blockId]}
+                        path={getBaseUrl(location?.pathname || '')}
+                      />
                     );
                   }}
                 </VisibilitySensor>
