@@ -53,7 +53,6 @@ let BlocksWithToc = ({ blockIds, blocksContent, intl, content, location }) => {
                   const { type } = slateBlock;
                   const text = slateBlock.children[0].text;
                   const textId = 'tocNav-'+ index;
-                  const tocSubTitle = type === 'h2';
                   if (!HEADLINES.includes(type)) return null;
                   return (
                     <AnchorLink
@@ -78,10 +77,9 @@ let BlocksWithToc = ({ blockIds, blocksContent, intl, content, location }) => {
                   'view'
                 ] || null;
               const block = blocksContent[blockId];
-              const slateBlock = block.value[0];
-              const { type } = slateBlock;
+              const blockType = block.value[0].type;
               const textId = 'tocNav-'+ index;
-              const isheadline = HEADLINES.includes(type);
+              const isheadline = HEADLINES.includes(blockType);
               return Block !== null ? (
                 <VisibilitySensor
                   scrollCheck={true}
