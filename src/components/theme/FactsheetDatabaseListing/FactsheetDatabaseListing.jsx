@@ -1,14 +1,14 @@
 import React from 'react';
 import { Container, Accordion } from 'semantic-ui-react';
 import { Icon } from '@plone/volto/components';
-import { Portal } from 'react-portal';
+// import { Portal } from 'react-portal';
 
 import upSVG from '@plone/volto/icons/up-key.svg';
 import downSVG from '@plone/volto/icons/down-key.svg';
 import { Link } from 'react-router-dom';
 import { flattenToAppURL } from '@plone/volto/helpers';
 
-const FactsheetDatabaseListing = props => {
+const FactsheetDatabaseListing = (props) => {
   const sections =
     props.content['@components']?.['factsheet-database-listing'] || [];
 
@@ -23,8 +23,6 @@ const FactsheetDatabaseListing = props => {
 
   return (
     <div>
-
-
       <div className="factsheet-view">
         <Container>
           {props.content.description && (
@@ -63,7 +61,7 @@ const FactsheetDatabaseListing = props => {
                           )}
                         </thead>
                         <tbody>
-                          {section.items.map(item => (
+                          {section.items.map((item) => (
                             <tr key={item['@id']}>
                               <td>
                                 <Link to={flattenToAppURL(item['@id'])}>
