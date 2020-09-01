@@ -9,14 +9,6 @@ import schema from './schema';
 import MaesViewerView from './MaesViewerView';
 
 class Edit extends Component {
-  // componentDidMount() {
-  //   this.props.changeSidebarState(true);
-  // }
-  //
-  // componentDidUpdate(prevProps) {
-  //   this.props.changeSidebarState(true);
-  // }
-
   render() {
     return (
       <div className="block selected">
