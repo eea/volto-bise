@@ -17,10 +17,7 @@ import {
   Breadcrumbs,
 } from '@plone/volto/components';
 
-import HeaderImage from './HeaderImage';
-
-// import HomepageSlider from '~/components/theme/Header/HomepageSlider';
-// import homepageSlideIMG from '~/components/theme/Header/images/bise-slide.png';
+import HeaderImage from 'volto-bise/components/theme/Header/HeaderImage';
 
 /**
  * Header component class.
