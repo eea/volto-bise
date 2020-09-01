@@ -28,6 +28,15 @@
   .ui.secondary.pointing.menu .item {
     transition: none !important;
     border-bottom: none;
+    text-transform: none!important;
+    font-size: 18px!important;
+    padding: .85em .80em!important;
+    margin: 0;
+  }
+
+  .ui.secondary.menu .dropdown.item>.menu,
+  .ui.text.menu .dropdown.item>.menu {
+    border-radius: 0;
   }
 
   .menu {
@@ -82,14 +91,13 @@
 }
 
 .navigation .menu .dropdown>.menu>.item {
-
   >.item.secondLevel {
     color: @darkGreenColor;
-    line-height: 3;
-    padding: 0 1.5rem;
+    font-weight: 500;
+    line-height: 2.5;
+    padding: 0 1.5rem!important;
     margin: 0;
-    font-size: 17px;
-    font-weight: 600;
+    border-bottom-style: none;
 
     &:active {
       border: none;
