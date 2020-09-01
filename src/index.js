@@ -6,6 +6,8 @@ import {
   TocNavigationView,
   KeyFactsView,
   KeyFactsEdit,
+  MaesViewerView,
+  MaesViewerEdit,
 } from './components';
 
 export default (config) => {
@@ -40,6 +42,20 @@ export default (config) => {
       view: [],
     },
   };
-  // console.log('config', config);
+  config.blocks.blocksConfig.maesviewer = {
+    id: 'maesviewer',
+    title: 'MAES Viewer',
+    icon: codeSVG,
+    group: 'bise',
+    view: MaesViewerView,
+    edit: MaesViewerEdit,
+    restricted: false,
+    mostUsed: false,
+    sidebarTab: 1,
+    security: {
+      addPermission: [],
+      view: [],
+    },
+  };
   return config;
 };

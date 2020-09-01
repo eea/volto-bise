@@ -8,11 +8,11 @@ import { Container, Segment, Grid } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import LogoImage from '@plone/volto/components/theme/Logo/Logo.svg';
-import ecLogo from './ec.png';
-import eeaLogo from './eea.png';
-import fiseLogo from './forest.svg';
-import ccaLogo from './cca.svg';
-import wiseLogo from './wise.png';
+import ecLogo from 'volto-bise/static/ec.png';
+import eeaLogo from 'volto-bise/static/eea.png';
+import fiseLogo from 'volto-bise/static/forest.svg';
+import ccaLogo from 'volto-bise/static/cca.svg';
+import wiseLogo from 'volto-bise/static/wise.png';
 
 // const messages = defineMessages({
 //   copyright: {
