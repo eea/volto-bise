@@ -26,6 +26,10 @@ const splitBlocksByTOC = (blockIds, blocksContent) => {
     if (blocksContent[blockId]['@type'] !== 'slate') return false;
 
     const content = blocksContent[blockId];
+    if (!content.value) {
+      console.log('view wrong block', content);
+      return false;
+    }
     const blockType = content.value[0].type;
     return blockType === 'h2';
   });
@@ -52,7 +56,7 @@ let BlocksWithToc = ({ blockIds, blocksContent, intl, content, location }) => {
                   const slateBlock = block.value[0];
                   const { type } = slateBlock;
                   const text = slateBlock.children[0].text;
-                  const textId = 'tocNav-'+ index;
+                  const textId = 'tocNav-' + index;
                   if (!HEADLINES.includes(type)) return null;
                   return (
                     <AnchorLink
@@ -62,7 +66,7 @@ let BlocksWithToc = ({ blockIds, blocksContent, intl, content, location }) => {
                       className={cx(`toc-nav-header link-${type}`, {
                         selected: activeId === textId,
                       })}
-                      >
+                    >
                       {text}
                     </AnchorLink>
                   );
@@ -77,8 +81,12 @@ let BlocksWithToc = ({ blockIds, blocksContent, intl, content, location }) => {
                   'view'
                 ] || null;
               const block = blocksContent[blockId];
+              if (block['@type'] !== 'slate' || !block.value) {
+                console.log('block not slate', block);
+                return null;
+              }
               const blockType = block.value[0].type;
-              const textId = 'tocNav-'+ index;
+              const textId = 'tocNav-' + index;
               const isheadline = HEADLINES.includes(blockType);
               return Block !== null ? (
                 <VisibilitySensor
@@ -92,15 +100,16 @@ let BlocksWithToc = ({ blockIds, blocksContent, intl, content, location }) => {
                   key={blockId}
                 >
                   {({ isVisible }) => {
-                    if (isheadline && textId && isVisible) customSetActive(textId);
+                    if (isheadline && textId && isVisible)
+                      customSetActive(textId);
                     return (
-                      <div id={`${isheadline? textId : ""}`}>
+                      <div id={`${isheadline ? textId : ''}`}>
                         <Block
                           key={blockId}
                           properties={content}
                           data={blocksContent[blockId]}
                           path={getBaseUrl(location?.pathname || '')}
-                          />
+                        />
                       </div>
                     );
                   }}
