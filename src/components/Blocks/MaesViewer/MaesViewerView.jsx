@@ -2,14 +2,17 @@ import React from 'react';
 import cx from 'classnames';
 import { connectBlockToProviderData } from './hooks';
 import { Grid } from 'semantic-ui-react';
+import loadable from '@loadable/component';
+import { serializeNodes } from 'volto-slate/editor/render';
+import {
+  customSelectStyles,
+  DropdownIndicator,
+  Option,
+  selectTheme,
+} from '@plone/volto/components/manage/Widgets/SelectStyling';
 
-import Loadable from 'react-loadable';
-const LoadablePlot = Loadable({
-  loader: () => import('react-plotly.js'),
-  loading() {
-    return <div>Loading chart...</div>;
-  },
-});
+const Select = loadable(() => import('react-select'));
+const LoadablePlot = loadable(() => import('react-plotly.js'));
 
 /**
  * Filters data. Given an object like:
@@ -58,10 +61,11 @@ function mapByLevel(provider_data) {
   return byLevel;
 }
 
-function makeTrace(level, levelData, index) {
+function makeTrace(level, levelData, index, focusOn) {
+  console.log(focusOn);
   const data = [
-    ...Object.entries(levelData).filter(([k, v]) => k !== 'Portugal'),
-    ['Portugal', levelData['Portugal']],
+    ...Object.entries(levelData).filter(([k, v]) => k !== focusOn),
+    [focusOn, levelData[focusOn]],
   ];
 
   const x = [...data.map(([k, v]) => v)];
@@ -72,7 +76,7 @@ function makeTrace(level, levelData, index) {
   const hovertext = [...data.map(([k, v]) => k)];
   const text = [
     ...data.slice(0, data.length - 1).map((_) => null),
-    '<b>PT</b>',
+    `<b>${focusOn}</b>`,
   ];
 
   const marker = {
@@ -255,7 +259,7 @@ function chartTileLayout(index) {
   };
 }
 
-function makeChartTiles(provider_data) {
+function makeChartTiles(provider_data, focusOn) {
   if (!provider_data) return;
   const byLevel = mapByLevel(provider_data);
 
@@ -277,7 +281,7 @@ function makeChartTiles(provider_data) {
   const tiles = ecosystems.map((level, index) => {
     return {
       layout: chartTileLayout(index),
-      data: [makeTrace(level, byArea[level], index)],
+      data: [makeTrace(level, byArea[level], index, focusOn)],
       title: level,
     };
   });
@@ -285,17 +289,36 @@ function makeChartTiles(provider_data) {
   return tiles;
 }
 
+const SelectCountry = (props) => {
+  const { id, onChange, data } = props;
+  const countries = Array.from(new Set(data['Country_name']));
+  const options = countries.map((c) => ({ label: c, value: c }));
+  return (
+    <Select
+      id={`field-${id}`}
+      name={id}
+      className="react-select-container"
+      classNamePrefix="react-select"
+      isMulti={id === 'roles' || id === 'groups'}
+      options={options}
+      styles={customSelectStyles}
+      theme={selectTheme}
+      components={{ DropdownIndicator, Option }}
+      defaultValue={null}
+      onChange={onChange}
+    />
+  );
+};
+
 const View = ({ data, provider_data, id, ...rest }) => {
+  const [focusOn, setFocusOn] = React.useState();
   const chart = React.useRef();
-  const multiCharts = React.useRef([]);
+  const [multiCharts, setMultiCharts] = React.useState([]);
   React.useEffect(() => {
-    if (provider_data && !multiCharts.current.length) {
-      multiCharts.current = makeChartTiles(provider_data);
-      // chart.current
-      // chart.current = makeSubplotsChart(provider_data);
-      console.log('chart', multiCharts.current);
+    if (provider_data) {
+      setMultiCharts(makeChartTiles(provider_data, focusOn));
     }
-  });
+  }, [provider_data, focusOn]);
 
   return (
     <div className={cx('block align', data.align)}>
@@ -309,22 +332,9 @@ const View = ({ data, provider_data, id, ...rest }) => {
 
         <Grid columns={12}>
           <Grid.Row>
-            <Grid.Column width={9}>
-              {provider_data && chart.current && (
-                <LoadablePlot
-                  data={chart.current.data}
-                  layout={chart.current.layout}
-                  frames={[]}
-                  config={{
-                    displayModeBar: false,
-                    editable: false,
-                    responsive: true,
-                    // useResizeHandler: true,
-                  }}
-                />
-              )}
+            <Grid.Column width={8}>
               {provider_data
-                ? multiCharts.current.map((chart, index) => {
+                ? multiCharts.map((chart, index) => {
                     return (
                       <>
                         <div>{chart.title}</div>
@@ -336,7 +346,7 @@ const View = ({ data, provider_data, id, ...rest }) => {
                           config={{
                             displayModeBar: false,
                             editable: false,
-                            responsive: true,
+                            responsive: false,
                             // useResizeHandler: true,
                           }}
                         />
@@ -345,7 +355,21 @@ const View = ({ data, provider_data, id, ...rest }) => {
                   })
                 : ''}
             </Grid.Column>
-            <Grid.Column width={3}>Select here</Grid.Column>
+            <Grid.Column width={4} flated="right">
+              {provider_data && (
+                <SelectCountry
+                  data={provider_data}
+                  id={`${id}-select-country`}
+                  onChange={(data) => {
+                    setFocusOn(data.value);
+                  }}
+                  defaultValue={
+                    focusOn ? { value: focusOn, label: focusOn } : null
+                  }
+                />
+              )}
+              <div>{serializeNodes(data.description)}</div>
+            </Grid.Column>
           </Grid.Row>
         </Grid>
       </div>
@@ -354,3 +378,17 @@ const View = ({ data, provider_data, id, ...rest }) => {
 };
 
 export default connectBlockToProviderData(View);
+
+// {provider_data && chart.current && (
+//   <LoadablePlot
+//     data={chart.current.data}
+//     layout={chart.current.layout}
+//     frames={[]}
+//     config={{
+//       displayModeBar: false,
+//       editable: false,
+//       responsive: true,
+//       // useResizeHandler: true,
+//     }}
+//   />
+// )}
