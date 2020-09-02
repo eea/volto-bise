@@ -141,12 +141,12 @@ export function chartTileLayout(index) {
       zeroline: false,
       autorange: true,
 
-      // fixedrange: true,
-      // tickmode: 'linear',
-      // nticks: 2,
-      // tick0: 0,
-      // ticks: 'outside',
       // showticklabels: true,
+      // automargin: true,
+      // tickvals: [10000000000],
+      // tickmode: 'array',
+      // ticktext: ['0%'],
+      // ticks: 'outside',
     },
     yaxis: {
       type: 'linear',
@@ -163,6 +163,28 @@ export function chartTileLayout(index) {
       showticklabels: false,
       // showdividers: true,
     },
+    annotations: [
+      {
+        xref: 'paper',
+        yref: 'paper',
+        x: 0,
+        y: 0.3,
+        xanchor: 'left',
+        yanchor: 'bottom',
+        text: '0%',
+        showarrow: false,
+      },
+      {
+        xref: 'paper',
+        yref: 'paper',
+        x: 1,
+        y: 0.3,
+        xanchor: 'right',
+        yanchor: 'bottom',
+        text: '20%',
+        showarrow: false,
+      },
+    ],
   };
 }
 
