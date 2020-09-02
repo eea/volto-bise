@@ -1,5 +1,8 @@
 import { DefaultView } from '@plone/volto/components';
+
 import codeSVG from '@plone/volto/icons/code.svg';
+import chartIcon from '@plone/volto/icons/world.svg';
+
 import {
   ChildrenTabsView,
   FactsheetDatabaseListing,
@@ -8,6 +11,10 @@ import {
   KeyFactsEdit,
   MaesViewerView,
   MaesViewerEdit,
+  ConnectedChartBlockView,
+  ConnectedChartBlockEdit,
+  DataQueryFilterView,
+  DataQueryFilterEdit,
 } from './components';
 
 export default (config) => {
@@ -57,5 +64,26 @@ export default (config) => {
       view: [],
     },
   };
+
+  config.blocks.blocksConfig.connected_plotly_chart = {
+    id: 'connected_plotly_chart',
+    title: 'Connected Plotly Chart',
+    view: ConnectedChartBlockView,
+    edit: ConnectedChartBlockEdit,
+    icon: chartIcon,
+    group: 'bise',
+    sidebarTab: 1,
+  };
+
+  config.blocks.blocksConfig.dataqueryfilter = {
+    id: 'dataqueryfilter',
+    title: 'DataQuery Filter',
+    view: DataQueryFilterView,
+    edit: DataQueryFilterEdit,
+    icon: chartIcon,
+    group: 'bise',
+    sidebarTab: 1,
+  };
+
   return config;
 };

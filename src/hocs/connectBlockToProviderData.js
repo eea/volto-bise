@@ -18,3 +18,5 @@ export function connectBlockToProviderData(WrappedComponent) {
     return <WrappedComponent {...props} provider_data={provider_data} />;
   };
 }
+
+export default connectBlockToProviderData;

@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import { connectBlockToProviderData } from './hooks';
+import { connectBlockToProviderData } from 'volto-bise/hocs';
 import { Grid } from 'semantic-ui-react';
 import loadable from '@loadable/component';
 import { serializeNodes } from 'volto-slate/editor/render';
@@ -378,17 +378,3 @@ const View = ({ data, provider_data, id, ...rest }) => {
 };
 
 export default connectBlockToProviderData(View);
-
-// {provider_data && chart.current && (
-//   <LoadablePlot
-//     data={chart.current.data}
-//     layout={chart.current.layout}
-//     frames={[]}
-//     config={{
-//       displayModeBar: false,
-//       editable: false,
-//       responsive: true,
-//       // useResizeHandler: true,
-//     }}
-//   />
-// )}
