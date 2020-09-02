@@ -6,13 +6,21 @@ export function connectBlockToProviderData(WrappedComponent) {
   return (props) => {
     const dispatch = useDispatch();
     const { provider_url } = props.data;
+
+    const isPending = useSelector((state) => {
+      const url = `${provider_url}/@connector-data`;
+      return provider_url
+        ? state.data_providers?.pendingConnectors?.[url]
+        : null;
+    });
+
     const provider_data = useSelector((state) => {
       const url = `${provider_url}/@connector-data`;
       return provider_url ? state.data_providers?.data?.[url] : null;
     });
 
     React.useEffect(() => {
-      if (provider_url && !provider_data)
+      if (provider_url && !provider_data && !isPending)
         dispatch(getDataFromProvider(provider_url));
     });
     return <WrappedComponent {...props} provider_data={provider_data} />;

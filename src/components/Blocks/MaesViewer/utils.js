@@ -136,17 +136,21 @@ export function chartTileLayout(index) {
     pad: 0,
     xaxis: {
       visible: true,
-      ticks: '',
       showline: false,
       showgrid: false,
       zeroline: false,
       autorange: true,
+
       // fixedrange: true,
-      showticklabels: false,
+      // tickmode: 'linear',
+      // nticks: 2,
+      // tick0: 0,
+      // ticks: 'outside',
+      // showticklabels: true,
     },
     yaxis: {
       type: 'linear',
-      range: [-0.3, 1],
+      range: [-0.3, 1], // needed to show the current country as a dot above the line
       visible: true,
       ticks: '',
       showgrid: false,
@@ -157,7 +161,7 @@ export function chartTileLayout(index) {
       zerolinewidth: 2,
       zerolinecolor: '#000',
       showticklabels: false,
-      showdividers: true,
+      // showdividers: true,
     },
   };
 }
