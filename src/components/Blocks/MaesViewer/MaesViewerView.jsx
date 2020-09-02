@@ -58,33 +58,41 @@ function mapByLevel(provider_data) {
 }
 
 function makeTrace(level, levelData, index) {
-  // console.log('index', index);
-  const x = Object.values(levelData);
+  const data = [
+    ...Object.entries(levelData).filter(([k, v]) => k !== 'Portugal'),
+    ['Portugal', levelData['Portugal']],
+  ];
+
+  const x = [...data.map(([k, v]) => v)];
   const y = [];
   y.length = x.length;
   y.fill(0);
 
+  const hovertext = [...data.map(([k, v]) => k)];
+  const text = [
+    ...data.slice(0, data.length - 1).map((_) => null),
+    '<b>PT</b>',
+  ];
+
+  const marker = {
+    symbol: [
+      ...data.slice(0, data.length - 1).map((_) => null),
+      'diamond-tall',
+    ],
+    // See https://plotly.com/javascript/reference/scatter/#scatter-marker
+    size: [...data.slice(0, data.length - 1).map((_) => 8), 16],
+  };
   const res = {
     x,
     y,
-    hovertext: Object.keys(levelData),
+    hovertext,
     name: level,
     type: 'scatter',
     xaxis: `x${index > 0 ? index + 1 : ''}`,
     yaxis: `y${index > 0 ? index + 1 : ''}`,
     mode: 'markers+text',
-    text: Object.keys(levelData).map((country) =>
-      country === 'Portugal' ? '<b>PT</b>' : null,
-    ),
-    marker: {
-      symbol: Object.keys(levelData).map((country) =>
-        country === 'Portugal' ? 'diamond-dot' : null,
-      ),
-      // See https://plotly.com/javascript/reference/scatter/#scatter-marker
-      size: Object.keys(levelData).map((country) =>
-        country === 'Portugal' ? 16 : 8,
-      ),
-    },
+    text,
+    marker,
     textposition: 'top center',
   };
   return res;
@@ -144,8 +152,8 @@ function makeChart(provider_data) {
     margin: {
       l: 400,
       r: 0,
-      t: 10,
-      b: 10,
+      t: 0,
+      b: 0,
     },
     pad: 10,
     grid: {
@@ -210,7 +218,7 @@ const View = ({ data, provider_data, id, ...rest }) => {
   React.useEffect(() => {
     if (provider_data && !chart.current) {
       chart.current = makeChart(provider_data);
-      // console.log('chart', chart.current);
+      console.log('chart', chart.current);
     }
   });
 
