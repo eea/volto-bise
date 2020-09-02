@@ -18,7 +18,7 @@ const ViewSelect = (props) => {
   const providerUrl = props.data?.provider_url || '';
 
   const choices = React.useMemo(() => {
-    return Array.from(new Set(provider_data[select_field] || [])).map((n) => [
+    return Array.from(new Set(provider_data?.[select_field] || [])).map((n) => [
       n,
       n,
     ]);
