@@ -165,11 +165,11 @@ export function chartTileLayout(index) {
     },
     annotations: [
       {
-        xref: 'paper',
+        xref: 'x',
         yref: 'paper',
         x: 0,
         y: 0.3,
-        xanchor: 'left',
+        xanchor: 'center',
         yanchor: 'bottom',
         text: '0%',
         showarrow: false,
