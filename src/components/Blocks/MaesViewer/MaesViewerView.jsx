@@ -77,7 +77,7 @@ function makeTrace(level, levelData, index) {
   const marker = {
     symbol: [
       ...data.slice(0, data.length - 1).map((_) => null),
-      'diamond-tall',
+      'triangle-down',
     ],
     // See https://plotly.com/javascript/reference/scatter/#scatter-marker
     size: [...data.slice(0, data.length - 1).map((_) => 8), 16],
@@ -85,11 +85,15 @@ function makeTrace(level, levelData, index) {
   const res = {
     x,
     y,
-    hovertext,
+    // hovertext,
+    hovertemplate: '%{customdata}: %{x:.2f}',
+    hoverinfo: 'y',
+    customdata: hovertext,
     name: level,
     type: 'scatter',
-    xaxis: `x${index > 0 ? index + 1 : ''}`,
-    yaxis: `y${index > 0 ? index + 1 : ''}`,
+    // needed for subplots!!
+    // xaxis: `x${index > 0 ? index + 1 : ''}`,
+    // yaxis: `y${index > 0 ? index + 1 : ''}`,
     mode: 'markers+text',
     text,
     marker,
@@ -127,7 +131,7 @@ function makeAnnotations(byLabel) {
   });
 }
 
-function makeChart(provider_data) {
+function makeSubplotsChart(provider_data) {
   if (!provider_data) return;
   const byLevel = mapByLevel(provider_data);
 
@@ -147,7 +151,7 @@ function makeChart(provider_data) {
   });
 
   let layout = {
-    height: 600,
+    height: 560,
     showlegend: false,
     margin: {
       l: 400,
@@ -213,32 +217,92 @@ function makeChart(provider_data) {
   return { layout, data: traces };
 }
 
+function chartTileLayout(index) {
+  return {
+    height: 50,
+    showlegend: false,
+    margin: {
+      l: 0,
+      r: 0,
+      t: 0,
+      b: 0,
+    },
+    pad: 0,
+    xaxis: {
+      visible: true,
+      ticks: '',
+      showline: false,
+      showgrid: false,
+      zeroline: false,
+      autorange: true,
+      // fixedrange: true,
+      showticklabels: false,
+    },
+    yaxis: {
+      type: 'category',
+      visible: true,
+      ticks: '',
+      showline: false,
+      showgrid: true,
+      gridwidth: 2,
+      zeroline: false,
+      gridcolor: '#000',
+      showticklabels: false,
+    },
+  };
+}
+
+function makeChartTiles(provider_data) {
+  if (!provider_data) return;
+  const byLevel = mapByLevel(provider_data);
+
+  const ecosystems = Array.from(new Set(provider_data['Ecosystem_level2']));
+  const countries = Array.from(new Set(provider_data['Country_name']));
+
+  const byArea = Object.fromEntries(ecosystems.map((l) => [l, {}]));
+  ecosystems.forEach((level) => {
+    countries.forEach((country) => {
+      const recs = byLevel[level][country];
+      const total = recs.reduce(
+        (acc, rec) => acc + parseInt(rec['Area (m2)']),
+        0,
+      );
+      byArea[level][country] = total;
+    });
+  });
+
+  const tiles = ecosystems.map((level, index) => {
+    return {
+      layout: chartTileLayout(index),
+      data: [makeTrace(level, byArea[level], index)],
+      title: level,
+    };
+  });
+
+  return tiles;
+}
+
 const View = ({ data, provider_data, id, ...rest }) => {
   const chart = React.useRef();
+  const multiCharts = React.useRef([]);
   React.useEffect(() => {
-    if (provider_data && !chart.current) {
-      chart.current = makeChart(provider_data);
-      console.log('chart', chart.current);
+    if (provider_data && !multiCharts.current.length) {
+      multiCharts.current = makeChartTiles(provider_data);
+      // chart.current
+      // chart.current = makeSubplotsChart(provider_data);
+      console.log('chart', multiCharts.current);
     }
   });
 
   return (
-    <div
-      className={cx(
-        'block align',
-        {
-          center: !Boolean(data.align),
-        },
-        data.align,
-      )}
-    >
+    <div className={cx('block align', data.align)}>
       <div
         className={cx({
           'full-width': data.align === 'full',
         })}
       >
         {/* <div className="block-wrapper">{JSON.stringify(data)}</div> */}
-        {provider_data && chart.current ? (
+        {provider_data && chart.current && (
           <LoadablePlot
             data={chart.current.data}
             layout={chart.current.layout}
@@ -250,9 +314,28 @@ const View = ({ data, provider_data, id, ...rest }) => {
               // useResizeHandler: true,
             }}
           />
-        ) : (
-          ''
         )}
+        {provider_data
+          ? multiCharts.current.map((chart, index) => {
+              return (
+                <>
+                  <div>{chart.title}</div>
+                  <LoadablePlot
+                    key={index}
+                    data={chart.data}
+                    layout={chart.layout}
+                    frames={[]}
+                    config={{
+                      displayModeBar: false,
+                      editable: false,
+                      responsive: true,
+                      // useResizeHandler: true,
+                    }}
+                  />
+                </>
+              );
+            })
+          : ''}
       </div>
     </div>
   );
