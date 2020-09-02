@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 import { connectBlockToProviderData } from './hooks';
+import { Grid } from 'semantic-ui-react';
 
 import Loadable from 'react-loadable';
 const LoadablePlot = Loadable({
@@ -86,7 +87,9 @@ function makeTrace(level, levelData, index) {
     x,
     y,
     // hovertext,
-    hovertemplate: '%{customdata}: %{x:.2f}',
+    // See
+    // https://plotly.com/javascript/reference/scatter/#scatter-hovertemplate
+    hovertemplate: '%{customdata}: %{x:.2f}<extra></extra>',
     hoverinfo: 'y',
     customdata: hovertext,
     name: level,
@@ -301,41 +304,50 @@ const View = ({ data, provider_data, id, ...rest }) => {
           'full-width': data.align === 'full',
         })}
       >
+        <h3>{data.title}</h3>
         {/* <div className="block-wrapper">{JSON.stringify(data)}</div> */}
-        {provider_data && chart.current && (
-          <LoadablePlot
-            data={chart.current.data}
-            layout={chart.current.layout}
-            frames={[]}
-            config={{
-              displayModeBar: false,
-              editable: false,
-              responsive: true,
-              // useResizeHandler: true,
-            }}
-          />
-        )}
-        {provider_data
-          ? multiCharts.current.map((chart, index) => {
-              return (
-                <>
-                  <div>{chart.title}</div>
-                  <LoadablePlot
-                    key={index}
-                    data={chart.data}
-                    layout={chart.layout}
-                    frames={[]}
-                    config={{
-                      displayModeBar: false,
-                      editable: false,
-                      responsive: true,
-                      // useResizeHandler: true,
-                    }}
-                  />
-                </>
-              );
-            })
-          : ''}
+
+        <Grid columns={12}>
+          <Grid.Row>
+            <Grid.Column width={9}>
+              {provider_data && chart.current && (
+                <LoadablePlot
+                  data={chart.current.data}
+                  layout={chart.current.layout}
+                  frames={[]}
+                  config={{
+                    displayModeBar: false,
+                    editable: false,
+                    responsive: true,
+                    // useResizeHandler: true,
+                  }}
+                />
+              )}
+              {provider_data
+                ? multiCharts.current.map((chart, index) => {
+                    return (
+                      <>
+                        <div>{chart.title}</div>
+                        <LoadablePlot
+                          key={index}
+                          data={chart.data}
+                          layout={chart.layout}
+                          frames={[]}
+                          config={{
+                            displayModeBar: false,
+                            editable: false,
+                            responsive: true,
+                            // useResizeHandler: true,
+                          }}
+                        />
+                      </>
+                    );
+                  })
+                : ''}
+            </Grid.Column>
+            <Grid.Column width={3}>Select here</Grid.Column>
+          </Grid.Row>
+        </Grid>
       </div>
     </div>
   );
