@@ -14,6 +14,19 @@ import {
 const Select = loadable(() => import('react-select'));
 const LoadablePlot = loadable(() => import('react-plotly.js'));
 
+const colorscale = [
+  'rgb(166,206,227)',
+  'rgb(31,120,180)',
+  'rgb(178,223,138)',
+  'rgb(51,160,44)',
+  'rgb(251,154,153)',
+  'rgb(227,26,28)',
+  'rgb(160,26,51)',
+  'rgb(227,178,223)',
+  'rgb(31,227,28)',
+  'rgb(227,120,180)',
+];
+
 /**
  * Filters data. Given an object like:
  *
@@ -85,7 +98,12 @@ function makeTrace(level, levelData, index, focusOn) {
       'triangle-down',
     ],
     // See https://plotly.com/javascript/reference/scatter/#scatter-marker
-    size: [...data.slice(0, data.length - 1).map((_) => 8), 16],
+    size: [...data.slice(0, data.length - 1).map((_) => 10), 20],
+    opacity: [...data.slice(0, data.length - 1).map((_) => 0.8), 1],
+    color: [
+      ...data.slice(0, data.length - 1).map((_) => colorscale[index]),
+      '#182844',
+    ],
   };
   const res = {
     x,
