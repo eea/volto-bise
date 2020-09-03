@@ -169,7 +169,7 @@ export function chartTileLayout(index) {
         yref: 'paper',
         x: 0,
         y: 0.3,
-        xanchor: 'center',
+        xanchor: 'right',
         yanchor: 'bottom',
         text: '0%',
         showarrow: false,
