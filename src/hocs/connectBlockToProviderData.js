@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export function connectBlockToProviderData(WrappedComponent) {
   return (props) => {
-    console.log('HOC presentation component rendering');
     const dispatch = useDispatch();
 
     // the URL is always available
@@ -14,14 +13,11 @@ export function connectBlockToProviderData(WrappedComponent) {
     // loaded it is false, if it has been loading but it finished/stopped, it is
     // false)
     const isPending = useSelector((state) => {
-      console.group('isPending selector');
       // the URL for getting whether the provider URL is pending is this (verified):
       const url = `${provider_url}`;
       const rv = provider_url
         ? state.data_providers?.pendingConnectors?.[url]
         : false;
-      console.log('isPending', rv);
-      console.groupEnd();
       return rv;
     });
 
@@ -33,16 +29,12 @@ export function connectBlockToProviderData(WrappedComponent) {
     });
 
     React.useEffect(() => {
-      console.group('effect');
-      console.log('effect', { provider_url, provider_data, isPending });
       // if the URL is available, the data is loaded and it is not being loaded
       if (provider_url && !provider_data && !isPending) {
-        console.log('effect running');
         // run the getDataFromProvider action (this should make isPending true,
         // but the reducer middleware does something wrong)
         dispatch(getDataFromProvider(provider_url));
       }
-      console.groupEnd();
     });
     return <WrappedComponent {...props} provider_data={provider_data} />;
   };
