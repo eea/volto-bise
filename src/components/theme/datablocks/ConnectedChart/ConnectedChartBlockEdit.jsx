@@ -25,7 +25,7 @@ class Edit extends Component {
           onChangeValue={(value) => {
             this.props.onChangeBlock(this.props.block, {
               ...this.props.data,
-              chartData: value,
+              chartData: JSON.parse(JSON.stringify(value)),
             });
           }}
         />
