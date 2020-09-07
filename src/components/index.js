@@ -5,3 +5,4 @@ export KeyFactsView from './Blocks/KeyFacts/KeyFactsView';
 export MaesViewerEdit from './Blocks/MaesViewer/MaesViewerEdit';
 export MaesViewerView from './Blocks/MaesViewer/MaesViewerView';
 export TocNavigationView from './theme/TocNavigationView/TocNavigationView';
+export TabsTocNavigationView from './theme/TocNavigationView/TabsTocNavigationView';
