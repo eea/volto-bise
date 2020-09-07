@@ -37,13 +37,14 @@ const SelectCountry = (props) => {
 };
 
 const View = ({ data, provider_data, id, ...rest }) => {
+  const focusEcosystem = data.ecosystem;
   const [focusOn, setFocusOn] = React.useState();
   const [multiCharts, setMultiCharts] = React.useState([]);
   React.useEffect(() => {
     if (provider_data) {
-      setMultiCharts(makeChartTiles(provider_data, focusOn));
+      setMultiCharts(makeChartTiles(provider_data, focusOn, focusEcosystem));
     }
-  }, [provider_data, focusOn]);
+  }, [provider_data, focusOn, focusEcosystem]);
 
   return (
     <div className={cx('block align', data.align)}>

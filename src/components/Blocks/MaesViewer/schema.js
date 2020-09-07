@@ -10,7 +10,7 @@ const MaesViewerSchema = {
     {
       id: 'source',
       title: 'Data source',
-      fields: ['provider_url'],
+      fields: ['provider_url', 'ecosystem'],
     },
   ],
 
@@ -26,6 +26,10 @@ const MaesViewerSchema = {
     provider_url: {
       widget: 'pick_provider',
       title: 'Data provider',
+    },
+    ecosystem: {
+      title: 'Ecosystem',
+      choices: [],
     },
   },
 

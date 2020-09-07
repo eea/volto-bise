@@ -13,8 +13,8 @@ import { connectBlockToProviderData } from 'volto-bise/hocs';
 const ViewSelect = (props) => {
   const { data = {}, id, provider_data = {} } = props;
   const { select_field } = data;
-  const { connected_data_parameters } = props; // data_query, querystring
-  console.log('ViewSelect connected:', connected_data_parameters);
+  // const { connected_data_parameters } = props; // data_query, querystring
+  // console.log('ViewSelect connected:', connected_data_parameters);
   const providerUrl = props.data?.provider_url || '';
 
   const choices = React.useMemo(() => {

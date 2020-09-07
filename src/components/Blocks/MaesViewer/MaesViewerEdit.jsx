@@ -1,14 +1,27 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import { SidebarPortal } from '@plone/volto/components'; // EditBlock
 import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
-// import { BlockEditForm } from 'volto-addons/BlockForm';
 
 import schema from './schema';
+import { connectBlockToProviderData } from 'volto-bise/hocs';
 import MaesViewerView from './MaesViewerView';
 
 class Edit extends Component {
+  getSchema = (schema) => {
+    if (!this.props.provider_data) return;
+    const provider_data = this.props.provider_data || {};
+
+    const select_field = 'Ecosystem_level2';
+    const choices = Array.from(
+      new Set(provider_data?.[select_field] || []),
+    ).map((n) => [n, n]);
+
+    const newSchema = JSON.parse(JSON.stringify(schema));
+    newSchema.properties.ecosystem.choices = choices;
+    return newSchema;
+  };
+
   render() {
     return (
       <div className="block selected">
@@ -18,7 +31,7 @@ class Edit extends Component {
 
         <SidebarPortal selected={this.props.selected}>
           <InlineForm
-            schema={schema}
+            schema={this.getSchema(schema)}
             title={schema.title}
             onChangeField={(id, value) => {
               this.props.onChangeBlock(this.props.block, {
@@ -34,4 +47,4 @@ class Edit extends Component {
   }
 }
 
-export default connect(null, {})(Edit);
+export default connectBlockToProviderData(Edit);

@@ -188,7 +188,7 @@ export function chartTileLayout(index) {
   };
 }
 
-export function makeChartTiles(provider_data, focusOn) {
+export function makeChartTiles(provider_data, focusOn, focusEcosystem) {
   if (!provider_data) return;
   const byLevel = mapByLevel(provider_data);
 
@@ -207,13 +207,16 @@ export function makeChartTiles(provider_data, focusOn) {
     });
   });
 
-  const tiles = ecosystems.map((level, index) => {
-    return {
-      layout: chartTileLayout(index),
-      data: [makeTrace(level, byArea[level], index, focusOn)],
-      title: level,
-    };
-  });
+  const tiles = ecosystems
+    .map((level, index) => {
+      if (focusEcosystem && level !== focusEcosystem) return null;
+      return {
+        layout: chartTileLayout(index),
+        data: [makeTrace(level, byArea[level], index, focusOn)],
+        title: level,
+      };
+    })
+    .filter((c) => !!c);
 
   return tiles;
 }
