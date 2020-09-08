@@ -29,7 +29,7 @@ const splitBlocksByTOC = (blockIds, blocksContent) => {
     const blockType = content.value[0].type;
     return blockType === 'h2';
   });
-  if (cursor === -1) cursor = blockIds.length;
+  if (cursor === -1) cursor = blockIds.length - 1;
   return [blockIds.slice(0, cursor), blockIds.slice(cursor)];
 };
 
