@@ -16,6 +16,7 @@ import {
   ConnectedChartBlockEdit,
   DataQueryFilterView,
   DataQueryFilterEdit,
+  ColorScalePickerWidget,
 } from './components';
 
 export default (config) => {
@@ -93,6 +94,14 @@ export default (config) => {
     icon: chartIcon,
     group: 'bise',
     sidebarTab: 1,
+  };
+
+  config.widgets = {
+    ...config.widgets,
+    type: {
+      ...config.widgets.type,
+      colorscale: ColorScalePickerWidget,
+    },
   };
 
   return config;

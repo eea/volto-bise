@@ -1,3 +1,5 @@
+const { default: ColorScalePickerWidget } = require("./theme/datablocks/ConnectedChart/ColorScalePickerWidget");
+
 export ChildrenTabsView from './theme/ChildrenTabsView/ChildrenTabsView';
 export FactsheetDatabaseListing from './theme/FactsheetDatabaseListing/FactsheetDatabaseListing';
 export KeyFactsEdit from './Blocks/KeyFacts/KeyFactsEdit';
@@ -10,3 +12,4 @@ export ConnectedChartBlockView from './theme/datablocks/ConnectedChart/Connected
 export ConnectedChartBlockEdit from './theme/datablocks/ConnectedChart/ConnectedChartBlockEdit';
 export DataQueryFilterView from './theme/datablocks/DataQueryFilter/DataQueryFilterView';
 export DataQueryFilterEdit from './theme/datablocks/DataQueryFilter/DataQueryFilterEdit';
+export ColorScalePickerWidget from './theme/datablocks/ConnectedChart/ColorScalePickerWidget';

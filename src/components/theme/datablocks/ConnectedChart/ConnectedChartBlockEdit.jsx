@@ -12,6 +12,7 @@ class Edit extends Component {
   getSchema = (chartData, schema) => {
     if (chartData.data.length > 0 && chartData.data[0].type === 'bar') {
       let usedSchema = JSON.parse(JSON.stringify(schema || {}));
+
       usedSchema.properties.categorical_axis = {
         title: 'Categorical axis',
         choices: [
@@ -22,6 +23,15 @@ class Edit extends Component {
       usedSchema.fieldsets[usedSchema.fieldsets.length - 1].fields.push(
         'categorical_axis',
       );
+
+      usedSchema.properties.categorical_colorscale = {
+        title: 'Categorical color scale',
+        type: 'colorscale',
+      };
+      usedSchema.fieldsets[usedSchema.fieldsets.length - 1].fields.push(
+        'categorical_colorscale',
+      );
+
       return usedSchema;
     }
 
