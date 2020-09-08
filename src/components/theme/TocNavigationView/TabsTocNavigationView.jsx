@@ -11,7 +11,8 @@ import {
   getBlocks,
   getBlocksFieldname,
   getBlocksLayoutFieldname,
-  getBaseUrl, } from '@plone/volto/helpers';
+  getBaseUrl,
+} from '@plone/volto/helpers';
 
 import VisibilitySensor from 'react-visibility-sensor';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
@@ -142,14 +143,17 @@ const TabsTocNavigationView = (props) => {
         return [blockId, properties[blocksFieldname]?.[blockId]];
       });
       const blocksContent = properties[blocksFieldname];
-      const [preambleIds, contentIds] = splitBlocksByTOC(blockIds, blocksContent);
+      const [preambleIds, contentIds] = splitBlocksByTOC(
+        blockIds,
+        blocksContent,
+      );
       return (
         <Tab.Pane>
           {map(preambleIds, (block) => {
             const Block =
-              blocks.blocksConfig[properties[blocksFieldname]?.[block]?.['@type']]?.[
-                'view'
-              ] || null;
+              blocks.blocksConfig[
+                properties[blocksFieldname]?.[block]?.['@type']
+              ]?.['view'] || null;
             return Block !== null ? (
               <Block
                 key={block}
@@ -173,7 +177,6 @@ const TabsTocNavigationView = (props) => {
             blocksContent={blocksContent}
             pathname={pathname}
           />
-
         </Tab.Pane>
       );
     },
