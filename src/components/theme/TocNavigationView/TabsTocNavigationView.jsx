@@ -8,9 +8,9 @@ import cx from 'classnames';
 import { map } from 'lodash';
 import { blocks } from '~/config';
 import {
-  getBlocks,
-  getBlocksFieldname,
-  getBlocksLayoutFieldname,
+  // getBlocks,
+  // getBlocksFieldname,
+  // getBlocksLayoutFieldname,
   getBaseUrl,
 } from '@plone/volto/helpers';
 
@@ -29,6 +29,7 @@ const splitBlocksByTOC = (blockIds, blocksContent) => {
     const blockType = content.value[0].type;
     return blockType === 'h2';
   });
+  if (cursor === -1) cursor = blockIds.length;
   return [blockIds.slice(0, cursor), blockIds.slice(cursor)];
 };
 
@@ -127,7 +128,6 @@ let BlocksWithToc = ({ blockIds, blocksContent, intl, content, pathname }) => {
 BlocksWithToc = injectIntl(BlocksWithToc);
 
 const TabsTocNavigationView = (props) => {
-  // console.log('toc toc');
   const renderTab = React.useCallback(
     ({
       index,
@@ -139,9 +139,9 @@ const TabsTocNavigationView = (props) => {
       pathname,
     }) => {
       const blockIds = tabsLayout[index] || [];
-      const blocklist = blockIds.map((blockId) => {
-        return [blockId, properties[blocksFieldname]?.[blockId]];
-      });
+      // const blocklist = blockIds.map((blockId) => {
+      //   return [blockId, properties[blocksFieldname]?.[blockId]];
+      // });
       const blocksContent = properties[blocksFieldname];
       const [preambleIds, contentIds] = splitBlocksByTOC(
         blockIds,
