@@ -6,7 +6,7 @@ import chartIcon from '@plone/volto/icons/world.svg';
 import {
   ChildrenTabsView,
   FactsheetDatabaseListing,
-  TocNavigationView,
+  // TocNavigationView,
   TabsTocNavigationView,
   KeyFactsView,
   KeyFactsEdit,
@@ -28,13 +28,21 @@ export default (config) => {
     layoutViews: {
       ...config.views.layoutViews,
       factsheet_database_listing_view: FactsheetDatabaseListing,
-      toc_nav_view: TocNavigationView,
-      tabs_toc_nav_view: TabsTocNavigationView,
+      // toc_nav_view: TocNavigationView,
+      // tabs_toc_nav_view: TabsTocNavigationView,
+      toc_nav_view: TabsTocNavigationView,
       children_tabs_view: ChildrenTabsView,
     },
   };
 
   config.blocks.groupBlocksOrder.push({ id: 'bise', title: 'BISE specific' });
+
+  config.blocks.blocksConfig.tabsBlock.extensions.push({
+    id: 'tocnav',
+    title: 'TOC Navigation',
+    view: TabsTocNavigationView,
+    schemaExtender: null,
+  });
 
   config.blocks.blocksConfig.keyfacts = {
     id: 'keyfacts',
