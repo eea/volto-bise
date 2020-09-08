@@ -9,12 +9,33 @@ import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
 import schema from './schema';
 
 class Edit extends Component {
+  getSchema = (chartData, schema) => {
+    if (chartData.data.length > 0 && chartData.data[0].type === 'bar') {
+      let usedSchema = JSON.parse(JSON.stringify(schema || {}));
+      usedSchema.properties.categorical_axis = {
+        title: 'Categorical axis',
+        choices: [
+          ['x', 'X'],
+          ['y', 'Y'],
+        ],
+      };
+      usedSchema.fieldsets[usedSchema.fieldsets.length - 1].fields.push(
+        'categorical_axis',
+      );
+      return usedSchema;
+    }
+
+    return schema;
+  };
+
   render() {
     const chartData = this.props.data.chartData || {
       layout: {},
       frames: [],
       data: [],
     };
+
+    let usedSchema = this.getSchema(chartData, schema);
 
     return (
       <div className="block selected">
@@ -31,8 +52,8 @@ class Edit extends Component {
         />
         <SidebarPortal selected={this.props.selected}>
           <InlineForm
-            schema={schema}
-            title={schema.title}
+            schema={usedSchema}
+            title={usedSchema.title}
             onChangeField={(id, value) => {
               this.props.onChangeBlock(this.props.block, {
                 ...this.props.data,

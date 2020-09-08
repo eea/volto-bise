@@ -60,7 +60,7 @@ const ChartSchema = {
       type: 'string',
       title: 'Hover format',
       placeholder: '.3s',
-      description: (
+      description: () => (
         <>
           See{' '}
           <a

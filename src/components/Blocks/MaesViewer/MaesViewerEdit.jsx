@@ -20,12 +20,15 @@ class Edit extends Component {
     const newSchema = JSON.parse(JSON.stringify(schema));
     newSchema.properties.ecosystem.choices = choices;
 
-    // newSchema.properties.dynamic = {
-    //   title: 'Je suis dynamic',
-    // };
-    // newSchema.fieldsets[0].fields.push('dynamic');
-    // return newSchema;
+    return newSchema;
   };
+
+  // newSchema.properties.dynamic = {
+  //   title: 'Je suis dynamic',
+  // };
+  // newSchema.fieldsets[0].fields.push('dynamic');
+  // return newSchema;
+  // };
 
   /**
    * If bar chart type in data is "bar":
