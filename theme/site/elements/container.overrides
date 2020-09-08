@@ -132,7 +132,7 @@ body.has-toolbar-collapsed.has-sidebar-collapsed {
 .contentWidth(@offset) {
   // 1200
   @media (max-width: @largestTabletScreen + @offset) {
-    .contentWidthMedia(@tabletWidth, @tabletGutter, -30px);
+    /* .contentWidthMedia(@tabletWidth, @tabletGutter, -30px); */
 
     .image-gallery-left-nav {
       left: unset;
