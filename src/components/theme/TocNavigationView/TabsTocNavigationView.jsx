@@ -8,10 +8,11 @@ import cx from 'classnames';
 import { map } from 'lodash';
 import { blocks } from '~/config';
 import {
-  getBlocks,
-  getBlocksFieldname,
-  getBlocksLayoutFieldname,
-  getBaseUrl, } from '@plone/volto/helpers';
+  // getBlocks,
+  // getBlocksFieldname,
+  // getBlocksLayoutFieldname,
+  getBaseUrl,
+} from '@plone/volto/helpers';
 
 import VisibilitySensor from 'react-visibility-sensor';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
@@ -28,6 +29,7 @@ const splitBlocksByTOC = (blockIds, blocksContent) => {
     const blockType = content.value[0].type;
     return blockType === 'h2';
   });
+  if (cursor === -1) cursor = blockIds.length - 1;
   return [blockIds.slice(0, cursor), blockIds.slice(cursor)];
 };
 
@@ -126,7 +128,6 @@ let BlocksWithToc = ({ blockIds, blocksContent, intl, content, pathname }) => {
 BlocksWithToc = injectIntl(BlocksWithToc);
 
 const TabsTocNavigationView = (props) => {
-  // console.log('toc toc');
   const renderTab = React.useCallback(
     ({
       index,
@@ -138,18 +139,21 @@ const TabsTocNavigationView = (props) => {
       pathname,
     }) => {
       const blockIds = tabsLayout[index] || [];
-      const blocklist = blockIds.map((blockId) => {
-        return [blockId, properties[blocksFieldname]?.[blockId]];
-      });
+      // const blocklist = blockIds.map((blockId) => {
+      //   return [blockId, properties[blocksFieldname]?.[blockId]];
+      // });
       const blocksContent = properties[blocksFieldname];
-      const [preambleIds, contentIds] = splitBlocksByTOC(blockIds, blocksContent);
+      const [preambleIds, contentIds] = splitBlocksByTOC(
+        blockIds,
+        blocksContent,
+      );
       return (
         <Tab.Pane>
           {map(preambleIds, (block) => {
             const Block =
-              blocks.blocksConfig[properties[blocksFieldname]?.[block]?.['@type']]?.[
-                'view'
-              ] || null;
+              blocks.blocksConfig[
+                properties[blocksFieldname]?.[block]?.['@type']
+              ]?.['view'] || null;
             return Block !== null ? (
               <Block
                 key={block}
@@ -173,7 +177,6 @@ const TabsTocNavigationView = (props) => {
             blocksContent={blocksContent}
             pathname={pathname}
           />
-
         </Tab.Pane>
       );
     },

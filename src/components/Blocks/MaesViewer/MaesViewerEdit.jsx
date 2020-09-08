@@ -9,7 +9,7 @@ import MaesViewerView from './MaesViewerView';
 
 class Edit extends Component {
   getSchema = (schema) => {
-    if (!this.props.provider_data) return;
+    if (!this.props.provider_data) return schema;
     const provider_data = this.props.provider_data || {};
 
     const select_field = 'Ecosystem_level2';
@@ -19,8 +19,23 @@ class Edit extends Component {
 
     const newSchema = JSON.parse(JSON.stringify(schema));
     newSchema.properties.ecosystem.choices = choices;
-    return newSchema;
+
+    // newSchema.properties.dynamic = {
+    //   title: 'Je suis dynamic',
+    // };
+    // newSchema.fieldsets[0].fields.push('dynamic');
+    // return newSchema;
   };
+
+  /**
+   * If bar chart type in data is "bar":
+   *    - display select "Custom color axis": X / Y
+   *    - un control cu paleta de culori pe care sa o folosim
+   *    - pt fiecare categorie (valoare) din axa X (sau Y), afisam cate un
+   *    widget in care userul sa aleaga culoarea
+   *    - store information, add it to the data that is passed to the chart
+   *
+   */
 
   render() {
     return (
