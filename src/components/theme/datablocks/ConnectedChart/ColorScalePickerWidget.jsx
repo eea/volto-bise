@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Loadable from 'react-loadable';
 import { Dropdown, Button } from 'semantic-ui-react';
+import { biseColorscale } from './config';
 import './style.less';
 
 const LoadableColorscalePicker = Loadable({
@@ -120,18 +121,7 @@ ColorScalePickerWidget.defaultProps = {
   description: null,
   required: false,
   error: [],
-  value: [
-    'rgb(166,206,227)',
-    'rgb(31,120,180)',
-    'rgb(178,223,138)',
-    'rgb(51,160,44)',
-    'rgb(251,154,153)',
-    'rgb(227,26,28)',
-    'rgb(160,26,51)',
-    'rgb(227,178,223)',
-    'rgb(31,227,28)',
-    'rgb(227,120,180)',
-  ],
+  value: biseColorscale,
   onChange: () => {},
   onBlur: () => {},
   onClick: () => {},

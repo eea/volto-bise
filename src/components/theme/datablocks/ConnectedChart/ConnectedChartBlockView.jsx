@@ -3,7 +3,7 @@ import cx from 'classnames';
 import ConnectedChart from './ConnectedChart';
 
 const ConnectedChartBlockView = (props) => {
-  const { data = {} } = props;
+  const { data = {}, barColors } = props;
   return (
     <div className={cx('block align', data.align)}>
       <div
@@ -11,7 +11,7 @@ const ConnectedChartBlockView = (props) => {
           'full-width': data.align === 'full',
         })}
       >
-        <ConnectedChart data={data} />
+        <ConnectedChart data={data} barColors={barColors} />
       </div>
     </div>
   );

@@ -130,6 +130,17 @@ function ConnectedChart(props) {
   console.log('data', data);
   console.log('layout', layout);
 
+  // TODO: this barColors property should be available only in bar charts
+  // (what if change the type of the first trace in the chart?)
+  if (Array.isArray(props.data.barColors)) {
+    data[0].marker = data[0].marker || {};
+    data[0].marker.color = [];
+
+    for (let i = 0; i < props.data.barColors.length; ++i) {
+      data[0].marker.color.push(props.data.barColors[i]);
+    }
+  }
+
   const chart = (
     <LoadablePlot
       data={data}
@@ -180,6 +191,7 @@ export default connect(
     return {
       providerData,
       connected_data_parameters,
+      barColors: props.barColors,
     };
   },
   { getDataFromProvider }, // getContent,
