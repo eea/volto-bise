@@ -354,10 +354,12 @@ export class FlexibleSelectWidget extends Component {
             theme={selectTheme}
             components={{ DropdownIndicator, Option }}
             defaultValue={
-              defaultValue ||
-              (id === 'roles' || id === 'groups'
-                ? null
-                : getDefaultValues(choices, value))
+              typeof defaultValue === 'number'
+                ? opts[defaultValue]
+                : defaultValue ||
+                  (id === 'roles' || id === 'groups'
+                    ? null
+                    : getDefaultValues(choices, value))
             }
             onChange={(data) => {
               let dataValue = [];

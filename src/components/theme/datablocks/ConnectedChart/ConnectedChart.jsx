@@ -13,6 +13,7 @@ import { settings } from '~/config';
 import React, { useEffect } from 'react'; // , useState
 import { getDataFromProvider } from 'volto-datablocks/actions';
 import loadable from '@loadable/component';
+import { biseColorscale } from './config';
 
 const LoadablePlot = loadable(() => import('react-plotly.js'));
 
@@ -127,17 +128,19 @@ function ConnectedChart(props) {
     },
   }));
 
-  console.log('data', data);
-  console.log('layout', layout);
+  // console.log('data', data);
+  // console.log('layout', layout);
 
-  // TODO: this barColors property should be available only in bar charts
+  // TODO: this bar_colors property should be available only in bar charts
   // (what if change the type of the first trace in the chart?)
-  if (Array.isArray(props.data.barColors)) {
+  if (Array.isArray(props.data.bar_colors)) {
+    const cs = props.data.categorical_colorscale || biseColorscale;
+
     data[0].marker = data[0].marker || {};
     data[0].marker.color = [];
 
-    for (let i = 0; i < props.data.barColors.length; ++i) {
-      data[0].marker.color.push(props.data.barColors[i]);
+    for (let i = 0; i < props.data.bar_colors.length; ++i) {
+      data[0].marker.color.push(cs[props.data.bar_colors[i]]);
     }
   }
 
@@ -191,7 +194,9 @@ export default connect(
     return {
       providerData,
       connected_data_parameters,
-      barColors: props.barColors,
+      bar_colors: props.bar_colors,
+      categorical_colorscale: props.categorical_colorscale,
+      categorical_axis: props.categorical_axis,
     };
   },
   { getDataFromProvider }, // getContent,
