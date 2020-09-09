@@ -1,5 +1,3 @@
-const { default: ColorScalePickerWidget } = require("./theme/datablocks/ConnectedChart/ColorScalePickerWidget");
-
 export ChildrenTabsView from './theme/ChildrenTabsView/ChildrenTabsView';
 export FactsheetDatabaseListing from './theme/FactsheetDatabaseListing/FactsheetDatabaseListing';
 export KeyFactsEdit from './Blocks/KeyFacts/KeyFactsEdit';
