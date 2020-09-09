@@ -12,12 +12,12 @@ import schema from './schema';
 import { biseColorscale } from './config';
 
 class Edit extends Component {
-  componentDidMount() {
-    // this.props.onChangeBlock(this.props.block, {
-    //   ...this.props.data,
-    //   bar_colors: [],
-    // });
-  }
+  // componentDidMount() {
+  //   // this.props.onChangeBlock(this.props.block, {
+  //   //   ...this.props.data,
+  //   //   bar_colors: [],
+  //   // });
+  // }
 
   getSchema = (chartData, schema) => {
     if (chartData.data.length > 0 && chartData.data[0].type === 'bar') {
@@ -31,7 +31,7 @@ class Edit extends Component {
           ['y', 'Y'],
         ],
         hasNoValueItem: false,
-        default: 0,
+        default: this.props.data.categorical_axis || 'x',
       };
       usedSchema.fieldsets[usedSchema.fieldsets.length - 1].fields.push(
         'categorical_axis',
@@ -61,7 +61,7 @@ class Edit extends Component {
       // for each non-duplicate value
       for (const val of xNoDupl) {
         // create a field for it for the end-user
-        const id = 'x_' + idx;
+        const id = 'x_' + idx; // TODO: replace with y_ when it is the case
 
         // console.log('bar_colors', this.props.data.bar_colors);
         // console.log('xValues and val', { xValues, val });
