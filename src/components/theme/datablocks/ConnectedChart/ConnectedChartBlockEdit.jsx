@@ -42,14 +42,15 @@ class Edit extends Component {
       // for each unique value on the X axis
       const xValues = chartData.data[0].x;
       const xNoDupl = _.uniq(xValues);
+
+      const choices = (
+        this.props.data.categorical_colorscale || biseColorscale
+      ).map((x, i) => [x, `Colour #${i + 1}`]);
+
       let idx = 1;
       for (const val of xNoDupl) {
         // create a field for it for the end-user
         const id = 'x_' + idx;
-
-        const choices = (
-          this.props.data.categorical_colorscale || biseColorscale
-        ).map((x, i) => [x, i + 1]);
 
         usedSchema.properties[id] = {
           title: val.toString(),
