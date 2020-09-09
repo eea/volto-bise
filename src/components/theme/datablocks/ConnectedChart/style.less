@@ -2,8 +2,28 @@
   .ui.dropdown {
     display: flex;
 
+    .colorscalePickerContainer {
+      position: relative;
+      width: 0;
+      right: 65px;
+      max-height: 250px;
+    }
+
     .colorscale-container {
       align-self: center;
+
+      ~.menu.transition.visible {
+        box-shadow: none;
+        border: none;
+      }
+    }
+
+    .colorscaleDescription {
+      white-space: normal;
+    }
+
+    .textLabel.zeroSpace {
+      white-space: normal;
     }
   }
 }

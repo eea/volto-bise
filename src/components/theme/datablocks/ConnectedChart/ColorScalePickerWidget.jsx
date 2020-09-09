@@ -58,8 +58,12 @@ const ColorScalePickerWidget = ({
       <Dropdown
         open={dropdownOpen}
         onClose={() => {
-          setDropdownOpen(false);
+          // setDropdownOpen(false);
         }}
+        // onMouseDown={(ev) => {
+        //   ev.preventDefault();
+        //   ev.stopPropagation();
+        // }}
         trigger={
           <LoadableColorscale
             colorscale={selectedColorScale}
