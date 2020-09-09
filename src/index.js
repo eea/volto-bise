@@ -18,6 +18,7 @@ import {
   DataQueryFilterEdit,
   ColorScalePickerWidget,
 } from './components';
+import FlexibleSelectWidget from './components/theme/datablocks/ConnectedChart/FlexibleSelectWidget';
 
 export default (config) => {
   config.views = {
@@ -101,6 +102,10 @@ export default (config) => {
     type: {
       ...config.widgets.type,
       colorscale: ColorScalePickerWidget,
+    },
+    widget: {
+      ...config.widgets.widget,
+      flexible_choices: FlexibleSelectWidget,
     },
   };
 

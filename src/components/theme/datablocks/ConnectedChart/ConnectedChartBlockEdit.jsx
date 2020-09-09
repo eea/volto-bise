@@ -16,13 +16,14 @@ class Edit extends Component {
     if (chartData.data.length > 0 && chartData.data[0].type === 'bar') {
       let usedSchema = JSON.parse(JSON.stringify(schema || {}));
 
-      // TODO: do not show No Value choice:
       usedSchema.properties.categorical_axis = {
+        widget: 'flexible_choices',
         title: 'Categorical axis',
         choices: [
           ['x', 'X'],
           ['y', 'Y'],
         ],
+        hasNoValueItem: false,
       };
       usedSchema.fieldsets[usedSchema.fieldsets.length - 1].fields.push(
         'categorical_axis',
@@ -37,7 +38,6 @@ class Edit extends Component {
       );
 
       // TODO: the same based on user input for Y
-      // TODO: chioce "No Value" should not be available
 
       // for each unique value on the X axis
       const xValues = chartData.data[0].x;
@@ -53,7 +53,9 @@ class Edit extends Component {
         const id = 'x_' + idx;
 
         usedSchema.properties[id] = {
+          widget: 'flexible_choices',
           title: val.toString(),
+          hasNoValueItem: false,
           choices,
         };
         usedSchema.fieldsets[usedSchema.fieldsets.length - 1].fields.push(id);
