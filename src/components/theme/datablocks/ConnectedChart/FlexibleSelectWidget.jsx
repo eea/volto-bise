@@ -239,6 +239,7 @@ export class FlexibleSelectWidget extends Component {
    * @returns {string} Markup for the component.
    */
   render() {
+    console.log('PROPS IN FLEXIBLE', this.props);
     const schema = {
       fieldsets: [
         {
@@ -276,6 +277,8 @@ export class FlexibleSelectWidget extends Component {
 
     const { onEdit, id, onDelete, choices, value, onChange } = this.props;
 
+    const defaultValue = this.props['default'];
+
     const defaultOption = this.props.hasNoValueItem
       ? {
           label: this.props.intl.formatMessage(messages.no_value),
@@ -296,7 +299,7 @@ export class FlexibleSelectWidget extends Component {
       opts.push(defaultOption);
     }
 
-    // console.log('HAS NO VALUE ITEM', this.props.hasNoValueItem);
+    console.log('default value', defaultValue);
 
     return (
       <FormFieldWrapper {...this.props} draggable={true}>
@@ -351,9 +354,10 @@ export class FlexibleSelectWidget extends Component {
             theme={selectTheme}
             components={{ DropdownIndicator, Option }}
             defaultValue={
-              id === 'roles' || id === 'groups'
+              defaultValue ||
+              (id === 'roles' || id === 'groups'
                 ? null
-                : getDefaultValues(choices, value)
+                : getDefaultValues(choices, value))
             }
             onChange={(data) => {
               let dataValue = [];

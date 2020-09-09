@@ -12,6 +12,13 @@ import schema from './schema';
 import { biseColorscale } from './config';
 
 class Edit extends Component {
+  componentDidMount() {
+    this.props.onChangeBlock(this.props.block, {
+      ...this.props.data,
+      barColors: [],
+    });
+  }
+
   getSchema = (chartData, schema) => {
     if (chartData.data.length > 0 && chartData.data[0].type === 'bar') {
       let usedSchema = JSON.parse(JSON.stringify(schema || {}));
@@ -24,6 +31,7 @@ class Edit extends Component {
           ['y', 'Y'],
         ],
         hasNoValueItem: false,
+        default: this.props.data.barColorsCategoricalAxis, // TODO: save this
       };
       usedSchema.fieldsets[usedSchema.fieldsets.length - 1].fields.push(
         'categorical_axis',
@@ -32,6 +40,7 @@ class Edit extends Component {
       usedSchema.properties.categorical_colorscale = {
         title: 'Categorical color scale',
         type: 'colorscale',
+        default: this.props.data.barColorsColorscale, // TODO: save this
       };
       usedSchema.fieldsets[usedSchema.fieldsets.length - 1].fields.push(
         'categorical_colorscale',
@@ -45,7 +54,7 @@ class Edit extends Component {
 
       const choices = (
         this.props.data.categorical_colorscale || biseColorscale
-      ).map((x, i) => [x, `Colour #${i + 1}`]);
+      ).map((x, i) => [x, `Colour #${i + 1}`]); // TODO: do not remember the color but the selected index in the selected colorscale
 
       let idx = 1;
       for (const val of xNoDupl) {
@@ -57,6 +66,7 @@ class Edit extends Component {
           title: val.toString(),
           hasNoValueItem: false,
           choices,
+          default: { label: choices?.[0][1], value: choices?.[0][0] },
         };
         usedSchema.fieldsets[usedSchema.fieldsets.length - 1].fields.push(id);
 
@@ -98,8 +108,10 @@ class Edit extends Component {
             schema={usedSchema}
             title={usedSchema.title}
             onChangeField={(id, value) => {
-              if (id.startsWith('x_') || id.startsWith('y_')) {
-                const xValues = chartData.data[0].x; // TODO: or y
+              const isAxisX = id.startsWith('x_');
+              const isAxisY = id.startsWith('y_');
+              if (isAxisX || isAxisY) {
+                const xValues = chartData.data[0][isAxisX ? 'x' : 'y'];
                 const xNoDupl = _.uniq(xValues);
 
                 // index from the array of uniques
@@ -119,15 +131,12 @@ class Edit extends Component {
                   ...this.props.data,
                   barColors,
                 });
-
-                // console.log('NEW PROPS', this.props);
-
-                return;
+              } else {
+                this.props.onChangeBlock(this.props.block, {
+                  ...this.props.data,
+                  [id]: value,
+                });
               }
-              this.props.onChangeBlock(this.props.block, {
-                ...this.props.data,
-                [id]: value,
-              });
             }}
             formData={this.props.data}
           />
