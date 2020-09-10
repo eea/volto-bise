@@ -44,7 +44,6 @@ class Edit extends Component {
       // take all the given axis values
       const xValues = chartData.data[0][axis];
       // update the colors on that axis
-      // console.log('PROPS', this.props.data);
       this.props.onChangeBlock(this.props.block, {
         ...this.props.data,
         bar_colors: this.getBarColors(axis, xValues, this.color_fields),
@@ -68,7 +67,7 @@ class Edit extends Component {
     }
   };
 
-  alterSchemaForBarChart(chartData, schema) {
+  alterSchemaForBarChart = (chartData, schema) => {
     let usedSchema = JSON.parse(JSON.stringify(schema || {}));
 
     usedSchema.properties.categorical_axis = {
@@ -125,6 +124,8 @@ class Edit extends Component {
 
       // a color is already set for it
       const color = this.props.data.bar_colors?.[id];
+
+      this.color_fields[id] = color;
 
       usedSchema.properties[id] = {
         widget: 'flexible_choices',

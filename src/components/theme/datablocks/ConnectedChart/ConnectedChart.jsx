@@ -152,11 +152,10 @@ function ConnectedChart(props) {
   if (isCategoricalBarChart()) {
     const cs = getCategoricalColorScale();
     resetCategoricalColors(data);
+
     // put colors into the chart
 
-    // TODO: handle y as well
-    const axis = 'x';
-
+    const axis = props.data.categorical_axis;
     // compute the unique
     const u = _.uniq(chartData.data[0][axis]);
     // for each val on axis (unique or non-unique)
@@ -173,7 +172,7 @@ function ConnectedChart(props) {
       //  Number(x.split('_')[1])///,
       //);
       // const colorIndex = props.data.bar_colors[axis + '_' + ci];
-      data[0].marker.color[i] = cs[ci];
+      data[0].marker.color[i] = cs[ci - 1];
     }
     // console.log('COLORS', data[0].marker.color);
   } else if (data[0]) {
