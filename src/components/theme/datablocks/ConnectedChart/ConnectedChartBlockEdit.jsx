@@ -120,14 +120,17 @@ class Edit extends Component {
           ? choices.findIndex(([i, l]) => i === color)
           : idx <= choices.length
           ? idx - 1
-          : 0,
+          : Math.floor(Math.random() * choices.length),
       };
       usedSchema.fieldsets[usedSchema.fieldsets.length - 1].fields.push(id);
 
       if (color) {
         this.color_fields[id] = color;
       } else {
-        this.color_fields[id] = idx <= choices.length ? idx : 1;
+        this.color_fields[id] =
+          idx <= choices.length
+            ? idx
+            : Math.floor(Math.random() * choices.length) + 1;
         // update the colors on that axis
 
         // this is done in another place in code in the main if branch above,
