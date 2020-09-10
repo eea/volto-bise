@@ -147,14 +147,14 @@ class Edit extends Component {
         this.color_fields[id] = color;
       } else {
         this.color_fields[id] = idx <= choices.length ? idx : 1;
-        console.log('COLOR SET IN OTHER BRANCH TO', id, this.color_fields[id]);
-      }
+        // console.log('COLOR SET IN OTHER BRANCH TO', id, this.color_fields[id]);
 
-      // update the colors on that axis
-      this.props.onChangeBlock(this.props.block, {
-        ...this.props.data,
-        bar_colors: this.getBarColors(axis, xValues, this.color_fields),
-      });
+        // update the colors on that axis
+        this.props.onChangeBlock(this.props.block, {
+          ...this.props.data,
+          bar_colors: this.getBarColors(axis, xValues, this.color_fields),
+        });
+      }
 
       ++idx;
     }
