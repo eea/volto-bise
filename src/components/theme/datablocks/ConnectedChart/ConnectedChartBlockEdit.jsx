@@ -11,6 +11,8 @@ import _ from 'lodash';
 import schema from './schema';
 import { biseColorscale } from './config';
 
+// TODO: write more comments
+
 class Edit extends Component {
   constructor(props) {
     super(props);
@@ -58,6 +60,12 @@ class Edit extends Component {
 
   alterSchemaForBarChart = (chartData, schema) => {
     let usedSchema = JSON.parse(JSON.stringify(schema || {}));
+
+    usedSchema.fieldsets.push({
+      id: 'categorical',
+      title: 'Categorical',
+      fields: [],
+    });
 
     usedSchema.properties.categorical_axis = {
       widget: 'flexible_choices',
