@@ -156,12 +156,14 @@ function ConnectedChart(props) {
     // put colors into the chart
 
     const axis = props.data.categorical_axis;
+
+    const axisData = chartData.data[0][axis];
     // compute the unique
-    const u = _.uniq(chartData.data[0][axis]);
+    const u = _.uniq(axisData);
     // for each val on axis (unique or non-unique)
-    for (let i = 0; i < chartData.data[0][axis].length; ++i) {
+    for (let i = 0; axisData && i < axisData.length; ++i) {
       // get the value
-      const val = chartData.data[0][axis][i];
+      const val = axisData[i];
       // find the index of it in the unique
       const idx = u.findIndex((x) => x === val);
       // get all the props associated to uniques (x_9, y_17 etc.)

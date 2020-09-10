@@ -43,6 +43,10 @@ class Edit extends Component {
       const axis = isAxisX ? 'x' : 'y';
       // take all the given axis values
       const xValues = chartData.data[0][axis];
+
+      // here the colors are set well in this.color_fields !
+      console.log('saving', this.color_fields);
+
       // update the colors on that axis
       this.props.onChangeBlock(this.props.block, {
         ...this.props.data,
@@ -93,6 +97,7 @@ class Edit extends Component {
       return usedSchema;
     }
 
+    console.group('setting colors');
     usedSchema.properties.categorical_colorscale = {
       title: 'Categorical color scale',
       type: 'colorscale',
@@ -125,8 +130,6 @@ class Edit extends Component {
       // a color is already set for it
       const color = this.props.data.bar_colors?.[id];
 
-      this.color_fields[id] = color;
-
       usedSchema.properties[id] = {
         widget: 'flexible_choices',
         title: val.toString(),
@@ -140,11 +143,26 @@ class Edit extends Component {
       };
       usedSchema.fieldsets[usedSchema.fieldsets.length - 1].fields.push(id);
 
+      if (color) {
+        this.color_fields[id] = color;
+      } else {
+        this.color_fields[id] = idx <= choices.length ? idx : 1;
+        console.log('COLOR SET IN OTHER BRANCH TO', id, this.color_fields[id]);
+      }
+
+      // update the colors on that axis
+      this.props.onChangeBlock(this.props.block, {
+        ...this.props.data,
+        bar_colors: this.getBarColors(axis, xValues, this.color_fields),
+      });
+
       ++idx;
     }
 
+    console.groupEnd();
+
     return usedSchema;
-  }
+  };
 
   hasBarChart(chartData) {
     return chartData.data.length > 0 && chartData.data[0].type === 'bar';
