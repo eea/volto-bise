@@ -7,12 +7,7 @@ import { injectIntl } from 'react-intl';
 import cx from 'classnames';
 import { map } from 'lodash';
 import { blocks } from '~/config';
-import {
-  // getBlocks,
-  // getBlocksFieldname,
-  // getBlocksLayoutFieldname,
-  getBaseUrl,
-} from '@plone/volto/helpers';
+import { getBaseUrl } from '@plone/volto/helpers';
 
 import VisibilitySensor from 'react-visibility-sensor';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
@@ -48,8 +43,12 @@ let BlocksWithToc = ({ blockIds, blocksContent, intl, content, pathname }) => {
             <div className="toc-sidebar">
               <div className="toc-nav">
                 {map(blockIds, (blockId, index) => {
+                  const Block =
+                    blocks.blocksConfig[blocksContent?.[blockId]?.['@type']]?.[
+                      'view'
+                    ] || null;
                   const block = blocksContent[blockId];
-                  if (!block.value) return null;
+                  if (block['@type'] !== 'slate' || !block.value) return '';
                   const slateBlock = block.value[0];
                   const { type } = slateBlock;
                   const text = slateBlock.children[0].text;
@@ -79,7 +78,14 @@ let BlocksWithToc = ({ blockIds, blocksContent, intl, content, pathname }) => {
                 ] || null;
               const block = blocksContent[blockId];
               if (block['@type'] !== 'slate' || !block.value) {
-                return null;
+                return (
+                  <Block
+                    key={blockId}
+                    properties={content}
+                    data={blocksContent[blockId]}
+                    path={getBaseUrl(pathname || '')}
+                  />
+                );
               }
               const blockType = block.value[0].type;
               const textId = 'tocNav-' + index;
