@@ -131,8 +131,6 @@ function ConnectedChart(props) {
   // console.log('data', data);
   // console.log('layout', layout);
 
-  // TODO: this bar_colors property should be available only in bar charts
-  // (what if change the type of the first trace in the chart?)
   if (Array.isArray(props.data.bar_colors)) {
     const cs = props.data.categorical_colorscale || biseColorscale;
 

@@ -30,8 +30,13 @@ class Edit extends Component {
           ['x', 'X'],
           ['y', 'Y'],
         ],
-        hasNoValueItem: false,
-        default: this.props.data.categorical_axis || 'x',
+        hasNoValueItem: true,
+        default:
+          this.props.data.categorical_axis === 'x'
+            ? 0
+            : this.props.data.categorical_axis === 'y'
+            ? 1
+            : 2,
       };
       usedSchema.fieldsets[usedSchema.fieldsets.length - 1].fields.push(
         'categorical_axis',
@@ -46,10 +51,14 @@ class Edit extends Component {
         'categorical_colorscale',
       );
 
-      // TODO: the same based on user input for Y
+      if (!this.props.data.categorical_axis) {
+        return usedSchema;
+      }
+
+      const axis = this.props.data.categorical_axis;
 
       // for each unique value on the X axis
-      const xValues = chartData.data[0].x;
+      const xValues = chartData.data[0][axis];
       const xNoDupl = _.uniq(xValues);
 
       // for each color in the selected colorscale, create an option for it
@@ -61,7 +70,7 @@ class Edit extends Component {
       // for each non-duplicate value
       for (const val of xNoDupl) {
         // create a field for it for the end-user
-        const id = 'x_' + idx; // TODO: replace with y_ when it is the case
+        const id = this.props.data.categorical_axis + '_' + idx;
 
         // console.log('bar_colors', this.props.data.bar_colors);
         // console.log('xValues and val', { xValues, val });
@@ -155,6 +164,16 @@ class Edit extends Component {
                   ...this.props.data,
                   bar_colors: this.getBarColorsAfterChange(xValues, id, value),
                 });
+              } else if (
+                chartData.data &&
+                typeof chartData.data[0] !== 'undefined' &&
+                chartData.data[0].type !== 'bar'
+              ) {
+                const obj = { ...this.props.data };
+                delete obj.categorical_axis;
+                delete obj.categorical_colorscale;
+                delete obj.bar_colors;
+                this.props.onChangeBlock(this.props.block, obj);
               } else {
                 this.props.onChangeBlock(this.props.block, {
                   ...this.props.data,
