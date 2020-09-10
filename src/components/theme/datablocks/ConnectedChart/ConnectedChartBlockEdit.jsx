@@ -12,12 +12,19 @@ import schema from './schema';
 import { biseColorscale } from './config';
 
 class Edit extends Component {
-  // componentDidMount() {
-  //   // this.props.onChangeBlock(this.props.block, {
-  //   //   ...this.props.data,
-  //   //   bar_colors: [],
-  //   // });
-  // }
+  componentDidMount() {
+    // this.getBarColors(this.props.data.categorical_axis, )
+    // this.props.onChangeBlock(this.props.block, {
+    //   ...this.props.data,
+    //   bar_colors: [],
+    // });
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.color_fields = {};
+  }
 
   getSchema = (chartData, schema) => {
     if (chartData.data.length > 0 && chartData.data[0].type === 'bar') {
@@ -42,6 +49,10 @@ class Edit extends Component {
         'categorical_axis',
       );
 
+      if (!this.props.data.categorical_axis) {
+        return usedSchema;
+      }
+
       usedSchema.properties.categorical_colorscale = {
         title: 'Categorical color scale',
         type: 'colorscale',
@@ -50,10 +61,6 @@ class Edit extends Component {
       usedSchema.fieldsets[usedSchema.fieldsets.length - 1].fields.push(
         'categorical_colorscale',
       );
-
-      if (!this.props.data.categorical_axis) {
-        return usedSchema;
-      }
 
       const axis = this.props.data.categorical_axis;
 
@@ -80,16 +87,17 @@ class Edit extends Component {
           xValues.findIndex((x) => x === val)
         ];
 
-        if (typeof index !== 'number') {
-          index = 1;
-        }
-
         usedSchema.properties[id] = {
           widget: 'flexible_choices',
           title: val.toString(),
           hasNoValueItem: false,
           choices,
-          default: index - 1,
+          default:
+            typeof index === 'number'
+              ? index - 1
+              : idx <= choices.length
+              ? idx - 1
+              : 0,
         };
         usedSchema.fieldsets[usedSchema.fieldsets.length - 1].fields.push(id);
 
@@ -104,23 +112,52 @@ class Edit extends Component {
     return schema;
   };
 
-  // computes bar colors based on values of the given axis and the value that changed (id, value)
-  getBarColorsAfterChange = (xValues, id, value) => {
-    const xNoDupl = _.uniq(xValues);
+  // // computes bar colors based on values of the given axis and the value that changed (id, value)
+  // getBarColorsAfterChange = (xValues, id, value) => {
+  //   const xNoDupl = _.uniq(xValues);
 
-    // index from the array of uniques
-    let idx = Number(id.substring(2)) - 1;
+  //   // index from the array of uniques
+  //   let idx = Number(id.substring(2)) - 1;
 
-    const bar_colors = this.props.data.bar_colors || [];
+  //   const bar_colors = this.props.data.bar_colors || [];
 
-    // for each index in xValues where it is xNoDupl[idx]
-    // put it in bar_colors there
+  //   // for each index in xValues where it is xNoDupl[idx]
+  //   // put it in bar_colors there
+  //   for (let i = 0; i < xValues.length; ++i) {
+  //     if (xValues[i] === xNoDupl[idx]) {
+  //       bar_colors[i] = value;
+  //     }
+  //   }
+  //   return bar_colors;
+  // };
+
+  /**
+   * @param {string} axis 'x' or 'y'
+   * @param {string[]} xValues All values on given axis.
+   * @param {object} relevantFields Each key is an id like x_5 (but not y_0) and the value is a color.
+   * @returns {string[]} Colors for each value in xValues.
+   */
+  getBarColors = (axis, xValues, relevantFields) => {
+    // the output array
+    const arr = [];
+
+    // the unique values on given axis
+    const u = _.uniq(xValues);
+
+    // for each non-unique value
     for (let i = 0; i < xValues.length; ++i) {
-      if (xValues[i] === xNoDupl[idx]) {
-        bar_colors[i] = value;
+      const idx = u.findIndex((x) => x === xValues[i]);
+      // set the color for the unique value represented by xValues[i] to arr[i]
+      // put in output the good color for it
+      const color = relevantFields[`${axis}_${idx + 1}`];
+      if (color) {
+        arr.push(color);
       }
     }
-    return bar_colors;
+
+    console.log('OUTPUT getBarColors =', arr);
+
+    return arr;
   };
 
   render() {
@@ -157,18 +194,27 @@ class Edit extends Component {
 
               // if some x or y color changed by user
               if (isAxisX || isAxisY) {
+                this.color_fields[id] = value;
+
+                const axis = isAxisX ? 'x' : 'y';
                 // take all the given axis values
-                const xValues = chartData.data[0][isAxisX ? 'x' : 'y'];
+                const xValues = chartData.data[0][axis];
                 // update the colors on that axis
+                // console.log('PROPS', this.props.data);
                 this.props.onChangeBlock(this.props.block, {
                   ...this.props.data,
-                  bar_colors: this.getBarColorsAfterChange(xValues, id, value),
+                  bar_colors: this.getBarColors(
+                    axis,
+                    xValues,
+                    this.color_fields,
+                  ),
                 });
               } else if (
                 chartData.data &&
                 typeof chartData.data[0] !== 'undefined' &&
                 chartData.data[0].type !== 'bar'
               ) {
+                this.color_fields = {};
                 const obj = { ...this.props.data };
                 delete obj.categorical_axis;
                 delete obj.categorical_colorscale;

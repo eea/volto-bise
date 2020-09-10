@@ -239,7 +239,7 @@ export class FlexibleSelectWidget extends Component {
    * @returns {string} Markup for the component.
    */
   render() {
-    console.log('PROPS IN FLEXIBLE', this.props);
+    // console.log('PROPS IN FLEXIBLE', this.props);
     const schema = {
       fieldsets: [
         {
@@ -299,7 +299,7 @@ export class FlexibleSelectWidget extends Component {
       opts.push(defaultOption);
     }
 
-    console.log('default value', defaultValue);
+    // console.log('default value', defaultValue);
 
     return (
       <FormFieldWrapper {...this.props} draggable={true}>

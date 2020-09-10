@@ -131,15 +131,32 @@ function ConnectedChart(props) {
   // console.log('data', data);
   // console.log('layout', layout);
 
-  if (Array.isArray(props.data.bar_colors)) {
-    const cs = props.data.categorical_colorscale || biseColorscale;
+  // if the chart is a bar chart and has bar_colors set
+  const isCategoricalBarChart = React.useCallback(() => {
+    return Array.isArray(props.data.bar_colors);
+  }, [props.data.bar_colors]);
 
+  // take the selected colorscale (or a default colorscale)
+  const getCategoricalColorScale = React.useCallback(() => {
+    return props.data.categorical_colorscale || biseColorscale;
+  }, [props.data.categorical_colorscale]);
+
+  // data - chart data
+  const resetCategoricalColors = React.useCallback((data) => {
+    // reset the color list in the chart data
     data[0].marker = data[0].marker || {};
     data[0].marker.color = [];
+  }, []);
 
+  if (isCategoricalBarChart()) {
+    const cs = getCategoricalColorScale();
+    resetCategoricalColors(data);
+    // put colors into the chart
     for (let i = 0; i < props.data.bar_colors.length; ++i) {
       data[0].marker.color.push(cs[props.data.bar_colors[i]]);
     }
+  } else if (data[0]) {
+    resetCategoricalColors(data);
   }
 
   const chart = (
