@@ -12,18 +12,6 @@ import schema from './schema';
 import { biseColorscale } from './config';
 
 class Edit extends Component {
-  componentDidMount() {
-    // const axis = this.props.categorical_axis || 'no-value';
-    // const color_fields = this.props.data.bar_colors || {};
-    // const xValues = this.props.data.chartData.data?.[0]?.[axis];
-    // this.props.onChangeBlock(this.props.block, {
-    //   ...this.props.data,
-    //   bar_colors: this.getBarColors(axis, xValues, color_fields),
-    //   categorical_axis: axis,
-    //   categorical_colorscale: null,
-    // });
-  }
-
   constructor(props) {
     super(props);
 
@@ -43,9 +31,6 @@ class Edit extends Component {
       const axis = isAxisX ? 'x' : 'y';
       // take all the given axis values
       const xValues = chartData.data[0][axis];
-
-      // here the colors are set well in this.color_fields !
-      console.log('saving', this.color_fields);
 
       // update the colors on that axis
       this.props.onChangeBlock(this.props.block, {
@@ -97,7 +82,6 @@ class Edit extends Component {
       return usedSchema;
     }
 
-    console.group('setting colors');
     usedSchema.properties.categorical_colorscale = {
       title: 'Categorical color scale',
       type: 'colorscale',
@@ -124,9 +108,6 @@ class Edit extends Component {
       // create a field for it for the end-user
       const id = this.props.data.categorical_axis + '_' + idx;
 
-      // console.log('bar_colors', this.props.data.bar_colors);
-      // console.log('xValues and val', { xValues, val });
-
       // a color is already set for it
       const color = this.props.data.bar_colors?.[id];
 
@@ -147,9 +128,11 @@ class Edit extends Component {
         this.color_fields[id] = color;
       } else {
         this.color_fields[id] = idx <= choices.length ? idx : 1;
-        // console.log('COLOR SET IN OTHER BRANCH TO', id, this.color_fields[id]);
-
         // update the colors on that axis
+
+        // this is done in another place in code in the main if branch above,
+        // and if we put this call to onChangeBlock in there too, we get render
+        // in render in render in etc.
         this.props.onChangeBlock(this.props.block, {
           ...this.props.data,
           bar_colors: this.getBarColors(axis, xValues, this.color_fields),
@@ -158,8 +141,6 @@ class Edit extends Component {
 
       ++idx;
     }
-
-    console.groupEnd();
 
     return usedSchema;
   };
@@ -184,30 +165,6 @@ class Edit extends Component {
    */
   getBarColors = (axis, xValues, relevantFields) => {
     return relevantFields;
-
-    // the output array
-    const arr = [];
-
-    // the unique values on given axis
-    const u = _.uniq(xValues);
-
-    // for each non-unique value
-    for (let i = 0; i < xValues.length; ++i) {
-      const idx = u.findIndex((x) => x === xValues[i]);
-      // set the color for the unique value represented by xValues[i] to arr[i]
-      // put in output the good color for it
-      const color = relevantFields[`${axis}_${idx + 1}`];
-      // console.log(`${axis}_${idx + 1}`, color);
-      if (color) {
-        console.log('i, color', i, color);
-        arr[i] = color;
-      }
-    }
-
-    // console.log('OUTPUT getBarColors =', arr);
-
-    // debugger;
-    return arr;
   };
 
   render() {
