@@ -119,6 +119,8 @@ class Edit extends Component {
       // a color is already set for it
       const color = this.props.data.bar_colors?.[id];
 
+      const randomChoice = Math.floor(Math.random() * choices.length);
+
       usedSchema.properties[id] = {
         widget: 'flexible_choices',
         title: val.toString(),
@@ -128,17 +130,14 @@ class Edit extends Component {
           ? choices.findIndex(([i, l]) => i === color)
           : idx <= choices.length
           ? idx - 1
-          : Math.floor(Math.random() * choices.length),
+          : randomChoice,
       };
       usedSchema.fieldsets[usedSchema.fieldsets.length - 1].fields.push(id);
 
       if (color) {
         this.color_fields[id] = color;
       } else {
-        this.color_fields[id] =
-          idx <= choices.length
-            ? idx
-            : Math.floor(Math.random() * choices.length) + 1;
+        this.color_fields[id] = idx <= choices.length ? idx : randomChoice + 1;
         // update the colors on that axis
 
         // this is done in another place in code in the main if branch above,
