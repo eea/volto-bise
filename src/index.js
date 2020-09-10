@@ -19,6 +19,7 @@ import {
   ColorScalePickerWidget,
 } from './components';
 import FlexibleSelectWidget from './components/theme/datablocks/ConnectedChart/FlexibleSelectWidget';
+import ColorPickerWidget from './components/theme/datablocks/ConnectedChart/ColorPickerWidget';
 
 export default (config) => {
   config.views = {
@@ -99,6 +100,7 @@ export default (config) => {
     type: {
       ...config.widgets.type,
       colorscale: ColorScalePickerWidget,
+      color: ColorPickerWidget,
     },
     widget: {
       ...config.widgets.widget,

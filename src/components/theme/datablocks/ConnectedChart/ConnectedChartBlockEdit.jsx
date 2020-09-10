@@ -122,10 +122,11 @@ class Edit extends Component {
       const randomChoice = Math.floor(Math.random() * choices.length);
 
       usedSchema.properties[id] = {
-        widget: 'flexible_choices',
+        // widget: 'flexible_choices',
         title: val.toString(),
-        hasNoValueItem: false,
-        choices,
+        // hasNoValueItem: false,
+        // choices,
+        type: 'color',
         defaultValue: color
           ? choices.findIndex(([i, l]) => i === color)
           : idx <= choices.length
