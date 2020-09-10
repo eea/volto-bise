@@ -175,13 +175,16 @@ class Edit extends Component {
       // set the color for the unique value represented by xValues[i] to arr[i]
       // put in output the good color for it
       const color = relevantFields[`${axis}_${idx + 1}`];
+      // console.log(`${axis}_${idx + 1}`, color);
       if (color) {
-        arr.push(color);
+        console.log('i, color', i, color);
+        arr[i] = color;
       }
     }
 
     // console.log('OUTPUT getBarColors =', arr);
 
+    // debugger;
     return arr;
   };
 
