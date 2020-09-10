@@ -28,9 +28,6 @@ export default (config) => {
     layoutViews: {
       ...config.views.layoutViews,
       factsheet_database_listing_view: FactsheetDatabaseListing,
-      // toc_nav_view: TocNavigationView,
-      // tabs_toc_nav_view: TabsTocNavigationView,
-      // toc_nav_view: TabsTocNavigationView,
       children_tabs_view: ChildrenTabsView,
     },
   };
