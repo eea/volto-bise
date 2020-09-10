@@ -231,9 +231,6 @@ export default connect(
     return {
       providerData,
       connected_data_parameters,
-      bar_colors: props.bar_colors,
-      categorical_colorscale: props.categorical_colorscale,
-      categorical_axis: props.categorical_axis,
     };
   },
   { getDataFromProvider }, // getContent,

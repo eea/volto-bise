@@ -277,7 +277,7 @@ export class FlexibleSelectWidget extends Component {
 
     const { onEdit, id, onDelete, choices, value, onChange } = this.props;
 
-    const defaultValue = this.props['default'];
+    const defaultValue = this.props.defaultValue;
 
     const defaultOption = this.props.hasNoValueItem
       ? {

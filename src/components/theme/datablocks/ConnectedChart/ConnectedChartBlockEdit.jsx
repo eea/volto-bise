@@ -67,7 +67,7 @@ class Edit extends Component {
         ['y', 'Y'],
       ],
       hasNoValueItem: true,
-      default:
+      defaultValue:
         this.props.data.categorical_axis === 'x'
           ? 0
           : this.props.data.categorical_axis === 'y'
@@ -85,7 +85,7 @@ class Edit extends Component {
     usedSchema.properties.categorical_colorscale = {
       title: 'Categorical color scale',
       type: 'colorscale',
-      default: this.props.data.categorical_colorscale,
+      defaultValue: this.props.data.categorical_colorscale,
     };
     usedSchema.fieldsets[usedSchema.fieldsets.length - 1].fields.push(
       'categorical_colorscale',
@@ -116,7 +116,7 @@ class Edit extends Component {
         title: val.toString(),
         hasNoValueItem: false,
         choices,
-        default: color
+        defaultValue: color
           ? choices.findIndex(([i, l]) => i === color)
           : idx <= choices.length
           ? idx - 1
@@ -203,5 +203,7 @@ class Edit extends Component {
     );
   }
 }
+
+// TODO: selecting a shorter colorscale after using a longer one leaves some color inputs with no value sometimes
 
 export default connect(null, {})(Edit);
