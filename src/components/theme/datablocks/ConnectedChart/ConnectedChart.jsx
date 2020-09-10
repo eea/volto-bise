@@ -14,6 +14,7 @@ import React, { useEffect } from 'react'; // , useState
 import { getDataFromProvider } from 'volto-datablocks/actions';
 import loadable from '@loadable/component';
 import { biseColorscale } from './config';
+import _ from 'lodash';
 
 const LoadablePlot = loadable(() => import('react-plotly.js'));
 
@@ -133,7 +134,7 @@ function ConnectedChart(props) {
 
   // if the chart is a bar chart and has bar_colors set
   const isCategoricalBarChart = React.useCallback(() => {
-    return Array.isArray(props.data.bar_colors);
+    return typeof props.data.bar_colors === 'object';
   }, [props.data.bar_colors]);
 
   // take the selected colorscale (or a default colorscale)
@@ -152,9 +153,29 @@ function ConnectedChart(props) {
     const cs = getCategoricalColorScale();
     resetCategoricalColors(data);
     // put colors into the chart
-    for (let i = 0; i < props.data.bar_colors.length; ++i) {
-      data[0].marker.color.push(cs[props.data.bar_colors[i]]);
+
+    // TODO: handle y as well
+    const axis = 'x';
+
+    // compute the unique
+    const u = _.uniq(chartData.data[0][axis]);
+    // for each val on axis (unique or non-unique)
+    for (let i = 0; i < chartData.data[0][axis].length; ++i) {
+      // get the value
+      const val = chartData.data[0][axis][i];
+      // find the index of it in the unique
+      const idx = u.findIndex((x) => x === val);
+      // get all the props associated to uniques (x_9, y_17 etc.)
+      // split them with _ and take the second piece, e.g. 9 or 17,
+      // convert it to a number
+      const ci = props.data.bar_colors[axis + '_' + (idx + 1)];
+      /// Object.keys(props.data.bar_colors).map((x) =>
+      //  Number(x.split('_')[1])///,
+      //);
+      // const colorIndex = props.data.bar_colors[axis + '_' + ci];
+      data[0].marker.color[i] = cs[ci];
     }
+    // console.log('COLORS', data[0].marker.color);
   } else if (data[0]) {
     resetCategoricalColors(data);
   }

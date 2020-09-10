@@ -13,10 +13,14 @@ import { biseColorscale } from './config';
 
 class Edit extends Component {
   componentDidMount() {
-    // this.getBarColors(this.props.data.categorical_axis, )
+    // const axis = this.props.categorical_axis || 'no-value';
+    // const color_fields = this.props.data.bar_colors || {};
+    // const xValues = this.props.data.chartData.data?.[0]?.[axis];
     // this.props.onChangeBlock(this.props.block, {
     //   ...this.props.data,
-    //   bar_colors: [],
+    //   bar_colors: this.getBarColors(axis, xValues, color_fields),
+    //   categorical_axis: axis,
+    //   categorical_colorscale: null,
     // });
   }
 
@@ -51,7 +55,7 @@ class Edit extends Component {
       chartData.data[0].type !== 'bar'
     ) {
       this.color_fields = {};
-      const obj = { ...this.props.data };
+      const obj = { ...this.props.data, [id]: value };
       delete obj.categorical_axis;
       delete obj.categorical_colorscale;
       delete obj.bar_colors;
@@ -120,21 +124,18 @@ class Edit extends Component {
       // console.log('xValues and val', { xValues, val });
 
       // a color is already set for it
-      let index = this.props.data.bar_colors?.[
-        xValues.findIndex((x) => x === val)
-      ];
+      const color = this.props.data.bar_colors?.[id];
 
       usedSchema.properties[id] = {
         widget: 'flexible_choices',
         title: val.toString(),
         hasNoValueItem: false,
         choices,
-        default:
-          typeof index === 'number'
-            ? index - 1
-            : idx <= choices.length
-            ? idx - 1
-            : 0,
+        default: color
+          ? choices.findIndex(([i, l]) => i === color)
+          : idx <= choices.length
+          ? idx - 1
+          : 0,
       };
       usedSchema.fieldsets[usedSchema.fieldsets.length - 1].fields.push(id);
 
@@ -163,6 +164,8 @@ class Edit extends Component {
    * @returns {string[]} Colors for each value in xValues.
    */
   getBarColors = (axis, xValues, relevantFields) => {
+    return relevantFields;
+
     // the output array
     const arr = [];
 
