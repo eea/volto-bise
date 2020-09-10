@@ -1,3 +1,13 @@
 /*******************************
          Site Overrides
 *******************************/
+
+.ui.form .searchbox.field button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #007EB1;
+  cursor: pointer;
+  text-align: initial;
+  position: relative;
+}

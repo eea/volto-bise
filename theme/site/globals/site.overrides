@@ -1,3 +1,7 @@
+*,*:focus,*:hover{
+  outline:none;
+}
+
 .siteroot .ui.basic.segment.content-area {
   margin-top: 0;
   padding-top:0;
@@ -11,4 +15,22 @@
   position: sticky;
   top: 80px;
   z-index: 2;
+}
+
+.searchbox div.input {
+  border: none;
+  border-bottom: 1px solid #ddd;
+  padding-left: 0.5em;
+  padding-right: 1.5em;
+  height: 27px;
+  font-size: 15px;
+}
+
+.searchbox .icon {
+  fill: #606060;
+  position: absolute;
+  z-index: 1;
+  left: -23px;
+  top: 50%;
+  transform: translateY(-50%);
 }
