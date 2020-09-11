@@ -36,6 +36,7 @@ const ColorPickerWidget = ({
   description,
   error,
   value,
+  defaultValue,
   onChange,
   onBlur,
   onClick,
@@ -44,7 +45,9 @@ const ColorPickerWidget = ({
   colorscale,
 }) => {
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
-  const [selectedColor, setSelectedColor] = React.useState(value);
+  const [selectedColor, setSelectedColor] = React.useState(
+    defaultValue || '#00000000',
+  );
 
   return (
     <FormFieldWrapper
