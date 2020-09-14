@@ -28,8 +28,6 @@ const splitBlocksByTOC = (blockIds, blocksContent) => {
   return [blockIds.slice(0, cursor), blockIds.slice(cursor)];
 };
 
-const HEADLINES = ['h2', 'h3'];
-
 let BlocksWithToc = ({ blockIds, blocksContent, intl, content, pathname }) => {
   let [activeId, setActiveId] = useState(null);
   const customSetActive = (value) => {
@@ -53,18 +51,26 @@ let BlocksWithToc = ({ blockIds, blocksContent, intl, content, pathname }) => {
                   const { type } = slateBlock;
                   const text = slateBlock.children[0].text;
                   const textId = 'tocNav-' + index;
-                  if (!HEADLINES.includes(type)) return null;
+                  const headings = ['h2', 'h3', 'h4'];
+                  const tocDescription = (type === 'h4');
+                  if (!headings.includes(type)) return null;
                   return (
-                    <AnchorLink
-                      key={blockId}
-                      href={'#' + textId}
-                      offset={10}
-                      className={cx(`toc-nav-header link-${type}`, {
-                        selected: activeId === textId,
-                      })}
-                    >
-                      {text}
-                    </AnchorLink>
+                    <>
+                      {!tocDescription ? (
+                        <AnchorLink
+                          key={blockId}
+                          href={`#${textId}`}
+                          offset={10}
+                          className={cx(`toc-nav-header link-${type}`, {
+                            selected: activeId === textId,
+                          })}
+                        >
+                          {text}
+                        </AnchorLink>
+                      ) : (
+                        <span className="toc-description">{text}</span>
+                      )}
+                    </>
                   );
                 })}
               </div>
@@ -89,7 +95,8 @@ let BlocksWithToc = ({ blockIds, blocksContent, intl, content, pathname }) => {
               }
               const blockType = block.value[0].type;
               const textId = 'tocNav-' + index;
-              const isheadline = HEADLINES.includes(blockType);
+              const headings = ['h2', 'h3'];
+              const isHeadline = headings.includes(blockType);
               return Block !== null ? (
                 <VisibilitySensor
                   scrollCheck={true}
@@ -98,14 +105,14 @@ let BlocksWithToc = ({ blockIds, blocksContent, intl, content, pathname }) => {
                   minTopValue={800}
                   partialVisibility={true}
                   offset={{ top: 10 }}
-                  intervalDelay={3000}
+                  intervalDelay={2000}
                   key={blockId}
                 >
                   {({ isVisible }) => {
-                    if (isheadline && textId && isVisible)
+                    if (isHeadline && textId && isVisible)
                       customSetActive(textId);
                     return (
-                      <div id={`${isheadline ? textId : ''}`}>
+                      <div {...(isHeadline ? {id: textId} : {})} >
                         <Block
                           key={blockId}
                           properties={content}
