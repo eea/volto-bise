@@ -152,15 +152,16 @@ const TabsTocNavigationView = (props) => {
       pathname,
     }) => {
       const blockIds = tabsLayout[index] || [];
-      // const blocklist = blockIds.map((blockId) => {
-      //   return [blockId, properties[blocksFieldname]?.[blockId]];
-      // });
+      const blocklist = blockIds.map((blockId) => {
+        return [blockId, properties[blocksFieldname]?.[blockId]];
+      });
       const blocksContent = properties[blocksFieldname];
       const [preambleIds, contentIds] = splitBlocksByTOC(
         blockIds,
         blocksContent,
       );
-      return (
+
+      return tab.tocnav_view ? (
         <Tab.Pane>
           {map(preambleIds, (block) => {
             const Block =
@@ -183,13 +184,35 @@ const TabsTocNavigationView = (props) => {
               </div>
             );
           })}
-
           <BlocksWithToc
             content={properties}
             blockIds={contentIds}
             blocksContent={blocksContent}
             pathname={pathname}
           />
+        </Tab.Pane>
+      ) : (
+        <Tab.Pane>
+          {blocklist.map(([blockId, blockData]) => {
+            const Block = blocks.blocksConfig[blockData['@type']]?.view;
+            return Block !== null ? (
+              <>
+                <Block
+                  key={blockId}
+                  id={blockId}
+                  properties={properties}
+                  data={blockData}
+                  path={getBaseUrl(pathname || '')}
+                />
+              </>
+            ) : (
+              <div key={blockId}>
+                {intl.formatMessage(messages.unknownBlock, {
+                  block: blockData?.['@type'],
+                })}
+              </div>
+            );
+          })}
         </Tab.Pane>
       );
     },
