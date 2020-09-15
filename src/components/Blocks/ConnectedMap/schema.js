@@ -11,7 +11,7 @@ export const MapSchema = {
 
   properties: {
     map_service_url: {
-      title: 'Map service url',
+      title: 'Map service URL',
       widget: 'url',
     },
   },
