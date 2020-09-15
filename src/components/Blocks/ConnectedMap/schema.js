@@ -18,3 +18,5 @@ export const MapSchema = {
 
   required: ['url'],
 };
+
+export default MapSchema;

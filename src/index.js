@@ -12,6 +12,7 @@ import {
   DataQueryFilterEdit,
   installKeyFacts,
   installMaesViewer,
+  installConnectedMap,
 } from './components';
 
 export default (config) => {
@@ -57,7 +58,7 @@ export default (config) => {
     sidebarTab: 1,
   };
 
-  return [installKeyFacts, installMaesViewer].reduce(
+  return [installKeyFacts, installMaesViewer, installConnectedMap].reduce(
     (acc, apply) => apply(acc),
     config,
   );

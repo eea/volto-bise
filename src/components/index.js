@@ -13,3 +13,4 @@ export DataQueryFilterEdit from './theme/datablocks/DataQueryFilter/DataQueryFil
 
 export installKeyFacts from './Blocks/KeyFacts';
 export installMaesViewer from './Blocks/MaesViewer';
+export installConnectedMap from './Blocks/ConnectedMap';
