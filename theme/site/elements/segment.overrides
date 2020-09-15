@@ -68,3 +68,7 @@
   display: flex;
   align-items: center;
 }
+
+.ui.segment {
+  font-size: 15px;
+}
