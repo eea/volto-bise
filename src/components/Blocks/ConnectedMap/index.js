@@ -1,15 +1,15 @@
 import codeSVG from '@plone/volto/icons/code.svg';
-import KeyFactsView from './KeyFactsView';
-import KeyFactsEdit from './KeyFactsEdit';
+import ConnectedMapEdit from './ConnectedMapEdit';
+import ConnectedMapView from './ConnectedMapView';
 
 export default (config) => {
-  config.blocks.blocksConfig.keyfacts = {
-    id: 'keyfacts',
-    title: 'Key Facts',
+  config.blocks.blocksConfig.connectedmap = {
+    id: 'connectedmap',
+    title: 'Connected Map',
     icon: codeSVG,
     group: 'bise',
-    view: KeyFactsView,
-    edit: KeyFactsEdit,
+    view: ConnectedMapView,
+    edit: ConnectedMapEdit,
     restricted: false,
     mostUsed: false,
     sidebarTab: 1,
