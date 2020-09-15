@@ -10,3 +10,6 @@ export ConnectedChartBlockView from './theme/datablocks/ConnectedChart/Connected
 export ConnectedChartBlockEdit from './theme/datablocks/ConnectedChart/ConnectedChartBlockEdit';
 export DataQueryFilterView from './theme/datablocks/DataQueryFilter/DataQueryFilterView';
 export DataQueryFilterEdit from './theme/datablocks/DataQueryFilter/DataQueryFilterEdit';
+
+export installKeyFacts from './Blocks/KeyFacts';
+export installMaesViewer from './Blocks/MaesViewer';

@@ -1,21 +1,17 @@
 import { DefaultView } from '@plone/volto/components';
 
-import codeSVG from '@plone/volto/icons/code.svg';
 import chartIcon from '@plone/volto/icons/world.svg';
 
 import {
   ChildrenTabsView,
   FactsheetDatabaseListing,
-  // TocNavigationView,
   TabsTocNavigationView,
-  KeyFactsView,
-  KeyFactsEdit,
-  MaesViewerView,
-  MaesViewerEdit,
   ConnectedChartBlockView,
   ConnectedChartBlockEdit,
   DataQueryFilterView,
   DataQueryFilterEdit,
+  installKeyFacts,
+  installMaesViewer,
 } from './components';
 
 export default (config) => {
@@ -41,37 +37,6 @@ export default (config) => {
     schemaExtender: null,
   });
 
-  config.blocks.blocksConfig.keyfacts = {
-    id: 'keyfacts',
-    title: 'Key Facts',
-    icon: codeSVG,
-    group: 'bise',
-    view: KeyFactsView,
-    edit: KeyFactsEdit,
-    restricted: false,
-    mostUsed: false,
-    sidebarTab: 1,
-    security: {
-      addPermission: [],
-      view: [],
-    },
-  };
-  config.blocks.blocksConfig.maesviewer = {
-    id: 'maesviewer',
-    title: 'MAES Viewer',
-    icon: codeSVG,
-    group: 'bise',
-    view: MaesViewerView,
-    edit: MaesViewerEdit,
-    restricted: false,
-    mostUsed: false,
-    sidebarTab: 1,
-    security: {
-      addPermission: [],
-      view: [],
-    },
-  };
-
   config.blocks.blocksConfig.connected_plotly_chart = {
     id: 'connected_plotly_chart',
     title: 'Connected Plotly Chart',
@@ -92,5 +57,8 @@ export default (config) => {
     sidebarTab: 1,
   };
 
-  return config;
+  return [installKeyFacts, installMaesViewer].reduce(
+    (acc, apply) => apply(acc),
+    config,
+  );
 };

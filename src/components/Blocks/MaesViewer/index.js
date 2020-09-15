@@ -1,0 +1,22 @@
+import codeSVG from '@plone/volto/icons/code.svg';
+import MaesViewerView from './MaesViewerView';
+import MaesViewerEdit from './MaesViewerEdit';
+
+export default (config) => {
+  config.blocks.blocksConfig.maesviewer = {
+    id: 'maesviewer',
+    title: 'MAES Viewer',
+    icon: codeSVG,
+    group: 'bise',
+    view: MaesViewerView,
+    edit: MaesViewerEdit,
+    restricted: false,
+    mostUsed: false,
+    sidebarTab: 1,
+    security: {
+      addPermission: [],
+      view: [],
+    },
+  };
+  return config;
+};
