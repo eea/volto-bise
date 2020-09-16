@@ -82,7 +82,7 @@ class Navigation extends Component {
    */
   componentDidUpdate(nextProps) {
     if (nextProps.pathname !== this.props.pathname) {
-      this.props.getNavigation(getBaseUrl(nextProps.pathname), 2);
+      this.props.getNavigation(getBaseUrl(nextProps.pathname), 3);
     }
   }
 
