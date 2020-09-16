@@ -4,7 +4,7 @@ import { PrivacyProtection } from 'volto-embed';
 import Webmap from './Webmap';
 
 export default ({ data = {} }) => {
-  console.log('data', data);
+  // console.log('data', data);
   return (
     <Style data={data}>
       <PrivacyProtection data={data}>

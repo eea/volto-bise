@@ -5,7 +5,7 @@ export const MapSchema = {
     {
       id: 'default',
       title: 'Default',
-      fields: ['map_service_url'],
+      fields: ['map_service_url', 'layer'],
     },
   ],
 
@@ -13,6 +13,10 @@ export const MapSchema = {
     map_service_url: {
       title: 'Map service URL',
       widget: 'url',
+    },
+    layer: {
+      title: 'Map layer',
+      choices: [],
     },
   },
 
