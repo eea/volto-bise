@@ -17,7 +17,6 @@ export default (props) => {
   const options = {
     css: true,
   };
-  console.log('webmap props', props);
   const mapRef = React.useRef();
   const [modules, setModules] = React.useState({});
   const loaded = React.useRef(false);
@@ -68,40 +67,13 @@ export default (props) => {
       container: mapRef.current,
       map,
     });
-    view.when(() => {
-      console.log('yes');
+    view.whenLayerView(layer).then((layerView) => {
+      console.log('yes', layerView);
+      layerView.filter = {
+        where: `Country_co = '${data.f_Country_co}'`,
+      };
     });
-  }, [modules, layer_url, base_layer]);
-
-  // console.log('fl', FeatureLayer);
-  // let layer = new FeatureLayer({
-  //   url: window.layerUrl,
-  // });
-  // let filter = new FeatureFilter({
-  //   where: "Country = '" + window.focusCountry + "'",
-  // });
-  //
-  // const map = new Map({
-  //   basemap: window.focusMapLayer || 'hybrid', //"gray-vector",
-  //   layers: [layer],
-  // });
-  //
-  // var view = new MapView({
-  //   map: map,
-  //   container: 'viewDiv',
-  //   // extent: focusExtent,
-  // });
-  // view.filter = {
-  //   where: "COUNTRY = '" + window.focusCountry + "'",
-  // };
-  //
-  // view.whenLayerView(layer).then(function (layerView) {
-  //   console.log('whenLayerView', layerView);
-  //
-  //   layerView.filter = {
-  //     where: "Country = '" + window.focusCountry + "'",
-  //   };
-  // });
+  }, [modules, layer_url, base_layer, data]);
 
   return <div ref={mapRef} className="esri-map"></div>;
 };
