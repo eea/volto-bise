@@ -44,6 +44,6 @@ export default (props) => {
     }
   }, [modules, setModules, options]);
 
-  console.log(modules);
+  // console.log(modules);
   return <div>Webmap</div>;
 };
