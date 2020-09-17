@@ -37,13 +37,6 @@ class Edit extends Component {
   };
 
   deriveSchemaFromProps = () => {
-    // TODO: add in this fieldset:
-    //
-    // {
-    //   id: 'filters',
-    //   title: 'Map Filters',
-    //   fields: [],
-    // },
     const schema = JSON.parse(JSON.stringify(MapSchema));
     const choices = (this.props.service_info?.layers || []).map((l) => [
       l.id.toString(),
@@ -54,10 +47,16 @@ class Edit extends Component {
     const fields = (this.props.layer_info?.fields || []).filter(
       (f) => f.type === 'esriFieldTypeString',
     );
+
     schema.fieldsets[0] = {
       ...MapSchema.fieldsets[0],
       fields: [
         ...MapSchema.fieldsets[0].fields,
+      ],
+    };
+    schema.fieldsets[1] = {
+      ...MapSchema.fieldsets[1],
+      fields: [
         ...fields.map(({ name }) => `f_${name}`),
       ],
     };

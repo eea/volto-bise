@@ -7,6 +7,11 @@ export const MapSchema = {
       title: 'Default',
       fields: ['map_service_url', 'base_layer', 'layer'],
     },
+    {
+      id: 'filters',
+      title: 'Map Filters',
+      fields: [],
+    },
   ],
 
   properties: {
