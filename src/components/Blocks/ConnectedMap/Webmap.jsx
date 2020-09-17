@@ -25,23 +25,11 @@ export default (props) => {
     if (!loaded.current) {
       loaded.current = true;
       loadModules(MODULES, options).then((modules) => {
-        const [
-          Map,
-          MapView,
-          FeatureLayer,
-          // Home,
-          // MapImageLayer,
-          // Extent,
-          // FeatureFilter,
-        ] = modules;
+        const [Map, MapView, FeatureLayer] = modules;
         setModules({
           Map,
           MapView,
           FeatureLayer,
-          // Home,
-          // MapImageLayer,
-          // Extent,
-          // FeatureFilter,
         });
       });
     }
@@ -49,8 +37,6 @@ export default (props) => {
 
   const layer_url = `${data.map_service_url}/${data.layer}`;
   const { base_layer } = data;
-
-  console.log(props.data);
 
   React.useEffect(() => {
     const { Map, MapView, FeatureLayer } = modules;
@@ -68,7 +54,11 @@ export default (props) => {
       map,
     });
     view.whenLayerView(layer).then((layerView) => {
-      console.log('yes', layerView);
+      layerView.watch('updating', (val) => {
+        layerView.queryExtent().then((results) => {
+          view.goTo(results.extent);
+        });
+      });
       layerView.filter = {
         where: `Country_co = '${data.f_Country_co}'`,
       };
