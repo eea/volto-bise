@@ -13,6 +13,7 @@ const MODULES = [
 ];
 
 export default (props) => {
+  // TODO: add a "filter" prop, filter={`Country_co = 'RO'`}
   const { data } = props;
   const options = {
     css: true,
@@ -60,6 +61,7 @@ export default (props) => {
         });
       });
       layerView.filter = {
+        // TODO: don't hardcode this filter
         where: `Country_co = '${data.f_Country_co}'`,
       };
     });

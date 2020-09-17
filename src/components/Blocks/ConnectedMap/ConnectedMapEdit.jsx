@@ -37,6 +37,13 @@ class Edit extends Component {
   };
 
   deriveSchemaFromProps = () => {
+    // TODO: add in this fieldset:
+    //
+    // {
+    //   id: 'filters',
+    //   title: 'Map Filters',
+    //   fields: [],
+    // },
     const schema = JSON.parse(JSON.stringify(MapSchema));
     const choices = (this.props.service_info?.layers || []).map((l) => [
       l.id.toString(),
