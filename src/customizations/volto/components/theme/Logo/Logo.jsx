@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom';
 import { defineMessages, injectIntl } from 'react-intl';
 import { Image } from 'semantic-ui-react';
 
-// import LogoImage from '@plone/volto/components/theme/Logo/Logo.svg';
 import BISELogo from './Logo.svg';
 
 const messages = defineMessages({
@@ -17,8 +16,8 @@ const messages = defineMessages({
     defaultMessage: 'Site',
   },
   plonesite: {
-    id: 'Plone Site',
-    defaultMessage: 'Plone Site',
+    id: 'BISE Homepage',
+    defaultMessage: 'BISE Homepage',
   },
 });
 

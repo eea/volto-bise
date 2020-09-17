@@ -92,7 +92,7 @@ const Footer = ({ intl }) => (
                     European Environment Agency.
                   </a>
                 </p>
-                .{' '}
+                {' '}
               </div>
               <div>
                 <a href="https://ec.europa.eu/" title="European Commission">

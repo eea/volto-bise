@@ -98,9 +98,9 @@ class Header extends Component {
                       <Anontools />
                     </Portal>
                   )}
-                  <div className="search">
+                  {/*<div className="search">
                     <SearchWidget pathname={this.props.pathname} />
-                  </div>
+                  </div>*/}
                 </div>
               </div>
             </div>
