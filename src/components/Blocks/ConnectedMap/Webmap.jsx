@@ -49,6 +49,8 @@ export default (props) => {
   }, [setModules, options]);
 
   const layer_url = `${map_service_url}/${layer}`;
+  const [currentView, setCurrentView] = React.useState();
+  const [currentLayerView, setCurrentLayerView] = React.useState();
 
   React.useEffect(() => {
     const { Map, MapView, FeatureLayer } = modules;
@@ -65,19 +67,42 @@ export default (props) => {
       container: mapRef.current,
       map,
     });
+    setCurrentView(view);
     view.whenLayerView(layer).then((layerView) => {
+      console.log('make current', layerView);
       layerView.watch('updating', (val) => {
         layerView.queryExtent().then((results) => {
+          console.log('go to extent', results.extent);
           view.goTo(results.extent);
         });
       });
-      if (map_filters) {
-        layerView.filter = {
-          where: filterToWhereParams(map_filters),
-        };
-      }
+      // if (map_filters) {
+      //   const where = filterToWhereParams(map_filters);
+      //   console.log('where', where);
+      //   layerView.filter = {
+      //     where,
+      //   };
+      // }
+      setCurrentLayerView(layerView);
     });
-  }, [modules, layer_url, base_layer, map_filters]);
+  }, [modules, layer_url, base_layer]);
+
+  React.useEffect(() => {
+    if (map_filters && currentLayerView) {
+      const where = filterToWhereParams(map_filters);
+      console.log('where', where);
+      currentLayerView.filter = {
+        where,
+      };
+
+      currentLayerView.watch('updating', (val) => {
+        currentLayerView.queryExtent().then((results) => {
+          console.log('go to extent', results.extent);
+          currentView.goTo(results.extent);
+        });
+      });
+    }
+  }, [map_filters, currentLayerView, currentView]);
 
   return <div ref={mapRef} className="esri-map"></div>;
 };
