@@ -12,8 +12,20 @@ const MODULES = [
   // 'esri/views/layers/support/FeatureFilter',
 ];
 
+export const filterToWhereParams = (map_filters) => {
+  //  `Country_co = 'DK'`
+  let acc = '';
+  Object.keys(map_filters).forEach((name) => {
+    if (map_filters[name]) {
+      if (acc) acc += ' AND ';
+      acc += `${name} = '${map_filters[name]}' `;
+    }
+  });
+
+  return acc;
+};
+
 export default (props) => {
-  // TODO: add a "filter" prop, filter={`Country_co = 'RO'`}
   const { map_filters, map_service_url, layer, base_layer } = props;
   const options = {
     css: true,
@@ -59,10 +71,11 @@ export default (props) => {
           view.goTo(results.extent);
         });
       });
-      layerView.filter = {
-        // TODO: don't hardcode this filter
-        where: `Country_co = '${map_filters.Country_co}'`,
-      };
+      if (map_filters) {
+        layerView.filter = {
+          where: filterToWhereParams(map_filters),
+        };
+      }
     });
   }, [modules, layer_url, base_layer, map_filters]);
 
