@@ -70,16 +70,13 @@ export default (props) => {
     });
     setCurrentView(view);
     view.whenLayerView(layer).then((layerView) => {
-      console.log('make current', layerView);
       layerView.watch('updating', (val) => {
         layerView.queryExtent().then((results) => {
-          console.log('go to extent', results.extent);
           view.goTo(results.extent);
         });
       });
       if (map_filters) {
         const where = filterToWhereParams(map_filters);
-        console.log('where', where);
         layerView.filter = {
           where,
         };
@@ -91,14 +88,12 @@ export default (props) => {
   React.useEffect(() => {
     if (map_filters && currentLayerView) {
       const where = filterToWhereParams(map_filters);
-      console.log('where', where);
       currentLayerView.filter = {
         where,
       };
 
       currentLayerView.watch('updating', (val) => {
         currentLayerView.queryExtent().then((results) => {
-          console.log('go to extent', results.extent);
           currentView.goTo(results.extent);
         });
       });
