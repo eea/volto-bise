@@ -53,6 +53,7 @@ export default (props) => {
   const [currentLayerView, setCurrentLayerView] = React.useState();
 
   React.useEffect(() => {
+    if (currentLayerView) return;
     const { Map, MapView, FeatureLayer } = modules;
     if (!FeatureLayer) return;
 
@@ -76,16 +77,16 @@ export default (props) => {
           view.goTo(results.extent);
         });
       });
-      // if (map_filters) {
-      //   const where = filterToWhereParams(map_filters);
-      //   console.log('where', where);
-      //   layerView.filter = {
-      //     where,
-      //   };
-      // }
+      if (map_filters) {
+        const where = filterToWhereParams(map_filters);
+        console.log('where', where);
+        layerView.filter = {
+          where,
+        };
+      }
       setCurrentLayerView(layerView);
     });
-  }, [modules, layer_url, base_layer]);
+  }, [modules, layer_url, base_layer, map_filters, currentLayerView]);
 
   React.useEffect(() => {
     if (map_filters && currentLayerView) {
