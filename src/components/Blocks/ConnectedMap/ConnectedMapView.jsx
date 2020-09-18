@@ -6,11 +6,17 @@ import { getProxiedExternalContent } from '@eeacms/volto-corsproxy/actions';
 import Webmap from './Webmap';
 
 const ConnectedMapView = ({ data = {}, ...rest }) => {
-  console.log('data', data);
+  // console.log('data', data);
+  const { map_filters, map_service_url, layer, base_layer } = data;
   return (
     <Style data={data}>
       <PrivacyProtection data={data}>
-        <Webmap {...rest} data={data} />
+        <Webmap
+          map_filters={map_filters}
+          map_service_url={map_service_url}
+          base_layer={base_layer}
+          layer={layer}
+        />
       </PrivacyProtection>
     </Style>
   );

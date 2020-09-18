@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { MapSchema, MapFiltersSchema } from './schema';
@@ -78,7 +78,7 @@ class SchemaProvider extends Component {
 
   render() {
     const schema = addPrivacyProtectionToSchema(this.deriveSchemaFromProps());
-    return <>{this.props.children(schema)}</>;
+    return this.props.children(schema);
   }
 }
 

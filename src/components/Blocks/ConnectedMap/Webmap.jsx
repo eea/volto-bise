@@ -14,7 +14,7 @@ const MODULES = [
 
 export default (props) => {
   // TODO: add a "filter" prop, filter={`Country_co = 'RO'`}
-  const { data } = props;
+  const { map_filters, map_service_url, layer, base_layer } = props;
   const options = {
     css: true,
   };
@@ -36,8 +36,7 @@ export default (props) => {
     }
   }, [setModules, options]);
 
-  const layer_url = `${data.map_service_url}/${data.layer}`;
-  const { base_layer } = data;
+  const layer_url = `${map_service_url}/${layer}`;
 
   React.useEffect(() => {
     const { Map, MapView, FeatureLayer } = modules;
@@ -62,10 +61,10 @@ export default (props) => {
       });
       layerView.filter = {
         // TODO: don't hardcode this filter
-        where: `Country_co = '${data.f_Country_co}'`,
+        where: `Country_co = '${map_filters.Country_co}'`,
       };
     });
-  }, [modules, layer_url, base_layer, data]);
+  }, [modules, layer_url, base_layer, map_filters]);
 
   return <div ref={mapRef} className="esri-map"></div>;
 };
