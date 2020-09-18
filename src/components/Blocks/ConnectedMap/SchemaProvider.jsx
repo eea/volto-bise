@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import MapSchema from './schema';
+import { MapSchema, MapFiltersSchema } from './schema';
 import { addPrivacyProtectionToSchema } from 'volto-embed';
 import { getProxiedExternalContent } from '@eeacms/volto-corsproxy/actions';
 
@@ -36,33 +36,40 @@ class SchemaProvider extends Component {
   };
 
   deriveSchemaFromProps = () => {
-    const schema = JSON.parse(JSON.stringify(MapSchema));
+    const schema = MapSchema();
+    const mapFiltersSchema = MapFiltersSchema();
+
     const choices = (this.props.service_info?.layers || []).map((l) => [
       l.id.toString(),
       l.name,
     ]);
     schema.properties.layer.choices = choices;
 
-    const fields = (this.props.layer_info?.fields || []).filter(
-      (f) => f.type === 'esriFieldTypeString',
-    );
-
-    schema.fieldsets[0] = {
-      ...MapSchema.fieldsets[0],
-      fields: [...MapSchema.fieldsets[0].fields],
-    };
-    schema.fieldsets[1] = {
-      ...MapSchema.fieldsets[1],
-      fields: [...fields.map(({ name }) => `f_${name}`)],
-    };
-
     const uniqueValues = (
       this.props.layer_info?.drawingInfo?.renderer?.uniqueValueInfos || []
     ).map((s) => [s.value.toString(), s.label]);
 
-    fields.forEach((f) => {
-      schema.properties[`f_${f.name}`] = {
-        title: f.name,
+    const fields = (this.props.layer_info?.fields || []).filter(
+      (f) => f.type === 'esriFieldTypeString',
+    );
+
+    const fieldset = {
+      id: 'filters',
+      title: 'Map filters',
+      fields: ['map_filters'],
+    };
+    schema.fieldsets.push(fieldset);
+    schema.properties.map_filters = {
+      title: 'Map filters',
+      widget: 'object',
+      schema: mapFiltersSchema,
+    };
+
+    mapFiltersSchema.fieldsets[0].fields = [...fields.map(({ name }) => name)];
+
+    fields.forEach(({ name }) => {
+      mapFiltersSchema.properties[name] = {
+        title: name,
         choices: uniqueValues,
       };
     });

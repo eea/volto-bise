@@ -1,4 +1,17 @@
-export const MapSchema = {
+export const MapFiltersSchema = () => ({
+  title: 'Map filters',
+  fieldsets: [
+    {
+      id: 'default',
+      title: 'Default',
+      fields: [],
+    },
+  ],
+  properties: {},
+  required: [],
+});
+
+export const MapSchema = () => ({
   title: 'ESRI Layer Map',
 
   fieldsets: [
@@ -6,11 +19,6 @@ export const MapSchema = {
       id: 'default',
       title: 'Default',
       fields: ['map_service_url', 'base_layer', 'layer'],
-    },
-    {
-      id: 'filters',
-      title: 'Map Filters',
-      fields: [],
     },
   ],
 
@@ -48,6 +56,4 @@ export const MapSchema = {
   },
 
   required: ['url'],
-};
-
-export default MapSchema;
+});
