@@ -51,6 +51,7 @@ export const MapSchema = () => ({
     },
     layer: {
       title: 'Map layer',
+      widget: 'bise_select',
       choices: [],
     },
     align: {

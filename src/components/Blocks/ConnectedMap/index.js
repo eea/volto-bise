@@ -1,6 +1,7 @@
 import codeSVG from '@plone/volto/icons/code.svg';
 import ConnectedMapEdit from './ConnectedMapEdit';
 import ConnectedMapView from './ConnectedMapView';
+import SelectWidget from './SelectWidget';
 
 export default (config) => {
   config.blocks.blocksConfig.connectedmap = {
@@ -18,5 +19,6 @@ export default (config) => {
       view: [],
     },
   };
+  config.widgets.widget.bise_select = SelectWidget;
   return config;
 };
