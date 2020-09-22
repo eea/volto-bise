@@ -19,6 +19,7 @@ export default (config) => {
   config.settings.allowed_cors_destinations = [
     ...(config.settings.allowed_cors_destinations || []),
     'trial.discomap.eea.europa.eu',
+    'marine.discomap.eea.europa.eu',
   ];
   config.views = {
     ...config.views,

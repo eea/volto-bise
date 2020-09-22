@@ -18,7 +18,7 @@ export const MapSchema = () => ({
     {
       id: 'default',
       title: 'Default',
-      fields: ['map_service_url', 'base_layer', 'layer'],
+      fields: ['map_service_url', 'base_layer', 'layer', 'align'],
     },
   ],
 
@@ -52,6 +52,10 @@ export const MapSchema = () => ({
     layer: {
       title: 'Map layer',
       choices: [],
+    },
+    align: {
+      widget: 'align',
+      title: 'Alignment',
     },
   },
 
