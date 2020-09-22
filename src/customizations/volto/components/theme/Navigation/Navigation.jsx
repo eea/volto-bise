@@ -84,6 +84,11 @@ class Navigation extends Component {
     if (nextProps.pathname !== this.props.pathname) {
       this.props.getNavigation(getBaseUrl(nextProps.pathname), 3);
     }
+
+    // Hide submenu on route change
+    if (document.querySelector('body')) {
+      document.querySelector('body').click();
+    }
   }
 
   /**
