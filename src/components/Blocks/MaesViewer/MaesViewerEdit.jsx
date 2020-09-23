@@ -4,7 +4,7 @@ import { SidebarPortal } from '@plone/volto/components'; // EditBlock
 import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
 
 import schema from './schema';
-import { connectBlockToProviderData } from 'volto-bise/hocs';
+import { connectBlockToProviderData } from 'volto-datablocks/hocs';
 import MaesViewerView from './MaesViewerView';
 
 class Edit extends Component {

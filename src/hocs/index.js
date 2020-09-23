@@ -1,1 +1,0 @@
-export connectBlockToProviderData from './connectBlockToProviderData';
