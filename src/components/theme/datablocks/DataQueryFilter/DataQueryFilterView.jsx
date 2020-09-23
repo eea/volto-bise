@@ -8,7 +8,7 @@ import {
   customSelectStyles,
 } from '@plone/volto/components/manage/Widgets/SelectStyling';
 import { setConnectedDataParameters } from 'volto-datablocks/actions';
-import { connectBlockToProviderData } from 'volto-bise/hocs';
+import { connectBlockToProviderData } from 'volto-datablocks/hocs';
 
 const ViewSelect = (props) => {
   const { data = {}, id, provider_data = {} } = props;
