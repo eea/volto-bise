@@ -63,6 +63,20 @@ export default (config) => {
     sidebarTab: 1,
   };
 
+  // TODO: these are just examples that work well when simply uncommented (see
+  // the StyleMenu plugin in eea/volto-slate):
+  // config.settings.slate.styleMenuDefinitions = [
+  //   ...(config.settings.slate?.styleMenuDefinitions || []),
+  //   { cssClass: 'green-block-text', isBlock: true, label: 'Green Text' },
+  //   {
+  //     cssClass: 'underline-block-text',
+  //     isBlock: true,
+  //     label: 'Underline Text',
+  //   },
+  //   { cssClass: 'cool-inline-text', isBlock: false, label: 'Cool Inline Text' },
+  //   { cssClass: 'red-inline-text', isBlock: false, label: 'Red Inline Text' },
+  // ];
+
   return [installKeyFacts, installMaesViewer, installConnectedMap].reduce(
     (acc, apply) => apply(acc),
     config,
