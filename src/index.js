@@ -65,16 +65,15 @@ export default (config) => {
 
   // TODO: these are just examples that work well when simply uncommented (see
   // the StyleMenu plugin in eea/volto-slate):
-  // config.settings.slate.styleMenuDefinitions = [
-  //   ...(config.settings.slate?.styleMenuDefinitions || []),
-  //   { cssClass: 'green-block-text', isBlock: true, label: 'Green Text' },
-  //   {
-  //     cssClass: 'underline-block-text',
-  //     isBlock: true,
-  //     label: 'Underline Text',
-  //   },
-  //   { cssClass: 'cool-inline-text', isBlock: false, label: 'Cool Inline Text' },
-  //   { cssClass: 'red-inline-text', isBlock: false, label: 'Red Inline Text' },
+  // config.settings.slate.styleMenu.inlineStyles = [
+  //   ...config.settings.slate.styleMenu.inlineStyles,
+  //   { cssClass: 'cool-inline-text', label: 'Cool Inline Text' },
+  //   { cssClass: 'red-inline-text', label: 'Red Inline Text' },
+  // ];
+  // config.settings.slate.styleMenu.blockStyles = [
+  //   ...config.settings.slate.styleMenu.blockStyles,
+  //   { cssClass: 'green-block-text', label: 'Green Text' },
+  //   { cssClass: 'underline-block-text', label: 'Underline Text' },
   // ];
 
   return [installKeyFacts, installMaesViewer, installConnectedMap].reduce(
