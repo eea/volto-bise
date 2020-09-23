@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import { connectBlockToProviderData } from 'volto-bise/hocs';
+import { connectBlockToProviderData } from 'volto-datablocks/hocs';
 import { Grid } from 'semantic-ui-react';
 import loadable from '@loadable/component';
 import { serializeNodes } from 'volto-slate/editor/render';
