@@ -2,14 +2,25 @@ import React from 'react';
 
 export const ArticleListItem = ({ source, bemBlocks }) => {
   return (
-    <div>
-      <a href={source.source_url}>
-        <h2
-          className={bemBlocks.item('title')}
+    <div className="catalogue-cell">
+      <h4 className={`cell-title ${bemBlocks.item('title')}`}>
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href={source.source_url}
           dangerouslySetInnerHTML={{ __html: source.title }}
-        ></h2>
-      </a>
-      <div></div>
+        ></a>
+      </h4>
+      {source.title !== source.english_title && (
+        <small className="cell-alternative-title" title="English title">
+          {source.english_title}
+        </small>
+      )}
+      <span className="cell-footer">
+        <span className="cell-source">{source.site.name}</span> &middot;
+        Published on {source.published_on}
+      </span>
+      {/* <strong>Web Page</strong> */}
     </div>
   );
 };
