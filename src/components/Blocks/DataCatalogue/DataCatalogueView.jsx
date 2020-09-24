@@ -1,6 +1,8 @@
 import React from 'react';
 import withProps from 'decorate-component-with-props';
 
+import _ from 'lodash';
+
 import {
   ActionBar,
   ActionBarRow,
@@ -39,6 +41,108 @@ import tableSVG from '@plone/volto/icons/table.svg';
 import { GridItem, ListItem, TableView } from './Tiles';
 import './styles.less';
 
+const valueToLabel = (val) => {
+  const data = [
+    { label: 'Documents', value: 'document' },
+    { label: 'Links', value: 'link' },
+    { label: 'Web Pages', value: 'article' },
+    { label: 'Species Info', value: 'species' },
+    { label: 'Habitat Types Info', value: 'habitat' },
+    { label: 'Sites Info', value: 'site' },
+    { label: 'Protected Area', value: 'protected_area' }, // hidden
+  ];
+  console.log('VAL', val);
+  return data.filter((x) => x.value === val)[0].label;
+};
+
+const DataTypeListFilter = ({ id, title, field, size, onChange }) => {
+  const data = React.useMemo(() => {
+    return [
+      { label: 'Documents', value: 'document' },
+      { label: 'Links', value: 'link' },
+      { label: 'Web Pages', value: 'article' },
+      { label: 'Species Info', value: 'species' },
+      { label: 'Habitat Types Info', value: 'habitat' },
+      { label: 'Sites Info', value: 'site' },
+    ];
+  }, []);
+
+  const [checkedValues, setCheckedValues] = React.useState([]);
+
+  const handleClick = React.useCallback(
+    (value, checked) => {
+      let changedData;
+      if (checked) {
+        changedData = [...checkedValues.concat(value)];
+      } else {
+        changedData = [
+          ...checkedValues.filter((x) => {
+            return x !== value;
+          }),
+        ];
+      }
+      setCheckedValues(changedData);
+      onChange(changedData);
+    },
+    [checkedValues, onChange],
+  );
+
+  return (
+    <div className="data-type-list-filter-box">
+      <strong>{title}</strong>
+      <ul>
+        {data.map((d) => {
+          return (
+            <li>
+              <p>
+                <label role="presentation">
+                  <input
+                    type="checkbox"
+                    value={d.value}
+                    onClick={(ev) => {
+                      handleClick(d.value, ev.target.checked);
+                    }}
+                  ></input>
+                  {d.label}
+                </label>
+              </p>
+            </li>
+          );
+        })}
+      </ul>
+      {JSON.stringify(checkedValues)}
+    </div>
+  );
+};
+
+const RefinementOption = (props) => {
+  return (
+    <div
+      role="checkbox"
+      onKeyPress={() => {}}
+      className={props.bemBlocks
+        .option()
+        .state({ selected: props.active })
+        .mix(props.bemBlocks.container('item'))}
+      tabIndex={0}
+      aria-checked={props.active}
+    >
+      <label style={{ flexGrow: 1 }}>
+        <input
+          type="checkbox"
+          onClick={props.onClick}
+          checked={props.active}
+          className="sk-item-list-option__checkbox"
+        />
+        <span className={props.bemBlocks.option('text')}>
+          {valueToLabel(props.label)}
+        </span>
+      </label>
+      <div className={props.bemBlocks.option('count')}>{props.count}</div>
+    </div>
+  );
+};
+
 const search_types = [
   'article',
   'document',
@@ -57,13 +161,16 @@ const DataCatalogueView = (props) => {
   const searchkit = React.useMemo(() => {
     return new SearchkitManager(url);
   }, [url]);
+  // const [selectedDataTypes, setSelectedDataTypes] = React.useState(
+  //   search_types,
+  // );
 
   // const searchkit = new SearchkitManager("/")
   searchkit.addDefaultQuery((query) => {
     return query.addQuery(
       FilteredQuery({
         filter: BoolShould([
-          TermsQuery('_type', search_types),
+          TermsQuery('_type', search_types /* selectedDataTypes */),
           // TermQuery('colour', 'orange'),
         ]),
       }),
@@ -151,11 +258,23 @@ const DataCatalogueView = (props) => {
             <SideBar>
               <h4>Filter results</h4>
 
-              <RefinementListFilter
+              {/* <DataTypeListFilter
                 id="type"
                 title="By type"
                 field="_type"
                 size={4}
+                onChange={(vals) => {
+                  setSelectedDataTypes(vals);
+                }}
+              ></DataTypeListFilter> */}
+
+              <RefinementListFilter
+                id="type"
+                title="By type"
+                field="_type"
+                size={10}
+                operator="OR"
+                itemComponent={RefinementOption}
               />
 
               <RefinementListFilter
