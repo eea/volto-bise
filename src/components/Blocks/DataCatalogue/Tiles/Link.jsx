@@ -4,9 +4,12 @@ export const LinkListItem = ({ source, bemBlocks }) => {
   return (
     <div className="catalogue-cell">
       <h4 className={`cell-title ${bemBlocks.item('title')}`}>
-        <a target="_blank" rel="noreferrer" href={source.uri}>
-          {source.name}
-        </a>
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href={source.url}
+          dangerouslySetInnerHTML={{ __html: source.title }}
+        ></a>
       </h4>
       {source.title != source.english_title && (
         <small

@@ -152,6 +152,13 @@ const DataCatalogueView = (props) => {
               <h4>Filter results</h4>
 
               <RefinementListFilter
+                id="type"
+                title="By type"
+                field="_type"
+                size={4}
+              />
+
+              <RefinementListFilter
                 id="countries"
                 title="By country"
                 field="countries.name"
