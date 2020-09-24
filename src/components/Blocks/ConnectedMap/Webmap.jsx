@@ -32,6 +32,7 @@ export default (props) => {
   };
   const mapRef = React.useRef();
   const [modules, setModules] = React.useState({});
+  const [mapIsUpdating, setMapIsUpdating] = React.useState(false);
   const modules_loaded = React.useRef(false);
 
   // Load the ESRI JS API
@@ -74,8 +75,13 @@ export default (props) => {
 
     view.whenLayerView(layer).then((layerView) => {
       layerView.watch('updating', (val) => {
+        setMapIsUpdating(true);
         layerView.queryExtent().then((results) => {
-          view.goTo(results.extent);
+          console.log('results', results);
+          if (results.count > 0) {
+            setMapIsUpdating(false);
+            view.goTo(results.extent);
+          }
         });
       });
       if (initial_map_filter_query.current) {
@@ -99,5 +105,10 @@ export default (props) => {
     }
   }, [currentLayerView, layer, map_filters]);
 
-  return <div ref={mapRef} className="esri-map"></div>;
+  return (
+    <div>
+      <div>{mapIsUpdating ? 'Waiting for map server...' : ''}</div>
+      <div ref={mapRef} className="esri-map"></div>
+    </div>
+  );
 };
