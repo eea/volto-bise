@@ -34,7 +34,13 @@ export const DocumentListItem = ({ source, bemBlocks }) => {
 
               <ol>
                 {source.highlight.attachment.map((h) => {
-                  return <>... {h.replace(/(<canvas>)/gi, '')} ...</>;
+                  return (
+                    <li
+                      dangerouslySetInnerHTML={{
+                        __html: `... ${h.replace(/(<canvas>)/gi, '')} ...`,
+                      }}
+                    ></li>
+                  );
                 })}
               </ol>
             </div>

@@ -15,7 +15,10 @@ export const LinkListItem = ({ source, bemBlocks }) => {
           dangerouslySetInnerHTML={{ __html: source.english_title }}
         ></small>
       )}
-      <div className="cell-description">{source.description}</div>
+      <div
+        className="cell-description"
+        dangerouslySetInnerHTML={{ __html: source.description }}
+      ></div>
       <div className="cell-footer">
         <span className="cell-source">{source.site.name}</span> &middot;
         Published on {source.published_on}
