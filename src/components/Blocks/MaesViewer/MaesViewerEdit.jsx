@@ -19,6 +19,7 @@ class Edit extends Component {
 
     const newSchema = JSON.parse(JSON.stringify(schema));
     newSchema.properties.ecosystem.choices = choices;
+    return newSchema;
   };
 
   render() {
