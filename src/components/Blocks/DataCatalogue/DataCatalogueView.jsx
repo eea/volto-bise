@@ -26,6 +26,7 @@ import {
   ViewSwitcherHits,
   ViewSwitcherToggle,
   DynamicRangeFilter,
+  CheckboxItemList,
   // MenuFilter,
   // RangeFilter,
   // TermQuery,
@@ -141,6 +142,33 @@ const RefinementOption = (props) => {
       <div className={props.bemBlocks.option('count')}>{props.count}</div>
     </div>
   );
+};
+
+const RefinementList = (props) => {
+  const data = [
+    { key: 'document', order: 1 },
+    { order: 2, key: 'link' },
+    { order: 3, key: 'article' },
+    { order: 4, key: 'species' },
+    { order: 5, key: 'habitat' },
+    { order: 6, key: 'site' },
+    // { order: 11, key: 'protected_area' }, // hidden
+  ];
+
+  // function labelsEqual(key1, key2) {
+  //   return valueToLabel(key1) === valueToLabel(key2);
+  // }
+
+  let arr = Array.from(props.items);
+  arr = arr.filter((x) => x.key !== 'protected_area');
+  arr = arr.sort((a, b) => {
+    return (
+      data[data.findIndex((x) => _.isEqual(x.key, a.key))].order -
+      data[data.findIndex((x) => _.isEqual(x.key, b.key))].order
+    );
+  });
+  console.log('ARR', arr);
+  return <CheckboxItemList {...props} items={arr} />;
 };
 
 const search_types = [
@@ -274,7 +302,9 @@ const DataCatalogueView = (props) => {
                 field="_type"
                 size={10}
                 operator="OR"
+                orderKey="_term"
                 itemComponent={RefinementOption}
+                listComponent={RefinementList}
               />
 
               <RefinementListFilter
