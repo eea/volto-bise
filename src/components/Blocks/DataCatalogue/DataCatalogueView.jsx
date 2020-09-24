@@ -36,7 +36,8 @@ import {
 import { Icon } from '@plone/volto/components';
 import tableSVG from '@plone/volto/icons/table.svg';
 
-import { GenericGridItem, GenericListItem, GenericTable } from './Tiles';
+import { GridItem, ListItem, TableView } from './Tiles';
+import './styles.less';
 
 const search_types = [
   'article',
@@ -52,10 +53,6 @@ const search_types = [
 
 const DataCatalogueView = (props) => {
   const { data } = props;
-  // const { es_index = {} } = data;
-  // const { host = 'http://localhost:3000', indexName = '' } = es_index;
-  // const url = `${host}/${indexName}`;
-  // console.log('using es index ', url);
   const url = data.es_host || 'http://localhost:3000';
   const searchkit = React.useMemo(() => {
     return new SearchkitManager(url);
@@ -73,11 +70,84 @@ const DataCatalogueView = (props) => {
     );
   });
 
+  // prefixQueryFields={[]}
+  // queryOptions={{ analyzer: 'standard' }}
+
   return (
     <div>
       <SearchkitProvider searchkit={searchkit}>
         <Layout>
           <LayoutBody>
+            <LayoutResults>
+              <SearchBox
+                autofocus={true}
+                searchOnChange={true}
+                queryFields={['title']}
+              />
+              <ActionBar>
+                <ActionBarRow>
+                  <HitsStats
+                    translations={{
+                      'hitstats.results_found': '{hitCount} results found',
+                    }}
+                  />
+                  <ViewSwitcherToggle />
+                  <SortingSelector
+                    options={[
+                      { label: 'Relevance', field: '_score', order: 'desc' },
+                      {
+                        label: 'Latest Modifications',
+                        field: 'modified',
+                        order: 'desc',
+                      },
+                      {
+                        label: 'Earliest Modifications',
+                        field: 'modified',
+                        order: 'asc',
+                      },
+                    ]}
+                  />
+                </ActionBarRow>
+
+                <ActionBarRow>
+                  <GroupedSelectedFilters />
+                  <ResetFilters />
+                </ActionBarRow>
+              </ActionBar>
+
+              <ViewSwitcherHits
+                hitsPerPage={12}
+                highlightFields={['title', 'description']}
+                sourceFilter={[]}
+                hitComponents={[
+                  // {
+                  //   key: 'grid',
+                  //   title: 'Grid',
+                  //   itemComponent: withProps(GridItem, {
+                  //     data,
+                  //   }),
+                  //   defaultOption: true,
+                  // },
+                  {
+                    key: 'list',
+                    title: 'List',
+                    itemComponent: withProps(ListItem, {
+                      data,
+                    }),
+                  },
+                  // {
+                  //   key: 'table',
+                  //   title: <Icon name={tableSVG} size="18px" />,
+                  //   listComponent: withProps(TableView, {
+                  //     data,
+                  //   }),
+                  // },
+                ]}
+                scrollTo="body"
+              />
+              <NoHits suggestionsField={'title'} />
+              <Pagination showNumbers={true} />
+            </LayoutResults>
             <SideBar>
               <h4>Filter results</h4>
 
@@ -145,76 +215,6 @@ const DataCatalogueView = (props) => {
               {/*   size={4} */}
               {/* /> */}
             </SideBar>
-            <LayoutResults>
-              <SearchBox
-                autofocus={true}
-                searchOnChange={true}
-                prefixQueryFields={[]}
-              />
-              <ActionBar>
-                <ActionBarRow>
-                  <HitsStats
-                    translations={{
-                      'hitstats.results_found': '{hitCount} results found',
-                    }}
-                  />
-                  <ViewSwitcherToggle />
-                  <SortingSelector
-                    options={[
-                      { label: 'Relevance', field: '_score', order: 'desc' },
-                      {
-                        label: 'Latest Modifications',
-                        field: 'modified',
-                        order: 'desc',
-                      },
-                      {
-                        label: 'Earliest Modifications',
-                        field: 'modified',
-                        order: 'asc',
-                      },
-                    ]}
-                  />
-                </ActionBarRow>
-
-                <ActionBarRow>
-                  <GroupedSelectedFilters />
-                  <ResetFilters />
-                </ActionBarRow>
-              </ActionBar>
-
-              <ViewSwitcherHits
-                hitsPerPage={12}
-                highlightFields={['title', 'description']}
-                sourceFilter={[]}
-                hitComponents={[
-                  {
-                    key: 'grid',
-                    title: 'Grid',
-                    itemComponent: withProps(GenericGridItem, {
-                      data,
-                    }),
-                    defaultOption: true,
-                  },
-                  {
-                    key: 'list',
-                    title: 'List',
-                    itemComponent: withProps(GenericListItem, {
-                      data,
-                    }),
-                  },
-                  {
-                    key: 'table',
-                    title: <Icon name={tableSVG} size="18px" />,
-                    listComponent: withProps(GenericTable, {
-                      data,
-                    }),
-                  },
-                ]}
-                scrollTo="body"
-              />
-              <NoHits suggestionsField={'title'} />
-              <Pagination showNumbers={true} />
-            </LayoutResults>
           </LayoutBody>
         </Layout>
       </SearchkitProvider>
