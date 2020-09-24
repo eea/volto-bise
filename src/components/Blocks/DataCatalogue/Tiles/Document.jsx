@@ -13,12 +13,14 @@ export const DocumentListItem = ({ source, bemBlocks }) => {
           href={`${catalogueHost}${source.file_name}`}
         >
           <sup class="cell-document-type">{source.content_type}</sup>
-          {source.title}
+          <span dangerouslySetInnerHTML={{ __html: source.title }}></span>
         </a>
-        {source.title !== source.english_title && (
-          <small className="cell-alternative-title" title="English title">
-            {source.english_title}
-          </small>
+        {source.title != source.english_title && (
+          <small
+            className="cell-alternative-title"
+            title="English title"
+            dangerouslySetInnerHTML={{ __html: source.english_title }}
+          ></small>
         )}
       </h4>
 

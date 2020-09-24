@@ -1,15 +1,12 @@
 import React from 'react';
 
-export const ArticleListItem = ({ source, bemBlocks }) => {
+export const LinkListItem = ({ source, bemBlocks }) => {
   return (
     <div className="catalogue-cell">
       <h4 className={`cell-title ${bemBlocks.item('title')}`}>
-        <a
-          target="_blank"
-          rel="noreferrer"
-          href={source.source_url}
-          dangerouslySetInnerHTML={{ __html: source.title }}
-        ></a>
+        <a target="_blank" rel="noreferrer" href={source.uri}>
+          {source.name}
+        </a>
       </h4>
       {source.title != source.english_title && (
         <small
@@ -18,11 +15,12 @@ export const ArticleListItem = ({ source, bemBlocks }) => {
           dangerouslySetInnerHTML={{ __html: source.english_title }}
         ></small>
       )}
-      <span className="cell-footer">
+      <div className="cell-description">{source.description}</div>
+      <div className="cell-footer">
         <span className="cell-source">{source.site.name}</span> &middot;
         Published on {source.published_on}
-      </span>
-      {/* <strong>Web Page</strong> */}
+      </div>
+      {/* <strong>Link</strong> */}
     </div>
   );
 };
