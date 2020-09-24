@@ -13,6 +13,7 @@ import {
   installKeyFacts,
   installMaesViewer,
   installConnectedMap,
+  installDataCatalogue,
 } from './components';
 
 export default (config) => {
@@ -76,8 +77,10 @@ export default (config) => {
   //   { cssClass: 'underline-block-text', label: 'Underline Text' },
   // ];
 
-  return [installKeyFacts, installMaesViewer, installConnectedMap].reduce(
-    (acc, apply) => apply(acc),
-    config,
-  );
+  return [
+    installKeyFacts,
+    installMaesViewer,
+    installConnectedMap,
+    installDataCatalogue,
+  ].reduce((acc, apply) => apply(acc), config);
 };
