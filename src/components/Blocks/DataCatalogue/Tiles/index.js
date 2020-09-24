@@ -4,6 +4,7 @@ import { Table } from 'semantic-ui-react';
 
 import { SpeciesGridItem, SpeciesListItem } from './Species';
 import { ArticleListItem } from './Article';
+import { DocumentListItem } from './Document';
 
 const gridItemTypes = {
   species: SpeciesGridItem,
@@ -12,6 +13,7 @@ const gridItemTypes = {
 const listItemTypes = {
   species: SpeciesListItem,
   article: ArticleListItem,
+  document: DocumentListItem,
 };
 
 export const GridItem = (props) => {
