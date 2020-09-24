@@ -2,7 +2,7 @@ import React from 'react';
 
 export const DocumentListItem = ({ source, bemBlocks }) => {
   const catalogueHost =
-    window.Catalogue?.host || 'https://catalogue.biodiversity.europa.eu/';
+    window.Catalogue?.host || 'https://catalogue.biodiversity.europa.eu';
 
   return (
     <div className="catalogue-cell">
