@@ -88,7 +88,7 @@ const RefinementOption = (props) => {
           {valueToLabel(props.label)}
         </span>
       </label>
-      <div className={props.bemBlocks.option('count')}>{props.count}</div>
+      {/* <div className={props.bemBlocks.option('count')}>{props.count}</div> */}
     </div>
   );
 };
