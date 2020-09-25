@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import DefaultTabsRenderer, {
   messages,
 } from '@eeacms/volto-tabs-block/Tabs/DefaultTabsRenderer';
-import { Tab, Grid } from 'semantic-ui-react';
+import { Tab } from 'semantic-ui-react';
 import { injectIntl } from 'react-intl';
-import cx from 'classnames';
 import { map } from 'lodash';
 import { blocks } from '~/config';
 import { getBaseUrl } from '@plone/volto/helpers';
 
-import VisibilitySensor from 'react-visibility-sensor';
-import AnchorLink from 'react-anchor-link-smooth-scroll';
+import BlocksWithToc from './BlocksWithToc';
 
 const splitBlocksByTOC = (blockIds, blocksContent) => {
   // find position of first block id where block content is text with h2
@@ -27,118 +25,6 @@ const splitBlocksByTOC = (blockIds, blocksContent) => {
   if (cursor === -1) cursor = blockIds.length - 1;
   return [blockIds.slice(0, cursor), blockIds.slice(cursor)];
 };
-
-let BlocksWithToc = ({ blockIds, blocksContent, intl, content, pathname }) => {
-  let [activeId, setActiveId] = useState(null);
-  const customSetActive = (value) => {
-    return setActiveId(value);
-  };
-  return (
-    <div>
-      <Grid className="toc-navigation">
-        <Grid.Row>
-          <Grid.Column width={3} className="sidebar-wrapper">
-            <div className="toc-sidebar">
-              <div className="toc-nav">
-                {map(blockIds, (blockId, index) => {
-                  const Block =
-                    blocks.blocksConfig[blocksContent?.[blockId]?.['@type']]?.[
-                      'view'
-                    ] || null;
-                  const block = blocksContent[blockId];
-                  if (block['@type'] !== 'slate' || !block.value) return '';
-                  const slateBlock = block.value[0];
-                  const { type } = slateBlock;
-                  const text = slateBlock.children[0].text;
-                  const textId = 'tocNav-' + index;
-                  const headings = ['h2', 'h3', 'h4'];
-                  const tocDescription = (type === 'h4');
-                  if (!headings.includes(type)) return null;
-                  return (
-                    <>
-                      {!tocDescription ? (
-                        <AnchorLink
-                          key={blockId}
-                          href={`#${textId}`}
-                          offset={10}
-                          className={cx(`toc-nav-header link-${type}`, {
-                            selected: activeId === textId,
-                          })}
-                        >
-                          {text}
-                        </AnchorLink>
-                      ) : (
-                        <span className="toc-description">{text}</span>
-                      )}
-                    </>
-                  );
-                })}
-              </div>
-            </div>
-          </Grid.Column>
-          <Grid.Column width={9} className="toc-content">
-            {map(blockIds, (blockId, index) => {
-              const Block =
-                blocks.blocksConfig[blocksContent?.[blockId]?.['@type']]?.[
-                  'view'
-                ] || null;
-              const block = blocksContent[blockId];
-              if (block['@type'] !== 'slate' || !block.value) {
-                return (
-                  <Block
-                    key={blockId}
-                    properties={content}
-                    data={blocksContent[blockId]}
-                    path={getBaseUrl(pathname || '')}
-                  />
-                );
-              }
-              const blockType = block.value[0].type;
-              const textId = 'tocNav-' + index;
-              const headings = ['h2', 'h3'];
-              const isHeadline = headings.includes(blockType);
-              return Block !== null ? (
-                <VisibilitySensor
-                  scrollCheck={true}
-                  resizeCheck={true}
-                  scrollThrottle={100}
-                  minTopValue={800}
-                  partialVisibility={true}
-                  offset={{ top: 10 }}
-                  intervalDelay={2000}
-                  key={blockId}
-                >
-                  {({ isVisible }) => {
-                    if (isHeadline && textId && isVisible)
-                      customSetActive(textId);
-                    return (
-                      <div {...(isHeadline ? {id: textId} : {})} >
-                        <Block
-                          key={blockId}
-                          properties={content}
-                          data={blocksContent[blockId]}
-                          path={getBaseUrl(pathname || '')}
-                        />
-                      </div>
-                    );
-                  }}
-                </VisibilitySensor>
-              ) : (
-                <div key={blockId}>
-                  {intl.formatMessage(messages.unknownBlock, {
-                    block: blocksContent?.[blockId]?.['@type'],
-                  })}
-                </div>
-              );
-            })}
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </div>
-  );
-};
-
-BlocksWithToc = injectIntl(BlocksWithToc);
 
 const TabsTocNavigationView = (props) => {
   const renderTab = React.useCallback(
@@ -189,6 +75,7 @@ const TabsTocNavigationView = (props) => {
             blockIds={contentIds}
             blocksContent={blocksContent}
             pathname={pathname}
+            intl={intl}
           />
         </Tab.Pane>
       ) : (
