@@ -32,11 +32,13 @@ export default (props) => {
   };
   const mapRef = React.useRef();
   const [modules, setModules] = React.useState({});
-  const loaded = React.useRef(false);
+  const [mapIsUpdating, setMapIsUpdating] = React.useState(false);
+  const modules_loaded = React.useRef(false);
 
+  // Load the ESRI JS API
   React.useEffect(() => {
-    if (!loaded.current) {
-      loaded.current = true;
+    if (!modules_loaded.current) {
+      modules_loaded.current = true;
       loadModules(MODULES, options).then((modules) => {
         const [Map, MapView, FeatureLayer] = modules;
         setModules({
@@ -48,14 +50,16 @@ export default (props) => {
     }
   }, [setModules, options]);
 
-  const layer_url = `${map_service_url}/${layer}`;
-  const [currentView, setCurrentView] = React.useState();
-  const [currentLayerView, setCurrentLayerView] = React.useState();
+  const layer_url = layer ? `${map_service_url}/${layer}` : null;
 
-  React.useEffect(() => {
-    if (currentLayerView) return;
+  const initial_map_filter_query = React.useRef(
+    map_filters ? filterToWhereParams(map_filters) : null,
+  );
+
+  const esri = React.useMemo(() => {
     const { Map, MapView, FeatureLayer } = modules;
-    if (!FeatureLayer) return;
+
+    if (!(FeatureLayer && layer_url)) return {};
 
     let layer = new FeatureLayer({
       url: layer_url,
@@ -68,37 +72,43 @@ export default (props) => {
       container: mapRef.current,
       map,
     });
-    setCurrentView(view);
+
     view.whenLayerView(layer).then((layerView) => {
       layerView.watch('updating', (val) => {
+        setMapIsUpdating(true);
         layerView.queryExtent().then((results) => {
-          view.goTo(results.extent);
+          console.log('results', results);
+          if (results.count > 0) {
+            setMapIsUpdating(false);
+            view.goTo(results.extent);
+          }
         });
       });
-      if (map_filters) {
-        const where = filterToWhereParams(map_filters);
+      if (initial_map_filter_query.current) {
         layerView.filter = {
-          where,
+          where: initial_map_filter_query.current,
         };
       }
-      setCurrentLayerView(layerView);
     });
-  }, [modules, layer_url, base_layer, map_filters, currentLayerView]);
 
+    return { view, map, layer };
+  }, [modules, base_layer, layer_url]);
+
+  const currentLayerView = esri.view?.layerViews?.items?.[0];
   React.useEffect(() => {
-    if (map_filters && currentLayerView) {
-      const where = filterToWhereParams(map_filters);
+    if (!currentLayerView) return;
+
+    if (currentLayerView && map_filters) {
       currentLayerView.filter = {
-        where,
+        where: filterToWhereParams(map_filters),
       };
-
-      currentLayerView.watch('updating', (val) => {
-        currentLayerView.queryExtent().then((results) => {
-          currentView.goTo(results.extent);
-        });
-      });
     }
-  }, [map_filters, currentLayerView, currentView]);
+  }, [currentLayerView, layer, map_filters]);
 
-  return <div ref={mapRef} className="esri-map"></div>;
+  return (
+    <div>
+      <div>{mapIsUpdating ? 'Waiting for map server...' : ''}</div>
+      <div ref={mapRef} className="esri-map"></div>
+    </div>
+  );
 };
