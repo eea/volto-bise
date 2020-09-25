@@ -42,6 +42,10 @@ import tableSVG from '@plone/volto/icons/table.svg';
 import { GridItem, ListItem, TableView } from './Tiles';
 import './styles.less';
 
+/**
+ * Returns the label associated to a data type
+ * @param {string} val
+ */
 const valueToLabel = (val) => {
   const data = [
     { label: 'Documents', value: 'document' },
@@ -52,70 +56,13 @@ const valueToLabel = (val) => {
     { label: 'Sites Info', value: 'site' },
     { label: 'Protected Area', value: 'protected_area' }, // hidden
   ];
-  console.log('VAL', val);
   return data.filter((x) => x.value === val)[0].label;
 };
 
-const DataTypeListFilter = ({ id, title, field, size, onChange }) => {
-  const data = React.useMemo(() => {
-    return [
-      { label: 'Documents', value: 'document' },
-      { label: 'Links', value: 'link' },
-      { label: 'Web Pages', value: 'article' },
-      { label: 'Species Info', value: 'species' },
-      { label: 'Habitat Types Info', value: 'habitat' },
-      { label: 'Sites Info', value: 'site' },
-    ];
-  }, []);
-
-  const [checkedValues, setCheckedValues] = React.useState([]);
-
-  const handleClick = React.useCallback(
-    (value, checked) => {
-      let changedData;
-      if (checked) {
-        changedData = [...checkedValues.concat(value)];
-      } else {
-        changedData = [
-          ...checkedValues.filter((x) => {
-            return x !== value;
-          }),
-        ];
-      }
-      setCheckedValues(changedData);
-      onChange(changedData);
-    },
-    [checkedValues, onChange],
-  );
-
-  return (
-    <div className="data-type-list-filter-box">
-      <strong>{title}</strong>
-      <ul>
-        {data.map((d) => {
-          return (
-            <li>
-              <p>
-                <label role="presentation">
-                  <input
-                    type="checkbox"
-                    value={d.value}
-                    onClick={(ev) => {
-                      handleClick(d.value, ev.target.checked);
-                    }}
-                  ></input>
-                  {d.label}
-                </label>
-              </p>
-            </li>
-          );
-        })}
-      </ul>
-      {JSON.stringify(checkedValues)}
-    </div>
-  );
-};
-
+/**
+ * Displays a checkbox w/ a label that replaces the default data type string.
+ * @param {object} props
+ */
 const RefinementOption = (props) => {
   return (
     <div
@@ -144,30 +91,29 @@ const RefinementOption = (props) => {
   );
 };
 
+/**
+ * Before showing the data types' filter sort its options well.
+ * @param {object} props
+ */
 const RefinementList = (props) => {
   const data = [
-    { key: 'document', order: 1 },
+    { order: 1, key: 'document' },
     { order: 2, key: 'link' },
     { order: 3, key: 'article' },
     { order: 4, key: 'species' },
     { order: 5, key: 'habitat' },
     { order: 6, key: 'site' },
-    // { order: 11, key: 'protected_area' }, // hidden
+    { order: 7, key: 'protected_area' }, // hidden
   ];
-
-  // function labelsEqual(key1, key2) {
-  //   return valueToLabel(key1) === valueToLabel(key2);
-  // }
 
   let arr = Array.from(props.items);
   arr = arr.filter((x) => x.key !== 'protected_area');
   arr = arr.sort((a, b) => {
     return (
-      data[data.findIndex((x) => _.isEqual(x.key, a.key))].order -
-      data[data.findIndex((x) => _.isEqual(x.key, b.key))].order
+      data[data.findIndex((x) => x.key === a.key)].order -
+      data[data.findIndex((x) => x.key === b.key)].order
     );
   });
-  console.log('ARR', arr);
   return <CheckboxItemList {...props} items={arr} />;
 };
 
@@ -175,6 +121,7 @@ const search_types = [
   'article',
   'document',
   'link',
+  // 'site',
   'news',
   // 'country',
   // 'biogen_region',
@@ -189,16 +136,13 @@ const DataCatalogueView = (props) => {
   const searchkit = React.useMemo(() => {
     return new SearchkitManager(url);
   }, [url]);
-  // const [selectedDataTypes, setSelectedDataTypes] = React.useState(
-  //   search_types,
-  // );
 
   // const searchkit = new SearchkitManager("/")
   searchkit.addDefaultQuery((query) => {
     return query.addQuery(
       FilteredQuery({
         filter: BoolShould([
-          TermsQuery('_type', search_types /* selectedDataTypes */),
+          TermsQuery('_type', search_types),
           // TermQuery('colour', 'orange'),
         ]),
       }),
@@ -286,30 +230,19 @@ const DataCatalogueView = (props) => {
             <SideBar>
               <h4>Filter results</h4>
 
-              {/* <DataTypeListFilter
-                id="type"
-                title="By type"
-                field="_type"
-                size={4}
-                onChange={(vals) => {
-                  setSelectedDataTypes(vals);
-                }}
-              ></DataTypeListFilter> */}
-
               <RefinementListFilter
                 id="type"
-                title="By type"
+                title="By Type"
                 field="_type"
                 size={10}
                 operator="OR"
-                orderKey="_term"
                 itemComponent={RefinementOption}
                 listComponent={RefinementList}
               />
 
               <RefinementListFilter
                 id="countries"
-                title="By country"
+                title="By Country"
                 field="countries.name"
                 size={4}
               />
