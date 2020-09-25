@@ -29,6 +29,7 @@ import {
   CheckboxItemList,
   Tabs,
   MenuFilter,
+  CheckboxItemComponent,
   // MenuFilter,
   // RangeFilter,
   // TermQuery,
@@ -43,6 +44,18 @@ import tableSVG from '@plone/volto/icons/table.svg';
 
 import { GridItem, ListItem, TableView } from './Tiles';
 import './styles.less';
+
+/**
+ * Displays a Checkbox Option which, when it has no key (key "") it displays a default string
+ * "(No Biogeograhical Region)".
+ * @param {object} props
+ */
+const BiogeographicalRegionOption = (props) => {
+  if (props.itemKey.length === 0) {
+    return <CheckboxItemComponent {...props} label="(No Region)" />;
+  }
+  return <CheckboxItemComponent {...props} />;
+};
 
 /**
  * Returns the label associated to a data type
@@ -298,6 +311,7 @@ const DataCatalogueView = (props) => {
                 id="bioregions"
                 title="By Biogeographical Region"
                 field="biographical_region"
+                itemComponent={BiogeographicalRegionOption}
                 size={4}
               />
 
