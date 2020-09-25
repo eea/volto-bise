@@ -11,7 +11,7 @@ export const HabitatListItem = ({ source, bemBlocks }) => {
 
       <div class="cell-footer">
         <span class="cell-source">{source.site.name}</span> &middot; Habitat
-        type with code
+        type with code{' '}
         {source.natura2000_code != undefined
           ? source.natura2000_code
           : source.habitat_code}
