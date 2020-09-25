@@ -28,6 +28,7 @@ import {
   DynamicRangeFilter,
   CheckboxItemList,
   Tabs,
+  MenuFilter,
   // MenuFilter,
   // RangeFilter,
   // TermQuery,
@@ -118,37 +119,6 @@ const RefinementList = (props) => {
   return <CheckboxItemList {...props} items={arr} />;
 };
 
-const CustomTabs = (props) => {
-  let doc_count = 0;
-  props.items.forEach((x) => {
-    doc_count += x.doc_count;
-  });
-
-  const arr = [{ key: 'All', doc_count }, ...props.items];
-  let selItems;
-  if (props.selectedItems.length > 0) {
-    selItems = [...props.selectedItems];
-  } else {
-    selItems = [arr[0].key];
-  }
-
-  return (
-    <Tabs
-      {...props}
-      items={arr}
-      selectedItems={selItems}
-      setItems={(arr) => {
-        if (arr[0] === 'All') {
-          // show all
-          console.log('ALL');
-          return;
-        }
-        props.setItems(arr);
-      }}
-    />
-  );
-};
-
 const search_types = [
   'article',
   'document',
@@ -224,16 +194,15 @@ const DataCatalogueView = (props) => {
                   <GroupedSelectedFilters />
                   <ResetFilters />
                 </ActionBarRow>
+
                 <ActionBarRow>
-                  <RefinementListFilter
+                  <MenuFilter
                     showCount={true}
                     id="siteName"
                     title="By Site Name"
                     field="site.name"
-                    listComponent={CustomTabs}
-                    operator="OR"
-                    size={10}
-                  ></RefinementListFilter>
+                    listComponent={Tabs}
+                  />
                 </ActionBarRow>
               </ActionBar>
 
