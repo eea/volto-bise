@@ -80,7 +80,9 @@ const RefinementOption = (props) => {
       <label style={{ flexGrow: 1 }}>
         <input
           type="checkbox"
-          onClick={props.onClick}
+          onClick={(...args) => {
+            return props.onClick(...args);
+          }}
           checked={props.active}
           className="sk-item-list-option__checkbox"
         />
@@ -94,7 +96,9 @@ const RefinementOption = (props) => {
 };
 
 /**
- * Before showing the data types' filter sort its options well.
+ * Before showing the data types' filter sort its options well and the default
+ * behavior is to all be checked (this is the same as when all are unchecked,
+ * because the implicit operator is OR).
  * @param {object} props
  */
 const RefinementList = (props) => {
@@ -108,7 +112,7 @@ const RefinementList = (props) => {
     { order: 7, key: 'protected_area' }, // hidden
   ];
 
-  let arr = Array.from(props.items);
+  let arr = [...props.items];
   arr = arr.filter((x) => x.key !== 'protected_area');
   arr = arr.sort((a, b) => {
     return (
@@ -116,7 +120,32 @@ const RefinementList = (props) => {
       data[data.findIndex((x) => x.key === b.key)].order
     );
   });
-  return <CheckboxItemList {...props} items={arr} />;
+
+  const allKeys = arr.map((x) => x.key);
+  const activeCount = props.selectedItems.length;
+  let selectedItems = props.selectedItems.map((x) => x.key);
+  if (activeCount === 0) {
+    selectedItems = allKeys;
+  } else {
+    selectedItems = props.selectedItems;
+    if (selectedItems.length === allKeys.length) {
+      selectedItems = [];
+
+      // TODO: do this in the selected filters view w/o reloading the page
+      const newLoc = window.location.href
+        .replace(/type\[\d+\]=[a-zA-Z0-9_]+/g, '')
+        .replace(/&&/g, '&')
+        .replace(/\?&/g, '?')
+        .replace(/[&?]$/, '');
+      if (newLoc !== window.location.href) {
+        window.location.href = newLoc;
+      }
+    }
+  }
+
+  return (
+    <CheckboxItemList {...props} items={arr} selectedItems={selectedItems} />
+  );
 };
 
 const search_types = [
@@ -150,6 +179,12 @@ const DataCatalogueView = (props) => {
       }),
     );
   });
+
+  // searchkit.setQueryProcessor((plainQueryObject) => {
+  //   console.log('QUERY', plainQueryObject);
+  //   // query.bool.must = [];
+  //   return plainQueryObject;
+  // });
 
   // prefixQueryFields={[]}
   // queryOptions={{ analyzer: 'standard' }}
