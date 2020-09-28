@@ -30,6 +30,7 @@ import {
   Tabs,
   MenuFilter,
   CheckboxItemComponent,
+  SearchkitComponent,
   // MenuFilter,
   // RangeFilter,
   // TermQuery,
@@ -44,8 +45,6 @@ import tableSVG from '@plone/volto/icons/table.svg';
 
 import { GridItem, ListItem, TableView } from './Tiles';
 import './styles.less';
-
-let globalSearchKitManagers = [];
 
 /**
  * Displays a Checkbox Option which, when it has no key (key "") it displays a
@@ -116,43 +115,43 @@ const RefinementOption = (props) => {
  * because the implicit operator is OR).
  * @param {object} props
  */
-const RefinementList = (props) => {
-  // console.log('MY PROPS', props);
-  const data = [
-    { order: 1, key: 'document' },
-    { order: 2, key: 'link' },
-    { order: 3, key: 'article' },
-    { order: 4, key: 'species' },
-    { order: 5, key: 'habitat' },
-    { order: 6, key: 'site' },
-    { order: 7, key: 'protected_area' }, // hidden
-  ];
+const RefinementList = class extends SearchkitComponent {
+  render() {
+    const data = [
+      { order: 1, key: 'document' },
+      { order: 2, key: 'link' },
+      { order: 3, key: 'article' },
+      { order: 4, key: 'species' },
+      { order: 5, key: 'habitat' },
+      { order: 6, key: 'site' },
+      { order: 7, key: 'protected_area' }, // hidden
+    ];
 
-  let arr = [...props.items];
-  arr = arr.filter((x) => x.key !== 'protected_area');
-  arr = arr.sort((a, b) => {
-    console.log('A', a.key, 'B', b.key);
+    const props = this.props;
 
-    const ai = data.findIndex((x) => x.key === a.key);
-    const bi = data.findIndex((x) => x.key === b.key);
-    if (ai < 0 || isNaN(ai) || bi < 0 || isNaN(bi)) {
-      return 0;
-    }
+    let arr = [...props.items];
+    arr = arr.filter((x) => x.key !== 'protected_area');
+    arr = arr.sort((a, b) => {
+      const ai = data.findIndex((x) => x.key === a.key);
+      const bi = data.findIndex((x) => x.key === b.key);
+      if (ai < 0 || isNaN(ai) || bi < 0 || isNaN(bi)) {
+        return 0;
+      }
 
-    return data[ai].order - data[bi].order;
-  });
+      return data[ai].order - data[bi].order;
+    });
 
-  const allKeys = arr.map((x) => x.key);
-  const activeCount = props.selectedItems.length;
-  let selectedItems = props.selectedItems.map((x) => x.key);
-  if (activeCount === 0) {
-    selectedItems = allKeys;
-  } else {
-    selectedItems = props.selectedItems;
-    if (selectedItems.length === allKeys.length) {
-      selectedItems = [];
+    const allKeys = arr.map((x) => x.key);
+    const activeCount = props.selectedItems.length;
+    let selectedItems = props.selectedItems.map((x) => x.key);
+    if (activeCount === 0) {
+      selectedItems = allKeys;
+    } else {
+      selectedItems = props.selectedItems;
+      if (selectedItems.length === allKeys.length) {
+        selectedItems = [];
 
-      for (const sk of globalSearchKitManagers) {
+        const sk = this.searchkit;
         if (typeof sk !== 'undefined') {
           const filters = sk.accessors.accessors.filter(
             (x) => x.field === '_type',
@@ -164,11 +163,11 @@ const RefinementList = (props) => {
         }
       }
     }
-  }
 
-  return (
-    <CheckboxItemList {...props} items={arr} selectedItems={selectedItems} />
-  );
+    return (
+      <CheckboxItemList {...props} items={arr} selectedItems={selectedItems} />
+    );
+  }
 };
 
 const search_types = [
@@ -191,16 +190,6 @@ const DataCatalogueView = (props) => {
   const searchkit = React.useMemo(() => {
     return new SearchkitManager(url);
   }, [url]);
-
-  React.useEffect(() => {
-    globalSearchKitManagers.push(searchkit);
-    return () => {
-      globalSearchKitManagers.splice(
-        globalSearchKitManagers.indexOf(searchkit),
-        1,
-      );
-    };
-  }, [searchkit]);
 
   // const searchkit = new SearchkitManager("/")
   searchkit.addDefaultQuery((query) => {
