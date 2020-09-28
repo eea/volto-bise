@@ -220,7 +220,7 @@ const DataCatalogueView = (props) => {
                       'hitstats.results_found': '{hitCount} results found',
                     }}
                   />
-                  <ViewSwitcherToggle />
+                  {/* <ViewSwitcherToggle /> */}
                   <SortingSelector
                     options={[
                       { label: 'Relevance', field: '_score', order: 'desc' },
