@@ -228,16 +228,31 @@ const DataCatalogueView = (props) => {
                   {/* <ViewSwitcherToggle /> */}
                   <SortingSelector
                     options={[
-                      { label: 'Relevance', field: '_score', order: 'desc' },
                       {
-                        label: 'Latest Modifications',
-                        field: 'modified',
+                        label: 'Sorted by relevance',
+                        field: '_score',
+                        order: 'desc',
+                        defaultOption: true,
+                      },
+                      // {
+                      //   label: 'Latest Modifications',
+                      //   field: 'modified',
+                      //   order: 'desc',
+                      // },
+                      // {
+                      //   label: 'Earliest Modifications',
+                      //   field: 'modified',
+                      //   order: 'asc',
+                      // },
+                      {
+                        label: 'Sorted by publish date',
+                        field: 'published_on',
                         order: 'desc',
                       },
                       {
-                        label: 'Earliest Modifications',
-                        field: 'modified',
-                        order: 'asc',
+                        label: 'Sorted by added date',
+                        field: 'created_at',
+                        order: 'desc',
                       },
                     ]}
                   />
