@@ -45,6 +45,8 @@ import tableSVG from '@plone/volto/icons/table.svg';
 import { GridItem, ListItem, TableView } from './Tiles';
 import './styles.less';
 
+let globalSearchKitManagers = [];
+
 /**
  * Displays a Checkbox Option which, when it has no key (key "") it displays a default string
  * "(No Biogeograhical Region)".
@@ -115,6 +117,7 @@ const RefinementOption = (props) => {
  * @param {object} props
  */
 const RefinementList = (props) => {
+  // console.log('MY PROPS', props);
   const data = [
     { order: 1, key: 'document' },
     { order: 2, key: 'link' },
@@ -149,14 +152,16 @@ const RefinementList = (props) => {
     if (selectedItems.length === allKeys.length) {
       selectedItems = [];
 
-      // TODO: do this in the selected filters view w/o reloading the page
-      const newLoc = window.location.href
-        .replace(/type\[\d+\]=[a-zA-Z0-9_]+/g, '')
-        .replace(/&&/g, '&')
-        .replace(/\?&/g, '?')
-        .replace(/[&?]$/, '');
-      if (newLoc !== window.location.href) {
-        window.location.href = newLoc;
+      for (const sk of globalSearchKitManagers) {
+        if (typeof sk !== 'undefined') {
+          const filters = sk.accessors.accessors.filter(
+            (x) => x.field === '_type',
+          );
+          for (const x of filters) {
+            sk.removeAccessor(x);
+          }
+          sk.performSearch(true, true);
+        }
       }
     }
   }
@@ -186,6 +191,16 @@ const DataCatalogueView = (props) => {
   const searchkit = React.useMemo(() => {
     return new SearchkitManager(url);
   }, [url]);
+
+  React.useEffect(() => {
+    globalSearchKitManagers.push(searchkit);
+    return () => {
+      globalSearchKitManagers.splice(
+        globalSearchKitManagers.indexOf(searchkit),
+        1,
+      );
+    };
+  }, [searchkit]);
 
   // const searchkit = new SearchkitManager("/")
   searchkit.addDefaultQuery((query) => {
