@@ -24,13 +24,13 @@ import {
   SortingSelector,
   TermsQuery,
   ViewSwitcherHits,
-  // ViewSwitcherToggle,
   DynamicRangeFilter,
   CheckboxItemList,
   Tabs,
   MenuFilter,
   CheckboxItemComponent,
   SearchkitComponent,
+  // ViewSwitcherToggle,
   // MenuFilter,
   // RangeFilter,
   // TermQuery,
@@ -46,9 +46,19 @@ import tableSVG from '@plone/volto/icons/table.svg';
 import { GridItem, ListItem, TableView } from './Tiles';
 import './styles.less';
 
+const dataTypesInformation = [
+  { label: 'Documents', value: 'document', order: 1 },
+  { label: 'Links', value: 'link', order: 2 },
+  { label: 'Web Pages', value: 'article', order: 3 },
+  { label: 'Species Info', value: 'species', order: 4 },
+  { label: 'Habitat Types Info', value: 'habitat', order: 5 },
+  { label: 'Sites Info', value: 'site', order: 6 },
+  { label: 'Protected Area', value: 'protected_area', order: 7 }, // hidden
+];
+
 /**
  * Displays a Checkbox Option which, when it has no key (key "") it displays a
- * default string "(No Biogeograhical Region)".
+ * default string "(No Region)".
  * @param {object} props
  */
 const BiogeographicalRegionOption = (props) => {
@@ -59,27 +69,18 @@ const BiogeographicalRegionOption = (props) => {
 };
 
 /**
- * Returns the label associated to a data type
- * @param {string} val
- */
-const valueToLabel = (val) => {
-  const data = [
-    { label: 'Documents', value: 'document' },
-    { label: 'Links', value: 'link' },
-    { label: 'Web Pages', value: 'article' },
-    { label: 'Species Info', value: 'species' },
-    { label: 'Habitat Types Info', value: 'habitat' },
-    { label: 'Sites Info', value: 'site' },
-    { label: 'Protected Area', value: 'protected_area' }, // hidden
-  ];
-  return data.filter((x) => x.value === val)[0].label;
-};
-
-/**
  * Displays a checkbox w/ a label that replaces the default data type string.
  * @param {object} props
  */
 const RefinementOption = (props) => {
+  /**
+   * Returns the label associated to a data type
+   * @param {string} val
+   */
+  const valueToLabel = React.useCallback((val) => {
+    return dataTypesInformation.filter((x) => x.value === val)[0].label;
+  }, []);
+
   return (
     <div
       role="checkbox"
@@ -115,27 +116,18 @@ const RefinementOption = (props) => {
  * because the implicit operator is OR).
  */
 const RefinementList = class extends SearchkitComponent {
-  static data = [
-    { order: 1, key: 'document' },
-    { order: 2, key: 'link' },
-    { order: 3, key: 'article' },
-    { order: 4, key: 'species' },
-    { order: 5, key: 'habitat' },
-    { order: 6, key: 'site' },
-    { order: 7, key: 'protected_area' }, // hidden
-  ];
-
   render() {
     let arr = [...this.props.items];
     arr = arr.filter((x) => x.key !== 'protected_area');
     arr = arr.sort((a, b) => {
-      const ai = RefinementList.data.findIndex((x) => x.key === a.key);
-      const bi = RefinementList.data.findIndex((x) => x.key === b.key);
+      const ai = dataTypesInformation.findIndex((x) => x.value === a.key);
+      const bi = dataTypesInformation.findIndex((x) => x.value === b.key);
+
       if (ai < 0 || isNaN(ai) || bi < 0 || isNaN(bi)) {
         return 0;
       }
 
-      return RefinementList.data[ai].order - RefinementList.data[bi].order;
+      return dataTypesInformation[ai].order - dataTypesInformation[bi].order;
     });
 
     const allKeys = arr.map((x) => x.key);
