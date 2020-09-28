@@ -17,3 +17,97 @@
 
 body {
 }
+
+// By Biogeographical Region > (No Region) to appear as italic text
+.sk-item-list-option.sk-item-list__item[data-key=""] {
+	font-style: italic;
+}
+
+/*
+Styles for the search results as copied from
+https://github.com/eea/bise.theme/blob/master/bise/theme/skins/bise_theme_styles/catalogue/catalogue.css
+on 24th of september 2020 and then converted to LESS:
+*/
+
+.catalogue-cell {
+	margin: 2rem 0;
+	.category {
+		font-size: .9em;
+		color: #999;
+	}
+	small {
+		display: block;
+	}
+	.cell-source {
+		color: #41b664;
+	}
+	.cell-footer {
+		color: #748284;
+		margin-top: .5rem;
+	}
+	.hits {
+		border-left: 3px solid #8ea04c;
+		border-top: 1px solid #8ea04c;
+		font-size: 10px;
+		line-height: 10px;
+		-webkit-box-shadow: 1px 2px 2px 2px rgba(0,0,0,0.3);
+		box-shadow: 1px 2px 2px 2px rgba(0,0,0,0.3);
+	}
+	p.hit {
+		background: #fff;
+		color: #6b6b6b;
+		margin-bottom: 0;
+	}
+	em {
+		font-weight: bold;
+		font-style: normal;
+	}
+	.att-preview {
+		ol {
+			margin-top: 12px;
+			margin-bottom: -5px;
+			margin-left: -25px;
+			list-style-type: none;
+			li {
+				color: #606060;
+				em {
+					padding: 1px 3px;
+					color: #3b5705;
+				}
+			}
+		}
+	}
+}
+.cell-title {
+	font-family: inherit;
+	font-size: larger !important;
+	margin-bottom: .25em;
+	font-weight: 400;
+}
+.cell-alternative-title {
+	display: block;
+	font-size: small;
+	font-style: italic;
+	line-height: 1.2;
+	margin: .5em 0;
+	padding-left: 1em;
+	border-left: solid #41b764;
+	color: #748284;
+	cursor: help;
+	&:hover {
+		color: inherit;
+	}
+}
+.cell-document-type {
+	font-size: x-small;
+	text-transform: uppercase;
+	font-weight: 600;
+	&::before {
+		content: '[';
+		font: inherit;
+	}
+	&::after {
+		content: ']';
+		font: inherit;
+	}
+}

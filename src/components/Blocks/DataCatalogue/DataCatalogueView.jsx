@@ -1,6 +1,8 @@
 import React from 'react';
 import withProps from 'decorate-component-with-props';
 
+import _ from 'lodash';
+
 import {
   ActionBar,
   ActionBarRow,
@@ -24,6 +26,10 @@ import {
   ViewSwitcherHits,
   ViewSwitcherToggle,
   DynamicRangeFilter,
+  CheckboxItemList,
+  Tabs,
+  MenuFilter,
+  CheckboxItemComponent,
   // MenuFilter,
   // RangeFilter,
   // TermQuery,
@@ -39,10 +45,127 @@ import tableSVG from '@plone/volto/icons/table.svg';
 import { GridItem, ListItem, TableView } from './Tiles';
 import './styles.less';
 
+/**
+ * Displays a Checkbox Option which, when it has no key (key "") it displays a default string
+ * "(No Biogeograhical Region)".
+ * @param {object} props
+ */
+const BiogeographicalRegionOption = (props) => {
+  if (props.itemKey.length === 0) {
+    return <CheckboxItemComponent {...props} label="(No Region)" />;
+  }
+  return <CheckboxItemComponent {...props} />;
+};
+
+/**
+ * Returns the label associated to a data type
+ * @param {string} val
+ */
+const valueToLabel = (val) => {
+  const data = [
+    { label: 'Documents', value: 'document' },
+    { label: 'Links', value: 'link' },
+    { label: 'Web Pages', value: 'article' },
+    { label: 'Species Info', value: 'species' },
+    { label: 'Habitat Types Info', value: 'habitat' },
+    { label: 'Sites Info', value: 'site' },
+    { label: 'Protected Area', value: 'protected_area' }, // hidden
+  ];
+  return data.filter((x) => x.value === val)[0].label;
+};
+
+/**
+ * Displays a checkbox w/ a label that replaces the default data type string.
+ * @param {object} props
+ */
+const RefinementOption = (props) => {
+  return (
+    <div
+      role="checkbox"
+      onKeyPress={() => {}}
+      className={props.bemBlocks
+        .option()
+        .state({ selected: props.active })
+        .mix(props.bemBlocks.container('item'))}
+      tabIndex={0}
+      aria-checked={props.active}
+    >
+      <label style={{ flexGrow: 1 }}>
+        <input
+          type="checkbox"
+          onClick={(...args) => {
+            return props.onClick(...args);
+          }}
+          checked={props.active}
+          className="sk-item-list-option__checkbox"
+        />
+        <span className={props.bemBlocks.option('text')}>
+          {valueToLabel(props.label)}
+        </span>
+      </label>
+      {/* <div className={props.bemBlocks.option('count')}>{props.count}</div> */}
+    </div>
+  );
+};
+
+/**
+ * Before showing the data types' filter sort its options well and the default
+ * behavior is to all be checked (this is the same as when all are unchecked,
+ * because the implicit operator is OR).
+ * @param {object} props
+ */
+const RefinementList = (props) => {
+  const data = [
+    { order: 1, key: 'document' },
+    { order: 2, key: 'link' },
+    { order: 3, key: 'article' },
+    { order: 4, key: 'species' },
+    { order: 5, key: 'habitat' },
+    { order: 6, key: 'site' },
+    { order: 7, key: 'protected_area' }, // hidden
+  ];
+
+  let arr = [...props.items];
+  arr = arr.filter((x) => x.key !== 'protected_area');
+  arr = arr.sort((a, b) => {
+    return (
+      data[data.findIndex((x) => x.key === a.key)].order -
+      data[data.findIndex((x) => x.key === b.key)].order
+    );
+  });
+
+  const allKeys = arr.map((x) => x.key);
+  const activeCount = props.selectedItems.length;
+  let selectedItems = props.selectedItems.map((x) => x.key);
+  if (activeCount === 0) {
+    selectedItems = allKeys;
+  } else {
+    selectedItems = props.selectedItems;
+    if (selectedItems.length === allKeys.length) {
+      selectedItems = [];
+
+      // TODO: do this in the selected filters view w/o reloading the page
+      const newLoc = window.location.href
+        .replace(/type\[\d+\]=[a-zA-Z0-9_]+/g, '')
+        .replace(/&&/g, '&')
+        .replace(/\?&/g, '?')
+        .replace(/[&?]$/, '');
+      if (newLoc !== window.location.href) {
+        window.location.href = newLoc;
+      }
+    }
+  }
+
+  return (
+    <CheckboxItemList {...props} items={arr} selectedItems={selectedItems} />
+  );
+};
+
 const search_types = [
   'article',
   'document',
   'link',
+  // 'site',
   'news',
   // 'country',
   // 'biogen_region',
@@ -69,6 +192,12 @@ const DataCatalogueView = (props) => {
       }),
     );
   });
+
+  // searchkit.setQueryProcessor((plainQueryObject) => {
+  //   console.log('QUERY', plainQueryObject);
+  //   // query.bool.must = [];
+  //   return plainQueryObject;
+  // });
 
   // prefixQueryFields={[]}
   // queryOptions={{ analyzer: 'standard' }}
@@ -113,6 +242,16 @@ const DataCatalogueView = (props) => {
                   <GroupedSelectedFilters />
                   <ResetFilters />
                 </ActionBarRow>
+
+                <ActionBarRow>
+                  <MenuFilter
+                    showCount={true}
+                    id="siteName"
+                    title="By Site Name"
+                    field="site.name"
+                    listComponent={Tabs}
+                  />
+                </ActionBarRow>
               </ActionBar>
 
               <ViewSwitcherHits
@@ -152,8 +291,18 @@ const DataCatalogueView = (props) => {
               <h4>Filter results</h4>
 
               <RefinementListFilter
+                id="type"
+                title="By Type"
+                field="_type"
+                size={10}
+                operator="OR"
+                itemComponent={RefinementOption}
+                listComponent={RefinementList}
+              />
+
+              <RefinementListFilter
                 id="countries"
-                title="By country"
+                title="By Country"
                 field="countries.name"
                 size={4}
               />
@@ -162,6 +311,7 @@ const DataCatalogueView = (props) => {
                 id="bioregions"
                 title="By Biogeographical Region"
                 field="biographical_region"
+                itemComponent={BiogeographicalRegionOption}
                 size={4}
               />
 
