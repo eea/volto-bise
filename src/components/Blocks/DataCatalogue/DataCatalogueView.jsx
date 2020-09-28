@@ -48,8 +48,8 @@ import './styles.less';
 let globalSearchKitManagers = [];
 
 /**
- * Displays a Checkbox Option which, when it has no key (key "") it displays a default string
- * "(No Biogeograhical Region)".
+ * Displays a Checkbox Option which, when it has no key (key "") it displays a
+ * default string "(No Biogeograhical Region)".
  * @param {object} props
  */
 const BiogeographicalRegionOption = (props) => {
