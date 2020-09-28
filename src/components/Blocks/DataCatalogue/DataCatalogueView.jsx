@@ -351,6 +351,7 @@ const DataCatalogueView = (props) => {
                 showHistogram={true}
                 rangeFormatter={(n) => {
                   if (n) {
+                    // `d` is the local time
                     const d = new Date(n);
                     return d.getFullYear();
                   }
