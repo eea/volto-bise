@@ -141,7 +141,7 @@ const RefinementList = (props) => {
 
   const allKeys = arr.map((x) => x.key);
   const activeCount = props.selectedItems.length;
-  let selectedItems = props.selectedItems.map((x) => x.key);
+  let selectedItems = props.selectedItems.map((x) => x?.key);
   if (activeCount === 0) {
     selectedItems = allKeys;
   } else {
