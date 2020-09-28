@@ -128,10 +128,15 @@ const RefinementList = (props) => {
   let arr = [...props.items];
   arr = arr.filter((x) => x.key !== 'protected_area');
   arr = arr.sort((a, b) => {
-    return (
-      data[data.findIndex((x) => x.key === a.key)].order -
-      data[data.findIndex((x) => x.key === b.key)].order
-    );
+    console.log('A', a.key, 'B', b.key);
+
+    const ai = data.findIndex((x) => x.key === a.key);
+    const bi = data.findIndex((x) => x.key === b.key);
+    if (ai < 0 || isNaN(ai) || bi < 0 || isNaN(bi)) {
+      return 0;
+    }
+
+    return data[ai].order - data[bi].order;
   });
 
   const allKeys = arr.map((x) => x.key);
