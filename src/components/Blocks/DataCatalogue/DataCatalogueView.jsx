@@ -141,31 +141,34 @@ const RefinementList = (props) => {
     return data[ai].order - data[bi].order;
   });
 
-  const allKeys = arr.map((x) => x.key);
-  const activeCount = props.selectedItems.length;
-  let selectedItems = props.selectedItems.map((x) => x?.key);
-  if (activeCount === 0) {
-    selectedItems = allKeys;
-  } else {
-    selectedItems = props.selectedItems;
-    if (selectedItems.length === allKeys.length) {
-      selectedItems = [];
+  let selection = [];
+  console.log('props.selectedItems', props.selectedItems);
+  if (Array.isArray(props.selectedItems)) {
+    const allKeys = arr.map((x) => x.key);
+    const activeCount = props.selectedItems.length;
+    let selectedItems = props.selectedItems.map((x) => x?.key);
+    if (activeCount === 0) {
+      selectedItems = allKeys;
+    } else {
+      selectedItems = props.selectedItems;
+      if (selectedItems.length === allKeys.length) {
+        selectedItems = [];
 
-      // TODO: do this in the selected filters view w/o reloading the page
-      const newLoc = window.location.href
-        .replace(/type\[\d+\]=[a-zA-Z0-9_]+/g, '')
-        .replace(/&&/g, '&')
-        .replace(/\?&/g, '?')
-        .replace(/[&?]$/, '');
-      if (newLoc !== window.location.href) {
-        window.location.href = newLoc;
+        // TODO: do this in the selected filters view w/o reloading the page
+        const newLoc = window.location.href
+          .replace(/type\[\d+\]=[a-zA-Z0-9_]+/g, '')
+          .replace(/&&/g, '&')
+          .replace(/\?&/g, '?')
+          .replace(/[&?]$/, '');
+        if (newLoc !== window.location.href) {
+          window.location.href = newLoc;
+        }
       }
     }
+    selection = selectedItems;
   }
 
-  return (
-    <CheckboxItemList {...props} items={arr} selectedItems={selectedItems} />
-  );
+  return <CheckboxItemList {...props} items={arr} selectedItems={selection} />;
 };
 
 const search_types = [
@@ -183,7 +186,7 @@ const search_types = [
 
 const DataCatalogueView = (props) => {
   const { data } = props;
-  const url = data.es_host || 'http://localhost:3000';
+  const url = data.es_host; //  || 'http://localhost:3000'
   const searchkit = React.useMemo(() => {
     return new SearchkitManager(url);
   }, [url]);
@@ -211,171 +214,175 @@ const DataCatalogueView = (props) => {
 
   return (
     <div>
-      <SearchkitProvider searchkit={searchkit}>
-        <Layout>
-          <LayoutBody>
-            <LayoutResults>
-              <SearchBox
-                autofocus={true}
-                searchOnChange={true}
-                queryFields={['title']}
-              />
-              <ActionBar>
-                <ActionBarRow>
-                  <HitsStats
-                    translations={{
-                      'hitstats.results_found': '{hitCount} results found',
-                    }}
-                  />
-                  {/* <ViewSwitcherToggle /> */}
-                  <SortingSelector
-                    options={[
-                      { label: 'Relevance', field: '_score', order: 'desc' },
-                      {
-                        label: 'Latest Modifications',
-                        field: 'modified',
-                        order: 'desc',
-                      },
-                      {
-                        label: 'Earliest Modifications',
-                        field: 'modified',
-                        order: 'asc',
-                      },
-                    ]}
-                  />
-                </ActionBarRow>
+      {url ? (
+        <SearchkitProvider searchkit={searchkit}>
+          <Layout>
+            <LayoutBody>
+              <LayoutResults>
+                <SearchBox
+                  autofocus={true}
+                  searchOnChange={true}
+                  queryFields={['title']}
+                />
+                <ActionBar>
+                  <ActionBarRow>
+                    <HitsStats
+                      translations={{
+                        'hitstats.results_found': '{hitCount} results found',
+                      }}
+                    />
+                    {/* <ViewSwitcherToggle /> */}
+                    <SortingSelector
+                      options={[
+                        { label: 'Relevance', field: '_score', order: 'desc' },
+                        {
+                          label: 'Latest Modifications',
+                          field: 'modified',
+                          order: 'desc',
+                        },
+                        {
+                          label: 'Earliest Modifications',
+                          field: 'modified',
+                          order: 'asc',
+                        },
+                      ]}
+                    />
+                  </ActionBarRow>
 
-                <ActionBarRow>
-                  <GroupedSelectedFilters />
-                  <ResetFilters />
-                </ActionBarRow>
+                  <ActionBarRow>
+                    <GroupedSelectedFilters />
+                    <ResetFilters />
+                  </ActionBarRow>
 
-                <ActionBarRow>
-                  <MenuFilter
-                    showCount={true}
-                    id="siteName"
-                    title="By Site Name"
-                    field="site.name"
-                    listComponent={Tabs}
-                  />
-                </ActionBarRow>
-              </ActionBar>
+                  <ActionBarRow>
+                    <MenuFilter
+                      showCount={true}
+                      id="siteName"
+                      title="By Site Name"
+                      field="site.name"
+                      listComponent={Tabs}
+                    />
+                  </ActionBarRow>
+                </ActionBar>
 
-              <ViewSwitcherHits
-                hitsPerPage={12}
-                highlightFields={['title', 'description']}
-                sourceFilter={[]}
-                hitComponents={[
-                  // {
-                  //   key: 'grid',
-                  //   title: 'Grid',
-                  //   itemComponent: withProps(GridItem, {
-                  //     data,
-                  //   }),
-                  //   defaultOption: true,
-                  // },
-                  {
-                    key: 'list',
-                    title: 'List',
-                    itemComponent: withProps(ListItem, {
-                      data,
-                    }),
-                  },
-                  // {
-                  //   key: 'table',
-                  //   title: <Icon name={tableSVG} size="18px" />,
-                  //   listComponent: withProps(TableView, {
-                  //     data,
-                  //   }),
-                  // },
-                ]}
-                scrollTo="body"
-              />
-              <NoHits suggestionsField={'title'} />
-              <Pagination showNumbers={true} />
-            </LayoutResults>
-            <SideBar>
-              <h4>Filter results</h4>
+                <ViewSwitcherHits
+                  hitsPerPage={12}
+                  highlightFields={['title', 'description']}
+                  sourceFilter={[]}
+                  hitComponents={[
+                    // {
+                    //   key: 'grid',
+                    //   title: 'Grid',
+                    //   itemComponent: withProps(GridItem, {
+                    //     data,
+                    //   }),
+                    //   defaultOption: true,
+                    // },
+                    {
+                      key: 'list',
+                      title: 'List',
+                      itemComponent: withProps(ListItem, {
+                        data,
+                      }),
+                    },
+                    // {
+                    //   key: 'table',
+                    //   title: <Icon name={tableSVG} size="18px" />,
+                    //   listComponent: withProps(TableView, {
+                    //     data,
+                    //   }),
+                    // },
+                  ]}
+                  scrollTo="body"
+                />
+                <NoHits suggestionsField={'title'} />
+                <Pagination showNumbers={true} />
+              </LayoutResults>
+              <SideBar>
+                <h4>Filter results</h4>
 
-              <RefinementListFilter
-                id="type"
-                title="By Type"
-                field="_type"
-                size={10}
-                operator="OR"
-                // itemComponent={RefinementOption}
-                listComponent={RefinementList}
-              />
+                {/* <RefinementListFilter */}
+                {/*   id="type" */}
+                {/*   title="By Type" */}
+                {/*   field="_type" */}
+                {/*   size={10} */}
+                {/*   operator="OR" */}
+                {/*   // itemComponent={RefinementOption} */}
+                {/*   // listComponent={RefinementList} */}
+                {/* /> */}
 
-              <RefinementListFilter
-                id="countries"
-                title="By Country"
-                field="countries.name"
-                size={4}
-              />
+                <RefinementListFilter
+                  id="countries"
+                  title="By Country"
+                  field="countries.name"
+                  size={4}
+                />
 
-              <RefinementListFilter
-                id="bioregions"
-                title="By Biogeographical Region"
-                field="biographical_region"
-                itemComponent={BiogeographicalRegionOption}
-                size={4}
-              />
+                <RefinementListFilter
+                  id="bioregions"
+                  title="By Biogeographical Region"
+                  field="biographical_region"
+                  itemComponent={BiogeographicalRegionOption}
+                  size={4}
+                />
 
-              <RefinementListFilter
-                id="language"
-                title="By Language"
-                field="languages.name"
-                size={4}
-              />
+                <RefinementListFilter
+                  id="language"
+                  title="By Language"
+                  field="languages.name"
+                  size={4}
+                />
 
-              <RefinementListFilter
-                id="species"
-                title="By Species Group"
-                field="species_group"
-                size={4}
-              />
+                <RefinementListFilter
+                  id="species"
+                  title="By Species Group"
+                  field="species_group"
+                  size={4}
+                />
 
-              <RefinementListFilter
-                id="taxonomy"
-                title="By Taxonomic Rank"
-                field="taxonomic_rank"
-                size={4}
-              />
+                <RefinementListFilter
+                  id="taxonomy"
+                  title="By Taxonomic Rank"
+                  field="taxonomic_rank"
+                  size={4}
+                />
 
-              <RefinementListFilter
-                id="genus"
-                title="By Genus"
-                field="genus"
-                size={4}
-              />
+                <RefinementListFilter
+                  id="genus"
+                  title="By Genus"
+                  field="genus"
+                  size={4}
+                />
 
-              <DynamicRangeFilter
-                id="published"
-                title="By Published Year"
-                field="published_on"
-                size={4}
-                showHistogram={true}
-                rangeFormatter={(n) => {
-                  if (n) {
-                    // `d` is the local time
-                    const d = new Date(n);
-                    return d.getFullYear();
-                  }
-                  return n;
-                }}
-              />
+                <DynamicRangeFilter
+                  id="published"
+                  title="By Published Year"
+                  field="published_on"
+                  size={4}
+                  showHistogram={true}
+                  rangeFormatter={(n) => {
+                    if (n) {
+                      // `d` is the local time
+                      const d = new Date(n);
+                      return d.getFullYear();
+                    }
+                    return n;
+                  }}
+                />
 
-              {/* <RefinementListFilter */}
-              {/*   id="bio_strategy" */}
-              {/*   title="By Biodiversity Strategy Targets" */}
-              {/*   field="targets.title" */}
-              {/*   size={4} */}
-              {/* /> */}
-            </SideBar>
-          </LayoutBody>
-        </Layout>
-      </SearchkitProvider>
+                {/* <RefinementListFilter */}
+                {/*   id="bio_strategy" */}
+                {/*   title="By Biodiversity Strategy Targets" */}
+                {/*   field="targets.title" */}
+                {/*   size={4} */}
+                {/* /> */}
+              </SideBar>
+            </LayoutBody>
+          </Layout>
+        </SearchkitProvider>
+      ) : (
+        'Please configure block ES url in sidebar'
+      )}
     </div>
   );
 };
