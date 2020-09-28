@@ -24,7 +24,7 @@ import {
   SortingSelector,
   TermsQuery,
   ViewSwitcherHits,
-  ViewSwitcherToggle,
+  // ViewSwitcherToggle,
   DynamicRangeFilter,
   CheckboxItemList,
   Tabs,
@@ -181,6 +181,7 @@ const search_types = [
 
 const DataCatalogueView = (props) => {
   const { data } = props;
+  // TODO: show this instead of supposing that the default URL is good? "Please configure the block's ElasticSearch URL in the sidebar."
   const url = data.es_host || 'http://localhost:3000';
   const searchkit = React.useMemo(() => {
     return new SearchkitManager(url);
