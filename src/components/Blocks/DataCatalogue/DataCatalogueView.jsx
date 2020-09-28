@@ -303,7 +303,7 @@ const DataCatalogueView = (props) => {
                 field="_type"
                 size={10}
                 operator="OR"
-                itemComponent={RefinementOption}
+                // itemComponent={RefinementOption}
                 listComponent={RefinementList}
               />
 
