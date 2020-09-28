@@ -113,41 +113,38 @@ const RefinementOption = (props) => {
  * Before showing the data types' filter sort its options well and the default
  * behavior is to all be checked (this is the same as when all are unchecked,
  * because the implicit operator is OR).
- * @param {object} props
  */
 const RefinementList = class extends SearchkitComponent {
+  static data = [
+    { order: 1, key: 'document' },
+    { order: 2, key: 'link' },
+    { order: 3, key: 'article' },
+    { order: 4, key: 'species' },
+    { order: 5, key: 'habitat' },
+    { order: 6, key: 'site' },
+    { order: 7, key: 'protected_area' }, // hidden
+  ];
+
   render() {
-    const data = [
-      { order: 1, key: 'document' },
-      { order: 2, key: 'link' },
-      { order: 3, key: 'article' },
-      { order: 4, key: 'species' },
-      { order: 5, key: 'habitat' },
-      { order: 6, key: 'site' },
-      { order: 7, key: 'protected_area' }, // hidden
-    ];
-
-    const props = this.props;
-
-    let arr = [...props.items];
+    let arr = [...this.props.items];
     arr = arr.filter((x) => x.key !== 'protected_area');
     arr = arr.sort((a, b) => {
-      const ai = data.findIndex((x) => x.key === a.key);
-      const bi = data.findIndex((x) => x.key === b.key);
+      const ai = RefinementList.data.findIndex((x) => x.key === a.key);
+      const bi = RefinementList.data.findIndex((x) => x.key === b.key);
       if (ai < 0 || isNaN(ai) || bi < 0 || isNaN(bi)) {
         return 0;
       }
 
-      return data[ai].order - data[bi].order;
+      return RefinementList.data[ai].order - RefinementList.data[bi].order;
     });
 
     const allKeys = arr.map((x) => x.key);
-    const activeCount = props.selectedItems.length;
-    let selectedItems = props.selectedItems.map((x) => x.key);
+    const activeCount = this.props.selectedItems.length;
+    let selectedItems = this.props.selectedItems.map((x) => x.key);
     if (activeCount === 0) {
       selectedItems = allKeys;
     } else {
-      selectedItems = props.selectedItems;
+      selectedItems = this.props.selectedItems;
       if (selectedItems.length === allKeys.length) {
         selectedItems = [];
 
@@ -165,7 +162,11 @@ const RefinementList = class extends SearchkitComponent {
     }
 
     return (
-      <CheckboxItemList {...props} items={arr} selectedItems={selectedItems} />
+      <CheckboxItemList
+        {...this.props}
+        items={arr}
+        selectedItems={selectedItems}
+      />
     );
   }
 };
