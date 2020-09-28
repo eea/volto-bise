@@ -226,6 +226,7 @@ const DataCatalogueView = (props) => {
                     }}
                   />
                   {/* <ViewSwitcherToggle /> */}
+                  {/* TODO: new sort options: Sorted ascending by publish date, Sorted ascending by added date */}
                   <SortingSelector
                     options={[
                       {
