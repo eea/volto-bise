@@ -115,6 +115,8 @@ const RefinementOption = (props) => {
  * @param {object} props
  */
 const RefinementList = (props) => {
+  console.log('props.items', props.items);
+
   const data = [
     { order: 1, key: 'document' },
     { order: 2, key: 'link' },
