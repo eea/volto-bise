@@ -31,7 +31,6 @@ import {
   CheckboxItemComponent,
   SearchkitComponent,
   FacetAccessor,
-  FacetAccessorOptions,
   // ViewSwitcherToggle,
   // MenuFilter,
   // RangeFilter,
@@ -142,7 +141,7 @@ const RefinementList = class extends SearchkitComponent {
     }
   }
 
-  resetDataTypeFilter = () => {
+  resetDataTypeFilter = (shouldPerformSearch = true) => {
     const sk = this.searchkit;
 
     if (!sk) {
@@ -154,7 +153,10 @@ const RefinementList = class extends SearchkitComponent {
       // console.log('GROZAV', x);
       sk.removeAccessor(x);
     }
-    sk.performSearch(true, true);
+
+    if (shouldPerformSearch) {
+      sk.performSearch(true, true);
+    }
 
     return true;
   };
@@ -184,20 +186,40 @@ const RefinementList = class extends SearchkitComponent {
       x.state = x.state.toggle(key);
     }
 
-    this.refreshSelectedKeys();
+    this.refreshSelectedKeys(false);
 
-    sk.performSearch();
+    sk.performSearch(true, true);
 
     return true;
   };
 
-  refreshSelectedKeys = () => {
+  refreshSelectedKeys = (shouldPerformSearch = true) => {
+    // debugger;
+    // this transforsm [... full ...] into []
+    const initialSelectedCount = this.props.selectedItems.length;
     let selectedKeys = this.selectedItemsFilter(this.allKeys);
-    this.setState({ selectedKeys });
+
+    const initialSelectedKeys = this.state.selectedKeys;
+
+    this.setState({ selectedKeys }, () => {
+      if (initialSelectedKeys === selectedKeys) {
+        return;
+      }
+
+      // console.log('SELECTED KEYS', this.state.selectedKeys);
+      if (
+        this.allKeys.length > 0 &&
+        initialSelectedCount === this.allKeys.length &&
+        this.state.selectedKeys.length === 0
+      ) {
+        // debugger;
+        this.resetDataTypeFilter(true);
+      }
+    });
   };
 
   render() {
-    console.log('PROPS.ITEMS', this.props.items);
+    // console.log('PROPS.ITEMS', this.props.items);
     // console.log('ITEMS', this.props.items);
     // console.log('SELECTED ITEMS', this.props.selectedItems);
 
@@ -234,15 +256,23 @@ const RefinementList = class extends SearchkitComponent {
     return arr;
   };
 
+  /**
+   * Adjusts the selected items list.
+   * Called when a checkbox for a data type is clicked.
+   * @param {string[]} allKeys
+   */
   selectedItemsFilter = (allKeys) => {
+    console.log('ALL KEYUS', allKeys);
     // this.props.selectedItems is of type string[]
     let selectedKeys;
     const selectedCount = this.props.selectedItems.length;
     if (selectedCount === 0) {
       selectedKeys = allKeys;
-      // this.resetDataTypeFilter();
+      // this.resetDaaTypeFilter();
     } else if (selectedCount <= allKeys.length) {
       if (selectedCount === allKeys.length) {
+        selectedKeys = [];
+        // this.resetDataTypeFilter(false);
         // this.reset();
         // selectedKeys = allKeys;
       } else {
