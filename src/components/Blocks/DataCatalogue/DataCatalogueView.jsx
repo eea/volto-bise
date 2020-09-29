@@ -189,11 +189,11 @@ const RefinementList = class extends SearchkitComponent {
       x.state = x.state.toggle(key);
     }
 
-    console.log('L1', this.props.selectedItems);
+    // console.log('L1', this.props.selectedItems);
     this.refreshSelectedKeys(false).then(() => {
       console.log('L2', this.props.selectedItems);
       sk.performSearch(true, true).then(() => {
-        console.log('L3', this.props.selectedItems);
+        // console.log('L3', this.props.selectedItems);
       });
     });
 
@@ -204,46 +204,46 @@ const RefinementList = class extends SearchkitComponent {
     return new Promise((resolve, reject) => {
       // this transforms [... full ...] into []
       const initialSelectedCount = this.props.selectedItems.length;
+      const initialSelectedKeys = this.props.selectedItems.map((x) => x);
+      // console.log('this.allKeys', this.allKeys);
       let selectedKeys = this.selectedItemsFilter(this.allKeys);
 
-      const initialSelectedKeys = this.state.selectedKeys;
+      // console.log('INITIAL', initialSelectedKeys, 'NOW', selectedKeys);
 
-      this.setState({ selectedKeys: null }, () => {
-        this.setState({ selectedKeys }, () => {
-          if (_.isEqual(initialSelectedKeys, selectedKeys)) {
-            resolve();
-            return;
-          }
+      this.setState(
+        (state, props) => {
+          return { selectedKeys: null };
+        },
+        () => {
+          console.log('SETTING', selectedKeys);
+          this.setState(
+            (state, props) => ({ selectedKeys }),
+            () => {
+              if (_.isEqual(initialSelectedKeys, selectedKeys)) {
+                resolve();
+                return;
+              }
 
-          // console.log('SELECTED KEYS', this.state.selectedKeys);
-          if (
-            this.allKeys.length > 0 &&
-            initialSelectedCount === this.allKeys.length &&
-            this.state.selectedKeys.length === 0
-          ) {
-            // debugger;
-            this.resetDataTypeFilter(true).then(resolve);
-          } else {
-            // this.resetDataTypeFilter(false);
-            resolve();
-          }
-        });
-      });
+              // console.log('SELECTED KEYS', this.state.selectedKeys);
+              if (
+                this.allKeys.length > 0 &&
+                initialSelectedCount === this.allKeys.length &&
+                this.state.selectedKeys.length === 0
+              ) {
+                // debugger;
+                this.resetDataTypeFilter(true).then(resolve);
+              } else {
+                // this.resetDataTypeFilter(false);
+                resolve();
+              }
+            },
+          );
+        },
+      );
     });
   };
 
   render() {
-    // console.log('PROPS.ITEMS', this.props.items);
-    // console.log('ITEMS', this.props.items);
-    // console.log('SELECTED ITEMS', this.props.selectedItems);
-
-    // let dataTypeInfo = this.getSortedFilteredDataTypeInfo();
-    // const allKeys = dataTypeInfo.map((x) => x.key);
-    // let selectedKeys = this.selectedItemsFilter(allKeys);
-
-    // console.log('!!! ITEMS', arr);
-    // console.log('!!! SELECTED ITEMS', selectedKeys);
-
     return (
       <CheckboxItemList
         {...this.props}
@@ -284,6 +284,7 @@ const RefinementList = class extends SearchkitComponent {
       selectedKeys = allKeys;
       // this.resetDaaTypeFilter();
     } else if (selectedCount <= allKeys.length) {
+      console.log('===:', selectedCount, allKeys.length);
       if (selectedCount === allKeys.length) {
         selectedKeys = [];
         // this.resetDataTypeFilter(false);
