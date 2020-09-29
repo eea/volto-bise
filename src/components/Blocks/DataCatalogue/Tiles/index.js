@@ -55,7 +55,6 @@ export const GridItem = (props) => {
 };
 
 export const ListItem = (props) => {
-  console.log('item', props);
   const { bemBlocks, result } = props;
   let url = 'http://www.imdb.com/title/' + result._source.imdbId;
   const source = extend({}, result._source, result.highlight);

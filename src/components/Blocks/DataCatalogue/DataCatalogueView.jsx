@@ -30,6 +30,8 @@ import {
   MenuFilter,
   CheckboxItemComponent,
   SearchkitComponent,
+  FacetAccessor,
+  FacetAccessorOptions,
   // ViewSwitcherToggle,
   // MenuFilter,
   // RangeFilter,
@@ -116,9 +118,59 @@ const RefinementOption = (props) => {
  * because the implicit operator is OR).
  */
 const RefinementList = class extends SearchkitComponent {
+  reset = () => {
+    const sk = this.searchkit;
+
+    if (!sk) {
+      return false;
+    }
+
+    const filters = sk.accessors.accessors.filter((x) => x.key === 'type');
+    for (const x of filters) {
+      console.log('GROZAV', x);
+      sk.removeAccessor(x);
+    }
+    sk.performSearch(true, true);
+
+    return true;
+  };
+
+  toggleItem = (key) => {
+    const sk = this.searchkit;
+
+    if (!sk) {
+      return false;
+    }
+
+    if (typeof sk !== 'undefined') {
+      const filters = sk.accessors.accessors.filter((x) => x.field === '_type');
+
+      if (filters.length === 0) {
+        // TODO: accessor with a single data type in it
+        sk.addAccessor(
+          new FacetAccessor('type', {
+            operator: 'OR',
+            field: '_type',
+            size: 100,
+          }),
+        );
+      }
+
+      // console.log('FILTERS', filters);
+      for (const x of filters) {
+        x.state = x.state.toggle(key);
+      }
+      sk.performSearch();
+    }
+
+    return true;
+  };
+
   render() {
-    let arr = [...this.props.items];
-    arr = arr.filter((x) => x.key !== 'protected_area');
+    // console.log('ITEMS', this.props.items);
+    // console.log('SELECTED ITEMS', this.props.selectedItems);
+
+    let arr = this.props.items.filter((x) => x.key !== 'protected_area');
     arr = arr.sort((a, b) => {
       const ai = dataTypesInformation.findIndex((x) => x.value === a.key);
       const bi = dataTypesInformation.findIndex((x) => x.value === b.key);
@@ -130,34 +182,46 @@ const RefinementList = class extends SearchkitComponent {
       return dataTypesInformation[ai].order - dataTypesInformation[bi].order;
     });
 
+    // all and selected keys
     const allKeys = arr.map((x) => x.key);
-    const activeCount = this.props.selectedItems.length;
-    let selectedItems = this.props.selectedItems.map((x) => x.key);
-    if (activeCount === 0) {
-      selectedItems = allKeys;
-    } else {
-      selectedItems = this.props.selectedItems;
-      if (selectedItems.length === allKeys.length) {
-        selectedItems = [];
 
-        const sk = this.searchkit;
-        if (typeof sk !== 'undefined') {
-          const filters = sk.accessors.accessors.filter(
-            (x) => x.field === '_type',
-          );
-          for (const x of filters) {
-            sk.removeAccessor(x);
-          }
-          sk.performSearch(true, true);
-        }
+    // this.props.selectedItems is of type string[]
+
+    let selectedKeys;
+    const selectedCount = this.props.selectedItems.length;
+    if (selectedCount === 0) {
+      selectedKeys = allKeys;
+      // this.reset();
+    } else if (selectedCount <= allKeys.length) {
+      if (selectedCount === allKeys.length) {
+        this.reset();
+        // selectedKeys = allKeys;
+      } else {
+        selectedKeys = this.props.selectedItems.map((x) => x);
       }
+    } else if (selectedCount > allKeys.length) {
+      console.error(
+        'We thought something was impossible, but it is possible actually.',
+      );
     }
+
+    if (typeof this.searchkit !== 'undefined') {
+      console.log(
+        'ACCESSORS',
+        this.searchkit.accessors.accessors.filter((x) => x.key === 'type'),
+      );
+    }
+
+    // console.log('!!! ITEMS', arr);
+    // console.log('!!! SELECTED ITEMS', selectedKeys);
 
     return (
       <CheckboxItemList
         {...this.props}
         items={arr}
-        selectedItems={selectedItems}
+        selectedItems={selectedKeys}
+        // toggleItem={this.toggleItem}
+        multiselect={true}
       />
     );
   }
