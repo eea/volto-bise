@@ -48,7 +48,7 @@
       font-weight: 700;
       padding: 1em 1.2em !important;
 
-      @media (max-width: 1200px) {
+      @media (max-width: 848px) {
         border-color: transparent!important;
         border-radius: 0!important;
 
@@ -156,7 +156,7 @@
 .navigation .menu>.dropdown.item>.menu {
   box-shadow: none;
 
-  @media(min-width: 1200px) {
+  @media(min-width: 848px) {
     margin-top: 0 !important;
     min-width: 220px;
   }

@@ -31,3 +31,10 @@ a {
 .documentFirstHeading {
   margin-top: 0.5em !important;
 }
+
+p > span:empty {
+  display: inline-block;
+  &:before {
+    content: "\a0";
+  }
+}
