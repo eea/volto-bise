@@ -6,8 +6,8 @@ const MODULES = [
   'esri/Map',
   'esri/views/MapView',
   'esri/layers/FeatureLayer',
+  'esri/layers/MapImageLayer',
   // 'esri/widgets/Home',
-  // 'esri/layers/MapImageLayer',
   // 'esri/geometry/Extent',
   // 'esri/views/layers/support/FeatureFilter',
 ];
@@ -40,11 +40,12 @@ export default (props) => {
     if (!modules_loaded.current) {
       modules_loaded.current = true;
       loadModules(MODULES, options).then((modules) => {
-        const [Map, MapView, FeatureLayer] = modules;
+        const [Map, MapView, FeatureLayer, MapImageLayer] = modules;
         setModules({
           Map,
           MapView,
           FeatureLayer,
+          MapImageLayer,
         });
       });
     }
