@@ -214,6 +214,7 @@ class Navigation extends Component {
                                 to={
                                   subsubitem.url === '' ? '/' : subsubitem.url
                                 }
+                                title={subsubitem.title}
                                 key={subsubitem.url}
                                 className={
                                   this.isActive(subsubitem.url)
