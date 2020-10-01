@@ -15,7 +15,10 @@ import {
   installConnectedMap,
   installDataCatalogue,
   installDataTable,
+  installBubbleChart,
 } from './components';
+
+import './slate-styles.css';
 
 export default (config) => {
   config.settings.allowed_cors_destinations = [
@@ -65,13 +68,12 @@ export default (config) => {
     sidebarTab: 1,
   };
 
-  // TODO: these are just examples that work well when simply uncommented (see
-  // the StyleMenu plugin in eea/volto-slate):
-  // config.settings.slate.styleMenu.inlineStyles = [
-  //   ...config.settings.slate.styleMenu.inlineStyles,
-  //   { cssClass: 'cool-inline-text', label: 'Cool Inline Text' },
-  //   { cssClass: 'red-inline-text', label: 'Red Inline Text' },
-  // ];
+  config.settings.slate.styleMenu.inlineStyles = [
+    ...config.settings.slate.styleMenu.inlineStyles,
+    { cssClass: 'primary-big-text', label: 'Big text' },
+    { cssClass: 'green-text', label: 'Green text' },
+    { cssClass: 'blue-text', label: 'Blue text' },
+  ];
   // config.settings.slate.styleMenu.blockStyles = [
   //   ...config.settings.slate.styleMenu.blockStyles,
   //   { cssClass: 'green-block-text', label: 'Green Text' },
@@ -84,5 +86,6 @@ export default (config) => {
     installConnectedMap,
     installDataCatalogue,
     installDataTable,
+    installBubbleChart,
   ].reduce((acc, apply) => apply(acc), config);
 };
