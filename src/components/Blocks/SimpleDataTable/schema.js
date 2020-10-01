@@ -5,7 +5,7 @@ const SimpleDataTableSchema = {
     {
       id: 'default',
       title: 'Default',
-      fields: ['description'], // title
+      fields: ['description', 'underline'], // title
     },
     {
       id: 'source',
@@ -15,7 +15,7 @@ const SimpleDataTableSchema = {
     {
       id: 'styling',
       title: 'Styling',
-      fields: ['show_header', 'striped'], // title
+      fields: ['show_header', 'striped', 'bordered', 'compact_table'],
     },
   ],
 
@@ -41,7 +41,19 @@ const SimpleDataTableSchema = {
       type: 'boolean',
     },
     striped: {
-      title: 'Striped?',
+      title: 'Color alternate rows',
+      type: 'boolean',
+    },
+    bordered: {
+      title: 'Remove table border',
+      type: 'boolean',
+    },
+    compact_table: {
+      title: 'Compact table',
+      type: 'boolean',
+    },
+    underline: {
+      title: 'Title underline',
       type: 'boolean',
     },
   },

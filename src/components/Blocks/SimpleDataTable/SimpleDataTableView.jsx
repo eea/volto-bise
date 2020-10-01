@@ -18,11 +18,19 @@ const SimpleDataTableView = (props) => {
   );
 
   const columns = Object.keys(provider_data || {});
+
   return (
     <div className="simple-data-table">
-      {description ? serializeNodes(description) : ''}
+      <div className={`${data.underline ? 'with-border' : ''}`}>
+        {description ? serializeNodes(description) : ''}
+      </div>
       {row_size ? (
-        <Table striped={data.striped} textAlign="left">
+        <Table
+          textAlign="left"
+          striped={data.striped}
+          className={`${data.bordered ? 'no-borders' : ''}
+          ${data.compact_table ? 'compact-table' : ''}`}
+          >
           {show_header ? (
             <Table.Header>
               <Table.Row>
@@ -57,4 +65,5 @@ const SimpleDataTableView = (props) => {
     </div>
   );
 };
+
 export default connectBlockToProviderData(SimpleDataTableView);
