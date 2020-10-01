@@ -22,7 +22,7 @@ const SimpleDataTableView = (props) => {
     <div className="simple-data-table">
       {description ? serializeNodes(description) : ''}
       {row_size ? (
-        <Table striped={data.striped}>
+        <Table striped={data.striped} textAlign="left">
           {show_header ? (
             <Table.Header>
               <Table.Row>
@@ -39,8 +39,11 @@ const SimpleDataTableView = (props) => {
               .fill()
               .map((_, i) => (
                 <Table.Row key={i}>
-                  {Object.keys(provider_data).map((k) => (
-                    <Table.Cell key={`${i}-${k}`}>
+                  {Object.keys(provider_data).map((k, j) => (
+                    <Table.Cell
+                      key={`${i}-${k}`}
+                      textAlign={j === 0 ? 'left' : 'right'}
+                    >
                       {provider_data[k][i]}
                     </Table.Cell>
                   ))}
