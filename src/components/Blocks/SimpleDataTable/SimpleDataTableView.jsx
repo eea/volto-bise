@@ -22,7 +22,7 @@ const SimpleDataTableView = (props) => {
     <div className="simple-data-table">
       {description ? serializeNodes(description) : ''}
       {row_size ? (
-        <Table>
+        <Table striped={data.striped}>
           {show_header ? (
             <Table.Header>
               <Table.Row>

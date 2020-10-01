@@ -10,7 +10,12 @@ const SimpleDataTableSchema = {
     {
       id: 'source',
       title: 'Data source',
-      fields: ['provider_url', 'max_count', 'show_header'],
+      fields: ['provider_url', 'max_count'],
+    },
+    {
+      id: 'styling',
+      title: 'Styling',
+      fields: ['show_header', 'striped'], // title
     },
   ],
 
@@ -33,6 +38,10 @@ const SimpleDataTableSchema = {
     },
     show_header: {
       title: 'Show header?',
+      type: 'boolean',
+    },
+    striped: {
+      title: 'Striped?',
       type: 'boolean',
     },
   },
