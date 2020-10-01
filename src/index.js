@@ -14,6 +14,7 @@ import {
   installMaesViewer,
   installConnectedMap,
   installDataCatalogue,
+  installDataTable,
 } from './components';
 
 export default (config) => {
@@ -82,5 +83,6 @@ export default (config) => {
     installMaesViewer,
     installConnectedMap,
     installDataCatalogue,
+    installDataTable,
   ].reduce((acc, apply) => apply(acc), config);
 };

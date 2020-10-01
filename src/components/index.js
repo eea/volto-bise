@@ -15,3 +15,4 @@ export installKeyFacts from './Blocks/KeyFacts';
 export installMaesViewer from './Blocks/MaesViewer';
 export installConnectedMap from './Blocks/ConnectedMap';
 export installDataCatalogue from './Blocks/DataCatalogue';
+export installDataTable from './Blocks/SimpleDataTable';
