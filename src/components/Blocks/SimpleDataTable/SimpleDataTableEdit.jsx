@@ -26,7 +26,7 @@ class Edit extends Component {
   render() {
     console.log('data', this.props);
     return (
-      <div className="block selected">
+      <div className="block">
         <div className="block-inner-wrapper" />
 
         <SimpleDataTableView data={this.props.data} />
