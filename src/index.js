@@ -12,7 +12,7 @@ import {
   DataQueryFilterEdit,
   installKeyFacts,
   installMaesViewer,
-  // installConnectedMap,
+  installConnectedMap,
   installDataCatalogue,
 } from './components';
 
@@ -80,7 +80,7 @@ export default (config) => {
   return [
     installKeyFacts,
     installMaesViewer,
-    // installConnectedMap,
+    installConnectedMap,
     installDataCatalogue,
   ].reduce((acc, apply) => apply(acc), config);
 };
