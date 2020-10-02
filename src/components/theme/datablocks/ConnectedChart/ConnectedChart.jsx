@@ -2,15 +2,15 @@
  * The most basic connected block chart
  */
 
+import React from 'react'; // , useState
+import { connect } from 'react-redux';
 import { addAppURL } from '@plone/volto/helpers';
 import {
   // getConnectedDataParametersForContext,
   // getConnectedDataParametersForProvider,
   getConnectedDataParametersForPath,
 } from 'volto-datablocks/helpers';
-import { connect } from 'react-redux';
 import { settings } from '~/config';
-import React, { useEffect } from 'react'; // , useState
 import { getDataFromProvider } from 'volto-datablocks/actions';
 import loadable from '@loadable/component';
 
@@ -19,7 +19,7 @@ const LoadablePlot = loadable(() => import('react-plotly.js'));
 function mixProviderData(chartData, providerData, parameters) {
   const providerDataColumns = Object.keys(providerData);
 
-  console.log('mix', parameters);
+  // console.log('mix', parameters);
   const res = (chartData || []).map((trace) => {
     Object.keys(trace).forEach((tk) => {
       const originalColumn = tk.replace(/src$/, '');
@@ -71,7 +71,7 @@ function ConnectedChart(props) {
   const source_url = props.source;
 
   // NOTE: this is a candidate for a HOC, withProviderData
-  useEffect(() => {
+  React.useEffect(() => {
     if (provider_url) getDataFromProvider(provider_url || url);
   }, [provider_url, url, source_url, props.data, getDataFromProvider]);
 
@@ -127,8 +127,8 @@ function ConnectedChart(props) {
     },
   }));
 
-  console.log('data', data);
-  console.log('layout', layout);
+  // console.log('data', data);
+  // console.log('layout', layout);
 
   const chart = (
     <LoadablePlot
