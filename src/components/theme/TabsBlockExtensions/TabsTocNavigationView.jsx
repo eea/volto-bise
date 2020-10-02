@@ -108,7 +108,7 @@ const TabsTocNavigationView = (props) => {
   return <DefaultTabsRenderer {...props} renderTab={renderTab} />;
 };
 
-export function tabsTocSchemaExtender(schema) {
+function addTocNavOption(schema) {
   const [first, ...rest] = schema.fieldsets;
   return {
     ...schema,
@@ -124,6 +124,19 @@ export function tabsTocSchemaExtender(schema) {
       tocnav_view: {
         title: 'Enable/Disable TOC navigation view',
         type: 'boolean',
+      },
+    },
+  };
+}
+export function tabsTocSchemaExtender(schema) {
+  const { tabs } = schema.properties;
+  return {
+    ...schema,
+    properties: {
+      ...schema.properties,
+      tabs: {
+        ...tabs,
+        schema: addTocNavOption(tabs.schema),
       },
     },
   };
