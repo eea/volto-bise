@@ -55,28 +55,24 @@ const BubbleChartView = (props) => {
         }))
       : [];
 
-  console.log('points', points);
-  // fixedDomain={{ min: -1, max: 1 }}
   return (
-    <div className="simple-data-table">
-      <BubbleChart
-        className="my-cool-chart"
-        data={points}
-        selectedColor="#737373"
-        selectedTextColor="#d9d9d9"
-        onClick={() => {}}
-        legend={false}
-        colorLegend={colorLegend}
-        legendSpacing={0}
-        tooltip={false}
-        tooltipProps={tooltipProps}
-        tooltipFunc={() => {}}
-        smallDiameter={10}
-        mediumDiameter={20}
-        height={height}
-        fontSizeFactor={0.3}
-      />
-    </div>
+    <BubbleChart
+      className="bubble-chart"
+      data={points}
+      selectedColor="#737373"
+      selectedTextColor="#d9d9d9"
+      onClick={() => {}}
+      legend={false}
+      colorLegend={colorLegend}
+      legendSpacing={0}
+      tooltip={false}
+      tooltipProps={tooltipProps}
+      tooltipFunc={() => {}}
+      smallDiameter={10}
+      mediumDiameter={20}
+      height={height}
+      fontSizeFactor={0.3}
+    />
   );
 };
 export default connectBlockToProviderData(BubbleChartView);
