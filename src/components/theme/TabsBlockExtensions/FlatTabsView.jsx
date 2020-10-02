@@ -1,32 +1,31 @@
 import React from 'react';
-import DefaultTabsRenderer, {
+import {
   messages,
+  getMenu,
+  GRID,
 } from '@eeacms/volto-tabs-block/Tabs/DefaultTabsRenderer';
-import { Tab } from 'semantic-ui-react';
-import { injectIntl } from 'react-intl';
-import { map } from 'lodash';
+import { Tab, Menu } from 'semantic-ui-react';
+import { useIntl } from 'react-intl';
 import { blocks } from '~/config';
-import { getBaseUrl } from '@plone/volto/helpers';
+import { getBaseUrl, getBlocksFieldname } from '@plone/volto/helpers';
+import AnchorLink from 'react-anchor-link-smooth-scroll';
 
-import BlocksWithToc from './BlocksWithToc';
+const FlatTabsView = (props) => {
+  const {
+    tabsLayout,
+    globalActiveTab,
+    mode,
+    properties,
+    pathname,
+    onTabChange,
+    tabs,
+    block,
+  } = props;
 
-const splitBlocksByTOC = (blockIds, blocksContent) => {
-  // find position of first block id where block content is text with h2
-  let cursor = blockIds.findIndex((blockId, index) => {
-    if (blocksContent[blockId]['@type'] !== 'slate') return false;
+  const intl = useIntl();
 
-    const content = blocksContent[blockId];
-    if (!content.value) {
-      return false;
-    }
-    const blockType = content.value[0].type;
-    return blockType === 'h2';
-  });
-  if (cursor === -1) cursor = blockIds.length - 1;
-  return [blockIds.slice(0, cursor), blockIds.slice(cursor)];
-};
+  const blocksFieldname = getBlocksFieldname(properties);
 
-const TabsTocNavigationView = (props) => {
   const renderTab = React.useCallback(
     ({
       index,
@@ -36,50 +35,14 @@ const TabsTocNavigationView = (props) => {
       intl,
       blocksFieldname,
       pathname,
+      block,
     }) => {
       const blockIds = tabsLayout[index] || [];
       const blocklist = blockIds.map((blockId) => {
         return [blockId, properties[blocksFieldname]?.[blockId]];
       });
-      const blocksContent = properties[blocksFieldname];
-      const [preambleIds, contentIds] = splitBlocksByTOC(
-        blockIds,
-        blocksContent,
-      );
-
-      return tab.tocnav_view ? (
-        <Tab.Pane>
-          {map(preambleIds, (block) => {
-            const Block =
-              blocks.blocksConfig[
-                properties[blocksFieldname]?.[block]?.['@type']
-              ]?.['view'] || null;
-            return Block !== null ? (
-              <Block
-                key={block}
-                id={block}
-                properties={properties}
-                data={properties[blocksFieldname][block]}
-                path={getBaseUrl(pathname || '')}
-              />
-            ) : (
-              <div key={block}>
-                {intl.formatMessage(messages.unknownBlock, {
-                  block: properties[blocksFieldname]?.[block]?.['@type'],
-                })}
-              </div>
-            );
-          })}
-          <BlocksWithToc
-            content={properties}
-            blockIds={contentIds}
-            blocksContent={blocksContent}
-            pathname={pathname}
-            intl={intl}
-          />
-        </Tab.Pane>
-      ) : (
-        <Tab.Pane>
+      return (
+        <section id={`section-${block}-${index}`}>
           {blocklist.map(([blockId, blockData]) => {
             const Block = blocks.blocksConfig[blockData['@type']]?.view;
             return Block !== null ? (
@@ -100,13 +63,78 @@ const TabsTocNavigationView = (props) => {
               </div>
             );
           })}
-        </Tab.Pane>
+        </section>
       );
     },
     [],
   );
+  const menu = getMenu(props);
+  const tabRenderer = props.renderTab || renderTab;
 
-  return <DefaultTabsRenderer {...props} renderTab={renderTab} />;
+  return tabs.length ? (
+    mode === 'view' ? (
+      <>
+        <Menu>
+          {tabs.map((tab, index) => (
+            <Menu.Item>
+              <AnchorLink href={`#section-${block}-${index}`}>
+                {tab.title}
+              </AnchorLink>
+            </Menu.Item>
+          ))}
+        </Menu>
+        {tabs.map((tab, index) =>
+          tabRenderer({
+            index,
+            tab,
+            tabsLayout,
+            properties,
+            intl,
+            blocksFieldname,
+            pathname,
+            block,
+          }),
+        )}
+      </>
+    ) : (
+      <Tab
+        grid={GRID}
+        menu={menu}
+        onTabChange={onTabChange}
+        activeIndex={globalActiveTab}
+        panes={tabs.map((tab, index) => ({
+          // render: () => mode === 'view' && renderTab(index, child),
+          render: () =>
+            mode === 'view' &&
+            tabRenderer({
+              index,
+              tab,
+              tabsLayout,
+              properties,
+              intl,
+              blocksFieldname,
+              pathname,
+            }),
+          menuItem: tab.title,
+        }))}
+      />
+    )
+  ) : (
+    <>
+      <hr className="block section" />
+      {mode === 'view'
+        ? tabRenderer({
+            index: 0,
+            tab: {},
+            tabsLayout,
+            properties,
+            intl,
+            blocksFieldname,
+            pathname,
+          })
+        : ''}
+    </>
+  );
 };
 
-export default TabsTocNavigationView;
+export default FlatTabsView;

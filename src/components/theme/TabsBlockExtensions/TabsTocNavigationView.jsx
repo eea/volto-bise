@@ -128,6 +128,7 @@ function addTocNavOption(schema) {
     },
   };
 }
+
 export function tabsTocSchemaExtender(schema) {
   const { tabs } = schema.properties;
   return {
