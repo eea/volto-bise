@@ -3,7 +3,6 @@ import DefaultTabsRenderer, {
   messages,
 } from '@eeacms/volto-tabs-block/Tabs/DefaultTabsRenderer';
 import { Tab } from 'semantic-ui-react';
-// import { injectIntl } from 'react-intl';
 import { map } from 'lodash';
 import { blocks } from '~/config';
 import { getBaseUrl } from '@plone/volto/helpers';
