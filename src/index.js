@@ -34,6 +34,7 @@ export default (config) => {
   };
 
   config.blocks.groupBlocksOrder.push({ id: 'bise', title: 'BISE specific' });
+  config.blocks.blocksConfig.columnsBlock.available_colors = [];
 
   config.settings.slate.styleMenu.inlineStyles = [
     ...config.settings.slate.styleMenu.inlineStyles,
