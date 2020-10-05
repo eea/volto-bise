@@ -1,17 +1,15 @@
 import { DefaultView } from '@plone/volto/components';
 
 import {
-  // ChildrenTabsView,
   FactsheetDatabaseListing,
   installKeyFacts,
   installMaesViewer,
   installConnectedMap,
   installDataCatalogue,
-  // installDataTable,
   installTabsBlockExtensions,
-  // installBubbleChart,
   installDataComponents,
 } from './components';
+import NumberWidget from './components/Widgets/Number';
 
 import './slate-styles.css';
 
@@ -47,6 +45,8 @@ export default (config) => {
   //   { cssClass: 'green-block-text', label: 'Green Text' },
   //   { cssClass: 'underline-block-text', label: 'Underline Text' },
   // ];
+  //
+  config.widgets.widget.number = NumberWidget;
 
   return [
     installKeyFacts,

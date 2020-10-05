@@ -9,6 +9,7 @@ import SimpleDataTableView from './SimpleDataTableView';
 
 class Edit extends Component {
   getSchema = (schema) => {
+    // TODO: create picker for columns to include
     return schema;
     if (!this.props.provider_data) return schema;
     const provider_data = this.props.provider_data || {};
@@ -24,7 +25,6 @@ class Edit extends Component {
   };
 
   render() {
-    console.log('data', this.props);
     return (
       <div className="block">
         <div className="block-inner-wrapper" />

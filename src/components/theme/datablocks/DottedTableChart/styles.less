@@ -1,0 +1,21 @@
+.dotted-table-chart {
+  .inner {
+    width: 100%;
+    overflow-x: auto;
+
+    .dot-cells {
+      width: 60px;
+      display: flex;
+      flex-flow: row wrap;
+      // justify-content: space-between;
+
+      & > div {
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        background-color: red;
+        margin: 4px;
+      }
+    }
+  }
+}

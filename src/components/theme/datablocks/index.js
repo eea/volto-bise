@@ -4,6 +4,7 @@ import DataQueryFilterView from './DataQueryFilter/DataQueryFilterView';
 import DataQueryFilterEdit from './DataQueryFilter/DataQueryFilterEdit';
 import installDataTable from './SimpleDataTable';
 import installBubbleChart from './BubbleChart';
+import installDottedTableChart from './DottedTableChart';
 
 import chartIcon from '@plone/volto/icons/world.svg';
 
@@ -28,7 +29,7 @@ export default (config) => {
     sidebarTab: 1,
   };
 
-  return [installDataTable, installBubbleChart].reduce(
+  return [installDataTable, installBubbleChart, installDottedTableChart].reduce(
     (acc, apply) => apply(acc),
     config,
   );
