@@ -28,18 +28,9 @@ var colorLegend = [
 
 var tooltipProps = [
   {
-    css: 'symbol',
-    prop: '_id',
-  },
-  {
     css: 'value',
     prop: 'value',
-    display: 'Last Value',
-  },
-  {
-    css: 'change',
-    prop: 'colorValue',
-    display: 'Change',
+    display: '',
   },
 ];
 
