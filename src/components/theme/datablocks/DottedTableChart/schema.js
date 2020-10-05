@@ -16,13 +16,13 @@ export const DottedTableChartSchema = () => ({
         'row_data',
         'size_data',
         'dot_value',
-      ], // , 'max_count'
+      ],
     },
-    // {
-    //   id: 'styling',
-    //   title: 'Styling',
-    //   fields: ['show_header', 'striped', 'bordered', 'compact_table'],
-    // },
+    {
+      id: 'styling',
+      title: 'Styling',
+      fields: ['row_colors'],
+    },
   ],
 
   properties: {
@@ -51,34 +51,14 @@ export const DottedTableChartSchema = () => ({
       title: 'Size data',
       choices: [],
     },
-    // title: {
-    //   title: 'Title',
-    // },
-    // max_count: {
-    //   title: 'Max results',
-    //   type: 'number',
-    //   default: 5,
-    // },
-    // show_header: {
-    //   title: 'Show header?',
-    //   type: 'boolean',
-    // },
-    // striped: {
-    //   title: 'Color alternate rows',
-    //   type: 'boolean',
-    // },
-    // bordered: {
-    //   title: 'Remove table border',
-    //   type: 'boolean',
-    // },
-    // compact_table: {
-    //   title: 'Compact table',
-    //   type: 'boolean',
-    // },
-    // underline: {
-    //   title: 'Title underline',
-    //   type: 'boolean',
-    // },
+    row_colors: {
+      title: 'Colors',
+      widget: 'option_mapping',
+      field_props: {
+        widget: 'simple_color',
+      },
+      options: [],
+    },
   },
 
   required: ['provider_url'],

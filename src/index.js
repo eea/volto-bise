@@ -10,6 +10,7 @@ import {
   installDataComponents,
 } from './components';
 import NumberWidget from './components/Widgets/Number';
+import SimpleColorPicker from './components/Widgets/SimpleColorPicker';
 
 import './slate-styles.css';
 
@@ -47,6 +48,9 @@ export default (config) => {
   // ];
   //
   config.widgets.widget.number = NumberWidget;
+  if (!config.widgets.widget.simple_color) {
+    config.widgets.widget.simple_color = SimpleColorPicker;
+  }
 
   return [
     installKeyFacts,

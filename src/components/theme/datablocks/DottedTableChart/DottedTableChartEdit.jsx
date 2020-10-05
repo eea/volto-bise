@@ -18,6 +18,14 @@ class DottedTableChartEdit extends React.Component {
       (n) => (schema.properties[n].choices = choices),
     );
 
+    const { row_data } = this.props.data;
+    const possible_rows = Array.from(new Set(provider_data?.[row_data])).sort();
+
+    schema.properties.row_colors.options = possible_rows.map((r) => ({
+      id: r,
+      title: r,
+    }));
+
     return schema;
   };
 

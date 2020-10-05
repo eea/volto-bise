@@ -6,7 +6,14 @@ import './styles.less';
 
 const DottedTableChartView = (props) => {
   const { data, provider_data } = props;
-  const { description, column_data, row_data, size_data, dot_value } = data;
+  const {
+    description,
+    column_data,
+    row_data,
+    size_data,
+    dot_value,
+    row_colors = {},
+  } = data;
 
   const possible_columns = Array.from(
     new Set(provider_data?.[column_data]),
@@ -24,19 +31,24 @@ const DottedTableChartView = (props) => {
     return res;
   }, [column_data, provider_data, row_data, size_data]);
 
-  const renderDots = (value) => (
-    <div className="dot-cells">
-      {value && dot_value && Math.floor(parseFloat(value) / dot_value)
-        ? new Array(Math.floor(value / dot_value))
-            .fill(1)
-            .map((_, i) => <div key={i}></div>)
-        : ''}
-    </div>
-  );
+  const renderDots = (value, color) => {
+    const arraySize =
+      Math.max(Math.floor(value / Math.max(dot_value, 1)), 1) || 1;
+    return (
+      <div className="dot-cells">
+        {value && dot_value && Math.floor(parseFloat(value) / dot_value)
+          ? new Array(arraySize)
+              .fill(1)
+              .map((_, i) => (
+                <div key={i} style={{ backgroundColor: color }}></div>
+              ))
+          : ''}
+      </div>
+    );
+  };
 
   return (
     <div className="dotted-table-chart">
-      Table chart
       <div className={`${data.underline ? 'with-border' : ''}`}>
         {description ? serializeNodes(description) : ''}
       </div>
@@ -62,7 +74,7 @@ const DottedTableChartView = (props) => {
                   <Table.HeaderCell>{row}</Table.HeaderCell>
                   {possible_columns.map((col, y) => (
                     <Table.Cell verticalAlign="top">
-                      {renderDots(data_tree[col][row])}
+                      {renderDots(data_tree[col][row], row_colors?.[row])}
                     </Table.Cell>
                   ))}
                 </Table.Row>

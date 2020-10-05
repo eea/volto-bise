@@ -25,8 +25,6 @@ const NumberWidget = (props) => {
     minimum,
   } = props;
 
-  console.log('number props', props);
-
   return (
     <FormFieldWrapper {...props}>
       <Input
