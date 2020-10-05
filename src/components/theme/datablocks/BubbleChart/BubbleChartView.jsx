@@ -65,7 +65,7 @@ const BubbleChartView = (props) => {
       legend={false}
       colorLegend={colorLegend}
       legendSpacing={0}
-      tooltip={false}
+      tooltip={true}
       tooltipProps={tooltipProps}
       tooltipFunc={() => {}}
       smallDiameter={10}
