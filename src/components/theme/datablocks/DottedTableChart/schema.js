@@ -1,3 +1,5 @@
+import { settings } from '~/config';
+
 export const DottedTableChartSchema = () => ({
   title: 'Dotted Table Chart',
 
@@ -56,6 +58,7 @@ export const DottedTableChartSchema = () => ({
       widget: 'option_mapping',
       field_props: {
         widget: 'simple_color',
+        available_colors: settings.available_colors,
       },
       options: [],
     },
