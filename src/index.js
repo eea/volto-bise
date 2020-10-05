@@ -34,7 +34,17 @@ export default (config) => {
   };
 
   config.blocks.groupBlocksOrder.push({ id: 'bise', title: 'BISE specific' });
-  config.blocks.blocksConfig.columnsBlock.available_colors = [];
+
+  config.blocks.blocksConfig.columnsBlock.available_colors = [
+    '#3c8000', '#f4cf01', '#ffffff', '#f7f7f7', '#EFEFEF', '#FAD0C3', '#FEF3BD',
+    '#C1E1C5', '#BEDADC', '#C4DEF6', '#000000',
+  ];
+
+  config.settings.available_colors = [
+    '#3c8000', '#88c24f', '#f2a70e', '#f4cf01', '#ed1834', '#8d8d8d', '#ffffff',
+    '#f7f7f7', '#EFEFEF', '#FAD0C3', '#FEF3BD', '#C1E1C5', '#BEDADC', '#BED3F3',
+    '#000000',
+  ];
 
   config.settings.slate.styleMenu.inlineStyles = [
     ...config.settings.slate.styleMenu.inlineStyles,
