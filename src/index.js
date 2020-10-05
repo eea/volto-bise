@@ -41,9 +41,9 @@ export default (config) => {
   ];
 
   config.settings.available_colors = [
-    '#3c8000', '#88c24f', '#f2a70e', '#f4cf01', '#ed1834', '#8d8d8d', '#ffffff',
-    '#f7f7f7', '#EFEFEF', '#FAD0C3', '#FEF3BD', '#C1E1C5', '#BEDADC', '#BED3F3',
-    '#000000',
+    '#1f6237', '#3c8000', '#88c24f', '#77ba72', '#f2a70e', '#f4cf01', '#ed1834',
+    '#44a2d6', '#4e8fa6', '#8d8d8d', '#ffffff', '#f7f7f7', '#EFEFEF', '#FAD0C3',
+    '#FEF3BD', '#C1E1C5', '#BEDADC', '#BED3F3', '#000000',
   ];
 
   config.settings.slate.styleMenu.inlineStyles = [
