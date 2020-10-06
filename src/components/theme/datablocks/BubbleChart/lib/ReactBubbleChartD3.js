@@ -394,10 +394,11 @@ export default class ReactBubbleChartD3 {
    */
   _tooltipMouseOver(color, el, d, i) {
     if (!this.createTooltip) return;
-    for (var { css, prop, display } of this.tooltipProps) {
-      this.tooltip
-        .select('.' + css)
-        .html((display ? display + ': ' : '') + d[prop]);
+    for (var { css, prop, display, preffix, suffix } of this.tooltipProps) {
+      const text = (display ? display + ': ' : '') + d[prop];
+      const newText = (preffix || '') + text + (suffix || '');
+      // TODO: escape the string passed to html if needed
+      this.tooltip.select('.' + css).html(newText);
     }
     // Fade the popup fill mixing the shape fill with 80% white
     const fill = color(d.colorValue);

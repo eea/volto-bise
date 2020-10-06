@@ -26,14 +26,6 @@ var colorLegend = [
   { color: '#08306b', text: 'Positive', textColor: '#ffffff' },
 ];
 
-var tooltipProps = [
-  {
-    css: 'value',
-    prop: 'value',
-    display: '',
-  },
-];
-
 const BubbleChartView = (props) => {
   const { data = {}, provider_data = {} } = props;
   const { size_column, label_column, height } = data;
@@ -45,6 +37,16 @@ const BubbleChartView = (props) => {
           colorValue: provider_data[size_column][index],
         }))
       : [];
+
+  var tooltipProps = [
+    {
+      css: 'value',
+      prop: 'value',
+      display: '',
+      preffix: props.data.tooltip_preffix,
+      suffix: props.data.tooltip_suffix,
+    },
+  ];
 
   return (
     <BubbleChart

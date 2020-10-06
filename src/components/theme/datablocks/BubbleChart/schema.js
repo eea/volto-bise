@@ -5,7 +5,7 @@ const BubbleChartSchema = {
     {
       id: 'default',
       title: 'Default',
-      fields: ['description'], // title
+      fields: ['description', 'tooltip_preffix', 'tooltip_suffix'], // title
     },
     {
       id: 'source',
@@ -23,6 +23,14 @@ const BubbleChartSchema = {
     description: {
       title: 'Description',
       widget: 'slate_richtext',
+    },
+    tooltip_preffix: {
+      title: 'Tooltip preffix',
+      description: 'e.g. $ or €',
+    },
+    tooltip_suffix: {
+      title: 'Tooltip suffix',
+      description: 'e.g. % or km',
     },
     provider_url: {
       widget: 'pick_provider',
