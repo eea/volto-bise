@@ -22,7 +22,6 @@ class Edit extends Component {
   };
 
   render() {
-    console.log('data', this.props);
     return (
       <div className="block">
         <div className="block-inner-wrapper" />
