@@ -63,12 +63,14 @@ export default class ReactBubbleChartD3 {
       .style('right', 0)
       .style('margin-left', 'auto')
       .style('margin-right', 'auto');
-    this.legend = d3
-      .select(el)
-      .append('svg')
-      .attr('class', 'bubble-legend')
-      .style('overflow', 'visible')
-      .style('position', 'absolute');
+    if (props.legend) {
+      this.legend = d3
+        .select(el)
+        .append('svg')
+        .attr('class', 'bubble-legend')
+        .style('overflow', 'visible')
+        .style('position', 'absolute');
+    }
     this.tooltip = this.html
       .append('div')
       .attr('class', 'tooltip')
@@ -115,9 +117,9 @@ export default class ReactBubbleChartD3 {
     this.createLegend = props.legend;
     // for each color in the legend, remove any existing, then
     // create a g and set its transform
-    this.legend.selectAll('.legend-key').remove();
     if (!this.createLegend) return;
 
+    this.legend.selectAll('.legend-key').remove();
     const legendRectSize = Math.min(
       (el.offsetHeight -
         20 -
