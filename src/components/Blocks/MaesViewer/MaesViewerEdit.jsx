@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import cx from 'classnames';
 import { SidebarPortal } from '@plone/volto/components'; // EditBlock
 import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
 
@@ -24,7 +25,7 @@ class Edit extends Component {
 
   render() {
     return (
-      <div className="block selected">
+      <div className={cx('block', { selected: this.props.selected })}>
         <div className="block-inner-wrapper" />
 
         <MaesViewerView data={this.props.data} />
