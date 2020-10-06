@@ -16,14 +16,38 @@
       cursor: pointer;
       display: flex;
       align-items: center;
-      justify-content: space-around;
       border-radius: 50%;
       will-change: left, top, height, width;
-      /* Show the overflow when hovering over a label */
+      font-weight: bold;
+
       &:hover {
+        /* Show the overflow when hovering over a label */
         overflow: visible;
-        font-weight: bold;
       }
+
+      /* Begin: Styles for the underline animation */
+      flex-direction: column;
+      justify-content: center;
+
+      &::after {
+        content: '';
+        opacity: 0;
+        margin: 0;
+        background-color: currentColor;
+        height: 1%;
+        transition: opacity 0.4s, width 0.4s;
+        width: 0;
+        box-sizing: border-box;
+      }
+
+      &:hover {
+        &::after {
+          opacity: 1;
+          width: 50%;
+        }
+      }
+      /* End: Styles for the underline animation */
+
       /* Optional, but recommended - reduce the size of text on medium bubbles */
       &.medium {
         font-size: 0.8em;
