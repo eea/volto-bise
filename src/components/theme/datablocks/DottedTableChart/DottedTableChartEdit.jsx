@@ -30,12 +30,12 @@ const lcm = (a, b) => {
 
 /**
  * Rounds a floating point number to be used in the DottedTableChartEdit.
- * @example e.g. 1.2389 to 1.23.
+ * @example e.g. 1.2389 to 1.2.
  * @param {number} a
  */
 const round = (a) => {
   // return Math.round(a * 100) / 100;
-  return Math.round((a + Number.EPSILON) * 100) / 100;
+  return Math.round((a + Number.EPSILON) * 10) / 10;
 };
 
 /**
@@ -120,8 +120,11 @@ class DottedTableChartEdit extends React.Component {
       title: r,
     }));
 
-    if (!this.props.data.dot_value) {
-      schema.properties.dot_value.defaultValue = this.getDefaultDotValue();
+    const defaultDotValue = this.getDefaultDotValue();
+    if (defaultDotValue) {
+      schema.properties.dot_value.description = `Recommended value: ${defaultDotValue}`;
+    } else {
+      schema.properties.dot_value.description = '';
     }
 
     return schema;
@@ -152,8 +155,15 @@ class DottedTableChartEdit extends React.Component {
 
     const data_tree = this.getDataTree();
 
-    let auto_dot_value = -1;
+    if (
+      possible_columns.length === 0 ||
+      possible_rows.length === 0 ||
+      typeof data_tree[possible_columns[0]][possible_rows[0]] !== 'string'
+    ) {
+      return null;
+    }
 
+    let auto_dot_value = -1;
     // This loop can be optimized by calculating the GCD only once with multiple
     // parameters.
     possible_columns.forEach((x) => {

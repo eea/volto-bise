@@ -32,10 +32,13 @@ const DottedTableChartView = (props) => {
   }, [column_data, provider_data, row_data, size_data]);
 
   const renderDots = (value, color) => {
-    const arraySize = Math.max(Math.floor(value / dot_value), 1) || 1;
+    const dotValue = parseFloat(dot_value);
+    const val = parseFloat(value);
+    const arraySize = Math.ceil(Math.max(val / dotValue, 1));
+
     return (
       <div className="dot-cells">
-        {value && dot_value && Math.floor(parseFloat(value) / dot_value)
+        {val && dotValue && Math.floor(val / dotValue)
           ? new Array(arraySize)
               .fill(1)
               .map((_, i) => (
