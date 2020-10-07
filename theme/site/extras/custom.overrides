@@ -20,4 +20,5 @@
   /* @import 'imagecards'; // imagecards block */
 
   @import 'factsheets';
+  @import 'table';
 }

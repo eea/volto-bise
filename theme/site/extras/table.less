@@ -1,0 +1,43 @@
+
+.ui.table {
+  border: none;
+}
+
+// Dotted table chart
+.dotted-table-chart {
+  .ui.table {
+    tr td {
+      border-top: none;
+      border-bottom: 1px solid rgba(34, 36, 38, 0.4);
+    }
+    thead {
+      th {
+        background: none;
+        border-bottom: none;
+        margin-bottom: 0.5rem;
+        text-decoration: underline;
+        text-transform: initial;
+        font-size: 16px;
+      }
+      td {
+        border-bottom: none;
+      }
+    }
+    tbody th {
+      background: none;
+      text-transform: initial;
+      font-weight: bold;
+      border-bottom: 1px solid rgba(34, 36, 38, 0.4);
+    }
+  }
+
+  .inner {
+    .dot-cells {
+      & > div {
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+      }
+    }
+  }
+}
