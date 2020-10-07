@@ -122,9 +122,9 @@ class DottedTableChartEdit extends React.Component {
 
     const defaultDotValue = this.getDefaultDotValue();
     if (defaultDotValue) {
-      schema.properties.dot_value.description = `Recommended value: ${defaultDotValue}`;
+      schema.properties.dot_value.description = `Recommended minimum value: ${defaultDotValue}`;
     } else {
-      schema.properties.dot_value.description = '';
+      delete schema.properties.dot_value.description;
     }
 
     return schema;
