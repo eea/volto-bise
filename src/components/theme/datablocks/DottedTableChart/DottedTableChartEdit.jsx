@@ -44,27 +44,28 @@ const round = (a) => {
  * @param {number} b
  */
 const gcd = (a, b) => {
-  // We are using this round function everywhere
-  // to not get unrounded results at any step.
+  // We are using this round function everywhere to not get unrounded results at
+  // any step.
   a = round(a);
   b = round(b);
 
   // If the numbers are integers we can compute their GCD in the normal, more
   // efficient way.
-  const hasDa = Math.floor(a) !== a;
-  const hasDb = Math.floor(b) !== b;
+  const hasDa = Math.floor(a) !== a; // whether a has fractional digits
+  const hasDb = Math.floor(b) !== b; // whether b has fractional digits
 
   if (!hasDa && !hasDb) {
     return gcdNormal(a, b);
   }
 
-  // Else make fractions from the two numbers.
+  // Else, make fractions from the two numbers.
   // The result we want is (GCD(a1, b1) / LCM(a2, b2)) where a1/a2 is equal to
   // the a number, and b1/b2 is equal to the b number.
-  let x = a,
-    da,
-    db,
-    y = b;
+  let x = a, // will be the number over the fraction line of a
+    da, // will temporarily be the number of decimal places used by a
+    db, // will temporarily be the number of decimal places used by b
+    y = b; // will be the number over the fraction line of b
+
   if (hasDa) {
     da = a.toString().split('.')[1].length; // the number of decimal places used by a
   } else {
@@ -77,13 +78,17 @@ const gcd = (a, b) => {
     db = 0;
   }
 
+  // We multiply x and y with a common number to compute the GCD easier.
   if (da > db) {
     db = da;
   }
 
+  // The number over the fraction line of a:
   x = round(a * Math.pow(10, da));
+  // The number over the fraction line of b:
   y = round(b * Math.pow(10, db));
 
+  // Using the formula: (GCD(a1, b1) / LCM(a2, b2))
   const g = round(gcdNormal(x, y));
   const l = round(lcm(Math.pow(10, da), Math.pow(10, db)));
   const rv = g / l;
