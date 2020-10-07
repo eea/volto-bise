@@ -39,6 +39,7 @@ export const DottedTableChartSchema = () => ({
     dot_value: {
       title: 'Dot value',
       widget: 'number',
+      defaultValue: 1,
     },
     column_data: {
       title: 'Columns',

@@ -130,6 +130,9 @@ class DottedTableChartEdit extends React.Component {
     return schema;
   };
 
+  /**
+   * Returns the data based on which the edit form is filled.
+   */
   getDataTree = () => {
     const { data, provider_data } = this.props;
     const { column_data, row_data, size_data } = data;
@@ -144,6 +147,9 @@ class DottedTableChartEdit extends React.Component {
     return res;
   };
 
+  /**
+   * Computes a default minimum dot_value piece of information.
+   */
   getDefaultDotValue = () => {
     const { data, provider_data } = this.props;
     const { column_data, row_data } = data;
