@@ -82,6 +82,9 @@ const gcd = (a, b) => {
   if (da > db) {
     db = da;
   }
+  if (db > da) {
+    da = db;
+  }
 
   // The number over the fraction line of a:
   x = round(a * Math.pow(10, da));
