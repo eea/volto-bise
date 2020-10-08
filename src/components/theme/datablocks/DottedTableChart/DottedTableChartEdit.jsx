@@ -5,28 +5,7 @@ import { connectBlockToProviderData } from 'volto-datablocks/hocs';
 import DottedTableChartView from './DottedTableChartView';
 import { DottedTableChartSchema } from './schema';
 
-/**
- * Integer GCD.
- * @param {number} a
- * @param {number} b
- */
-const gcdNormal = (a, b) => {
-  while (b !== 0) {
-    const t = b;
-    b = a % b;
-    a = t;
-  }
-  return a;
-};
-
-/**
- * Integer LCM.
- * @param {number} a
- * @param {number} b
- */
-const lcm = (a, b) => {
-  return Math.abs(a * b) / gcdNormal(a, b);
-};
+const MAXIMUM_DOT_COUNT = 15;
 
 /**
  * Rounds a floating point number to be used in the DottedTableChartEdit.
@@ -34,69 +13,7 @@ const lcm = (a, b) => {
  * @param {number} a
  */
 const round = (a) => {
-  // return Math.round(a * 100) / 100;
-  return Math.round((a + Number.EPSILON) * 10) / 10;
-};
-
-/**
- * Returns the GCD of two floating point numbers.
- * @param {number} a
- * @param {number} b
- */
-const gcd = (a, b) => {
-  // We are using this round function everywhere to not get unrounded results at
-  // any step.
-  a = round(a);
-  b = round(b);
-
-  // If the numbers are integers we can compute their GCD in the normal, more
-  // efficient way.
-  const hasDa = Math.floor(a) !== a; // whether a has fractional digits
-  const hasDb = Math.floor(b) !== b; // whether b has fractional digits
-
-  if (!hasDa && !hasDb) {
-    return gcdNormal(a, b);
-  }
-
-  // Else, make fractions from the two numbers.
-  // The result we want is (GCD(a1, b1) / LCM(a2, b2)) where a1/a2 is equal to
-  // the a number, and b1/b2 is equal to the b number.
-  let x = a, // will be the number over the fraction line of a
-    da, // will temporarily be the number of decimal places used by a
-    db, // will temporarily be the number of decimal places used by b
-    y = b; // will be the number over the fraction line of b
-
-  if (hasDa) {
-    da = a.toString().split('.')[1].length; // the number of decimal places used by a
-  } else {
-    da = 0;
-  }
-
-  if (hasDb) {
-    db = b.toString().split('.')[1].length; // the number of decimal places used by b
-  } else {
-    db = 0;
-  }
-
-  // We multiply x and y with a common number to compute the GCD easier.
-  if (da > db) {
-    db = da;
-  }
-  if (db > da) {
-    da = db;
-  }
-
-  // The number over the fraction line of a:
-  x = round(a * Math.pow(10, da));
-  // The number over the fraction line of b:
-  y = round(b * Math.pow(10, db));
-
-  // Using the formula: (GCD(a1, b1) / LCM(a2, b2))
-  const g = round(gcdNormal(x, y));
-  const l = round(lcm(Math.pow(10, da), Math.pow(10, db)));
-  const rv = g / l;
-
-  return rv;
+  return Math.round(a * 10) / 10;
 };
 
 class DottedTableChartEdit extends React.Component {
@@ -122,7 +39,10 @@ class DottedTableChartEdit extends React.Component {
 
     const defaultDotValue = this.getDefaultDotValue();
     if (defaultDotValue) {
-      schema.properties.dot_value.description = `Recommended minimum value: ${defaultDotValue}`;
+      schema.properties.dot_value.description = `Recommended value: ${defaultDotValue.toLocaleString()}`;
+      if (!this.props.data.dot_value) {
+        this.props.data.dot_value = defaultDotValue.toString();
+      }
     } else {
       delete schema.properties.dot_value.description;
     }
@@ -148,44 +68,47 @@ class DottedTableChartEdit extends React.Component {
   };
 
   /**
+   * Uses this.possible_columns, this.possible_rows and this.data_tree.
+   */
+  getMaxValue = () => {
+    let max = 0;
+    // This loop can be optimized by calculating the GCD only once with multiple
+    // parameters.
+    this.possible_columns.forEach((x) => {
+      this.possible_rows.forEach((y) => {
+        if (typeof this.data_tree[x][y] === 'string') {
+          const num = parseFloat(this.data_tree[x][y]);
+          max = Math.max(max, num);
+        }
+      });
+    });
+    return max;
+  };
+
+  /**
    * Computes a default minimum dot_value piece of information.
    */
   getDefaultDotValue = () => {
     const { data, provider_data } = this.props;
     const { column_data, row_data } = data;
 
-    const possible_columns = Array.from(
+    this.possible_columns = Array.from(
       new Set(provider_data?.[column_data]),
     ).sort();
-    const possible_rows = Array.from(new Set(provider_data?.[row_data])).sort();
+    this.possible_rows = Array.from(new Set(provider_data?.[row_data])).sort();
 
-    const data_tree = this.getDataTree();
+    this.data_tree = this.getDataTree();
 
     if (
-      possible_columns.length === 0 ||
-      possible_rows.length === 0 ||
-      typeof data_tree[possible_columns[0]][possible_rows[0]] !== 'string'
+      this.possible_columns.length === 0 ||
+      this.possible_rows.length === 0 ||
+      typeof this.data_tree[this.possible_columns[0]][this.possible_rows[0]] !==
+        'string'
     ) {
       return null;
     }
 
-    let auto_dot_value = -1;
-    // This loop can be optimized by calculating the GCD only once with multiple
-    // parameters.
-    possible_columns.forEach((x) => {
-      possible_rows.forEach((y) => {
-        if (typeof data_tree[x][y] === 'string') {
-          const num = parseFloat(data_tree[x][y]);
-          if (auto_dot_value < 0) {
-            auto_dot_value = num;
-          } else {
-            auto_dot_value = gcd(auto_dot_value, num);
-          }
-        }
-      });
-    });
-
-    return auto_dot_value;
+    return round(this.getMaxValue() / MAXIMUM_DOT_COUNT);
   };
 
   render() {
