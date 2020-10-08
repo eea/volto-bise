@@ -33,8 +33,8 @@ const BubbleChartView = (props) => {
     size_column && label_column && provider_data
       ? provider_data[label_column]?.map((d, index) => ({
           _id: d,
-          value: provider_data[size_column][index],
-          colorValue: provider_data[size_column][index],
+          value: provider_data[size_column]?.[index],
+          colorValue: provider_data[size_column]?.[index],
         }))
       : [];
 
