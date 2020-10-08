@@ -1,45 +1,47 @@
-.ui.table {
-  border: none;
+.block {
+  .ui.table {
+    border: none;
 
-  tr td {
-    border-top: none;
-    border-bottom: 1px solid rgba(34, 36, 38, 0.4);
-  }
+    tr td {
+      border-top: none;
+      border-bottom: 1px solid rgba(34, 36, 38, 0.4);
+    }
 
-  thead {
-    th {
-      background: none;
-      border-bottom: none;
-      margin-bottom: 0.5rem;
-      text-transform: initial;
-      font-size: 15px;
-      vertical-align: bottom;
-      color: #000;
-      text-align: center;
-      position: relative;
+    thead {
+      th {
+        background: none;
+        border-bottom: none;
+        margin-bottom: 0.5rem;
+        text-transform: initial;
+        font-size: 15px;
+        vertical-align: bottom;
+        color: #000;
+        text-align: center;
+        position: relative;
 
-      &:before {
-        content: "";
-        display: block;
-        border-bottom: 1px solid #000;
-        position: absolute;
-        left: 50%;
-        transform: translate(-50%,-50%);
-        bottom: 8px;
-        width: 85%;
+        &:before {
+          content: "";
+          display: block;
+          border-bottom: 1px solid #000;
+          position: absolute;
+          left: 50%;
+          transform: translate(-50%,-50%);
+          bottom: 8px;
+          width: 85%;
+        }
+      }
+
+      td {
+        border-bottom: none;
       }
     }
 
-    td {
-      border-bottom: none;
+    tbody th {
+      background: none;
+      text-transform: initial;
+      font-weight: bold;
+      border-bottom: 1px solid rgba(34, 36, 38, 0.4);
     }
-  }
-
-  tbody th {
-    background: none;
-    text-transform: initial;
-    font-weight: bold;
-    border-bottom: 1px solid rgba(34, 36, 38, 0.4);
   }
 }
 
