@@ -1,11 +1,31 @@
-.green-text {
-  color: #77bb83;
+.primary-big-text {
+  font-size: 300%;
+}
+
+.dark-green-text {
+  color: #1f6237;
+}
+
+.light-green-text {
+  color: #77ba72;
+}
+
+.vivid-green-text {
+  color: #7a9b28;
 }
 
 .blue-text {
-  color: #3accf5;
+  color: #44a2d6;
 }
 
-.primary-big-text {
-  font-size: 300%;
+.red-text {
+  color: #ed1834;
+}
+
+.yellow-text {
+  color: #f2a70e;
+}
+
+.grey-text {
+  color: #8d8d8d;
 }

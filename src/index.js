@@ -49,8 +49,13 @@ export default (config) => {
   config.settings.slate.styleMenu.inlineStyles = [
     ...config.settings.slate.styleMenu.inlineStyles,
     { cssClass: 'primary-big-text', label: 'Big text' },
-    { cssClass: 'green-text', label: 'Green text' },
+    { cssClass: 'dark-green-text', label: 'Dark green text' },
+    { cssClass: 'light-green-text', label: 'Light green text' },
+    { cssClass: 'vivid-green-text', label: 'Vivid green text' },
     { cssClass: 'blue-text', label: 'Blue text' },
+    { cssClass: 'red-text', label: 'Red text' },
+    { cssClass: 'yellow-text', label: 'Yellow text' },
+    { cssClass: 'grey-text', label: 'Grey text' },
   ];
   // config.settings.slate.styleMenu.blockStyles = [
   //   ...config.settings.slate.styleMenu.blockStyles,
