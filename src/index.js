@@ -106,6 +106,11 @@ export default (config) => {
       title: 'Divided',
       cssClass: 'divided-block',
     },
+    {
+      id: 'shadedBlock',
+      title: 'Shaded & Divided',
+      cssClass: 'shaded-block',
+    },
   ];
 
   return [
