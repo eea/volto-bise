@@ -17,8 +17,7 @@ class Edit extends Component {
     };
 
     return (
-      <div className="block selected">
-        <div className="block-inner-wrapper" />
+      <>
         <ChartEditor
           value={chartData}
           provider_url={this.props.data?.url}
@@ -42,7 +41,7 @@ class Edit extends Component {
             formData={this.props.data}
           />
         </SidebarPortal>
-      </div>
+      </>
     );
   }
 }

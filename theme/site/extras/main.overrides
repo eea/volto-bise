@@ -252,3 +252,7 @@ button {
     background: transparent; /* optional: just make scrollbar invisible */
   }
 }
+
+div#view .ui.container > * {
+  margin-bottom: 1.5em;
+}
