@@ -3,6 +3,11 @@
   line-height: 45px;
 }
 
+.medium-text {
+  font-size: 30px;
+  line-height: 30px;
+}
+
 .dark-green-text {
   color: #1f6237;
 }

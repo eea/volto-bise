@@ -75,6 +75,7 @@ export default (config) => {
   config.settings.slate.styleMenu.inlineStyles = [
     ...config.settings.slate.styleMenu.inlineStyles,
     { cssClass: 'primary-big-text', label: 'Big text' },
+    { cssClass: 'medium-text', label: 'Medium text' },
     { cssClass: 'dark-green-text', label: 'Dark green text' },
     { cssClass: 'light-green-text', label: 'Light green text' },
     { cssClass: 'vivid-green-text', label: 'Vivid green text' },
