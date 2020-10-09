@@ -13,6 +13,7 @@ import NumberWidget from './components/Widgets/Number';
 import SimpleColorPicker from './components/Widgets/SimpleColorPicker';
 
 import './slate-styles.css';
+import './box-styles.less';
 
 export default (config) => {
   config.settings.allowed_cors_destinations = [
@@ -36,14 +37,39 @@ export default (config) => {
   config.blocks.groupBlocksOrder.push({ id: 'bise', title: 'BISE specific' });
 
   config.blocks.blocksConfig.columnsBlock.available_colors = [
-    '#3c8000', '#f4cf01', '#ffffff', '#f7f7f7', '#EFEFEF', '#FAD0C3', '#FEF3BD',
-    '#C1E1C5', '#BEDADC', '#C4DEF6', '#000000',
+    '#3c8000',
+    '#f4cf01',
+    '#ffffff',
+    '#f7f7f7',
+    '#EFEFEF',
+    '#FAD0C3',
+    '#FEF3BD',
+    '#C1E1C5',
+    '#BEDADC',
+    '#C4DEF6',
+    '#000000',
   ];
 
   config.settings.available_colors = [
-    '#1f6237', '#3c8000', '#88c24f', '#77ba72', '#f2a70e', '#f4cf01', '#ed1834',
-    '#44a2d6', '#4e8fa6', '#8d8d8d', '#ffffff', '#f7f7f7', '#EFEFEF', '#FAD0C3',
-    '#FEF3BD', '#C1E1C5', '#BEDADC', '#BED3F3', '#000000',
+    '#1f6237',
+    '#3c8000',
+    '#88c24f',
+    '#77ba72',
+    '#f2a70e',
+    '#f4cf01',
+    '#ed1834',
+    '#44a2d6',
+    '#4e8fa6',
+    '#8d8d8d',
+    '#ffffff',
+    '#f7f7f7',
+    '#EFEFEF',
+    '#FAD0C3',
+    '#FEF3BD',
+    '#C1E1C5',
+    '#BEDADC',
+    '#BED3F3',
+    '#000000',
   ];
 
   config.settings.slate.styleMenu.inlineStyles = [
@@ -67,6 +93,20 @@ export default (config) => {
   if (!config.widgets.widget.simple_color) {
     config.widgets.widget.simple_color = SimpleColorPicker;
   }
+
+  config.settings.pluggableStyles = [
+    ...(config.settings.pluggableStyles || []),
+    {
+      id: 'borderBlock',
+      title: 'Border',
+      cssClass: 'border-block',
+    },
+    {
+      id: 'dividedBlock',
+      title: 'Divided',
+      cssClass: 'divided-block',
+    },
+  ];
 
   return [
     installKeyFacts,
