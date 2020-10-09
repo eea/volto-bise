@@ -40,6 +40,8 @@
       Site Colors
 --------------------*/
 
+@textColor           : #000;
+
 /*---  Theme colors  ---*/
 
 @lightGreenColor     : #3c8000;

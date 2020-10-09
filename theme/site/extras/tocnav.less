@@ -85,3 +85,33 @@
     }
   }
 }
+
+// Table of contents - horizontal menu
+.table-of-contents.horizontalMenu {
+  .ui.menu {
+    border:none;
+    float: right;
+
+    .item {
+      &:not(:last-child) {
+        &:before {
+          top: 6px;
+          height: 70%;
+          background: rgba(34, 36, 38, 0.8);
+        }
+      }
+      a {
+        font-size: 18px;
+        color: @textColor;
+      }
+    }
+  }
+
+  &:after {
+    content: "";
+    visibility: hidden;
+    display: block;
+    height: 0;
+    clear: both;
+  }
+}
