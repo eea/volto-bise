@@ -11,12 +11,22 @@ import PropTypes from 'prop-types';
  * @class View
  * @extends Component
  */
-const View = ({ properties }) =>
-  properties.image ? (
-    ''
-  ) : (
-    <h1 className="documentFirstHeading">{properties.title}</h1>
+
+const View = ({ properties, data }) => {
+  return (
+    <>
+    {properties.image
+      ? ''
+      : [
+        (!data.hide_title
+          ? <h1 className="documentFirstHeading">{properties.title}</h1>
+          : ''
+        )
+      ]
+    }
+    </>
   );
+};
 
 /**
  * Property types.
