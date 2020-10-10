@@ -128,7 +128,7 @@ function ConnectedChart(props) {
   }));
 
   // console.log('data', data);
-  // console.log('layout', layout);
+  console.log('layout', layout);
 
   const chart = (
     <LoadablePlot
@@ -138,8 +138,12 @@ function ConnectedChart(props) {
       config={{
         displayModeBar: false,
         editable: false,
-        responsive: false,
-        // useResizeHandler: true,
+        responsive: true,
+        useResizeHandler: true,
+      }}
+      style={{
+        maxWidth: '100%',
+        margin: 'auto',
       }}
     />
   );
