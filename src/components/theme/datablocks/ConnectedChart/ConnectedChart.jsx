@@ -111,7 +111,6 @@ function ConnectedChart(props) {
   // TODO: only use fallback data if chartData.data.url doesn't exist
   // or the connected_data_parameters don't exist
 
-  // debugger;
   let data =
     props.providerData && useLiveData
       ? mixProviderData(
@@ -128,41 +127,60 @@ function ConnectedChart(props) {
     },
   }));
 
-  // console.log('data', data);
-  // console.log('layout', layout);
+  const nodeRef = React.useRef();
+  const sizeRef = React.useRef({});
+
+  React.useLayoutEffect(() => {
+    if (nodeRef.current) {
+      setTimeout(() => {
+        const height = nodeRef.current.el.clientHeight;
+        const width = nodeRef.current.el.clientWidth;
+        if (height && width) {
+          const size = {
+            height: `${height}px`,
+            width: `${width}px`,
+          };
+          sizeRef.current = size;
+        }
+      }, 500);
+    }
+  });
+
+  const [update, setUpdate] = React.useState(true);
 
   return (
-    <div className="connected-chart">
-      <VisibilitySensor partialVisibility={true} offset={{ bottom: 200 }}>
-        {({ isVisible }) => (
-          <div>
-            {isVisible ? (
-              <div className="connected-chart-wrapper">
-                {__CLIENT__ && chartData && data && layout ? (
-                  <LoadablePlot
-                    data={data}
-                    layout={layout}
-                    frames={[]}
-                    config={{
-                      displayModeBar: false,
-                      editable: false,
-                      responsive: true,
-                      useResizeHandler: true,
-                    }}
-                    style={{
-                      maxWidth: '100%',
-                      margin: 'auto',
-                    }}
-                  />
-                ) : (
-                  ''
-                )}
-              </div>
-            ) : (
-              <div>not visible</div>
-            )}
-          </div>
-        )}
+    <div>
+      <VisibilitySensor
+        className="connected-chart"
+        partialVisibility={true}
+        offset={{ top: 10 }}
+        delayedCall={true}
+        onChange={() => setUpdate(!update)}
+      >
+        {({ isVisible }) =>
+          isVisible ? (
+            <div className="connected-chart-wrapper">
+              <LoadablePlot
+                ref={nodeRef}
+                data={data}
+                layout={layout}
+                frames={[]}
+                config={{
+                  displayModeBar: false,
+                  editable: false,
+                  responsive: true,
+                  useResizeHandler: true,
+                }}
+                style={{
+                  maxWidth: '100%',
+                  margin: 'auto',
+                }}
+              />
+            </div>
+          ) : (
+            <div style={sizeRef.current}>x</div>
+          )
+        }
       </VisibilitySensor>
     </div>
   );
