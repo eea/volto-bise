@@ -133,8 +133,8 @@ function ConnectedChart(props) {
   React.useLayoutEffect(() => {
     if (nodeRef.current) {
       setTimeout(() => {
-        const height = nodeRef.current.el.clientHeight;
-        const width = nodeRef.current.el.clientWidth;
+        const height = nodeRef.current?.el?.clientHeight;
+        const width = nodeRef.current?.el?.clientWidth;
         if (height && width) {
           const size = {
             height: `${height}px`,
