@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import { SidebarPortal } from '@plone/volto/components'; // EditBlock
 
-// import ChartEditor from 'volto-plotlycharts/Widget/ChartEditor';
 import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
 import ChartEditorWidget from 'volto-plotlycharts/Widget/Widget';
 
@@ -54,14 +53,3 @@ class Edit extends Component {
 }
 
 export default connect(null, {})(Edit);
-//
-//      <ChartEditor
-//        value={chartData}
-//        provider_url={this.props.data?.url}
-//        onChangeValue={(value) => {
-//          this.props.onChangeBlock(this.props.block, {
-//            ...this.props.data,
-//            chartData: JSON.parse(JSON.stringify(value)),
-//          });
-//        }}
-//      />

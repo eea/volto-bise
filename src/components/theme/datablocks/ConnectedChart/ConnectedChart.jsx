@@ -13,6 +13,7 @@ import {
 import { settings } from '~/config';
 import { getDataFromProvider } from 'volto-datablocks/actions';
 import loadable from '@loadable/component';
+import VisibilitySensor from 'react-visibility-sensor';
 
 const LoadablePlot = loadable(() => import('react-plotly.js'));
 
@@ -128,27 +129,45 @@ function ConnectedChart(props) {
   }));
 
   // console.log('data', data);
-  console.log('layout', layout);
+  // console.log('layout', layout);
 
-  const chart = (
-    <LoadablePlot
-      data={data}
-      layout={layout}
-      frames={[]}
-      config={{
-        displayModeBar: false,
-        editable: false,
-        responsive: true,
-        useResizeHandler: true,
-      }}
-      style={{
-        maxWidth: '100%',
-        margin: 'auto',
-      }}
-    />
+  return (
+    <div className="connected-chart">
+      <VisibilitySensor partialVisibility={true} offset={{ bottom: 200 }}>
+        {({ isVisible }) => (
+          <div>
+            {isVisible ? (
+              <div className="connected-chart-wrapper">
+                {__CLIENT__ && chartData && data && layout ? (
+                  <LoadablePlot
+                    data={data}
+                    layout={layout}
+                    frames={[]}
+                    config={{
+                      displayModeBar: false,
+                      editable: false,
+                      responsive: true,
+                      useResizeHandler: true,
+                    }}
+                    style={{
+                      maxWidth: '100%',
+                      margin: 'auto',
+                    }}
+                  />
+                ) : (
+                  ''
+                )}
+              </div>
+            ) : (
+              <div>not visible</div>
+            )}
+          </div>
+        )}
+      </VisibilitySensor>
+    </div>
   );
 
-  return <>{__CLIENT__ && chartData && data && layout ? chart : ''}</>;
+  // return <>{__CLIENT__ && chartData && data && layout ? chart : ''}</>;
 }
 
 function getProviderData(state, props) {
