@@ -15,6 +15,24 @@
 //------------------------------------------------------------------------------
 
 import d3 from 'd3';
+import { fitText } from '../fitText/fittext';
+
+// https://stackoverflow.com/a/20773846/258462
+function endall(transition, callback) {
+  if (typeof callback !== 'function')
+    throw new Error('Wrong callback in endall');
+  if (transition.size() === 0) {
+    callback();
+  }
+  var n = 0;
+  transition
+    .each(function () {
+      ++n;
+    })
+    .each('end', function () {
+      if (!--n) callback.apply(this, arguments);
+    });
+}
 
 /**
  * Properties defined during construction:
@@ -294,8 +312,12 @@ export default class ReactBubbleChartD3 {
         else size = 'large';
         return 'bubble-label ' + size;
       })
-      // we can pass in a fontSizeFactor here to set the label font-size as a factor of its corresponding circle's radius; this overrides CSS font-size styles set with the small, medium and large classes
-      .style('font-size', (d) => (fontFactor ? fontFactor * d.r + 'px' : null));
+      .call(endall, (x) => {
+        document.querySelectorAll('.bubble-label').forEach((x) => fitText(x));
+      });
+
+    // we can pass in a fontSizeFactor here to set the label font-size as a factor of its corresponding circle's radius; this overrides CSS font-size styles set with the small, medium and large classes
+    // .style('font-size', (d) => (fontFactor ? fontFactor * d.r + 'px' : null));
 
     // enter - only applies to incoming elements (once emptying data)
     if (nodes.length) {
@@ -344,9 +366,12 @@ export default class ReactBubbleChartD3 {
         .transition()
         .duration(duration * 1.2)
         .style('opacity', 1)
-        .style('font-size', (d) =>
-          fontFactor ? fontFactor * d.r + 'px' : null,
-        );
+        .call(endall, (x) => {
+          document.querySelectorAll('.bubble-label').forEach((x) => fitText(x));
+        });
+      // .style('font-size', (d) =>
+      //   fontFactor ? fontFactor * d.r + 'px' : null,
+      // );
     }
 
     // exit - only applies to... exiting elements
@@ -398,9 +423,11 @@ export default class ReactBubbleChartD3 {
     if (!this.createTooltip) return;
     for (var { css, prop, display, preffix, suffix } of this.tooltipProps) {
       const text = (display ? display + ': ' : '') + d[prop];
-      const newText = (preffix || '') + text + (suffix || '');
-      // TODO: escape the string passed to html if needed
-      this.tooltip.select('.' + css).html(newText);
+
+      // TODO: don't hardcode d._id and '\n' here:
+      const newText = d._id + '\n' + (preffix || '') + text + (suffix || '');
+
+      this.tooltip.select('.' + css).text(newText);
     }
     // Fade the popup fill mixing the shape fill with 80% white
     const fill = color(d.colorValue);
