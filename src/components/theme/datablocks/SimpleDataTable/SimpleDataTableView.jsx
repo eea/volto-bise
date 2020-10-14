@@ -2,6 +2,7 @@ import { Table } from 'semantic-ui-react';
 import React from 'react';
 import { connectBlockToProviderData } from 'volto-datablocks/hocs';
 import { serializeNodes } from 'volto-slate/editor/render';
+import FormattedValue from './FormattedValue';
 
 import './styles.css';
 
@@ -21,8 +22,12 @@ const SimpleDataTableView = (props) => {
 
   const providerColumns = Object.keys(provider_data || {});
   const selectedColumns = columns
-    ? columns.filter((c) => providerColumns.includes(c))
+    ? columns.filter((c) =>
+        typeof c === 'string' ? null : providerColumns.includes(c?.column),
+      )
     : providerColumns;
+
+  // console.log('columns', format);
 
   return (
     <div className="simple-data-table">
@@ -39,8 +44,10 @@ const SimpleDataTableView = (props) => {
           {show_header ? (
             <Table.Header>
               <Table.Row>
-                {selectedColumns.map((name) => (
-                  <Table.HeaderCell key={name}>{name}</Table.HeaderCell>
+                {selectedColumns.map((coldef) => (
+                  <Table.HeaderCell key={coldef.column}>
+                    {coldef.title || coldef.column}
+                  </Table.HeaderCell>
                 ))}
               </Table.Row>
             </Table.Header>
@@ -52,12 +59,22 @@ const SimpleDataTableView = (props) => {
               .fill()
               .map((_, i) => (
                 <Table.Row key={i}>
-                  {selectedColumns.map((k, j) => (
+                  {selectedColumns.map((coldef, j) => (
                     <Table.Cell
-                      key={`${i}-${k}`}
-                      textAlign={j === 0 ? 'left' : 'right'}
+                      key={`${i}-${coldef.column}`}
+                      textAlign={
+                        coldef.textAlign
+                          ? coldef.textAlign
+                          : j === 0
+                          ? 'left'
+                          : 'right'
+                      }
                     >
-                      {provider_data[k][i]}
+                      <FormattedValue
+                        textTemplate={coldef.textTemplate}
+                        value={provider_data[coldef.column][i]}
+                        specifier={coldef.specifier}
+                      />
                     </Table.Cell>
                   ))}
                 </Table.Row>

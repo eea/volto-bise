@@ -1,3 +1,49 @@
+import React from 'react';
+
+const ColumnSchema = () => ({
+  title: 'Column',
+  fieldsets: [
+    {
+      id: 'default',
+      title: 'Default',
+      fields: ['column', 'title', 'textTemplate', 'specifier', 'textAlign'],
+    },
+  ],
+  properties: {
+    title: {
+      title: 'Header',
+    },
+    specifier: {
+      title: 'Format specifier',
+      description: (
+        <>
+          See{' '}
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://github.com/d3/d3-3.x-api-reference/blob/master/Formatting.md#d3_format"
+          >
+            D3 format documentation
+          </a>
+        </>
+      ),
+    },
+    textTemplate: {
+      title: 'Text template',
+      description: 'Add suffix/prefix to text. Use {} for value placeholder',
+    },
+    textAlign: {
+      title: 'Align',
+      widget: 'simple_text_align',
+    },
+    column: {
+      title: 'Data column',
+      choices: [],
+    },
+  },
+  required: ['column'],
+});
+
 const SimpleDataTableSchema = () => ({
   title: 'DataConnected Table',
 
@@ -26,13 +72,20 @@ const SimpleDataTableSchema = () => ({
   ],
 
   properties: {
+    // columns: {
+    //   title: 'Columns',
+    //   description: 'Leave empty to show all columns',
+    //   isMulti: true,
+    //   choices: [],
+    //   widget: 'multi_select',
+    // },
     columns: {
       title: 'Columns',
       description: 'Leave empty to show all columns',
-      isMulti: true,
-      choices: [],
-      widget: 'multi_select',
+      schema: ColumnSchema(),
+      widget: 'object_list_inline',
     },
+
     description: {
       title: 'Description',
       widget: 'slate_richtext',

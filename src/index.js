@@ -12,6 +12,7 @@ import {
 import NumberWidget from './components/Widgets/Number';
 import SimpleColorPicker from './components/Widgets/SimpleColorPicker';
 import MultiSelectWidget from './components/Widgets/MultiSelectWidget';
+import TextAlign from './components/Widgets/TextAlign';
 
 import './slate-styles.css';
 import './box-styles.less';
@@ -101,6 +102,10 @@ export default (config) => {
     config.widgets.widget.multi_select = MultiSelectWidget;
   }
 
+  if (!config.widgets.widget.simple_text_align) {
+    config.widgets.widget.simple_text_align = TextAlign;
+  }
+
   config.settings.pluggableStyles = [
     ...(config.settings.pluggableStyles || []),
     {
@@ -125,8 +130,6 @@ export default (config) => {
     installMaesViewer,
     installConnectedMap,
     installDataCatalogue,
-    // installDataTable,
-    // installBubbleChart,
     installTabsBlockExtensions,
     installDataComponents,
   ].reduce((acc, apply) => apply(acc), config);
