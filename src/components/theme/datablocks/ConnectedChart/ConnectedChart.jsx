@@ -37,14 +37,19 @@ function mixProviderData(chartData, providerData, parameters) {
         if (!(parameters && parameters.length)) return;
 
         // TODO: we assume a single parameter
-        const {
+        let {
           i: filterName,
           v: [filterValue],
         } = parameters[0];
+        filterName = filterName.replace('taxonomy_', '');
+
+        const real_index =
+          providerDataColumns.find((n) => n.toLowerCase() === filterName) ||
+          filterName;
 
         // tweak transformation filters using data parameters
         (trace.transforms || []).forEach((transform) => {
-          if (transform.targetsrc === filterName && filterValue) {
+          if (transform.targetsrc === real_index && filterValue) {
             transform.value = filterValue;
             transform.target = providerData[transform.targetsrc];
           }
