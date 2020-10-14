@@ -13,7 +13,7 @@ import {
 import { settings } from '~/config';
 import { getDataFromProvider } from 'volto-datablocks/actions';
 import loadable from '@loadable/component';
-import VisibilitySensor from 'react-visibility-sensor';
+import Placeholder from './Placeholder';
 
 const LoadablePlot = loadable(() => import('react-plotly.js'));
 
@@ -127,61 +127,38 @@ function ConnectedChart(props) {
     },
   }));
 
-  const nodeRef = React.useRef();
-  const sizeRef = React.useRef({});
-
-  React.useLayoutEffect(() => {
-    if (nodeRef.current) {
-      setTimeout(() => {
-        const height = nodeRef.current?.el?.clientHeight;
-        const width = nodeRef.current?.el?.clientWidth;
-        if (height && width) {
-          const size = {
-            height: `${height}px`,
-            width: `${width}px`,
-          };
-          sizeRef.current = size;
-        }
-      }, 500);
-    }
-  });
-
   const [update, setUpdate] = React.useState(true);
 
   return (
     <div>
-      <VisibilitySensor
+      <Placeholder
         className="connected-chart"
         partialVisibility={true}
         offset={{ top: 10 }}
         delayedCall={true}
         onChange={() => setUpdate(!update)}
       >
-        {({ isVisible }) =>
-          isVisible ? (
-            <div className="connected-chart-wrapper">
-              <LoadablePlot
-                ref={nodeRef}
-                data={data}
-                layout={layout}
-                frames={[]}
-                config={{
-                  displayModeBar: false,
-                  editable: false,
-                  responsive: true,
-                  useResizeHandler: true,
-                }}
-                style={{
-                  maxWidth: '100%',
-                  margin: 'auto',
-                }}
-              />
-            </div>
-          ) : (
-            <div style={sizeRef.current}>x</div>
-          )
-        }
-      </VisibilitySensor>
+        {({ nodeRef }) => (
+          <div className="connected-chart-wrapper">
+            <LoadablePlot
+              ref={nodeRef}
+              data={data}
+              layout={layout}
+              frames={[]}
+              config={{
+                displayModeBar: false,
+                editable: false,
+                responsive: true,
+                useResizeHandler: true,
+              }}
+              style={{
+                maxWidth: '100%',
+                margin: 'auto',
+              }}
+            />
+          </div>
+        )}
+      </Placeholder>
     </div>
   );
 
