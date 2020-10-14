@@ -1,13 +1,15 @@
 import { Table } from 'semantic-ui-react';
+import { compose } from 'redux';
 import React from 'react';
 import { connectBlockToProviderData } from 'volto-datablocks/hocs';
 import { serializeNodes } from 'volto-slate/editor/render';
 import FormattedValue from './FormattedValue';
+import { filterDataByParameters, connectToDataParameters } from '../utils';
 
 import './styles.css';
 
 const SimpleDataTableView = (props) => {
-  const { data = {}, provider_data = {} } = props;
+  const { data = {}, provider_data = {}, connected_data_parameters } = props;
   const { show_header, description, max_count, columns } = data;
 
   // TODO: sorting
@@ -26,6 +28,12 @@ const SimpleDataTableView = (props) => {
         typeof c === 'string' ? null : providerColumns.includes(c?.column),
       )
     : providerColumns;
+
+  const tableData = connected_data_parameters
+    ? filterDataByParameters(provider_data, connected_data_parameters)
+    : provider_data;
+  console.log('pd', provider_data);
+  console.log('td', tableData);
 
   return (
     <div className="simple-data-table">
@@ -70,7 +78,7 @@ const SimpleDataTableView = (props) => {
                     >
                       <FormattedValue
                         textTemplate={coldef.textTemplate}
-                        value={provider_data[coldef.column]?.[i]}
+                        value={tableData[coldef.column]?.[i]}
                         specifier={coldef.specifier}
                       />
                     </Table.Cell>
@@ -86,4 +94,7 @@ const SimpleDataTableView = (props) => {
   );
 };
 
-export default connectBlockToProviderData(SimpleDataTableView);
+export default compose(
+  connectBlockToProviderData,
+  connectToDataParameters,
+)(SimpleDataTableView);
