@@ -4,12 +4,14 @@
 
 import React from 'react'; // , useState
 import { connect } from 'react-redux';
-import { addAppURL } from '@plone/volto/helpers';
+import { compose } from 'redux';
+import { flattenToAppURL, addAppURL } from '@plone/volto/helpers';
 import {
-  // getConnectedDataParametersForContext,
-  // getConnectedDataParametersForProvider,
+  getConnectedDataParametersForContext,
+  getConnectedDataParametersForProvider,
   getConnectedDataParametersForPath,
 } from 'volto-datablocks/helpers';
+import { connectAnythingToProviderData } from 'volto-datablocks/hocs';
 import { settings } from '~/config';
 import { getDataFromProvider } from 'volto-datablocks/actions';
 import loadable from '@loadable/component';
@@ -70,21 +72,21 @@ function mixProviderData(chartData, providerData, parameters) {
  */
 function ConnectedChart(props) {
   // need to bind them in this closure, useEffect depends on them;
-  const provider_url = props.data.provider_url; //|| props.chartDataFromVis?.provider_url;
-  const url = props.data.url;
-  const getDataFromProvider = props.getDataFromProvider;
+  // const provider_url = props.data.url || props.data.provider_url; //|| props.chartDataFromVis?.provider_url;
+  // const getDataFromProvider = props.getDataFromProvider;
 
   const source_url = props.source;
 
   // NOTE: this is a candidate for a HOC, withProviderData
-  React.useEffect(() => {
-    if (provider_url) getDataFromProvider(provider_url || url);
-  }, [provider_url, url, source_url, props.data, getDataFromProvider]);
+  // React.useEffect(() => {
+  //   if (provider_url) getDataFromProvider(provider_url);
+  // }, [provider_url, getDataFromProvider]); // source_url, props.data,
 
   const chartData = props.data.chartData;
 
   const useLiveData =
     typeof props.useLiveData !== 'undefined' ? props.useLiveData : true;
+  console.log('useLiveData', useLiveData);
 
   const propsLayout = props.data && props.data.layout ? props.data.layout : {};
 
@@ -116,6 +118,7 @@ function ConnectedChart(props) {
   // TODO: only use fallback data if chartData.data.url doesn't exist
   // or the connected_data_parameters don't exist
 
+  console.log('providerData', props.providerData);
   let data =
     props.providerData && useLiveData
       ? mixProviderData(
@@ -176,7 +179,7 @@ function getProviderData(state, props) {
 
   if (!path) return;
 
-  path = `${path}/@connector-data`;
+  path = `${flattenToAppURL(path)}/@connector-data`;
   const url = `${addAppURL(path)}/@connector-data`;
 
   const data = state.data_providers?.data || {};
@@ -184,26 +187,45 @@ function getProviderData(state, props) {
   return res;
 }
 
-export default connect(
-  (state, props) => {
-    const providerData = getProviderData(state, props);
+export default compose(
+  connectAnythingToProviderData(
+    (props) => props.data.url || props.data.provider_url,
+  ),
+  connect(
+    (state, props) => {
+      const providerData = getProviderData(state, props);
 
-    const providerUrl = props?.data?.provider_url || props?.data?.url || null;
+      const providerUrl = props?.data?.provider_url || props?.data?.url || null;
 
-    const FILTER = true; // this is a filter??
-    const byPath =
-      getConnectedDataParametersForPath(
+      const FILTER = true; // this is a filter??
+      const byPath =
+        getConnectedDataParametersForPath(
+          state.connected_data_parameters,
+          providerUrl,
+          FILTER,
+        ) || {};
+
+      const byProvider = getConnectedDataParametersForProvider(
         state.connected_data_parameters,
         providerUrl,
-        FILTER,
-      ) || {};
+      );
+      const byContext = getConnectedDataParametersForContext(
+        state.connected_data_parameters,
+        state.router.location.pathname,
+      );
 
-    const connected_data_parameters = byPath[FILTER];
+      const connected_data_parameters =
+        providerUrl !== null
+          ? byPath
+            ? byPath[FILTER] || byContext || byProvider
+            : byContext || byProvider
+          : null;
 
-    return {
-      providerData,
-      connected_data_parameters,
-    };
-  },
-  { getDataFromProvider }, // getContent,
+      return {
+        providerData,
+        connected_data_parameters,
+      };
+    },
+    { getDataFromProvider }, // getContent,
+  ),
 )(ConnectedChart);
