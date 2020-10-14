@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { SidebarPortal } from '@plone/volto/components'; // EditBlock
 
 import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
-import ChartEditorWidget from 'volto-plotlycharts/Widget/Widget';
+import ChartEditorWidget from './Widget';
 import VisibilitySensor from 'react-visibility-sensor';
 
 import schema from './schema';
