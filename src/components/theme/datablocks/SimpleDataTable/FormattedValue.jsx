@@ -8,7 +8,7 @@ const FormattedValue = ({ textTemplate, specifier, value }) => {
   if (textTemplate) {
     value = textTemplate.replace('{}', value);
   }
-  return value;
+  return value || null;
 };
 
 export default FormattedValue;

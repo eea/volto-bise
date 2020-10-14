@@ -5,7 +5,7 @@
 import React from 'react'; // , useState
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { flattenToAppURL, addAppURL } from '@plone/volto/helpers';
+// import { flattenToAppURL, addAppURL } from '@plone/volto/helpers';
 import {
   getConnectedDataParametersForContext,
   getConnectedDataParametersForProvider,
@@ -118,7 +118,7 @@ function ConnectedChart(props) {
   // TODO: only use fallback data if chartData.data.url doesn't exist
   // or the connected_data_parameters don't exist
 
-  console.log('providerData', props.providerData);
+  // console.log('providerData', props.providerData);
   let data =
     props.providerData && useLiveData
       ? mixProviderData(
@@ -169,22 +169,6 @@ function ConnectedChart(props) {
       </Placeholder>
     </div>
   );
-
-  // return <>{__CLIENT__ && chartData && data && layout ? chart : ''}</>;
-}
-
-function getProviderData(state, props) {
-  let path =
-    props?.data?.provider_url || props?.data?.url || props?.url || null;
-
-  if (!path) return;
-
-  path = `${flattenToAppURL(path)}/@connector-data`;
-  const url = `${addAppURL(path)}/@connector-data`;
-
-  const data = state.data_providers?.data || {};
-  const res = path ? data[path] || data[url] : [];
-  return res;
 }
 
 export default compose(
@@ -193,7 +177,7 @@ export default compose(
   ),
   connect(
     (state, props) => {
-      const providerData = getProviderData(state, props);
+      const providerData = props.provider_data; //getProviderData(state, props);
 
       const providerUrl = props?.data?.provider_url || props?.data?.url || null;
 

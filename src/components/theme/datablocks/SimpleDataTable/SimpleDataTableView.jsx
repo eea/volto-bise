@@ -27,8 +27,6 @@ const SimpleDataTableView = (props) => {
       )
     : providerColumns;
 
-  // console.log('columns', format);
-
   return (
     <div className="simple-data-table">
       <div className={`${data.underline ? 'with-border' : ''}`}>
@@ -72,7 +70,7 @@ const SimpleDataTableView = (props) => {
                     >
                       <FormattedValue
                         textTemplate={coldef.textTemplate}
-                        value={provider_data[coldef.column][i]}
+                        value={provider_data[coldef.column]?.[i]}
                         specifier={coldef.specifier}
                       />
                     </Table.Cell>
