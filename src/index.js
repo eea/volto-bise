@@ -11,6 +11,7 @@ import {
 } from './components';
 import NumberWidget from './components/Widgets/Number';
 import SimpleColorPicker from './components/Widgets/SimpleColorPicker';
+import MultiSelectWidget from './components/Widgets/MultiSelectWidget';
 
 import './slate-styles.css';
 import './box-styles.less';
@@ -91,8 +92,13 @@ export default (config) => {
   // ];
   //
   config.widgets.widget.number = NumberWidget;
+
   if (!config.widgets.widget.simple_color) {
     config.widgets.widget.simple_color = SimpleColorPicker;
+  }
+
+  if (!config.widgets.widget.multi_select) {
+    config.widgets.widget.multi_select = MultiSelectWidget;
   }
 
   config.settings.pluggableStyles = [

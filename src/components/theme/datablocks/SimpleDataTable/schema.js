@@ -1,31 +1,42 @@
-const SimpleDataTableSchema = {
+const SimpleDataTableSchema = () => ({
   title: 'DataConnected Table',
 
   fieldsets: [
     {
       id: 'default',
       title: 'Default',
-      fields: ['description', 'underline'], // title
+      fields: ['description'], // title
     },
     {
       id: 'source',
       title: 'Data source',
-      fields: ['provider_url', 'max_count'],
+      fields: ['provider_url', 'max_count', 'columns'],
     },
     {
       id: 'styling',
       title: 'Styling',
-      fields: ['show_header', 'striped', 'bordered', 'compact_table'],
+      fields: [
+        'show_header',
+        'underline',
+        'striped',
+        'bordered',
+        'compact_table',
+      ],
     },
   ],
 
   properties: {
-    // title: {
-    //   title: 'Title',
-    // },
+    columns: {
+      title: 'Columns',
+      description: 'Leave empty to show all columns',
+      isMulti: true,
+      choices: [],
+      widget: 'multi_select',
+    },
     description: {
       title: 'Description',
       widget: 'slate_richtext',
+      description: 'Allows rich text formatting',
     },
     provider_url: {
       widget: 'pick_provider',
@@ -33,8 +44,8 @@ const SimpleDataTableSchema = {
     },
     max_count: {
       title: 'Max results',
-      type: 'number',
-      default: 5,
+      widget: 'number',
+      defaultValue: 5,
     },
     show_header: {
       title: 'Show header?',
@@ -59,6 +70,6 @@ const SimpleDataTableSchema = {
   },
 
   required: ['provider_url'],
-};
+});
 
 export default SimpleDataTableSchema;

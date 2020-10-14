@@ -39,6 +39,7 @@ class ModalChartEditor extends Component {
             <Grid.Row>
               <Grid.Column width="8">
                 <PickProvider
+                  title="Select data source"
                   onChange={(id, provider_url) => {
                     this.setState({
                       value: { ...this.state.value, provider_url },
