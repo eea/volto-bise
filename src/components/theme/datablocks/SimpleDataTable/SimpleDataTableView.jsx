@@ -48,8 +48,17 @@ const SimpleDataTableView = (props) => {
           {show_header ? (
             <Table.Header>
               <Table.Row>
-                {selectedColumns.map((coldef) => (
-                  <Table.HeaderCell key={coldef.column}>
+                {selectedColumns.map((coldef, j) => (
+                  <Table.HeaderCell
+                    key={coldef.column}
+                    className={
+                      coldef.textAlign
+                        ? coldef.textAlign
+                        : j === 0
+                        ? 'left'
+                        : 'right'
+                    }
+                  >
                     {coldef.title || coldef.column}
                   </Table.HeaderCell>
                 ))}
