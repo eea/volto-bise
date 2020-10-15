@@ -19,45 +19,15 @@
         text-align: center;
         position: relative;
 
-        &::after {
+        &::before {
           content: "";
           display: block;
-          border-bottom: 0.1rem solid #000;
-          padding-top: 0.7rem;
+          border-bottom: 1px solid #000;
+          position: absolute;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          bottom: 8px;
           width: 85%;
-        }
-
-        &.left::after {
-          /* Nothing here for now. */
-        }
-
-        &.center::after {
-          margin-left: auto;
-          margin-right: auto;
-        }
-
-        &.right::after {
-          margin-left: auto;
-        }
-
-        &.justify::after {
-          width: 100%;
-        }
-
-        &.left {
-          text-align: left;
-        }
-
-        &.right {
-          text-align: right;
-        }
-
-        &.center {
-          text-align: center;
-        }
-
-        &.justify {
-          text-align: justify;
         }
       }
 
@@ -79,11 +49,58 @@
 .dotted-table-chart {
   .inner {
     .dot-cells {
-      & > div {
+      &>div {
         width: 17px;
         height: 17px;
         border-radius: 50%;
       }
     }
+  }
+}
+
+.simple-data-table > table > thead > tr > th {
+  &::after {
+    content: "";
+    display: block;
+    border-bottom: 0.1rem solid #000;
+    padding-top: 0.7rem;
+    width: 85%;
+  }
+
+  &::before {
+    display: none !important;
+  }
+
+  &.left::after {
+    /* Nothing here for now. */
+  }
+
+  &.center::after {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &.right::after {
+    margin-left: auto;
+  }
+
+  &.justify::after {
+    width: 100%;
+  }
+
+  &.left {
+    text-align: left;
+  }
+
+  &.right {
+    text-align: right;
+  }
+
+  &.center {
+    text-align: center;
+  }
+
+  &.justify {
+    text-align: justify;
   }
 }
