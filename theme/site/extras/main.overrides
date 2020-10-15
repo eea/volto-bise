@@ -254,5 +254,5 @@ button {
 }
 
 div#view .ui.container > * {
-  margin-bottom: 1.5em;
+  margin-bottom: 2.3em;
 }

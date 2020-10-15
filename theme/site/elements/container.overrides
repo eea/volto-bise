@@ -110,6 +110,35 @@ body.has-toolbar-collapsed.has-sidebar-collapsed {
   .contentWidth(@collapsedWidth + @collapsedWidth);
 }
 
+/* 
+body:not(.has-toolbar):not(.has-sidebar):not(.has-toolbar-collapsed):not(.has-sidebar-collapsed) {
+  .contentWidth(0);
+}
+
+body.has-toolbar:not(.has-sidebar):not(.has-sidebar-collapsed) {
+  .contentWidth(@toolbarWidth);
+}
+
+body.has-toolbar.has-sidebar {
+  .contentWidth(@toolbarWidth + @sidebarWidth);
+}
+
+body.has-toolbar.has-sidebar-collapsed {
+  .contentWidth(@toolbarWidth + @collapsedWidth);
+}
+
+body.has-toolbar-collapsed:not(.has-sidebar):not(.has-sidebar-collapsed) {
+  .contentWidth(@collapsedWidth);
+}
+
+body.has-toolbar-collapsed.has-sidebar {
+  .contentWidth(@collapsedWidth + @sidebarWidth);
+}
+
+body.has-toolbar-collapsed.has-sidebar-collapsed {
+  .contentWidth(@collapsedWidth + @collapsedWidth);
+} */
+
 .drag.handle.wrapper {
   margin-left: -15px !important;
 }

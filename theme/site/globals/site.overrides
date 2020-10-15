@@ -58,3 +58,8 @@
     }
   }
 }
+
+// Blocks
+.block-editor-slate {
+  margin-bottom: 3rem!important;
+}

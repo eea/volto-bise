@@ -10,6 +10,10 @@
 .ui.secondary.pointing.menu {
   border-bottom: none!important;
   margin-right: 0.8em!important;
+
+  @media (max-width: 991px) {
+    margin: 0 0 0 40px!important;
+  }
 }
 
 .navigation .ui.secondary.pointing.menu>.item.dropdown {
@@ -86,16 +90,22 @@
         >.item {
           .submenu-wrapper {
             .submenu {
-              display: flex;
-              flex-direction: row;
-              flex-wrap: wrap;
+              column-count: 2;
+              column-gap: 1rem;
               > a {
-                flex-basis: 200px;
+                display: block;
+                column-span: all; // ignore two column layout by default
+              }
+
+              // if more than 3 items are present
+              // wrap the list into two column
+              >a:nth-last-child(n+4),
+              >a:nth-last-child(n+4)~* {
+                column-span: none;
+                width: 200px;
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
-                flex-grow: 1;
-                flex-shrink: inherit;
               }
             }
           }
