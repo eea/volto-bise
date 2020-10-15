@@ -15,10 +15,23 @@ import {
  */
 export function filterDataByParameters(providerData, parameters) {
   if (!(parameters && parameters.length)) return providerData;
+
+  // debugger;
+  const filter = parameters.find((f) => {
+    // finds any available filter that matches the data
+    let { i: index } = f;
+    index = index.toLowerCase().replace('taxonomy_', '');
+    return Object.keys(providerData || {})
+      .map((k) => k.toLowerCase())
+      .includes(index);
+  }); // [filterIndex];
+  if (!filter) return providerData;
+  console.log('filter', filter, parameters);
   let {
     i: filterName,
     v: [filterValue],
-  } = parameters[0]; // TODO: use all parameters!
+  } = filter;
+
   filterName = filterName.replace('taxonomy_', '');
   const fixedFilterName = Object.keys(providerData).find(
     (k) => k.toLowerCase() === filterName.toLowerCase(),
@@ -68,11 +81,21 @@ export function mixProviderData(chartData, providerData, parameters) {
 
         if (!(parameters && parameters.length)) return;
 
-        // TODO: we assume a single parameter
+        const filter = parameters.find((f) => {
+          // finds any available filter that matches the data
+          let { i: index } = f;
+          index = index.toLowerCase().replace('taxonomy_', '');
+          return Object.keys(providerData || {})
+            .map((k) => k.toLowerCase())
+            .includes(index);
+        });
+        if (!filter) return providerData;
+
         let {
           i: filterName,
           v: [filterValue],
-        } = parameters[0]; // TODO: use all/any parameters!!
+        } = filter;
+
         filterName = filterName.replace('taxonomy_', '');
 
         const real_index =
