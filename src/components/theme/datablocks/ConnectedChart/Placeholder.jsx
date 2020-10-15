@@ -27,7 +27,7 @@ export const Placeholder = ({ children, getDOMElement, ...rest }) => {
   });
 
   return (
-    <VisibilitySensor {...rest}>
+    <VisibilitySensor scrollCheck={true} resizeCheck={true} {...rest}>
       {({ isVisible }) => {
         if (isVisible) {
           return children?.({ nodeRef });
