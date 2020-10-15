@@ -18,7 +18,8 @@ export function filterDataByParameters(providerData, parameters) {
   let {
     i: filterName,
     v: [filterValue],
-  } = parameters[0];
+  } = parameters[0]; // TODO: use all parameters!
+  filterName = filterName.replace('taxonomy_', '');
   const fixedFilterName = Object.keys(providerData).find(
     (k) => k.toLowerCase() === filterName.toLowerCase(),
   );
@@ -71,7 +72,7 @@ export function mixProviderData(chartData, providerData, parameters) {
         let {
           i: filterName,
           v: [filterValue],
-        } = parameters[0];
+        } = parameters[0]; // TODO: use all/any parameters!!
         filterName = filterName.replace('taxonomy_', '');
 
         const real_index =
