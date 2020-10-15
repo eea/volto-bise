@@ -65,7 +65,7 @@
 }
 
 
-@media only screen and (min-width: 656px) and (max-width: 802px) {
+@media only screen and (min-width: 767px) and (max-width: 846px) {
   .simple-data-table,
   .dotted-table-chart,
   .connected-chart-wrapper {
