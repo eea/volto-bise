@@ -10,8 +10,6 @@
 .ui.secondary.pointing.menu {
   border-bottom: none!important;
   margin-right: 0.8em!important;
-  top: 13px;
-  position: relative;
 
   @media (max-width: 991px) {
     margin: 0 0 0 40px!important;
@@ -31,6 +29,11 @@
 }
 
 .navigation {
+  .ui.secondary.pointing.menu {
+    top: 13px;
+    position: relative;
+  }
+
   .ui.secondary.pointing.menu .item {
     transition: none !important;
     border-bottom: none;

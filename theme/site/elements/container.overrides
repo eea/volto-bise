@@ -6,6 +6,8 @@
 @sidebarWidth: 375px;
 @collapsedWidth: 20px;
 
+@largestMobileScreen: 765px;
+
 /* All Sizes */
 .ui.container {
   display: block;
@@ -32,7 +34,7 @@
 }
 
 .contentWidth(@offset) {
-  @media only screen and (max-width: @largestMobileScreen + @offset) {
+  @media only screen and (max-width: @largestMobileScreen) {
     .contentWidthMedia(@mobileWidth, @mobileGutter, -12px);
 
     [class*='mobile hidden'],
@@ -110,7 +112,7 @@ body.has-toolbar-collapsed.has-sidebar-collapsed {
   .contentWidth(@collapsedWidth + @collapsedWidth);
 }
 
-/* 
+/*
 body:not(.has-toolbar):not(.has-sidebar):not(.has-toolbar-collapsed):not(.has-sidebar-collapsed) {
   .contentWidth(0);
 }
