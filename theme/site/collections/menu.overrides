@@ -10,6 +10,8 @@
 .ui.secondary.pointing.menu {
   border-bottom: none!important;
   margin-right: 0.8em!important;
+  top: 13px;
+  position: relative;
 
   @media (max-width: 991px) {
     margin: 0 0 0 40px!important;
@@ -79,6 +81,14 @@
       border: 1px solid transparent !important;
       border-bottom: 1px solid transparent !important;
 
+      &:nth-last-child(-n+3) {
+        >.menu {
+          left: unset!important;
+          right: -1px;
+          transform: none!important;
+        }
+      }
+
       &:hover {
         border-color: #eee !important;
         border-top-left-radius: 4px;
@@ -86,7 +96,9 @@
         background: #fff!important;
       }
 
-      > .menu {
+      >.menu {
+        left: -1px!important;
+        transform: none!important;
         >.item {
           .submenu-wrapper {
             .submenu {
