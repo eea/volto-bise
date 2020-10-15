@@ -1,15 +1,20 @@
 import React from 'react';
 import VisibilitySensor from 'react-visibility-sensor';
 
-export const Placeholder = ({ children, ...rest }) => {
+export const Placeholder = ({ children, getDOMElement, onChange, ...rest }) => {
   const nodeRef = React.useRef();
   const sizeRef = React.useRef({});
 
   React.useLayoutEffect(() => {
     if (nodeRef.current) {
       setTimeout(() => {
-        const height = nodeRef.current?.el?.clientHeight;
-        const width = nodeRef.current?.el?.clientWidth;
+        const de = getDOMElement
+          ? getDOMElement(nodeRef.current)
+          : nodeRef.current;
+
+        const height = de?.clientHeight;
+        const width = de?.clientWidth;
+
         if (height && width) {
           const size = {
             height: `${height}px`,
@@ -21,13 +26,28 @@ export const Placeholder = ({ children, ...rest }) => {
     }
   });
 
+  const [update, setUpdate] = React.useState(true);
+
   return (
-    <VisibilitySensor {...rest}>
+    <VisibilitySensor
+      scrollCheck={true}
+      resizeCheck={true}
+      onChange={(args) => {
+        setUpdate(!update);
+        if (typeof onChange === 'function') {
+          onChange(...args);
+        }
+      }}
+      {...rest}
+    >
       {({ isVisible }) => {
         if (isVisible) {
           return children?.({ nodeRef });
         }
-        return <div style={sizeRef?.current}>&times;</div>;
+
+        // Without the character inside the div (non-breaking white space)
+        // the size of the <div> is wrong.
+        return <div style={sizeRef?.current}>&nbsp;</div>;
       }}
     </VisibilitySensor>
   );
