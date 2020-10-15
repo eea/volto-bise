@@ -32,8 +32,6 @@ const SimpleDataTableView = (props) => {
   const tableData = connected_data_parameters
     ? filterDataByParameters(provider_data, connected_data_parameters)
     : provider_data;
-  console.log('pd', provider_data);
-  console.log('td', tableData);
 
   return (
     <div className="simple-data-table">
