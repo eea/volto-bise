@@ -63,3 +63,13 @@
 .block-editor-slate {
   margin-bottom: 3rem!important;
 }
+
+
+@media only screen and (min-width: 656px) and (max-width: 802px) {
+  .simple-data-table,
+  .dotted-table-chart,
+  .connected-chart-wrapper {
+    max-width: 650px;
+    overflow-x: auto;
+  }
+}
