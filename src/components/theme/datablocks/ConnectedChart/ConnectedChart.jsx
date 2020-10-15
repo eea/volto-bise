@@ -79,9 +79,12 @@ function ConnectedChart(props) {
   return (
     <div>
       <Placeholder
+        getDOMElement={(ref) => {
+          return ref?.el;
+        }}
         className="connected-chart"
         partialVisibility={true}
-        offset={{ top: 10 }}
+        offset={{ top: -100, bottom: -100 }}
         delayedCall={true}
         onChange={() => setUpdate(!update)}
       >
