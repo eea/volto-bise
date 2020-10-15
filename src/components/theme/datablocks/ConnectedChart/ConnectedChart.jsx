@@ -12,6 +12,7 @@ import Placeholder from './Placeholder';
 import { settings } from '~/config';
 
 const LoadablePlot = loadable(() => import('react-plotly.js'));
+import './fixes.css';
 
 /*
  * @param { object } data The chart data, layout,  extra config, etc.
