@@ -74,19 +74,16 @@ function ConnectedChart(props) {
     },
   }));
 
-  const [update, setUpdate] = React.useState(true);
-
   return (
     <div>
       <Placeholder
-        getDOMElement={(ref) => {
-          return ref?.el;
+        getDOMElement={(val) => {
+          return val?.el;
         }}
         className="connected-chart"
         partialVisibility={true}
         offset={{ top: -100, bottom: -100 }}
         delayedCall={true}
-        onChange={() => setUpdate(!update)}
       >
         {({ nodeRef }) => (
           <div className="connected-chart-wrapper">

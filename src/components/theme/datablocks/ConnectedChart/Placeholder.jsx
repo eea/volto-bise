@@ -1,7 +1,7 @@
 import React from 'react';
 import VisibilitySensor from 'react-visibility-sensor';
 
-export const Placeholder = ({ children, getDOMElement, ...rest }) => {
+export const Placeholder = ({ children, getDOMElement, onChange, ...rest }) => {
   const nodeRef = React.useRef();
   const sizeRef = React.useRef({});
 
@@ -26,8 +26,20 @@ export const Placeholder = ({ children, getDOMElement, ...rest }) => {
     }
   });
 
+  const [update, setUpdate] = React.useState(true);
+
   return (
-    <VisibilitySensor scrollCheck={true} resizeCheck={true} {...rest}>
+    <VisibilitySensor
+      scrollCheck={true}
+      resizeCheck={true}
+      onChange={(args) => {
+        setUpdate(!update);
+        if (typeof onChange === 'function') {
+          onChange(...args);
+        }
+      }}
+      {...rest}
+    >
       {({ isVisible }) => {
         if (isVisible) {
           return children?.({ nodeRef });
