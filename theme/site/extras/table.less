@@ -20,7 +20,7 @@
         position: relative;
 
         &::before {
-          content: "";
+          content: '';
           display: block;
           border-bottom: 1px solid #000;
           position: absolute;
@@ -49,7 +49,7 @@
 .dotted-table-chart {
   .inner {
     .dot-cells {
-      &>div {
+      & > div {
         width: 17px;
         height: 17px;
         border-radius: 50%;
@@ -58,9 +58,11 @@
   }
 }
 
-.simple-data-table > table > thead > tr > th {
+.simple-data-table table > thead > tr > th {
+  background: none !important;
+
   &::after {
-    content: "";
+    content: '';
     display: block;
     border-bottom: 0.1rem solid #000;
     padding-top: 0.7rem;
