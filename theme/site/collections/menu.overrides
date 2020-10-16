@@ -117,7 +117,7 @@
               >a:nth-last-child(n+4),
               >a:nth-last-child(n+4)~* {
                 column-span: none;
-                width: 200px;
+                width: 230px;
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
@@ -138,11 +138,12 @@
   >.item.secondLevel {
     color: @lightGreenColor;
     font-weight: 600;
-    line-height: 2.5;
+    line-height: 2;
     padding: 0.3rem 1.5rem!important;
     margin: 0;
     border-bottom-style: none;
     font-size: 16px;
+    white-space: normal;
 
     &:active {
       border: none;
@@ -211,10 +212,10 @@
   border-top-right-radius: 0 !important;
   left: 50%;
   transform: translateX(-50%);
+  min-width: 300px;
 
   @media(min-width: 848px) {
     margin-top: 0 !important;
-    min-width: 220px;
   }
 }
 
