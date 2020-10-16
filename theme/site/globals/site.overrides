@@ -35,14 +35,19 @@
   transform: translateY(-50%);
 }
 
-.DraftEditor-root {
-  border: none;
-  padding: 0;
-}
 
 // Blocks
 .block-editor-slate {
   margin-bottom: 2.5rem!important;
+}
+
+.block-editor-title {
+  margin-top: 1.5rem;
+}
+
+.DraftEditor-root {
+  border: none;
+  padding: 0;
 }
 
 @media only screen and (min-width: 767px) and (max-width: 846px) {
