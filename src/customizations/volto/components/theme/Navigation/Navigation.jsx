@@ -193,53 +193,81 @@ class Navigation extends Component {
                 item
                 simple
               >
-                <Dropdown.Menu>
-                  {item.items.map((subitem) => {
-                    const flatSubUrl = flattenToAppURL(subitem.url);
-                    return (
-                      <Dropdown.Item key={flatSubUrl}>
-                        <Link
-                          to={flatSubUrl === '' ? '/' : flatSubUrl}
-                          key={flatSubUrl}
-                          className={
-                            this.isActive(flatSubUrl)
-                              ? 'item secondLevel menuActive'
-                              : 'item secondLevel'
-                          }
-                        >
-                          {subitem.title}
-                        </Link>
-                        {subitem.items && (
-                          <div className="submenu-wrapper">
-                            <div className="submenu">
-                              {subitem.items.map((subsubitem) => {
-                                const flatSubSubUrl = flattenToAppURL(
-                                  subsubitem.url,
-                                );
-                                return (
-                                  <Link
-                                    to={
-                                      flatSubSubUrl === '' ? '/' : flatSubSubUrl
-                                    }
-                                    title={subsubitem.title}
-                                    key={flatSubSubUrl}
-                                    className={
-                                      this.isActive(flatSubSubUrl)
-                                        ? 'item thirdLevel menuActive'
-                                        : 'item thirdLevel'
-                                    }
-                                  >
-                                    {subsubitem.title}
-                                  </Link>
-                                );
-                              })}
+                {item.title === 'Countries' ? (
+                  <Dropdown.Menu>
+                    <div className="submenu-wrapper">
+                      <div className="submenu">
+                        {item.items.map((subsubitem) => {
+                          const flatSubSubUrl = flattenToAppURL(subsubitem.url);
+                          return (
+                            <Link
+                              to={flatSubSubUrl === '' ? '/' : flatSubSubUrl}
+                              title={subsubitem.title}
+                              key={flatSubSubUrl}
+                              className={
+                                this.isActive(flatSubSubUrl)
+                                  ? 'item thirdLevel menuActive'
+                                  : 'item thirdLevel'
+                              }
+                            >
+                              {subsubitem.title}
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </Dropdown.Menu>
+                ) : (
+                  <Dropdown.Menu>
+                    {item.items.map((subitem) => {
+                      const flatSubUrl = flattenToAppURL(subitem.url);
+                      return (
+                        <Dropdown.Item key={flatSubUrl}>
+                          <Link
+                            to={flatSubUrl === '' ? '/' : flatSubUrl}
+                            key={flatSubUrl}
+                            className={
+                              this.isActive(flatSubUrl)
+                                ? 'item secondLevel menuActive'
+                                : 'item secondLevel'
+                            }
+                          >
+                            {subitem.title}
+                          </Link>
+                          {subitem.items && (
+                            <div className="submenu-wrapper">
+                              <div className="submenu">
+                                {subitem.items.map((subsubitem) => {
+                                  const flatSubSubUrl = flattenToAppURL(
+                                    subsubitem.url,
+                                  );
+                                  return (
+                                    <Link
+                                      to={
+                                        flatSubSubUrl === ''
+                                          ? '/'
+                                          : flatSubSubUrl
+                                      }
+                                      title={subsubitem.title}
+                                      key={flatSubSubUrl}
+                                      className={
+                                        this.isActive(flatSubSubUrl)
+                                          ? 'item thirdLevel menuActive'
+                                          : 'item thirdLevel'
+                                      }
+                                    >
+                                      {subsubitem.title}
+                                    </Link>
+                                  );
+                                })}
+                              </div>
                             </div>
-                          </div>
-                        )}
-                      </Dropdown.Item>
-                    );
-                  })}
-                </Dropdown.Menu>
+                          )}
+                        </Dropdown.Item>
+                      );
+                    })}
+                  </Dropdown.Menu>
+                )}
               </Dropdown>
             ) : (
               <Link
