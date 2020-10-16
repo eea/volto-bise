@@ -58,6 +58,10 @@ a {
 
 .documentFirstHeading {
   margin-top: 0.5em !important;
+  border-bottom: none;
+  &:before {
+    border-bottom: none;
+  }
 }
 
 p > span:empty {
@@ -65,4 +69,8 @@ p > span:empty {
   &:before {
     content: "\a0";
   }
+}
+
+#page-edit .block h1 {
+  margin: 0!important;
 }
