@@ -196,7 +196,7 @@ class Navigation extends Component {
                 {item.title === 'Countries' ? (
                   <Dropdown.Menu>
                     <div className="submenu-wrapper">
-                      <div className="submenu">
+                      <div className="submenu countries-submenu">
                         {item.items.map((subsubitem) => {
                           const flatSubSubUrl = flattenToAppURL(subsubitem.url);
                           return (
