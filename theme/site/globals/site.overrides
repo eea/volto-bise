@@ -35,35 +35,10 @@
   transform: translateY(-50%);
 }
 
-
-.simple-data-table {
-  .with-border {
-    border-bottom: 2px solid #000;
-    >*:first-child {
-      margin-bottom: 0!important;
-    }
-  }
-
-  table.no-borders {
-    border: none !important;
-    td {
-      border:none!important;
-    }
-  }
-
-  table.compact-table {
-    tr td {
-      padding-top: 0.3em!important;
-      padding-bottom: 0.3em!important;
-    }
-  }
-}
-
 // Blocks
 .block-editor-slate {
-  margin-bottom: 3rem!important;
+  margin-bottom: 2.5rem!important;
 }
-
 
 @media only screen and (min-width: 767px) and (max-width: 846px) {
   .simple-data-table,

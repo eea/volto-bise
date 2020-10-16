@@ -1,0 +1,24 @@
+.simple-data-table {
+  overflow-x: auto;
+
+  .with-border {
+    border-bottom: 2px solid #000;
+    >*:first-child {
+      margin-bottom: 0!important;
+    }
+  }
+
+  table.no-borders {
+    border: none !important;
+    th, td {
+      border:none !important;
+    }
+  }
+
+  table.compact-table {
+    tr td {
+      padding-top: 0.3em!important;
+      padding-bottom: 0.3em!important;
+    }
+  }
+}

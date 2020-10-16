@@ -6,7 +6,7 @@ import { serializeNodes } from 'volto-slate/editor/render';
 import FormattedValue from './FormattedValue';
 import { filterDataByParameters, connectToDataParameters } from '../utils';
 
-import './styles.css';
+import './styles.less';
 
 const SimpleDataTableView = (props) => {
   const { data = {}, provider_data = {}, connected_data_parameters } = props;
