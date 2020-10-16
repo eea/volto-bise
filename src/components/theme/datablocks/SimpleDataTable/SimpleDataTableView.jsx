@@ -8,6 +8,40 @@ import { filterDataByParameters, connectToDataParameters } from '../utils';
 
 import './styles.less';
 
+const getAlignmentOfColumn = (col, idx) => {
+  return typeof col !== 'string' && col.textAlign
+    ? col.textAlign
+    : idx === 0
+    ? 'left'
+    : 'right';
+};
+
+const getNameOfColumn = (col) => {
+  return typeof col === 'string' ? col : col.column;
+};
+
+const getTitleOfColumn = (col) => {
+  return typeof col === 'string' ? col : col.title || getNameOfColumn(col);
+};
+
+const selectedColumnValidator = (allColDefs) => (colDef) => {
+  return typeof colDef === 'string'
+    ? false
+    : allColDefs.includes(colDef?.column);
+};
+
+const getCellValue = (tableData, colDef, rowIndex) => {
+  return typeof colDef === 'string' ? (
+    tableData[colDef]?.[rowIndex]
+  ) : (
+    <FormattedValue
+      textTemplate={colDef.textTemplate}
+      value={tableData[colDef.column]?.[rowIndex]}
+      specifier={colDef.specifier}
+    />
+  );
+};
+
 const SimpleDataTableView = (props) => {
   const { data = {}, provider_data = {}, connected_data_parameters } = props;
   const { show_header, description, max_count, columns } = data;
@@ -23,11 +57,11 @@ const SimpleDataTableView = (props) => {
   );
 
   const providerColumns = Object.keys(provider_data || {});
-  const selectedColumns = columns
-    ? columns.filter((c) =>
-        typeof c === 'string' ? null : providerColumns.includes(c?.column),
-      )
-    : providerColumns;
+  const sureToShowAllColumns = !Array.isArray(columns) || columns.length === 0;
+  const validator = selectedColumnValidator(providerColumns);
+  const selectedColumns = sureToShowAllColumns
+    ? providerColumns
+    : columns.filter(validator);
 
   const tableData = connected_data_parameters
     ? filterDataByParameters(provider_data, connected_data_parameters)
@@ -48,18 +82,12 @@ const SimpleDataTableView = (props) => {
           {show_header ? (
             <Table.Header>
               <Table.Row>
-                {selectedColumns.map((coldef, j) => (
+                {selectedColumns.map((colDef, j) => (
                   <Table.HeaderCell
-                    key={coldef.column}
-                    className={
-                      coldef.textAlign
-                        ? coldef.textAlign
-                        : j === 0
-                        ? 'left'
-                        : 'right'
-                    }
+                    key={getNameOfColumn(colDef)}
+                    className={getAlignmentOfColumn(colDef, j)}
                   >
-                    {coldef.title || coldef.column}
+                    {getTitleOfColumn(colDef)}
                   </Table.HeaderCell>
                 ))}
               </Table.Row>
@@ -72,22 +100,12 @@ const SimpleDataTableView = (props) => {
               .fill()
               .map((_, i) => (
                 <Table.Row key={i}>
-                  {selectedColumns.map((coldef, j) => (
+                  {selectedColumns.map((colDef, j) => (
                     <Table.Cell
-                      key={`${i}-${coldef.column}`}
-                      textAlign={
-                        coldef.textAlign
-                          ? coldef.textAlign
-                          : j === 0
-                          ? 'left'
-                          : 'right'
-                      }
+                      key={`${i}-${getNameOfColumn(colDef)}`}
+                      textAlign={getAlignmentOfColumn(colDef, j)}
                     >
-                      <FormattedValue
-                        textTemplate={coldef.textTemplate}
-                        value={tableData[coldef.column]?.[i]}
-                        specifier={coldef.specifier}
-                      />
+                      {getCellValue(tableData, colDef, i)}
                     </Table.Cell>
                   ))}
                 </Table.Row>
