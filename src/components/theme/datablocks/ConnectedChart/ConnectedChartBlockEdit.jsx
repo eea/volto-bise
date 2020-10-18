@@ -31,6 +31,7 @@ class Edit extends Component {
             }}
             id={`field-plotlychart-${this.props.block}`}
             onChange={(id, value) => {
+              console.log('value', value);
               this.props.onChangeBlock(this.props.block, {
                 ...this.props.data,
                 url: value.provider_url,
