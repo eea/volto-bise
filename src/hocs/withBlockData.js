@@ -1,15 +1,19 @@
 import React from 'react';
 import { getBlockData } from 'volto-bise/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import { getBaseUrl } from '@plone/volto/helpers';
 
 const withBlockData = (WrappedComponent) => (props) => {
-  const { id, path } = props;
+  const { id } = props;
   const dispatch = useDispatch();
   const blockData = useSelector((state) => state.blockdata[id]);
+  const pathname = useSelector((state) => state.router.location.pathname);
 
   React.useEffect(() => {
-    if (!blockData) dispatch(getBlockData(path, id)); // || blockData.error
-  }, [blockData, dispatch, id, path]);
+    if (!blockData) {
+      dispatch(getBlockData(getBaseUrl(pathname), id)); // || blockData.error
+    }
+  }, [blockData, dispatch, id, pathname]);
 
   return <WrappedComponent {...props} data={blockData?.data || {}} />;
 };

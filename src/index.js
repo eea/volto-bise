@@ -23,6 +23,9 @@ export default (config) => {
     ...config.addonReducers,
     blockdata,
   };
+
+  config.settings.navDepth = 3;
+
   config.settings.allowed_cors_destinations = [
     ...(config.settings.allowed_cors_destinations || []),
     'trial.discomap.eea.europa.eu',
