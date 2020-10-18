@@ -15,6 +15,7 @@ import cx from 'classnames';
 import { getBaseUrl, flattenToAppURL } from '@plone/volto/helpers';
 
 import { getNavigation } from '@plone/volto/actions';
+import { settings } from '~/config';
 
 const messages = defineMessages({
   closeMobileMenu: {
@@ -71,7 +72,10 @@ class Navigation extends Component {
    * @returns {undefined}
    */
   componentDidMount() {
-    this.props.getNavigation(getBaseUrl(this.props.pathname), 3);
+    this.props.getNavigation(
+      getBaseUrl(this.props.pathname),
+      settings.navDepth,
+    );
   }
 
   /**
@@ -81,8 +85,14 @@ class Navigation extends Component {
    * @returns {undefined}
    */
   componentDidUpdate(nextProps) {
-    if (nextProps.pathname !== this.props.pathname) {
-      this.props.getNavigation(getBaseUrl(nextProps.pathname), 3);
+    if (
+      nextProps.pathname !== this.props.pathname ||
+      nextProps.userToken !== this.props.userToken
+    ) {
+      this.props.getNavigation(
+        getBaseUrl(nextProps.pathname),
+        settings.navDepth,
+      );
     }
 
     // Hide submenu on route change
@@ -292,9 +302,12 @@ class Navigation extends Component {
 export default compose(
   injectIntl,
   connect(
-    (state) => ({
-      items: state.navigation.items,
-    }),
+    (state) => {
+      return {
+        items: state.navigation.items,
+        userToken: state?.userSession?.token,
+      };
+    },
     { getNavigation },
   ),
 )(Navigation);
