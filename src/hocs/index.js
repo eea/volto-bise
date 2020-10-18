@@ -1,0 +1,1 @@
+export withBlockData from './withBlockData';

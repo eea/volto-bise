@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import { SidebarPortal } from '@plone/volto/components'; // EditBlock
 
 import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
 import ChartEditorWidget from './Widget';
+import { withBlockData } from 'volto-bise/hocs';
 
 import schema from './schema';
 
@@ -18,7 +18,6 @@ class Edit extends Component {
       data: [],
     };
 
-    // partialVisibility={true}
     return (
       <>
         <div className="connected-chart" ref={this.chartNode}>
@@ -31,7 +30,6 @@ class Edit extends Component {
             }}
             id={`field-plotlychart-${this.props.block}`}
             onChange={(id, value) => {
-              console.log('value', value);
               this.props.onChangeBlock(this.props.block, {
                 ...this.props.data,
                 url: value.provider_url,
@@ -59,4 +57,4 @@ class Edit extends Component {
   }
 }
 
-export default connect(null, {})(Edit);
+export default withBlockData(Edit);
