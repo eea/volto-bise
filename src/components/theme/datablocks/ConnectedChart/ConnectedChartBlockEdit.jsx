@@ -57,4 +57,4 @@ class Edit extends Component {
   }
 }
 
-export default withBlockData(Edit);
+export default React.memo(withBlockData(Edit));
