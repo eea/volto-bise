@@ -8,6 +8,7 @@ import {
   installDataCatalogue,
   installTabsBlockExtensions,
   installDataComponents,
+  installImageCards,
 } from './components';
 import NumberWidget from './components/Widgets/Number';
 import SimpleColorPicker from './components/Widgets/SimpleColorPicker';
@@ -140,5 +141,6 @@ export default (config) => {
     installDataCatalogue,
     installTabsBlockExtensions,
     installDataComponents,
+    installImageCards,
   ].reduce((acc, apply) => apply(acc), config);
 };
