@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { settings } from '~/config';
 import { flattenToAppURL } from '@plone/volto/helpers';
 import React, { useEffect } from 'react';
+import { Grid } from 'semantic-ui-react';
 
 export const getPath = (url) => new URL(url).pathname;
 
@@ -62,9 +63,13 @@ const RoundTiled = ({ data }) => {
         <div className="roundtiled">
           <h2>{title}</h2>
           <div className="cards">
-            {(cards || []).map((card) => (
-              <Card {...card} />
-            ))}
+            <Grid>
+                {(cards || []).map((card) => (
+                  <Grid.Column mobile={12} tablet={6} computer={3}>
+                    <Card {...card} />
+                  </Grid.Column>
+                ))}
+            </Grid>
           </div>
         </div>
       </div>
