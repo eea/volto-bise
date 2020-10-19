@@ -13,7 +13,12 @@ import { settings } from '~/config';
 
 import './fixes.css';
 
-const LoadablePlot = loadable(() => import('react-plotly.js'));
+const LoadablePlot = loadable(() =>
+  import(
+    /* webpackChunkName: "bise-react-plotly" */
+    'react-plotly.js'
+  ),
+);
 
 /*
  * @param { object } data The chart data, layout,  extra config, etc.

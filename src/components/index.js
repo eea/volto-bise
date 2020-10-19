@@ -12,7 +12,7 @@ export TocNavigationView from './theme/TocNavigationView/TocNavigationView';
 
 export installBubbleChart from './theme/datablocks/BubbleChart';
 export installConnectedMap from './Blocks/ConnectedMap';
-export installDataCatalogue from './Blocks/DataCatalogue';
+// export installDataCatalogue from './Blocks/DataCatalogue';
 export installDataComponents from './theme/datablocks';
 export installKeyFacts from './Blocks/KeyFacts';
 export installMaesViewer from './Blocks/MaesViewer';
