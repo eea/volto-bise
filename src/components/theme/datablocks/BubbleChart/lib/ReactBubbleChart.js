@@ -14,9 +14,13 @@
 // limitations under the License.
 //------------------------------------------------------------------------------
 
-import ReactBubbleChartD3 from './ReactBubbleChartD3';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import loadable from '@loadable/component';
+
+const ReactBubbleChartD3  = loadable.lib(() => {
+  return import('./ReactBubbleChartD3');
+});
 
 // Description of props!
 
@@ -134,6 +138,7 @@ import ReactDOM from 'react-dom';
 class ReactBubbleChart extends React.Component {
   constructor(props) {
     super(props);
+    this.rbc = null;
     // define the method this way so that we have a clear reference to it
     // this is necessary so that window.removeEventListener will work properly
     this.handleResize = (e) => this._handleResize(e);
@@ -143,17 +148,24 @@ class ReactBubbleChart extends React.Component {
   render() {
     const { height } = this.props;
     return (
-      <div
-        style={{ height }}
-        className={'bubble-chart-container ' + this.props.className}
-      ></div>
+      <ReactBubbleChartD3>
+        {({ default: rbc }) => {
+          this.rbc = rbc;
+          return (
+            <div
+              style={{ height }}
+              className={'bubble-chart-container ' + this.props.className}
+            ></div>
+          );
+        }}
+      </ReactBubbleChartD3>
     );
   }
 
   /** When we mount, intialize resize handler and create the bubbleChart */
   componentDidMount() {
     window.addEventListener('resize', this.handleResize);
-    this.bubbleChart = new ReactBubbleChartD3(
+    this.bubbleChart = new this.rbc(
       this.getDOMNode(),
       this.getChartState(),
     );
