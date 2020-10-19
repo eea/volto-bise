@@ -1,0 +1,28 @@
+@media print {
+  @page {
+    size: auto;
+    margin: 20mm 10mm 20mm 10mm;
+  }
+
+  body {
+    margin: 0px;
+  }
+
+  #page-document {
+    >p, div {
+      break-inside: avoid;
+    }
+  }
+
+  .footerWrapper,
+  .table-of-contents {
+    display: none;
+  }
+
+  .simple-data-table,
+  .dotted-table-chart,
+  .connected-chart-wrapper {
+    max-width: 670px;
+    overflow-x: auto;
+  }
+}
