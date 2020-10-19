@@ -28,7 +28,7 @@ class Edit extends Component {
       //     ...this.props.data.chartData
       //   }
       // };
-      console.log('propagate');
+      console.log('propagate', this.props.data);
       this.props.onChangeBlock(this.props.block, this.props.data);
     }
   }
@@ -42,6 +42,7 @@ class Edit extends Component {
 
     return (
       <>
+        {/* {this.props.block} */}
         <div className="connected-chart" ref={this.chartNode}>
           <ChartEditorWidget
             title="Plotly Chart"
@@ -57,9 +58,11 @@ class Edit extends Component {
                 url: value.provider_url,
                 chartData: JSON.parse(JSON.stringify(value)),
               };
+              console.log('onchange', newvalue);
               this.props.onChangeBlock(this.props.block, newvalue);
             }}
           />
+          {/* {JSON.stringify(this.props.data, null, 2)} */}
         </div>
 
         <SidebarPortal selected={this.props.selected}>
