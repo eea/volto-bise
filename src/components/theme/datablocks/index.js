@@ -30,6 +30,29 @@ export default (config) => {
     sidebarTab: 1,
   };
 
+  // The colorscale above translated into hex colors:
+  config.settings.biseColorscale = [
+    // from mockup as of 19th of October, 2020:
+    '#ee252c',
+    '#d5e843',
+    '#33b540',
+    '#352d4e',
+    '#f9ae79',
+    '#87d6cb',
+
+    // other colors:
+    '#a6cee3',
+    '#1f78b4',
+    '#b2df8a',
+    '#33a02c',
+    '#fb9a99',
+    '#e31a1c',
+    '#a01a33',
+    '#e3b2df',
+    '#1fe31c',
+    '#e378b4',
+  ];
+
   return [
     installDataTable,
     installBubbleChart,
