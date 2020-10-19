@@ -233,17 +233,19 @@ class Navigation extends Component {
                       const flatSubUrl = flattenToAppURL(subitem.url);
                       return (
                         <Dropdown.Item key={flatSubUrl}>
-                          <Link
-                            to={flatSubUrl === '' ? '/' : flatSubUrl}
-                            key={flatSubUrl}
-                            className={
-                              this.isActive(flatSubUrl)
+                          <div className="secondLevel-wrapper">
+                            <Link
+                              to={flatSubUrl === '' ? '/' : flatSubUrl}
+                              key={flatSubUrl}
+                              className={
+                                this.isActive(flatSubUrl)
                                 ? 'item secondLevel menuActive'
                                 : 'item secondLevel'
-                            }
-                          >
-                            {subitem.title}
-                          </Link>
+                              }
+                              >
+                              {subitem.title}
+                            </Link>
+                          </div>
                           {subitem.items && (
                             <div className="submenu-wrapper">
                               <div className="submenu">

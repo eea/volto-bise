@@ -53,7 +53,7 @@
       font-size: 18px;
       line-height: 1;
       color: @lightGreenColor;
-      font-weight: 700;
+      font-weight: 700!important;
       padding: 1em 1.2em !important;
 
       @media (max-width: 848px) {
@@ -124,7 +124,7 @@
         }
       }
 
-      > .menu > .item:not(:last-child) > .secondLevel {
+      > .menu > .item:not(:last-child) > .secondLevel-wrapper {
         border-bottom: 1px solid #ededed!important;
       }
     }
@@ -135,21 +135,36 @@
 .navigation .ui.secondary.pointing.menu .countries-submenu {
   column-count: 3;
   column-gap: 0.5rem;
-  > a {
+  > .item.thirdLevel {
     display: block;
-    color: @darkGreenColor!important;
     line-height: 1.5;
-    padding: 0 1.2rem 0.8rem 1.2rem !important;
-    margin: 0;
     border-bottom-style: none;
-    font-size: 14px !important;
-    font-weight: 400;
+    color: @lightGreenColor!important;
+    font-weight: 600!important;
+    padding: 0.3rem 1rem !important;
+    margin: 0;
+    font-size: 16px!important;
+
     &:hover {
-      text-decoration: underline;
+      text-decoration: none;
     }
   }
   >a:last-child {
     padding-bottom: 0;
+  }
+}
+
+
+.navigation .ui.secondary.pointing.menu {
+  > .item:last-child {
+    > .menu > .item:first-child {
+      .secondLevel-wrapper {
+        cursor: auto;
+        > a {
+         pointer-events: none;
+       }
+      }
+    }
   }
 }
 
