@@ -98,7 +98,7 @@ class Html extends Component {
           <div id="sidebar" />
           <script
             dangerouslySetInnerHTML={{
-              __html: `window.__data=${serialize(optimize(store.getState()))};`,
+              __html: `window.__data=${serialize(store.getState())};`,
             }}
             charSet="UTF-8"
           />
