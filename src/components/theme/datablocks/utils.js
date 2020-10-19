@@ -26,7 +26,7 @@ export function filterDataByParameters(providerData, parameters) {
       .includes(index);
   }); // [filterIndex];
   if (!filter) return providerData;
-  console.log('filter', filter, parameters);
+  // console.log('filter', filter, parameters);
   let {
     i: filterName,
     v: [filterValue],
@@ -102,6 +102,8 @@ export function mixProviderData(chartData, providerData, parameters) {
           providerDataColumns.find((n) => n.toLowerCase() === filterName) ||
           filterName;
 
+        // console.log('filter', filterName, real_index, filterValue);
+
         // tweak transformation filters using data parameters
         (trace.transforms || []).forEach((transform) => {
           if (transform.targetsrc === real_index && filterValue) {
@@ -114,6 +116,7 @@ export function mixProviderData(chartData, providerData, parameters) {
 
     return trace;
   });
+  // console.log('res', res);
   return res;
 }
 
@@ -147,6 +150,11 @@ export const connectToDataParameters = connect((state, props) => {
         : byContext || byProvider
       : null;
 
+  // console.log(
+  //   'final connected_data_parameters',
+  //   providerUrl,
+  //   connected_data_parameters,
+  // );
   return {
     connected_data_parameters,
   };

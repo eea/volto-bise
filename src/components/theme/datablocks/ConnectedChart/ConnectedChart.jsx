@@ -27,6 +27,7 @@ const LoadablePlot = loadable(() =>
  *
  */
 function ConnectedChart(props) {
+  // console.log('connectedchart', props);
   const chartData = props.data.chartData;
 
   const useLiveData =
@@ -62,7 +63,6 @@ function ConnectedChart(props) {
   // TODO: only use fallback data if chartData.data.url doesn't exist
   // or the connected_data_parameters don't exist
 
-  // console.log('provider_data', props.provider_data);
   let data =
     props.provider_data && useLiveData
       ? mixProviderData(
@@ -71,6 +71,8 @@ function ConnectedChart(props) {
           props.connected_data_parameters,
         )
       : (chartData || {}).data || [];
+  //
+  // console.log('data after mix', data);
 
   data = data.map((trace) => ({
     ...trace,
@@ -82,6 +84,7 @@ function ConnectedChart(props) {
 
   return (
     <div>
+      {/* {JSON.stringify(data)} */}
       <Placeholder
         getDOMElement={(val) => {
           return val?.el;

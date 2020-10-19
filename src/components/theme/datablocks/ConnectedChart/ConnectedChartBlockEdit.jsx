@@ -4,12 +4,34 @@ import { SidebarPortal } from '@plone/volto/components'; // EditBlock
 
 import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
 import ChartEditorWidget from './Widget';
-import { withBlockData } from 'volto-bise/hocs';
+import { withEditBlockData } from 'volto-bise/hocs';
+import { isEqual } from 'lodash';
 
 import schema from './schema';
 
 class Edit extends Component {
   chartNode = React.createRef();
+
+  componentDidUpdate(prevProps) {
+    // console.log('updated', prevProps, this.props);
+    // when we read the content from the block, we want to also write it in the
+    // form
+    if (
+      !isEqual(
+        prevProps.data?.chartData?.data,
+        this.props.data?.chartData?.data,
+      )
+    ) {
+      // const newvalue = {
+      //   ...this.props.data,
+      //   chartData: {
+      //     ...this.props.data.chartData
+      //   }
+      // };
+      console.log('propagate');
+      this.props.onChangeBlock(this.props.block, this.props.data);
+    }
+  }
 
   render() {
     const chartData = this.props.data.chartData || {
@@ -30,11 +52,12 @@ class Edit extends Component {
             }}
             id={`field-plotlychart-${this.props.block}`}
             onChange={(id, value) => {
-              this.props.onChangeBlock(this.props.block, {
+              const newvalue = {
                 ...this.props.data,
                 url: value.provider_url,
                 chartData: JSON.parse(JSON.stringify(value)),
-              });
+              };
+              this.props.onChangeBlock(this.props.block, newvalue);
             }}
           />
         </div>
@@ -57,4 +80,5 @@ class Edit extends Component {
   }
 }
 
-export default React.memo(withBlockData(Edit));
+// export default Edit;
+export default withEditBlockData(Edit);

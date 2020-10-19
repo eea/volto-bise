@@ -15,7 +15,8 @@ const withBlockData = (WrappedComponent) => (props) => {
     }
   }, [blockData, dispatch, id, pathname]);
 
-  return <WrappedComponent {...props} data={blockData?.data || {}} />;
+  // console.log('data', blockData, props.data);
+  return <WrappedComponent {...props} data={blockData?.data || props.data} />;
 };
 
 export default withBlockData;
