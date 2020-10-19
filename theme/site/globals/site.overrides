@@ -35,7 +35,41 @@
   transform: translateY(-50%);
 }
 
+/* Table of contents */
+.table-of-contents.default {
+  .bulleted.list {
+    margin-left: 0;
+    .item {
+      position: relative;
+      padding: 0;
+      a {
+        font-size: 17px;
+        padding: 0.5rem 0.7rem;
+        display: block;
+        border-left: 2px solid lightgray;
+      }
+      &:before {
+        content: '';
+      }
+      &:hover {
+        > a {
+          border-color: @lightGreenColor;
+        }
+      }
+    }
+    .headline-3 {
+      a { padding-left: 1rem; }
+    }
+    .headline-4,
+    .headline-5,
+    .headline-6, {
+      a { padding-left: 1.5rem; }
+    }
+  }
+}
 
+
+/* Blocks */
 .block-editor-title {
   margin-top: 1.5rem;
 }
