@@ -26,7 +26,7 @@ export function filterDataByParameters(providerData, parameters) {
       .includes(index);
   }); // [filterIndex];
   if (!filter) return providerData;
-  console.log('filter', filter, parameters);
+  // console.log('filter', filter, parameters);
   let {
     i: filterName,
     v: [filterValue],
@@ -147,6 +147,11 @@ export const connectToDataParameters = connect((state, props) => {
         : byContext || byProvider
       : null;
 
+  // console.log(
+  //   'final connected_data_parameters',
+  //   providerUrl,
+  //   connected_data_parameters,
+  // );
   return {
     connected_data_parameters,
   };

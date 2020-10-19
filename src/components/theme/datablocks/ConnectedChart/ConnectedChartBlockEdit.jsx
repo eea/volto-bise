@@ -4,7 +4,7 @@ import { SidebarPortal } from '@plone/volto/components'; // EditBlock
 
 import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
 import ChartEditorWidget from './Widget';
-import { withBlockData } from 'volto-bise/hocs';
+import { withEditBlockData } from 'volto-bise/hocs';
 
 import schema from './schema';
 
@@ -30,11 +30,12 @@ class Edit extends Component {
             }}
             id={`field-plotlychart-${this.props.block}`}
             onChange={(id, value) => {
-              this.props.onChangeBlock(this.props.block, {
+              const newvalue = {
                 ...this.props.data,
                 url: value.provider_url,
                 chartData: JSON.parse(JSON.stringify(value)),
-              });
+              };
+              this.props.onChangeBlock(this.props.block, newvalue);
             }}
           />
         </div>
@@ -57,4 +58,5 @@ class Edit extends Component {
   }
 }
 
-export default React.memo(withBlockData(Edit));
+// export default Edit;
+export default withEditBlockData(Edit);

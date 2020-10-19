@@ -24,6 +24,7 @@ export default (config) => {
     ...config.addonReducers,
     blockdata,
   };
+  console.log('reducers', config.addonReducers);
 
   config.settings.navDepth = 3;
 

@@ -62,7 +62,7 @@ function ConnectedChart(props) {
   // TODO: only use fallback data if chartData.data.url doesn't exist
   // or the connected_data_parameters don't exist
 
-  // console.log('provider_data', props.provider_data);
+  // console.log('provider_data', props.connected_data_parameters);
   let data =
     props.provider_data && useLiveData
       ? mixProviderData(
@@ -82,6 +82,7 @@ function ConnectedChart(props) {
 
   return (
     <div>
+      {/* {JSON.stringify(data)} */}
       <Placeholder
         getDOMElement={(val) => {
           return val?.el;
