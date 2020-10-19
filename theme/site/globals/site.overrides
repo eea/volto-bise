@@ -36,11 +36,6 @@
 }
 
 
-// Blocks
-.block-editor-slate {
-  margin-bottom: 2.5rem!important;
-}
-
 .block-editor-title {
   margin-top: 1.5rem;
 }
@@ -56,5 +51,56 @@
   .connected-chart-wrapper {
     max-width: 650px;
     overflow-x: auto;
+  }
+}
+
+/* Fix overlapping content on country factsheet (country flag & title) */
+@media only screen and (max-width: 1275px) and (min-width: 860px) {
+  .section-countries {
+    #page-document {
+      .columns-view {
+        .ui.grid > .row > [class*="four wide computer"].column,
+        .ui.grid > .column.row > [class*="four wide computer"].column,
+        .ui.grid > [class*="four wide computer"].column,
+        .ui.column.grid > [class*="four wide computer"].column,
+
+        .ui.grid > .row > [class*="eight wide computer"].column,
+        .ui.grid > .column.row > [class*="eight wide computer"].column,
+        .ui.grid > [class*="eight wide computer"].column,
+        .ui.column.grid > [class*="eight wide computer"].column {
+          width: 50%!important;
+        }
+      }
+
+      .columns-view ~ .columns-view {
+        .ui.grid > .row > [class*="four wide computer"].column,
+        .ui.grid > .column.row > [class*="four wide computer"].column,
+        .ui.grid > [class*="four wide computer"].column,
+        .ui.column.grid > [class*="four wide computer"].column,
+
+        .ui.grid > .row > [class*="eight wide computer"].column,
+        .ui.grid > .column.row > [class*="eight wide computer"].column,
+        .ui.grid > [class*="eight wide computer"].column,
+        .ui.column.grid > [class*="eight wide computer"].column {
+          width: 33.33333333%!important;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 860px) {
+  .section-countries {
+    .ui.grid > .row > [class*="four wide computer"].column,
+    .ui.grid > .column.row > [class*="four wide computer"].column,
+    .ui.grid > [class*="four wide computer"].column,
+    .ui.column.grid > [class*="four wide computer"].column,
+
+    .ui.grid > .row > [class*="eight wide computer"].column,
+    .ui.grid > .column.row > [class*="eight wide computer"].column,
+    .ui.grid > [class*="eight wide computer"].column,
+    .ui.column.grid > [class*="eight wide computer"].column {
+      width: 100%!important;
+    }
   }
 }
