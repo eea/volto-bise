@@ -10,10 +10,13 @@ import {
   installDataComponents,
   installImageCards,
 } from './components';
+
 import NumberWidget from './components/Widgets/Number';
 import SimpleColorPicker from './components/Widgets/SimpleColorPicker';
 import MultiSelectWidget from './components/Widgets/MultiSelectWidget';
 import TextAlign from './components/Widgets/TextAlign';
+import ObjectListWidget from './components/Widgets/ObjectList';
+
 import blockdata from 'volto-bise/reducers/blockdata';
 
 import './slate-styles.css';
@@ -102,6 +105,7 @@ export default (config) => {
   //   { cssClass: 'underline-block-text', label: 'Underline Text' },
   // ];
   //
+
   config.widgets.widget.number = NumberWidget;
 
   if (!config.widgets.widget.simple_color) {
@@ -114,6 +118,10 @@ export default (config) => {
 
   if (!config.widgets.widget.simple_text_align) {
     config.widgets.widget.simple_text_align = TextAlign;
+  }
+
+  if (!config.widgets.widget.objectlist) {
+    config.widgets.widget.objectlist = ObjectListWidget;
   }
 
   config.settings.pluggableStyles = [
