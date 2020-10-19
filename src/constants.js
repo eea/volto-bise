@@ -1,0 +1,1 @@
+export const GET_BLOCKDATA = 'GET_BLOCKDATA';

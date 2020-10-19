@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { Button, Modal, Grid, Label } from 'semantic-ui-react';
-import { map } from 'lodash';
+import { map, omit } from 'lodash';
 
 import { FormFieldWrapper } from '@plone/volto/components';
 
@@ -82,18 +82,21 @@ class ChartWidget extends Component {
   }
 
   handleModalChange(value) {
-    const chartData = {
-      data: value.data,
-      frames: value.frames,
-      layout: value.layout,
-      provider_url: value.provider_url,
-    };
+    // value is like: {
+    //   data: value.data,
+    //   frames: value.frames,
+    //   layout: value.layout,
+    //   provider_url: value.provider_url,
+    // };
     this.props.onChange(this.props.id, {
-      ...this.props.value,
-      chartData,
-      data: value.data,
-      frames: value.frames,
-      layout: value.layout,
+      ...omit(
+        // Fix BBB
+        {
+          ...this.props.value,
+          ...value,
+        },
+        ['chartData'],
+      ),
       provider_url: value.provider_url,
     });
     this.setState({

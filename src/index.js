@@ -8,16 +8,25 @@ import {
   installDataCatalogue,
   installTabsBlockExtensions,
   installDataComponents,
+  installImageCards,
 } from './components';
 import NumberWidget from './components/Widgets/Number';
 import SimpleColorPicker from './components/Widgets/SimpleColorPicker';
 import MultiSelectWidget from './components/Widgets/MultiSelectWidget';
 import TextAlign from './components/Widgets/TextAlign';
+import blockdata from 'volto-bise/reducers/blockdata';
 
 import './slate-styles.css';
 import './box-styles.less';
 
 export default (config) => {
+  config.addonReducers = {
+    ...config.addonReducers,
+    blockdata,
+  };
+
+  config.settings.navDepth = 3;
+
   config.settings.allowed_cors_destinations = [
     ...(config.settings.allowed_cors_destinations || []),
     'trial.discomap.eea.europa.eu',
@@ -132,5 +141,6 @@ export default (config) => {
     installDataCatalogue,
     installTabsBlockExtensions,
     installDataComponents,
+    installImageCards,
   ].reduce((acc, apply) => apply(acc), config);
 };

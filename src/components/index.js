@@ -17,3 +17,4 @@ export installDataComponents from './theme/datablocks';
 export installKeyFacts from './Blocks/KeyFacts';
 export installMaesViewer from './Blocks/MaesViewer';
 export installTabsBlockExtensions from './theme/TabsBlockExtensions';
+export installImageCards from './Blocks/ImageCards';
