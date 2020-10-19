@@ -5,11 +5,33 @@ import { SidebarPortal } from '@plone/volto/components'; // EditBlock
 import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
 import ChartEditorWidget from './Widget';
 import { withEditBlockData } from 'volto-bise/hocs';
+import { isEqual } from 'lodash';
 
 import schema from './schema';
 
 class Edit extends Component {
   chartNode = React.createRef();
+
+  componentDidUpdate(prevProps) {
+    // console.log('updated', prevProps, this.props);
+    // when we read the content from the block, we want to also write it in the
+    // form
+    if (
+      !isEqual(
+        prevProps.data?.chartData?.data,
+        this.props.data?.chartData?.data,
+      )
+    ) {
+      // const newvalue = {
+      //   ...this.props.data,
+      //   chartData: {
+      //     ...this.props.data.chartData
+      //   }
+      // };
+      console.log('propagate');
+      this.props.onChangeBlock(this.props.block, this.props.data);
+    }
+  }
 
   render() {
     const chartData = this.props.data.chartData || {

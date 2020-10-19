@@ -102,6 +102,8 @@ export function mixProviderData(chartData, providerData, parameters) {
           providerDataColumns.find((n) => n.toLowerCase() === filterName) ||
           filterName;
 
+        // console.log('filter', filterName, real_index, filterValue);
+
         // tweak transformation filters using data parameters
         (trace.transforms || []).forEach((transform) => {
           if (transform.targetsrc === real_index && filterValue) {
@@ -114,6 +116,7 @@ export function mixProviderData(chartData, providerData, parameters) {
 
     return trace;
   });
+  // console.log('res', res);
   return res;
 }
 
