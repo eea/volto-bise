@@ -165,10 +165,12 @@ class ReactBubbleChart extends React.Component {
   /** When we mount, intialize resize handler and create the bubbleChart */
   componentDidMount() {
     window.addEventListener('resize', this.handleResize);
-    this.bubbleChart = new this.rbc(
-      this.getDOMNode(),
-      this.getChartState(),
-    );
+    if (this.rbc) {
+      this.bubbleChart = new this.rbc(
+        this.getDOMNode(),
+        this.getChartState(),
+      );
+    }
   }
 
   /** When we update, update our friend, the bubble chart */
