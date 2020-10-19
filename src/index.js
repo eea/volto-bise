@@ -22,34 +22,16 @@ import blockdata from 'volto-bise/reducers/blockdata';
 import './slate-styles.css';
 import './box-styles.less';
 
-export default (config) => {
-  config.addonReducers = {
-    ...config.addonReducers,
-    blockdata,
-  };
-  console.log('reducers', config.addonReducers);
-
-  config.settings.navDepth = 3;
-
-  config.settings.allowed_cors_destinations = [
-    ...(config.settings.allowed_cors_destinations || []),
-    'trial.discomap.eea.europa.eu',
-    'marine.discomap.eea.europa.eu',
+const installStyles = (config) => {
+  config.settings.plotlyChartsColorScale = [
+    '#ee252c',
+    '#d5e843',
+    '#33b540',
+    '#352d4e',
+    '#f9ae79',
+    '#87d6cb',
+    ...config.settings.plotlyChartsColorScale,
   ];
-  config.views = {
-    ...config.views,
-    contentTypesViews: {
-      ...config.views.contentTypesViews,
-      'Plone Site': DefaultView,
-    },
-    layoutViews: {
-      ...config.views.layoutViews,
-      factsheet_database_listing_view: FactsheetDatabaseListing,
-      // children_tabs_view: ChildrenTabsView,
-    },
-  };
-
-  config.blocks.groupBlocksOrder.push({ id: 'bise', title: 'BISE specific' });
 
   config.blocks.blocksConfig.columnsBlock.available_colors = [
     '#3c8000',
@@ -104,7 +86,37 @@ export default (config) => {
   //   { cssClass: 'green-block-text', label: 'Green Text' },
   //   { cssClass: 'underline-block-text', label: 'Underline Text' },
   // ];
-  //
+
+  return config;
+};
+
+export default (config) => {
+  config.addonReducers = {
+    ...config.addonReducers,
+    blockdata,
+  };
+
+  config.settings.navDepth = 3;
+
+  config.settings.allowed_cors_destinations = [
+    ...(config.settings.allowed_cors_destinations || []),
+    'trial.discomap.eea.europa.eu',
+    'marine.discomap.eea.europa.eu',
+  ];
+  config.blocks.groupBlocksOrder.push({ id: 'bise', title: 'BISE specific' });
+
+  config.views = {
+    ...config.views,
+    contentTypesViews: {
+      ...config.views.contentTypesViews,
+      'Plone Site': DefaultView,
+    },
+    layoutViews: {
+      ...config.views.layoutViews,
+      factsheet_database_listing_view: FactsheetDatabaseListing,
+      // children_tabs_view: ChildrenTabsView,
+    },
+  };
 
   config.widgets.widget.number = NumberWidget;
 
@@ -144,12 +156,13 @@ export default (config) => {
   ];
 
   return [
+    // installDataCatalogue,
     installKeyFacts,
     installMaesViewer,
     installConnectedMap,
-    // installDataCatalogue,
     installTabsBlockExtensions,
     installDataComponents,
     installImageCards,
+    installStyles,
   ].reduce((acc, apply) => apply(acc), config);
 };
