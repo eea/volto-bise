@@ -6,12 +6,12 @@ import React from 'react';
 import { compose } from 'redux';
 import { connectAnythingToProviderData } from 'volto-datablocks/hocs';
 import loadable from '@loadable/component';
-import { mixProviderData, connectToDataParameters } from '../utils';
+import { filterDataByParameters, connectToDataParameters } from '../utils';
 import Placeholder from 'volto-bise/components/theme/Placeholder/Placeholder';
 
 import { settings } from '~/config';
 
-import './fixes.css';
+// import './fixes.css';
 
 const LoadablePlot = loadable(() =>
   import(
@@ -26,66 +26,40 @@ const LoadablePlot = loadable(() =>
  * @param { boolean } filterWithDataParameters Will filter live data with parameters from context
  *
  */
-function ConnectedChart(props) {
-  // console.log('connectedchart', props);
-  const chartData = props.data.chartData;
-
-  const useLiveData =
-    typeof props.useLiveData !== 'undefined' ? props.useLiveData : true;
-
-  const propsLayout = props.data && props.data.layout ? props.data.layout : {};
-
-  let layout = chartData?.layout ? chartData.layout : propsLayout;
-
-  layout = {
-    ...layout,
+function Treemap(props) {
+  const layout = {
     autosize: true,
     dragmode: false,
     font: {
-      ...layout.font,
       family: settings.chartLayoutFontFamily || "'Roboto', sans-serif",
     },
   };
 
-  if (layout.xaxis)
-    layout.xaxis = {
-      ...layout.xaxis,
-      fixedrange: true,
-      hoverformat: props.hoverFormatXY || '.3s',
-    };
-  if (layout.yaxis)
-    layout.yaxis = {
-      ...layout.yaxis,
-      hoverformat: props.hoverFormatXY || '.3s',
-      fixedrange: true,
-    };
+  let { connected_data_parameters, provider_data = {}, data = {} } = props;
+  const { size_column, parent_column, label_column } = data;
 
-  // TODO: only use fallback data if chartData.data.url doesn't exist
-  // or the connected_data_parameters don't exist
-  // console.log('connected chart', props);
+  provider_data = provider_data || {};
+  const filteredData = filterDataByParameters(
+    provider_data,
+    connected_data_parameters,
+  );
 
-  let data =
-    props.provider_data && useLiveData
-      ? mixProviderData(
-          (chartData || {}).data,
-          props.provider_data,
-          props.connected_data_parameters,
-        )
-      : (chartData || {}).data || [];
-  //
-  // console.log('data after mix', data);
-
-  data = data.map((trace) => ({
-    ...trace,
-    textfont: {
-      ...trace.textfont,
-      family: settings.chartDataFontFamily || "'Roboto', sans-serif",
+  let traces = [
+    {
+      type: 'treemap',
+      labels: filteredData[label_column] || [],
+      parents: filteredData[parent_column] || [],
+      values: filteredData[size_column] || [],
+      marker: {
+        pad: {
+          // t: 100,
+        },
+      },
     },
-  }));
+  ];
 
   return (
     <div>
-      {/* {JSON.stringify(data)} */}
       <Placeholder
         getDOMElement={(val) => {
           return val?.el;
@@ -99,7 +73,7 @@ function ConnectedChart(props) {
           <div className="connected-chart-wrapper">
             <LoadablePlot
               ref={nodeRef}
-              data={data}
+              data={traces}
               layout={layout}
               frames={[]}
               config={{
@@ -126,4 +100,4 @@ export default compose(
     (props) => props.data.url || props.data.provider_url,
   ),
   connectToDataParameters,
-)(ConnectedChart);
+)(Treemap);

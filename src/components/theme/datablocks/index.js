@@ -6,6 +6,7 @@ import installDataTable from './SimpleDataTable';
 import installBubbleChart from './BubbleChart';
 import installDottedTableChart from './DottedTableChart';
 import installCountryFlag from './CountryFlag';
+import installTreemap from './Treemap';
 
 import chartIcon from '@plone/volto/icons/world.svg';
 
@@ -35,5 +36,6 @@ export default (config) => {
     installBubbleChart,
     installDottedTableChart,
     installCountryFlag,
+    installTreemap,
   ].reduce((acc, apply) => apply(acc), config);
 };
