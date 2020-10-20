@@ -5,6 +5,9 @@ import { serializeNodes } from 'volto-slate/editor/render';
 
 const View = ({ data }) => {
   const { message, message_link, message_link_text, lines } = data;
+
+  console.log('lines', lines);
+
   return (
     <div
       className={cx(
@@ -33,20 +36,29 @@ const View = ({ data }) => {
                   )}
                 </>
               ) : (
-                ''
-              )}
+                  ''
+                )}
             </div>
           </div>
 
           <div className="facts-wrapper">
             {(lines || []).map((line, i) => (
               <div className="fact" key={i}>
-                <div
-                  className="upper"
-                >
-                  {serializeNodes(line.upper)}
-                </div>
-                <div className="lower">{serializeNodes(line.lower)}</div>
+                {line.upper.data ? (
+                  <>
+                    <div className="upper" dangerouslySetInnerHTML={{ __html: line.upper.data }} />
+                    <div className="lower">{line.lower}</div>
+                  </>
+                ) : (
+                    <>
+                      <div
+                        className="upper"
+                      >
+                        {serializeNodes(line.upper)}
+                      </div>
+                      <div className="lower">{serializeNodes(line.lower)}</div>
+                    </>
+                  )}
               </div>
             ))}
           </div>
