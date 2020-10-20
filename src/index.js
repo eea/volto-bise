@@ -16,6 +16,7 @@ import SimpleColorPicker from './components/Widgets/SimpleColorPicker';
 import MultiSelectWidget from './components/Widgets/MultiSelectWidget';
 import TextAlign from './components/Widgets/TextAlign';
 import ObjectListWidget from './components/Widgets/ObjectList';
+import AttachedImageWidget from './components/Widgets/AttachedImage';
 
 import blockdata from 'volto-bise/reducers/blockdata';
 
@@ -134,6 +135,10 @@ export default (config) => {
 
   if (!config.widgets.widget.objectlist) {
     config.widgets.widget.objectlist = ObjectListWidget;
+  }
+
+  if (!config.widgets.widget.attachedimage) {
+    config.widgets.widget.attachedimage = AttachedImageWidget;
   }
 
   config.settings.pluggableStyles = [

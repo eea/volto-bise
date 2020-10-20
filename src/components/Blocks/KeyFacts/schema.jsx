@@ -44,7 +44,7 @@ const KeyFactsSchema = {
 
   properties: {
     lines: {
-      widget: 'objectlist',
+      widget: 'object_list',
       title: 'Lines',
       // this is an invention, should confront with dexterity serializer
       schema: LineSchema,
