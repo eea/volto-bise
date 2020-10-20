@@ -73,7 +73,7 @@ const DottedTableChartView = (props) => {
             <Table.Body>
               {possible_rows.map((row, i) => (
                 <Table.Row key={`${row}-${i}`}>
-                  <Table.HeaderCell key="first-cell">{row}</Table.HeaderCell>
+                  <Table.HeaderCell key="first-cell" style={{ color: row_colors?.[row] }}>{row}</Table.HeaderCell>
                   {possible_columns.map((col, y) => (
                     <Table.Cell verticalAlign="top" key={`${col}-${y}`}>
                       {renderDots(data_tree[col][row], row_colors?.[row])}
