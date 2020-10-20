@@ -5,7 +5,8 @@ import { flattenToAppURL } from '@plone/volto/helpers';
 import React, { useEffect } from 'react';
 import { Grid } from 'semantic-ui-react';
 
-export const getPath = (url) => new URL(url).pathname;
+export const getPath = (url) =>
+  url.startsWith('http') ? new URL(url).pathname : url;
 
 // TODO: the approach for the URL path generation is not correct, it does not
 // work on local;
@@ -64,11 +65,11 @@ const RoundTiled = ({ data }) => {
           <h2>{title}</h2>
           <div className="cards">
             <Grid>
-                {(cards || []).map((card) => (
-                  <Grid.Column mobile={12} tablet={6} computer={3}>
-                    <Card {...card} />
-                  </Grid.Column>
-                ))}
+              {(cards || []).map((card) => (
+                <Grid.Column mobile={12} tablet={6} computer={3}>
+                  <Card {...card} />
+                </Grid.Column>
+              ))}
             </Grid>
           </div>
         </div>

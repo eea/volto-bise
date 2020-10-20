@@ -1,14 +1,16 @@
-*,*:focus,*:hover{
-  outline:none;
+*,
+*:focus,
+*:hover {
+  outline: none;
 }
 
 .siteroot .ui.basic.segment.content-area {
   margin-top: 0;
-  padding-top:0;
+  padding-top: 0;
 }
 
 #toolbar .toolbar-content {
-  z-index: 6!important;
+  z-index: 6 !important;
 }
 
 .editor-toolbar-wrapper {
@@ -58,16 +60,19 @@
       }
     }
     .headline-3 {
-      a { padding-left: 1rem; }
+      a {
+        padding-left: 1rem;
+      }
     }
     .headline-4,
     .headline-5,
-    .headline-6, {
-      a { padding-left: 1.5rem; }
+    .headline-6 {
+      a {
+        padding-left: 1.5rem;
+      }
     }
   }
 }
-
 
 /* Blocks */
 .block-editor-title {
@@ -92,31 +97,31 @@
 @media only screen and (max-width: 1275px) and (min-width: 860px) {
   .section-countries {
     #page-document {
-      .columns-view {
-        .ui.grid > .row > [class*="four wide computer"].column,
-        .ui.grid > .column.row > [class*="four wide computer"].column,
-        .ui.grid > [class*="four wide computer"].column,
-        .ui.column.grid > [class*="four wide computer"].column,
-
-        .ui.grid > .row > [class*="eight wide computer"].column,
-        .ui.grid > .column.row > [class*="eight wide computer"].column,
-        .ui.grid > [class*="eight wide computer"].column,
-        .ui.column.grid > [class*="eight wide computer"].column {
-          width: 50%!important;
+      .flags-block {
+        .columns-view {
+          .ui.grid > .row > [class*='four wide computer'].column,
+          .ui.grid > .column.row > [class*='four wide computer'].column,
+          .ui.grid > [class*='four wide computer'].column,
+          .ui.column.grid > [class*='four wide computer'].column,
+          .ui.grid > .row > [class*='eight wide computer'].column,
+          .ui.grid > .column.row > [class*='eight wide computer'].column,
+          .ui.grid > [class*='eight wide computer'].column,
+          .ui.column.grid > [class*='eight wide computer'].column {
+            width: 50% !important;
+          }
         }
-      }
 
-      .columns-view ~ .columns-view {
-        .ui.grid > .row > [class*="four wide computer"].column,
-        .ui.grid > .column.row > [class*="four wide computer"].column,
-        .ui.grid > [class*="four wide computer"].column,
-        .ui.column.grid > [class*="four wide computer"].column,
-
-        .ui.grid > .row > [class*="eight wide computer"].column,
-        .ui.grid > .column.row > [class*="eight wide computer"].column,
-        .ui.grid > [class*="eight wide computer"].column,
-        .ui.column.grid > [class*="eight wide computer"].column {
-          width: 33.33333333%!important;
+        .columns-view ~ .columns-view {
+          .ui.grid > .row > [class*='four wide computer'].column,
+          .ui.grid > .column.row > [class*='four wide computer'].column,
+          .ui.grid > [class*='four wide computer'].column,
+          .ui.column.grid > [class*='four wide computer'].column,
+          .ui.grid > .row > [class*='eight wide computer'].column,
+          .ui.grid > .column.row > [class*='eight wide computer'].column,
+          .ui.grid > [class*='eight wide computer'].column,
+          .ui.column.grid > [class*='eight wide computer'].column {
+            width: 33.33333333% !important;
+          }
         }
       }
     }
@@ -125,16 +130,15 @@
 
 @media only screen and (max-width: 860px) {
   .section-countries {
-    .ui.grid > .row > [class*="four wide computer"].column,
-    .ui.grid > .column.row > [class*="four wide computer"].column,
-    .ui.grid > [class*="four wide computer"].column,
-    .ui.column.grid > [class*="four wide computer"].column,
-
-    .ui.grid > .row > [class*="eight wide computer"].column,
-    .ui.grid > .column.row > [class*="eight wide computer"].column,
-    .ui.grid > [class*="eight wide computer"].column,
-    .ui.column.grid > [class*="eight wide computer"].column {
-      width: 100%!important;
+    .ui.grid > .row > [class*='four wide computer'].column,
+    .ui.grid > .column.row > [class*='four wide computer'].column,
+    .ui.grid > [class*='four wide computer'].column,
+    .ui.column.grid > [class*='four wide computer'].column,
+    .ui.grid > .row > [class*='eight wide computer'].column,
+    .ui.grid > .column.row > [class*='eight wide computer'].column,
+    .ui.grid > [class*='eight wide computer'].column,
+    .ui.column.grid > [class*='eight wide computer'].column {
+      width: 100% !important;
     }
   }
 }

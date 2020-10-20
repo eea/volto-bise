@@ -10,7 +10,9 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 import 'react-image-gallery/styles/css/image-gallery.css';
 
-export const getPath = (url) => new URL(url).pathname;
+export const getPath = (url) =>
+  url.startsWith('http') ? new URL(url).pathname : url;
+
 export const fixUrl = (url) =>
   (url || '').includes(settings.apiPath)
     ? `${flattenToAppURL(url.replace('/api', ''))}/@@images/image`
