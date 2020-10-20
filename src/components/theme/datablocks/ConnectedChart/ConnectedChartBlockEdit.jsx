@@ -28,7 +28,7 @@ class Edit extends Component {
       //     ...this.props.data.chartData
       //   }
       // };
-      console.log('propagate', this.props.data);
+      // console.log('propagate', this.props.data);
       this.props.onChangeBlock(this.props.block, this.props.data);
     }
   }
@@ -58,7 +58,7 @@ class Edit extends Component {
                 url: value.provider_url,
                 chartData: JSON.parse(JSON.stringify(value)),
               };
-              console.log('onchange', newvalue);
+              // console.log('onchange', newvalue);
               this.props.onChangeBlock(this.props.block, newvalue);
             }}
           />

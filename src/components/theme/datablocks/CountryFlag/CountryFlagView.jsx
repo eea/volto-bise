@@ -16,8 +16,6 @@ const CountryFlagView = ({ data = {} }) => {
 
         `./data/svg/${code}.svg`
       ).then((module) => {
-        console.log('module', module.default);
-        // setFlage('bla');
         setFlag(module.default);
       });
     }
