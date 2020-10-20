@@ -23,7 +23,7 @@ const View = ({ data }) => {
           'full-width': data.align === 'full',
         })}
       >
-        <div className="block-wrapper">
+        <div className="ui container block-wrapper">
           <div className="title-wrapper">
             <div className="title">
               {message ? (
