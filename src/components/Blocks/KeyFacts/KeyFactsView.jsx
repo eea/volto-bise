@@ -6,8 +6,6 @@ import { serializeNodes } from 'volto-slate/editor/render';
 const View = ({ data }) => {
   const { message, message_link, message_link_text, lines } = data;
 
-  console.log('lines', lines);
-
   return (
     <div
       className={cx(
