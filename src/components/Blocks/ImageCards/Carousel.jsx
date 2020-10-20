@@ -42,13 +42,15 @@ class Carousel extends Component {
           }
         />
         <div className="slide-overlay" />
-        <div className="slide-body">
-          <div className="slide-title">{card.title || ''}</div>
-          <div
-            className="slide-description"
-            dangerouslySetInnerHTML={{ __html: card.text?.data || '' }}
-          />
-        </div>
+          <div class="ui container">
+            <div className="slide-body">
+              <div className="slide-title">{card.title || ''}</div>
+              <div
+                className="slide-description"
+                dangerouslySetInnerHTML={{ __html: card.text?.data || '' }}
+              />
+            </div>
+          </div>
       </div>
     );
   };

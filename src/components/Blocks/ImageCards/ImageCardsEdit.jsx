@@ -7,10 +7,8 @@ import schema from './schema';
 
 const ImageCardEdit = (props) => {
   return (
-    <div className="block selected">
-      <div className="block-inner-wrapper">
-        <ImageCardsView data={props.data} />
-      </div>
+    <>
+      <ImageCardsView data={props.data} />
 
       <SidebarPortal selected={props.selected}>
         <BlockEditForm
@@ -26,7 +24,7 @@ const ImageCardEdit = (props) => {
           block={props.block}
         />
       </SidebarPortal>
-    </div>
+    </>
   );
 };
 

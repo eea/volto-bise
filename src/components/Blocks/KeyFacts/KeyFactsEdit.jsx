@@ -10,9 +10,7 @@ import KeyFactsView from './KeyFactsView';
 class Edit extends Component {
   render() {
     return (
-      <div className="block selected">
-        <div className="block-inner-wrapper" />
-
+      <>
         <KeyFactsView data={this.props.data} />
 
         <SidebarPortal selected={this.props.selected}>
@@ -28,7 +26,7 @@ class Edit extends Component {
             formData={this.props.data}
           />
         </SidebarPortal>
-      </div>
+      </>
     );
   }
 }
