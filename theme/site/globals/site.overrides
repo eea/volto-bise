@@ -84,6 +84,31 @@
   padding: 0;
 }
 
+.contenttype-bise_factsheet {
+  #main {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      display: table;
+      margin-top: 1.5em;
+    }
+
+    h3,
+    h4,
+    h5,
+    h6 {
+      border-bottom: 2px solid @darkSecondaryColor;
+    }
+
+    h2 {
+      border-bottom: 2px solid @secondaryColor;
+    }
+  }
+}
+
 @media only screen and (min-width: 767px) and (max-width: 846px) {
   .simple-data-table,
   .dotted-table-chart,
