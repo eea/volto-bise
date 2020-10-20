@@ -7,11 +7,11 @@ import { compose } from 'redux';
 import { connectAnythingToProviderData } from 'volto-datablocks/hocs';
 import loadable from '@loadable/component';
 import { mixProviderData, connectToDataParameters } from '../utils';
-import Placeholder from 'volto-bise/components/theme/Placeholder/Placeholder';
+import Placeholder from './Placeholder';
 
 import { settings } from '~/config';
 
-import './fixes.css';
+// import './fixes.css';
 
 const LoadablePlot = loadable(() =>
   import(

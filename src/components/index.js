@@ -1,3 +1,4 @@
+export Placeholder from './theme/Placeholder/Placeholder';
 export ChildrenTabsView from './theme/ChildrenTabsView/ChildrenTabsView';
 export ConnectedChartBlockEdit from './theme/datablocks/ConnectedChart/ConnectedChartBlockEdit';
 export ConnectedChartBlockView from './theme/datablocks/ConnectedChart/ConnectedChartBlockView';
