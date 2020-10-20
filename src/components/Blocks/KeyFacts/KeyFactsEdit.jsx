@@ -3,20 +3,11 @@ import { connect } from 'react-redux';
 
 import { SidebarPortal } from '@plone/volto/components'; // EditBlock
 import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
-// import { BlockEditForm } from 'volto-addons/BlockForm';
 
 import schema from './schema';
 import KeyFactsView from './KeyFactsView';
 
 class Edit extends Component {
-  // componentDidMount() {
-  //   this.props.changeSidebarState(true);
-  // }
-  //
-  // componentDidUpdate(prevProps) {
-  //   this.props.changeSidebarState(true);
-  // }
-
   render() {
     return (
       <div className="block selected">
