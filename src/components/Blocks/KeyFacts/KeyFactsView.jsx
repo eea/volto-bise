@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
+import { serializeNodes } from 'volto-slate/editor/render';
 
 const View = ({ data }) => {
   const { message, message_link, message_link_text, lines } = data;
@@ -42,9 +43,10 @@ const View = ({ data }) => {
               <div className="fact" key={i}>
                 <div
                   className="upper"
-                  dangerouslySetInnerHTML={{ __html: line.upper.data }}
-                />
-                <div className="lower">{line.lower}</div>
+                >
+                  {serializeNodes(line.upper)}
+                </div>
+                <div className="lower">{serializeNodes(line.lower)}</div>
               </div>
             ))}
           </div>
