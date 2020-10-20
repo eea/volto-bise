@@ -31,7 +31,7 @@ const installStyles = (config) => {
     '#352d4e',
     '#f9ae79',
     '#87d6cb',
-    ...config.settings.plotlyChartsColorScale,
+    ...(config.settings.plotlyChartsColorScale || []),
   ];
 
   config.blocks.blocksConfig.columnsBlock.available_colors = [
