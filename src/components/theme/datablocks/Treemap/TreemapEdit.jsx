@@ -12,12 +12,12 @@ class Edit extends Component {
     if (!this.props.provider_data) return schema;
     const provider_data = this.props.provider_data || {};
 
-    // const select_field = 'Ecosystem_level2';
     const choices = Object.keys(provider_data).map((n) => [n, n]);
 
     const newSchema = JSON.parse(JSON.stringify(schema));
     newSchema.properties.size_column.choices = choices;
     newSchema.properties.label_column.choices = choices;
+    newSchema.properties.parent_column.choices = choices;
     return newSchema;
   };
 

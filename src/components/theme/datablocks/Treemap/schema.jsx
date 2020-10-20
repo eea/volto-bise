@@ -1,90 +1,43 @@
-/*
- * Schema format mostly follows Volto's Form.jsx requirement
- *
- */
-import React from 'react';
-
-const SourceSchema = {
-  title: 'Source',
+const TreemapSchema = {
+  title: 'Treemap Chart',
 
   fieldsets: [
     {
       id: 'default',
       title: 'Default',
-      fields: ['chart_source', 'chart_source_link'],
+      fields: ['description'], // title
+    },
+    {
+      id: 'source',
+      title: 'Data source',
+      fields: ['provider_url', 'size_column', 'label_column', 'parent_column'],
     },
   ],
 
   properties: {
-    chart_source: {
-      type: 'string',
-      title: 'Source',
+    description: {
+      title: 'Description',
+      widget: 'slate_richtext',
     },
-    chart_source_link: {
-      type: 'string',
-      title: 'Link',
-    },
-  },
-
-  required: ['source'],
-};
-
-const ChartSchema = {
-  title: 'Edit chart',
-
-  fieldsets: [
-    {
-      id: 'default',
-      title: 'Default',
-      fields: ['url', 'hover_format_xy', 'align', 'min_width'],
-    },
-    {
-      id: 'sources',
-      title: 'Sources',
-      fields: ['chartSources'],
-    },
-  ],
-
-  properties: {
-    url: {
+    provider_url: {
       widget: 'pick_provider',
       title: 'Data provider',
     },
-    chartSources: {
-      widget: 'objectlist',
-      title: 'Sources',
-      // this is an invention, should confront with dexterity serializer
-      schema: SourceSchema,
+    size_column: {
+      title: 'Size column',
+      choices: [],
     },
-    hover_format_xy: {
-      type: 'string',
-      title: 'Hover format',
-      placeholder: '.3s',
-      description: (
-        <>
-          See{' '}
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://github.com/d3/d3-3.x-api-reference/blob/master/Formatting.md#d3_format"
-          >
-            D3 format documentation
-          </a>
-        </>
-      ),
+    label_column: {
+      title: 'Label column',
+      choices: [],
     },
-    align: {
-      title: 'Alignment',
-      widget: 'align',
-      type: 'string',
-    },
-    min_width: {
-      title: 'Minimum width',
-      type: 'string',
+    parent_column: {
+      title: 'Parent column',
+      choices: [],
     },
   },
 
-  required: ['url'],
+  required: ['provider_url'],
 };
 
-export default ChartSchema;
+export default TreemapSchema;

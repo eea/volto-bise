@@ -16,7 +16,6 @@ import {
 export function filterDataByParameters(providerData, parameters) {
   if (!(parameters && parameters.length)) return providerData;
 
-  // debugger;
   const filter = parameters.find((f) => {
     // finds any available filter that matches the data
     let { i: index } = f;
@@ -24,9 +23,9 @@ export function filterDataByParameters(providerData, parameters) {
     return Object.keys(providerData || {})
       .map((k) => k.toLowerCase())
       .includes(index);
-  }); // [filterIndex];
+  });
   if (!filter) return providerData;
-  // console.log('filter', filter, parameters);
+
   let {
     i: filterName,
     v: [filterValue],
