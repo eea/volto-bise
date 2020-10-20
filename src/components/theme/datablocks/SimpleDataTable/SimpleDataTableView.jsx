@@ -69,7 +69,7 @@ const SimpleDataTableView = (props) => {
 
   return (
     <div className="simple-data-table">
-      <div className={`${data.underline ? 'with-border' : ''}`}>
+      <div className={`table-title ${data.underline ? 'title-border' : ''}`}>
         {description ? serializeNodes(description) : ''}
       </div>
       {row_size ? (

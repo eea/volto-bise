@@ -1,6 +1,8 @@
-.block {
+#page-document,
+#page-edit {
   .ui.table {
     border: none;
+    background: transparent;
 
     tr td {
       border-top: none;
@@ -40,78 +42,9 @@
       background: none;
       text-transform: initial;
       font-weight: bold;
+      color: @textColor;
+      font-size: 15px;
       border-bottom: 1px solid rgba(34, 36, 38, 0.4);
-    }
-  }
-}
-
-// Dotted table chart
-.dotted-table-chart {
-  .inner {
-    .dot-cells {
-      & > div {
-        width: 17px;
-        height: 17px;
-        border-radius: 50%;
-      }
-    }
-  }
-}
-
-.simple-data-table {
-  table {
-    > thead {
-      > tr > th {
-        background: none !important;
-        vertical-align: bottom !important;
-        text-transform: inherit !important;
-        color: @textColor !important;
-
-        &::after {
-          content: '';
-          display: block;
-          border-bottom: 0.1rem solid #000;
-          padding-top: 0.7rem;
-          width: 100%;
-        }
-
-        &::before {
-          display: none !important;
-        }
-
-        &.left::after {
-          /* Nothing here for now. */
-        }
-
-        &.center::after {
-          margin-left: auto;
-          margin-right: auto;
-        }
-
-        &.right::after {
-          margin-left: auto;
-        }
-
-        &.justify::after {
-          width: 100%;
-        }
-
-        &.left {
-          text-align: left!important;
-        }
-
-        &.right {
-          text-align: right!important;
-        }
-
-        &.center {
-          text-align: center!important;
-        }
-
-        &.justify {
-          text-align: justify!important;
-        }
-      }
     }
   }
 }
