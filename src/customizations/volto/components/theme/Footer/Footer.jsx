@@ -8,6 +8,9 @@ import { Container, Segment, Grid } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import LogoImage from '@plone/volto/components/theme/Logo/Logo.svg';
+
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+
 import ecLogo from 'volto-bise/static/ec.png';
 import eeaLogo from 'volto-bise/static/eea.png';
 import fiseLogo from 'volto-bise/static/forest.svg';
@@ -95,14 +98,21 @@ const Footer = ({ intl }) => (
                 {' '}
               </div>
               <div>
-                <a href="https://ec.europa.eu/" title="European Commission">
-                  <img className="footerLogo" src={ecLogo} alt="" />
+                <a href="https://ec.europa.eu/">
+                  <LazyLoadImage
+                    className="footerLogo"
+                    src={ecLogo}
+                    title="European Commission"
+                    alt="European Commission"
+                  />
                 </a>
-                <a
-                  href="https://www.eea.europa.eu/"
-                  title="European Environment Agency"
-                >
-                  <img className="footerLogo" src={eeaLogo} alt="" />
+                <a href="https://www.eea.europa.eu/">
+                  <LazyLoadImage
+                    className="footerLogo"
+                    src={eeaLogo}
+                    title="European Environment Agency"
+                    alt="European Environment Agency"
+                  />
                 </a>
               </div>
             </Grid.Column>
@@ -117,23 +127,29 @@ const Footer = ({ intl }) => (
                 <p>Other European Information Systems</p>
               </div>
               <div className="footerLogos">
-                <a
-                  href="https://water.europa.eu/"
-                  title="Water Information System for Europe"
-                >
-                  <img className="footerLogo" src={wiseLogo} alt="" />
+                <a href="https://water.europa.eu/">
+                  <LazyLoadImage
+                    className="footerLogo"
+                    src={wiseLogo}
+                    title="Water Information System for Europe"
+                    alt="Water Information System for Europe"
+                  />
                 </a>
-                <a
-                  href="https://forest.eea.europa.eu/"
-                  title="Forest Information System for Europe"
-                >
-                  <img className="footerLogo" src={fiseLogo} alt="" />
+                <a href="https://forest.eea.europa.eu/">
+                  <LazyLoadImage
+                    className="footerLogo"
+                    src={fiseLogo}
+                    title="Forest Information System for Europe"
+                    alt="Forest Information System for Europe"
+                  />
                 </a>
-                <a
-                  href="https://climate-adapt.eea.europa.eu/"
-                  title="Climate-Adapt"
-                >
-                  <img className="footerLogo" src={ccaLogo} alt="" />
+                <a href="https://climate-adapt.eea.europa.eu/">
+                  <LazyLoadImage
+                    className="footerLogo"
+                    src={ccaLogo}
+                    title="Climate-Adapt"
+                    alt="Climate-Adapt"
+                  />
                 </a>
               </div>
             </Grid.Column>
