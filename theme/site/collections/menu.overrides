@@ -7,15 +7,6 @@
   transition : none;
 }
 
-.navigation .ui.secondary.pointing.menu {
-  border-bottom: none!important;
-  margin-right: 0.8em!important;
-
-  @media (max-width: 991px) {
-    margin: 0 0 0 40px!important;
-  }
-}
-
 .ui.menu .item > a:not(.ui) {
   line-height: 1;
 }
@@ -24,9 +15,16 @@
   .ui.secondary.pointing.menu {
     top: 13px;
     position: relative;
+    border-bottom: none!important;
+    margin-right: 0.8em!important;
+    margin-left: 0!important;
+
+    @media (max-width: 991px) {
+      margin: 0 0 0 40px!important;
+    }
   }
 
-  .ui.secondary.pointing.menu>.item.dropdown {
+  .ui.secondary.pointing.menu > .item.dropdown {
     position: relative;
     .firstLevel:not(.item) {
       padding: 0;
@@ -41,8 +39,8 @@
     margin: 0;
   }
 
-  .ui.secondary.menu .dropdown.item>.menu,
-  .ui.text.menu .dropdown.item>.menu {
+  .ui.secondary.menu .dropdown.item > .menu,
+  .ui.text.menu .dropdown.item >.menu {
     border-radius: 0;
   }
 
@@ -124,51 +122,14 @@
         }
       }
 
-      > .menu > .item:not(:last-child) > .secondLevel-wrapper {
+      .secondLevel-wrapper {
         border-bottom: 1px solid #ededed!important;
       }
     }
   }
 }
 
-/* Countries menu */
-.navigation .ui.secondary.pointing.menu .countries-submenu {
-  column-count: 3;
-  column-gap: 0.5rem;
-  > .item.thirdLevel {
-    display: block;
-    line-height: 1.5;
-    border-bottom-style: none;
-    color: @lightGreenColor!important;
-    font-weight: 600!important;
-    padding: 0.3rem 1rem !important;
-    margin: 0;
-    font-size: 16px!important;
-
-    &:hover {
-      text-decoration: none;
-    }
-  }
-  >a:last-child {
-    padding-bottom: 0;
-  }
-}
-
-
-.navigation .ui.secondary.pointing.menu {
-  > .item:last-child {
-    > .menu > .item:first-child {
-      .secondLevel-wrapper {
-        cursor: auto;
-        > a {
-         pointer-events: none;
-       }
-      }
-    }
-  }
-}
-
-.navigation .ui.menu .dropdown>.menu {
+.navigation .ui.menu .dropdown > .menu {
   .item.secondLevel {
     color: @lightGreenColor;
     font-weight: 600;
@@ -208,14 +169,14 @@
   }
 }
 
-.navigation .ui.menu>.dropdown.item>.menu .item {
+.navigation .ui.menu > .dropdown.item > .menu .item {
   margin: 0;
   &:not(a) {
     padding: 0 !important;
   }
 }
 
-.navigation .ui.menu>.dropdown.item>.menu .item:last-child {
+.navigation .ui.menu > .dropdown.item > .menu .item:last-child {
   border-bottom: none !important;
 }
 
@@ -227,7 +188,7 @@
   background-color: transparent!important;
 }
 
-.navigation .ui.menu>.dropdown.item>.menu {
+.navigation .ui.menu > .dropdown.item > .menu {
   box-shadow: none;
   left: 50%;
   border: 1px solid #eee;
@@ -244,7 +205,7 @@
 }
 
 .navigation {
-  .ui.dropdown .menu>.header {
+  .ui.dropdown .menu > .header {
     width: 0;
     height: 0;
     padding: 0 !important;
@@ -254,7 +215,7 @@
   }
 }
 
-.ui.menu .item>i.dropdown.icon {
+.ui.menu .item > i.dropdown.icon {
   display: none;
 }
 
@@ -266,4 +227,42 @@
 .hamburger.is-active .hamburger-inner::before,
 .hamburger.is-active .hamburger-inner::after {
   background-color: @lightGreenColor !important;
+}
+
+/* Countries submenu */
+.navigation .ui.secondary.pointing.menu .countries-submenu {
+  column-count: 3;
+  column-gap: 0.5rem;
+  padding-bottom: 1rem;
+
+  > .item.thirdLevel {
+      display: block;
+      line-height: 1.5;
+      border-bottom-style: none;
+      color: @lightGreenColor!important;
+      font-weight: 600!important;
+      padding: 0.3rem 1rem !important;
+      margin: 0;
+      font-size: 16px!important;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+  > a:last-child {
+    padding-bottom: 0;
+  }
+}
+
+/* Ecosystems submenu */
+#ecosystems {
+  > .menu > .item:first-child {
+    .secondLevel-wrapper {
+      cursor: default;
+    }
+  }
+  #ecosystem-types {
+   pointer-events: none; // disable link
+ }
 }

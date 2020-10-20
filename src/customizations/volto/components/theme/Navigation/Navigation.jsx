@@ -187,8 +187,10 @@ class Navigation extends Component {
         >
           {this.props.items.map((item) => {
             const flatUrl = flattenToAppURL(item.url);
+            const itemID = item.title.split(' ').join('-').toLowerCase();
             return item.items && item.items.length ? (
               <Dropdown
+                id={itemID}
                 className={
                   this.isActive(flatUrl)
                     ? 'item firstLevel menuActive'
@@ -231,10 +233,12 @@ class Navigation extends Component {
                   <Dropdown.Menu>
                     {item.items.map((subitem) => {
                       const flatSubUrl = flattenToAppURL(subitem.url);
+                      const subItemID = subitem.title.split(' ').join('-').toLowerCase();
                       return (
                         <Dropdown.Item key={flatSubUrl}>
                           <div className="secondLevel-wrapper">
                             <Link
+                              id={subItemID}
                               to={flatSubUrl === '' ? '/' : flatSubUrl}
                               key={flatSubUrl}
                               className={

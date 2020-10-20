@@ -174,7 +174,16 @@ body.has-toolbar-collapsed.has-sidebar-collapsed {
     }
   }
 
-  @media (max-width: @largestSmallMonitor + @offset) {
+  @media only screen and (max-width: 1380px) {
+    .navigation {
+      .hamburger-wrapper.mobile.only {
+        display: block!important;
+      }
+      .ui.menu.large.screen.only {
+        display: none!important;
+      }
+    }
+
     .ui.pointing.secondary.stackable.open.menu {
       display: flex;
       flex-direction: column;
