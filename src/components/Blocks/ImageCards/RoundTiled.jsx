@@ -29,10 +29,8 @@ export const Card = (props) => {
         <>
           <Link to={link}>
             <img src={thumbUrl(getPath(attachedimage))} alt={title} />
+            <h5>{title}</h5>
           </Link>
-          <h5>
-            <Link to={link}>{title}</Link>
-          </h5>
         </>
       ) : (
         <>
