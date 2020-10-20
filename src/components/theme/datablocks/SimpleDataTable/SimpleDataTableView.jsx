@@ -96,7 +96,7 @@ const SimpleDataTableView = (props) => {
             ''
           )}
           <Table.Body>
-            {row_size > 0 && Array(row_size)
+            {Array(Math.max(0, row_size))
               .fill()
               .map((_, i) => (
                 <Table.Row key={i}>
