@@ -33,6 +33,7 @@ function Treemap(props) {
     font: {
       family: settings.chartLayoutFontFamily || "'Roboto', sans-serif",
     },
+    margin: { b: 10, l: 10, pad: 0, r: 10, t: 10 },
   };
 
   let { connected_data_parameters, provider_data = {}, data = {} } = props;
@@ -59,7 +60,7 @@ function Treemap(props) {
   ];
 
   return (
-    <div>
+    <div className="treemap-chart">
       <Placeholder
         getDOMElement={(val) => {
           return val?.el;
