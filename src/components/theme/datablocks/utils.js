@@ -24,6 +24,7 @@ export function filterDataByParameters(providerData, parameters) {
       .map((k) => k.toLowerCase())
       .includes(index);
   });
+
   if (!filter) return providerData;
 
   let {

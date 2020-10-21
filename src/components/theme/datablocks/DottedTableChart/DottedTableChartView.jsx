@@ -1,11 +1,17 @@
 import React from 'react';
 import { Table } from 'semantic-ui-react';
 import { connectBlockToProviderData } from 'volto-datablocks/hocs';
+import { filterDataByParameters, connectToDataParameters } from '../utils';
+import { compose } from 'redux';
 import { serializeNodes } from 'volto-slate/editor/render';
 import './styles.less';
 
 const DottedTableChartView = (props) => {
-  const { data, provider_data } = props;
+  const { data, provider_data, connected_data_parameters } = props;
+
+  const filteredData =
+    filterDataByParameters(provider_data, connected_data_parameters) || {};
+
   const {
     description,
     column_data,
@@ -16,20 +22,20 @@ const DottedTableChartView = (props) => {
   } = data;
 
   const possible_columns = Array.from(
-    new Set(provider_data?.[column_data]),
+    new Set(filteredData?.[column_data]),
   ).sort();
-  const possible_rows = Array.from(new Set(provider_data?.[row_data])).sort();
+  const possible_rows = Array.from(new Set(filteredData?.[row_data])).sort();
 
   const data_tree = React.useMemo(() => {
     const res = {};
-    (provider_data?.[column_data] || []).forEach((cv, i) => {
+    (filteredData?.[column_data] || []).forEach((cv, i) => {
       res[cv] = {
         ...res[cv],
-        [provider_data?.[row_data]?.[i]]: provider_data?.[size_data]?.[i],
+        [filteredData?.[row_data]?.[i]]: filteredData?.[size_data]?.[i],
       };
     });
     return res;
-  }, [column_data, provider_data, row_data, size_data]);
+  }, [column_data, filteredData, row_data, size_data]);
 
   const renderDots = (value, color) => {
     const dotValue = parseFloat(dot_value);
@@ -55,7 +61,7 @@ const DottedTableChartView = (props) => {
         {description ? serializeNodes(description) : ''}
       </div>
       <div className="inner">
-        {!!provider_data && column_data && row_data && size_data ? (
+        {!!filteredData && column_data && row_data && size_data ? (
           <Table
             textAlign="left"
             striped={data.striped}
@@ -91,4 +97,7 @@ const DottedTableChartView = (props) => {
   );
 };
 
-export default connectBlockToProviderData(DottedTableChartView);
+export default compose(
+  connectBlockToProviderData,
+  connectToDataParameters,
+)(DottedTableChartView);
