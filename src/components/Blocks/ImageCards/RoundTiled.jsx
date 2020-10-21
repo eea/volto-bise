@@ -4,17 +4,11 @@ import { settings } from '~/config';
 import { flattenToAppURL } from '@plone/volto/helpers';
 import React, { useEffect } from 'react';
 import { Grid } from 'semantic-ui-react';
+import { clone } from 'lodash';
 
-export const getPath = (url) =>
-  url.startsWith('http') ? new URL(url).pathname : url;
-
-// TODO: the approach for the URL path generation is not correct, it does not
-// work on local;
-
-export const thumbUrl = (url) =>
-  (url || '').includes(settings.apiPath)
-    ? `${flattenToAppURL(url.replace('/api', ''))}/@@images/image/preview`
-    : `${url.replace('/api', '')}/@@images/image/preview`;
+export const thumbUrl = (url) => {
+  return url.replace(/\@\@images(.*)$/, '@@images/image/large');
+}
 
 export const Card = (props) => {
   const { title, link, attachedimage } = props; // text,
@@ -28,16 +22,16 @@ export const Card = (props) => {
       {link ? (
         <>
           <Link to={link}>
-            <img src={thumbUrl(getPath(attachedimage))} alt={title} />
+            <img src={thumbUrl(attachedimage)} alt={title} />
             <h5>{title}</h5>
           </Link>
         </>
       ) : (
-        <>
-          <img src={thumbUrl(getPath(attachedimage))} alt={title} />
-          <h5>{title}</h5>
-        </>
-      )}
+          <>
+            <img src={thumbUrl(attachedimage)} alt={title} />
+            <h5>{title}</h5>
+          </>
+        )}
     </div>
   );
 };
