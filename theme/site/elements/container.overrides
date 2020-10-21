@@ -184,13 +184,13 @@ body.has-toolbar-collapsed.has-sidebar-collapsed {
       }
     }
 
-    .ui.pointing.secondary.stackable.open.menu {
+    .navigation .ui.pointing.secondary.stackable.open.menu {
       display: flex;
       flex-direction: column;
       margin-top: 17px;
-      margin-right: -1rem !important;
-      margin-left: -1rem;
-      background-color: #f7f7f7;
+      margin-right: 0 !important;
+      margin-left: 0;
+      background-color: #f6ffed;
       overflow-x: auto;
       overflow-y: auto;
       position: fixed;
@@ -199,7 +199,7 @@ body.has-toolbar-collapsed.has-sidebar-collapsed {
       width: 100%;
       max-width: 380px;
       right: 0;
-      top: 58px;
+      top: 63px;
       z-index: 999;
       height: 95vh;
       box-shadow: -5px 5px 17px -7px rgba(0,0,0,0.3);
@@ -225,7 +225,7 @@ body.has-toolbar-collapsed.has-sidebar-collapsed {
         }
 
         &:hover {
-          background: #f7f7f7!important;
+          background: transparent!important;
           border-color: transparent!important;
           >.menu {
             display: none!important;
@@ -236,7 +236,7 @@ body.has-toolbar-collapsed.has-sidebar-collapsed {
           position: relative;
           top: 10px !important;
           margin: 0;
-          background-color: #f7f7f7!important;
+          background-color: transparent!important;
           border: none!important;
           width: 100%;
           .submenu {
@@ -246,9 +246,9 @@ body.has-toolbar-collapsed.has-sidebar-collapsed {
 
         > i.dropdown.icon {
           display: block;
-          font-size: 20px;
+          font-size: 30px;
           position: absolute;
-          top: 15px;
+          top: 10px;
           right: 15px;
           z-index: 999;
         }
@@ -271,20 +271,14 @@ body.has-toolbar-collapsed.has-sidebar-collapsed {
     }
   }
 
+  @media only screen and (max-width: 991px) {
+    .navigation .ui.pointing.secondary.stackable.open.menu {
+      top: 81px;
+    }
+  }
+
   @media (max-width: @largestTabletScreen + @offset) {
     /* .contentWidthMedia(@tabletWidth, @tabletGutter, -30px); */
-
-    .image-gallery-left-nav {
-      left: unset;
-      right: 5rem;
-      bottom: -3.5rem;
-    }
-
-    .image-gallery-right-nav {
-      left: unset;
-      right: 1rem;
-      bottom: -3.5rem;
-    }
 
     .searchInput {
       width: 0 !important;

@@ -26,7 +26,7 @@
     border-top-right-radius: 4px;
 
     @media (max-width: 600px) {
-      height: 550px;
+      height: 450px;
     }
 
     .slider-slide {
@@ -40,11 +40,16 @@
         position: absolute;
         bottom: 35%;
         max-width: 600px;
+        width: 100%;
         color: white;
         text-align: left;
 
         @media (max-width: 600px) {
-          bottom: 40%;
+          bottom: 50%;
+        }
+
+        @media (max-width: 480px) {
+          max-width: 390px;
         }
 
         .slide-title {
@@ -54,21 +59,19 @@
           font-weight: bold;
           line-height: 1.2;
 
-          @media (max-width: 600px) {
+          @media (max-width: 768px) {
             margin-bottom: 2rem;
-            font-size: 2rem;
+            font-size: 40px;
           }
         }
 
         .slide-description {
-          max-width: 540px;
           font-size: 24px;
           font-weight: 200;
           line-height: 1.2;
 
-          @media (max-width: 600px) {
-            font-size: 1rem;
-            font-weight: 400;
+          @media (max-width: 768px) {
+            font-size: 18px;
           }
         }
       }
@@ -94,42 +97,50 @@
 
   }
 
-  .image-gallery-left-nav {
+  .image-gallery-left-nav,
+  .image-gallery-right-nav {
     top: unset;
     bottom: -2.5rem;
+
+    @media screen and (max-width: 600px) {
+      bottom: 100px!important;
+    }
+
+    @media screen and (max-width: 480px) {
+      bottom: 140px!important;
+    }
+  }
+
+  .image-gallery-left-nav {
     left: 6em;
 
     @media screen and (max-width: 1500px) {
       left: 3em;
     }
 
-    @media screen and (max-width: 1100px) {
-      left: 1em;
+    @media screen and (max-width: 991px) {
+      left: 2em;
     }
 
-    @media (max-width: 600px) {
-      bottom: 0.5em !important;
+    @media screen and (max-width: 768px) {
+      left: 15px;
     }
   }
 
   .image-gallery-right-nav {
-    top: unset;
-    right: unset;
-    bottom: -2.5rem;
     left: 7em;
 
     @media screen and (max-width: 1500px) {
       left: 4em;
     }
 
-    @media screen and (max-width: 1100px) {
-      left: 2em;
+    @media screen and (max-width: 991px) {
+      left: 3em;
     }
 
-    @media (max-width: 600px) {
-      bottom: 0.5em !important;
+    @media screen and (max-width: 768px) {
+      left: 45px;
     }
-
   }
 
   .image-gallery-fullscreen-button:hover::before,
