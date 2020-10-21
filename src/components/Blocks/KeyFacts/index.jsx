@@ -7,7 +7,7 @@ export default (config) => {
     id: 'keyfacts',
     title: 'Key Facts',
     icon: codeSVG,
-    group: 'bise',
+    group: 'custom_addons',
     view: KeyFactsView,
     edit: KeyFactsEdit,
     restricted: false,

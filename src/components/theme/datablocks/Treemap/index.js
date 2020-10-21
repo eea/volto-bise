@@ -7,7 +7,7 @@ export default (config) => {
     id: 'treemapChart',
     title: 'Treemap',
     icon: tableSVG,
-    group: 'bise',
+    group: 'custom_addons',
     view: TreemapView,
     edit: TreemapEdit,
     restricted: false,

@@ -7,7 +7,7 @@ export default (config) => {
     id: 'dottedTableChart',
     title: 'Dotted Table Chart',
     icon: tableSVG,
-    group: 'bise',
+    group: 'custom_addons',
     view: DottedTableChartView,
     edit: DottedTableChartEdit,
     restricted: false,

@@ -17,7 +17,7 @@ export default (config) => {
     view: ConnectedChartBlockView,
     edit: ConnectedChartBlockEdit,
     icon: chartIcon,
-    group: 'bise',
+    group: 'custom_addons',
     sidebarTab: 1,
   };
 
@@ -27,7 +27,7 @@ export default (config) => {
     view: DataQueryFilterView,
     edit: DataQueryFilterEdit,
     icon: chartIcon,
-    group: 'bise',
+    group: 'custom_addons',
     sidebarTab: 1,
   };
 

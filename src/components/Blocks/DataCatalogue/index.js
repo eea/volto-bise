@@ -7,7 +7,7 @@ export default (config) => {
     id: 'biseCatalogue',
     title: 'Search Catalogue',
     icon: codeSVG,
-    group: 'bise',
+    group: 'custom_addons',
     view: DataCatalogueView,
     edit: DataCatalogueEdit,
     restricted: false,

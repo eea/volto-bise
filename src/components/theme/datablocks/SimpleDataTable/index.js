@@ -7,7 +7,7 @@ export default (config) => {
     id: 'simpleDataConnectedTable',
     title: 'Data Table',
     icon: tableSVG,
-    group: 'bise',
+    group: 'custom_addons',
     view: SimpleDataTableView,
     edit: SimpleDataTableEdit,
     restricted: false,

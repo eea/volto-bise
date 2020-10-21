@@ -105,7 +105,6 @@ export default (config) => {
     'trial.discomap.eea.europa.eu',
     'marine.discomap.eea.europa.eu',
   ];
-  config.blocks.groupBlocksOrder.push({ id: 'bise', title: 'BISE specific' });
 
   config.views = {
     ...config.views,

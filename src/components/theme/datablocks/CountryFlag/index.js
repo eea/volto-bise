@@ -7,7 +7,7 @@ export default (config) => {
     id: 'countryFlag',
     title: 'Country Flag',
     icon: paintSVG,
-    group: 'bise',
+    group: 'custom_addons',
     view: CountryFlagView,
     edit: CountryFlagEdit,
     restricted: false,

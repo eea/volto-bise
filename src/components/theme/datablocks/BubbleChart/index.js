@@ -7,7 +7,7 @@ export default (config) => {
     id: 'bubbleChart',
     title: 'Bubble Chart',
     icon: paintSVG,
-    group: 'bise',
+    group: 'custom_addons',
     view: BubbleChartView,
     edit: BubbleChartEdit,
     restricted: false,

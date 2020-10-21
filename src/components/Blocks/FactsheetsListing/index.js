@@ -7,7 +7,7 @@ export default (config) => {
     id: 'biseFactsheetListing',
     title: 'Factsheets Listing',
     icon: codeSVG,
-    group: 'bise',
+    group: 'custom_addons',
     view: FactsheetsListingView,
     edit: FactsheetsListingEdit,
     restricted: false,

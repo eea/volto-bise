@@ -8,7 +8,7 @@ export default (config) => {
     id: 'connectedmap',
     title: 'Connected Map',
     icon: codeSVG,
-    group: 'bise',
+    group: 'custom_addons',
     view: ConnectedMapView,
     edit: ConnectedMapEdit,
     restricted: false,

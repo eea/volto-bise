@@ -7,7 +7,7 @@ export default (config) => {
     id: 'maesviewer',
     title: 'MAES Viewer',
     icon: codeSVG,
-    group: 'bise',
+    group: 'custom_addons',
     view: MaesViewerView,
     edit: MaesViewerEdit,
     restricted: false,

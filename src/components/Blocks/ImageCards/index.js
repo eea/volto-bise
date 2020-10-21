@@ -8,7 +8,7 @@ export default (config) => {
     id: 'imagecards',
     title: 'Image Cards',
     icon: codeSVG,
-    group: 'bise',
+    group: 'custom_addons',
     view: ImageCardsView,
     edit: ImageCardsEdit,
     restricted: false,
