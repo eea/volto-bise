@@ -10,13 +10,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 import 'react-image-gallery/styles/css/image-gallery.css';
 
-export const getPath = (url) =>
-  url.startsWith('http') ? new URL(url).pathname : url;
-
-export const fixUrl = (url) =>
-  (url || '').includes(settings.apiPath)
-    ? `${flattenToAppURL(url.replace('/api', ''))}/@@images/image`
-    : `${url.replace('/api', '')}/@@images/image`;
+import { getImageUrlFromValue } from './utils';
 
 class Carousel extends Component {
   componentDidMount() {
@@ -31,7 +25,7 @@ class Carousel extends Component {
           height={600}
           effect="blur"
           style={{
-            backgroundImage: `url(${fixUrl(getPath(card.attachedimage))})`,
+            backgroundImage: `url(${getImageUrlFromValue(card.attachedimage)})`,
           }}
           width={'100%'}
           visibleByDefault={true}

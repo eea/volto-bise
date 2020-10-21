@@ -5,10 +5,7 @@ import { flattenToAppURL } from '@plone/volto/helpers';
 import React, { useEffect } from 'react';
 import { Grid } from 'semantic-ui-react';
 import { clone } from 'lodash';
-
-export const thumbUrl = (url) => {
-  return url.replace(/\@\@images(.*)$/, '@@images/image/large');
-}
+import { getImageUrlFromValue } from './utils';
 
 export const Card = (props) => {
   const { title, link, attachedimage } = props; // text,
@@ -22,13 +19,13 @@ export const Card = (props) => {
       {link ? (
         <>
           <Link to={link}>
-            <img src={thumbUrl(attachedimage)} alt={title} />
+            <img src={getImageUrlFromValue(attachedimage)} alt={title} />
             <h5>{title}</h5>
           </Link>
         </>
       ) : (
           <>
-            <img src={thumbUrl(attachedimage)} alt={title} />
+            <img src={getImageUrlFromValue(attachedimage)} alt={title} />
             <h5>{title}</h5>
           </>
         )}
