@@ -54,7 +54,7 @@ const Footer = ({ intl }) => (
                   </Link>
                 </li>
                 <li>
-                  <Link className="item" to="/">
+                  <Link className="item" to="/legal-and-privacy-notice">
                     <FormattedMessage
                       id="legal_notice"
                       defaultMessage="Privacy and legal notice"
@@ -94,8 +94,7 @@ const Footer = ({ intl }) => (
                   <a href="https://www.eea.europa.eu/" target="_blank">
                     European Environment Agency.
                   </a>
-                </p>
-                {' '}
+                </p>{' '}
               </div>
               <div>
                 <a href="https://ec.europa.eu/">

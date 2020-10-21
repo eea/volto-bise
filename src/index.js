@@ -9,6 +9,7 @@ import {
   installTabsBlockExtensions,
   installDataComponents,
   installImageCards,
+  installFactsheetListingView,
 } from './components';
 
 import NumberWidget from './components/Widgets/Number';
@@ -169,5 +170,6 @@ export default (config) => {
     installDataComponents,
     installImageCards,
     installStyles,
+    installFactsheetListingView,
   ].reduce((acc, apply) => apply(acc), config);
 };

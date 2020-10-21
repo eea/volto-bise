@@ -11,6 +11,7 @@ export MaesViewerEdit from './Blocks/MaesViewer/MaesViewerEdit';
 export MaesViewerView from './Blocks/MaesViewer/MaesViewerView';
 export TocNavigationView from './theme/TocNavigationView/TocNavigationView';
 
+export installFactsheetListingView from './Blocks/FactsheetsListing';
 export installBubbleChart from './theme/datablocks/BubbleChart';
 export installConnectedMap from './Blocks/ConnectedMap';
 // export installDataCatalogue from './Blocks/DataCatalogue';
