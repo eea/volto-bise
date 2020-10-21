@@ -5,9 +5,10 @@ import DataCatalogueView from './DataCatalogueView';
 
 const DataCatalogueEdit = (props) => {
   const { selected, block, data, onChangeBlock } = props;
+  console.log('content', props);
   return (
     <div>
-      <DataCatalogueView {...props} />
+      {/* <DataCatalogueView {...props} /> */}
       <SidebarPortal selected={selected}>
         <InlineForm
           schema={schema}
