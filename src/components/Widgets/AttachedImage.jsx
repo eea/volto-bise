@@ -14,7 +14,7 @@ import Dropzone from 'react-dropzone';
 import React, { Component } from 'react';
 import { Icon as VoltoIcon } from '@plone/volto/components';
 import { defineMessages } from 'react-intl';
-import { map } from 'lodash';
+import { map, compact } from 'lodash';
 import { flattenToAppURL, getBaseUrl } from '@plone/volto/helpers';
 
 import imageBlockSVG from '@plone/volto/components/manage/Blocks/Image/block-image.svg';
@@ -53,13 +53,22 @@ const messages = defineMessages({
   },
 });
 
-export const oldThumbUrl = (url) =>
-  (url || '').includes(settings.apiPath)
+export const thumbUrlFromUrl = (url) => {
+  // older code:
+  const rv = (url || '').includes(settings.apiPath)
     ? `${flattenToAppURL(url)}/@@images/image/thumb`
     : url;
 
-export const thumbUrl = (content) => {
+  // recent code:
+  return rv.replace(/@@images(.*)$/, '/@@images/image/thumb');
+}
+
+export const thumbUrlFromContent = (content) => {
   return content?.image?.scales?.thumb?.download || '';
+};
+
+export const valueUrlFromContent = (content) => {
+  return content?.image?.scales?.large?.download || '';
 };
 
 export class UnconnectedAttachedImageWidget extends Component {
@@ -70,6 +79,7 @@ export class UnconnectedAttachedImageWidget extends Component {
     super(props);
     this.state = {
       uploading: false,
+      errorMessage: null,
     };
 
     this.onDrop = this.onDrop.bind(this);
@@ -89,16 +99,16 @@ export class UnconnectedAttachedImageWidget extends Component {
     ) {
       this.setState({
         uploading: false,
+        errorMessage: null,
       });
 
-      const url = this.props.content['@id'];
-      this.props.onChange(this.props.id, flattenToAppURL(url));
+      this.props.onChange?.(this.props.id, valueUrlFromContent(this.props.content));
     }
   }
 
-  onDrop(acceptedFiles) {
+  onDrop = (acceptedFiles) => {
     this.setState((state) => {
-      return { ...state, uploading: true };
+      return { ...state, uploading: true, errorMessage: null };
     });
 
     const promises = [];
@@ -107,6 +117,10 @@ export class UnconnectedAttachedImageWidget extends Component {
       const p = readAsDataURL(file).then((data) => {
         const fields = data.match(/^data:(.*);(.*),(.*)$/);
         // console.log('fields', fields);
+
+        if (fields.length !== 4) {
+          return "Invalid image data";
+        }
 
         return this.props.createContent(getBaseUrl(this.props.pathname), {
           '@type': 'Image',
@@ -124,7 +138,12 @@ export class UnconnectedAttachedImageWidget extends Component {
 
     return Promise.all(promises).then(() => {
       this.setState((state) => {
-        return { ...state, uploading: false };
+        return { ...state, uploading: false, errorMessage: null };
+      });
+      this.props.onChange?.(this.props.id, valueUrlFromContent(this.props.content));
+    }, (err) => {
+      this.setState((state) => {
+        return { ...state, uploading: false, errorMessage: err.message };
       });
     });
   }
@@ -179,16 +198,11 @@ export class UnconnectedAttachedImageWidget extends Component {
       required: ['id', 'title'],
     };
 
-    // console.log('o', { value, tu: oldThumbUrl(value), fu: flattenToAppURL(oldThumbUrl(value) || ''), pathname, content, request });
-
-
-    // console.log('d', { x: content.image.scales.thumb.download });
-
     return (
       <Form.Field
         inline
         required={required}
-        error={(error || []).length > 0}
+        error={(this.state.errorMessage || []).length > 0}
         className={description ? 'help text' : 'text'}
         id={`${fieldSet || 'field'}-${id}`}
       >
@@ -226,39 +240,35 @@ export class UnconnectedAttachedImageWidget extends Component {
                 </div>
               )}
 
-              {value ? (
-                <Item>
-                  <Item.Image src={flattenToAppURL(thumbUrl(content))} />
-                </Item>
-              ) : (
-                <div>
-                  <Dropzone onDrop={this.onDrop} className="dropzone">
-                    {({ getRootProps, getInputProps }) => {
-                      return (
-                        <Message {...getRootProps()}>
-                          {this.state.uploading && (
-                            <Dimmer active>
-                              <Loader indeterminate>Uploading</Loader>
-                            </Dimmer>
-                          )}
+              <Dropzone onDrop={this.onDrop} className="dropzone">
+                {({ getRootProps, getInputProps }) => {
+                  return (
+                    <Message {...getRootProps()}>
+                      {this.state.uploading ? (
+                        <Dimmer active>
+                          <Loader indeterminate>Uploading</Loader>
+                        </Dimmer>
+                      ) : (value && (
+                        <div className="centered">
+                          <img src={thumbUrlFromUrl(value)} alt="" />
+                        </div>
+                      ))}
 
-                          <center>
-                            <img src={imageBlockSVG} alt="" />
-                            <input {...getInputProps()} />
-                            <div className="discreet">Click or drag file here</div>
-                          </center>
-                        </Message>
-                      );
-                    }}
-                  </Dropzone>
-                </div>
-              )}
+                      <div className="centered">
+                        { !value && <img src={imageBlockSVG} alt="" /> }
+                        <input {...getInputProps()} />
+                        <div className="discreet">Click or drag file here</div>
+                      </div>
+                    </Message>
+                  );
+                }}
+              </Dropzone>
 
-              {map(error, (message) => (
-                <Label key={message} basic color="red" pointing>
-                  {message}
+              {this.state.errorMessage && this.state.errorMessage && (
+                <Label basic color="red" pointing>
+                  {this.state.errorMessage}
                 </Label>
-              ))}
+              )}
               {icon && iconAction && (
                 <button onClick={iconAction}>
                   <VoltoIcon name={icon} size="18px" />
