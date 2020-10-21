@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table } from 'semantic-ui-react';
+import { Popup, Table } from 'semantic-ui-react';
 import { connectBlockToProviderData } from 'volto-datablocks/hocs';
 import { filterDataByParameters, connectToDataParameters } from '../utils';
 import { compose } from 'redux';
@@ -79,10 +79,22 @@ const DottedTableChartView = (props) => {
             <Table.Body>
               {possible_rows.map((row, i) => (
                 <Table.Row key={`${row}-${i}`}>
-                  <Table.HeaderCell key="first-cell" style={{ color: row_colors?.[row] }}>{row}</Table.HeaderCell>
+                  <Table.HeaderCell
+                    key="first-cell"
+                    style={{ color: row_colors?.[row] }}
+                  >
+                    {row}
+                  </Table.HeaderCell>
                   {possible_columns.map((col, y) => (
                     <Table.Cell verticalAlign="top" key={`${col}-${y}`}>
-                      {renderDots(data_tree[col][row], row_colors?.[row])}
+                      <Popup
+                        content={`Value: ${data_tree[col][row]}`}
+                        trigger={
+                          <span>
+                            {renderDots(data_tree[col][row], row_colors?.[row])}
+                          </span>
+                        }
+                      />
                     </Table.Cell>
                   ))}
                 </Table.Row>
