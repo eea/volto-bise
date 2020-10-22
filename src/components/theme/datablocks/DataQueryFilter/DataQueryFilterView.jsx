@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Select from 'react-select';
+import loadable from '@loadable/component';
 import {
   Option,
   DropdownIndicator,
@@ -9,6 +9,8 @@ import {
 } from '@plone/volto/components/manage/Widgets/SelectStyling';
 import { setConnectedDataParameters } from 'volto-datablocks/actions';
 import { connectBlockToProviderData } from 'volto-datablocks/hocs';
+
+const Select = loadable(() => import('react-select'));
 
 const ViewSelect = (props) => {
   const { data = {}, id, provider_data = {} } = props;
