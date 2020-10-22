@@ -1,15 +1,17 @@
 import cx from 'classnames';
 import React, { Component } from 'react';
 
+import loadable from '@loadable/component';
+
 import { Placeholder } from 'semantic-ui-react';
 import { settings } from '~/config';
 import { flattenToAppURL } from '@plone/volto/helpers';
 
-import loadable from '@loadable/component';
-const ImageGallery = loadable(() => import('react-image-gallery'));
-const ImageGalleryCss = loadable.lib(() => import('react-image-gallery/styles/css/image-gallery.css'));
-
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+
+import 'react-image-gallery/styles/css/image-gallery.css';
+
+const ImageGallery = loadable(() => import('react-image-gallery'));
 
 export const getPath = (url) =>
   url.startsWith('http') ? new URL(url).pathname : url;
@@ -43,15 +45,15 @@ class Carousel extends Component {
           }
         />
         <div className="slide-overlay" />
-          <div className="ui container">
-            <div className="slide-body">
-              <div className="slide-title">{card.title || ''}</div>
-              <div
-                className="slide-description"
-                dangerouslySetInnerHTML={{ __html: card.text?.data || '' }}
-              />
-            </div>
+        <div className="ui container">
+          <div className="slide-body">
+            <div className="slide-title">{card.title || ''}</div>
+            <div
+              className="slide-description"
+              dangerouslySetInnerHTML={{ __html: card.text?.data || '' }}
+            />
           </div>
+        </div>
       </div>
     );
   };
@@ -91,22 +93,16 @@ class Carousel extends Component {
           })}
         >
           <div className="slider-wrapper">
-            <ImageGalleryCss>
-              {() => {
-                return (
-                  <ImageGallery
-                    className="mainSlider"
-                    items={images}
-                    showFullscreenButton={false}
-                    showPlayButton={false}
-                    autoPlay
-                    renderItem={this.renderSlide}
-                    slideDuration={300}
-                    slideInterval={100000}
-                  />
-                );
-              }}
-            </ImageGalleryCss>
+            <ImageGallery
+              className="mainSlider"
+              items={images}
+              showFullscreenButton={false}
+              showPlayButton={false}
+              autoPlay
+              renderItem={this.renderSlide}
+              slideDuration={300}
+              slideInterval={100000}
+            />
           </div>
         </div>
       </div>
