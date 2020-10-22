@@ -63,8 +63,8 @@ const RoundTiled = ({ data }) => {
           <h2>{title}</h2>
           <div className="cards">
             <Grid>
-              {(cards || []).map((card) => (
-                <Grid.Column mobile={12} tablet={6} computer={3}>
+              {(cards || []).map((card, i) => (
+                <Grid.Column key={i} mobile={12} tablet={6} computer={3}>
                   <Card {...card} />
                 </Grid.Column>
               ))}

@@ -93,6 +93,7 @@ class Navigation extends Component {
         getBaseUrl(nextProps.pathname),
         settings.navDepth,
       );
+      this.closeMobileMenu();
     }
 
     // Hide submenu on route change

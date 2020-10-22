@@ -42,7 +42,7 @@ class Carousel extends Component {
           }
         />
         <div className="slide-overlay" />
-          <div class="ui container">
+          <div className="ui container">
             <div className="slide-body">
               <div className="slide-title">{card.title || ''}</div>
               <div
