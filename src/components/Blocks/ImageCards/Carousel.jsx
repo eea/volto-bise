@@ -5,10 +5,11 @@ import { Placeholder } from 'semantic-ui-react';
 import { settings } from '~/config';
 import { flattenToAppURL } from '@plone/volto/helpers';
 
-import ImageGallery from 'react-image-gallery';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import loadable from '@loadable/component';
+const ImageGallery = loadable(() => import('react-image-gallery'));
+const ImageGalleryCss = loadable.lib(() => import('react-image-gallery/styles/css/image-gallery.css'));
 
-import 'react-image-gallery/styles/css/image-gallery.css';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 export const getPath = (url) =>
   url.startsWith('http') ? new URL(url).pathname : url;
@@ -90,16 +91,22 @@ class Carousel extends Component {
           })}
         >
           <div className="slider-wrapper">
-            <ImageGallery
-              className="mainSlider"
-              items={images}
-              showFullscreenButton={false}
-              showPlayButton={false}
-              autoPlay
-              renderItem={this.renderSlide}
-              slideDuration={300}
-              slideInterval={100000}
-            />
+            <ImageGalleryCss>
+              {() => {
+                return (
+                  <ImageGallery
+                    className="mainSlider"
+                    items={images}
+                    showFullscreenButton={false}
+                    showPlayButton={false}
+                    autoPlay
+                    renderItem={this.renderSlide}
+                    slideDuration={300}
+                    slideInterval={100000}
+                  />
+                );
+              }}
+            </ImageGalleryCss>
           </div>
         </div>
       </div>

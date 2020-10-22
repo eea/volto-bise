@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import 'react-image-gallery/styles/css/image-gallery.css';
+import loadable from '@loadable/component';
+const ImageGallery = loadable(() => import('react-image-gallery'));
+const ImageGalleryCss = loadable.lib(() => import('react-image-gallery/styles/css/image-gallery.css'));
 
-import ImageGallery from 'react-image-gallery';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Placeholder } from 'semantic-ui-react';
 import { getBasePath } from '~/helpers';
@@ -56,16 +57,20 @@ class HomepageSlider extends Component {
   render() {
     return (
       <div className="slider-wrapper">
-        <ImageGallery
-          className="mainSlider"
-          items={images}
-          showFullscreenButton={false}
-          showPlayButton={false}
-          autoPlay
-          renderItem={this.renderSlide}
-          slideDuration={300}
-          slideInterval={10000}
-        />
+        <ImageGalleryCss>
+          {() => (
+            <ImageGallery
+              className="mainSlider"
+              items={images}
+              showFullscreenButton={false}
+              showPlayButton={false}
+              autoPlay
+              renderItem={this.renderSlide}
+              slideDuration={300}
+              slideInterval={10000}
+            />
+          )}
+        </ImageGalleryCss>
       </div>
     );
   }
