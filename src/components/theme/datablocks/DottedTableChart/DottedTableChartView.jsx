@@ -65,7 +65,7 @@ const DottedTableChartView = (props) => {
           <Table
             textAlign="left"
             striped={data.striped}
-            className={`${data.bordered ? 'no-borders' : ''}
+            className={`unstackable ${data.bordered ? 'no-borders' : ''}
     ${data.compact_table ? 'compact-table' : ''}`}
           >
             <Table.Header>

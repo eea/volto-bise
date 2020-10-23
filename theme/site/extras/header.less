@@ -1,10 +1,115 @@
 /*-------------------
         Header
 --------------------*/
-.tools-search-wrapper .ui.input input {
-  width: 70px !important;
+// .tools-search-wrapper .ui.input input {
+//   width: 70px !important;
+// }
+//
+// .tools-search-wrapper svg.icon {
+//   color: @lightGreenColor;
+// }
+
+
+/*-------------------
+    Sticky header
+--------------------*/
+.ui.basic.segment.header-wrapper.sticky-header {
+  position: fixed !important;
+  right: auto;
+  left: 0;
+  top: 0;
+  z-index: 1030;
+  min-height: 60px;
+  width: 100%;
+  max-width: 100vw;
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-width: 0 1px 1px 1px;
+
+  .ui.vertical.segment.breadcrumbs {
+    top: 80px;
+  }
 }
 
-.tools-search-wrapper svg.icon {
-  color: @lightGreenColor;
+@media only screen and (max-width: 1654px) {
+  .header-bg {
+    margin-top: 82px!important;
+  }
+
+  body.has-toolbar.has-sidebar {
+    .ui.basic.segment.header-wrapper.sticky-header {
+      width: calc(100% - 455px);
+      left: 80px;
+    }
+  }
+
+  body.has-toolbar.has-sidebar-collapsed {
+    .ui.basic.segment.header-wrapper.sticky-header {
+      width: calc(100% - 100px);
+      left: 80px;
+    }
+  }
+
+  body.has-toolbar:not(.has-sidebar):not(.has-sidebar-collapsed) {
+    .ui.basic.segment.header-wrapper.sticky-header{
+      width: calc(100% - 80px);
+      left: 80px;
+    }
+  }
+
+  body.has-toolbar-collapsed.has-sidebar {
+    .ui.basic.segment.header-wrapper.sticky-header {
+      width: calc(100% - 395px);
+      left: 20px;
+    }
+  }
+
+  body.has-toolbar-collapsed.has-sidebar-collapsed {
+    .ui.basic.segment.header-wrapper.sticky-header {
+      width: calc(100% - 40px);
+      left: 20px;
+    }
+  }
+
+  body.has-toolbar-collapsed:not(.has-sidebar):not(.has-sidebar-collapsed) {
+    .ui.basic.segment.header-wrapper.sticky-header{
+      width: calc(100% - 20px);
+      left: 20px;
+    }
+  }
+}
+
+
+
+@media only screen and (max-width: 767px) {
+  body.has-toolbar-collapsed .sidebar-container {
+    top: 103px;
+  }
+
+  body.has-toolbar .sidebar-container {
+    top: 183px;
+    bottom: 0;
+  }
+
+  body.has-toolbar,
+  body.has-toolbar-collapsed {
+    .ui.basic.segment.header-wrapper.sticky-header {
+      width: 100% !important;
+      left: 0 !important;
+      right: 0;
+      border-top: 1px solid #eee;
+    }
+  }
+
+  body.has-toolbar {
+    .ui.basic.segment.header-wrapper.sticky-header {
+      top: 100px !important;
+    }
+  }
+
+  body.has-toolbar-collapsed {
+    .ui.basic.segment.header-wrapper.sticky-header {
+      top: 20px !important;
+    }
+  }
 }

@@ -9,8 +9,9 @@
   padding-top: 0;
 }
 
-#toolbar .toolbar-content {
-  z-index: 6 !important;
+#toolbar,
+#sidebar {
+  z-index: 1500 !important;
 }
 
 .editor-toolbar-wrapper {

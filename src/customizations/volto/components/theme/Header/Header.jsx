@@ -9,6 +9,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Portal } from 'react-portal';
 
+import cx from 'classnames';
+
 import {
   Anontools,
   Logo,
@@ -52,6 +54,20 @@ class Header extends Component {
     token: null,
   };
 
+  componentWillMount() {
+    if (typeof window !== "undefined") {
+      window.addEventListener('resize', this.handleWindowSizeChange);
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowSizeChange);
+  }
+
+  handleWindowSizeChange = () => {
+    this.setState({ width: window.innerWidth });
+  };
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.actualPathName !== this.props.actualPathName) {
       this.setState({
@@ -72,12 +88,22 @@ class Header extends Component {
    * @method render
    * @returns {string} Markup for the component.
    */
+
   render() {
     const defaultHeaderImage = this.props.defaultHeaderImage;
     let headerImageUrl = defaultHeaderImage?.image || defaultHeaderImage;
+    const { width } = this.state;
+    const isStickyHeader = width < 1654;
     return (
       <div>
-        <Segment basic className="header-wrapper" role="banner">
+        <Segment
+           basic
+           role="banner"
+           className={cx('header-wrapper', (isStickyHeader)
+              ? 'sticky-header'
+              : ''
+            )}
+          >
           <Container>
             <div className="header">
               <div className="logo-nav-wrapper">

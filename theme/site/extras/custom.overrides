@@ -12,6 +12,7 @@
   @import 'toolbar';
   @import 'tocnav';
   @import 'tabsview';
+  @import 'header';
   @import 'print';
 
   /* keyfacts block; */
