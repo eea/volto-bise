@@ -4,6 +4,7 @@ import { connectBlockToProviderData } from 'volto-datablocks/hocs';
 import { filterDataByParameters, connectToDataParameters } from '../utils';
 import { compose } from 'redux';
 import { serializeNodes } from 'volto-slate/editor/render';
+import FormattedValue from '../FormattedValue';
 import './styles.less';
 
 const DottedTableChartView = (props) => {
@@ -19,6 +20,8 @@ const DottedTableChartView = (props) => {
     size_data,
     max_dot_count,
     row_colors = {},
+    text_template,
+    specifier,
   } = data;
 
   const possible_columns = Array.from(
@@ -118,7 +121,13 @@ const DottedTableChartView = (props) => {
                   {possible_columns.map((col, y) => (
                     <Table.Cell verticalAlign="top" key={`${col}-${y}`}>
                       <Popup
-                        content={`Value: ${data_tree[col][row]}`}
+                        content={<>
+                          Value: <FormattedValue
+                            textTemplate={text_template}
+                            value={data_tree[col][row]}
+                            specifier={specifier}
+                          />
+                        </>}
                         trigger={
                           <span>
                             {renderDots(data_tree[col][row], row_colors?.[row])}

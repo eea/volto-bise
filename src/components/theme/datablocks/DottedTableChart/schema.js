@@ -1,3 +1,4 @@
+import React from 'react';
 import { settings } from '~/config';
 
 export const DottedTableChartSchema = () => ({
@@ -18,6 +19,8 @@ export const DottedTableChartSchema = () => ({
         'row_data',
         'size_data',
         'max_dot_count',
+        'specifier',
+        'text_template',
       ],
     },
     {
@@ -60,6 +63,25 @@ export const DottedTableChartSchema = () => ({
         available_colors: settings.available_colors,
       },
       options: [],
+    },
+    specifier: {
+      title: 'Tool-tip format specifier',
+      description: (
+        <>
+          See{' '}
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://github.com/d3/d3-3.x-api-reference/blob/master/Formatting.md#d3_format"
+          >
+            D3 format documentation
+          </a>
+        </>
+      ),
+    },
+    text_template: {
+      title: 'Tool-tip text template',
+      description: 'Add suffix/prefix to text. Use {} for value placeholder',
     },
   },
 
