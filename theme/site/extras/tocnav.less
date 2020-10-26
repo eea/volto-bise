@@ -93,13 +93,6 @@
     float: right;
 
     .item {
-      &:not(:last-child) {
-        &:before {
-          top: 6px;
-          height: 70%;
-          background: rgba(34, 36, 38, 0.8);
-        }
-      }
       a {
         font-size: 18px;
         color: @textColor;
@@ -113,5 +106,35 @@
     display: block;
     height: 0;
     clear: both;
+  }
+}
+
+@media only screen and (min-width: 769px) {
+  .table-of-contents.horizontalMenu {
+    .ui.menu {
+      .item {
+        &:not(:last-child) {
+          &:before {
+            top: 6px;
+            height: 70%;
+            background: rgba(34, 36, 38, 0.8);
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .table-of-contents.horizontalMenu {
+    margin-top: 1em;
+    .ui.menu {
+      display: block;
+      float: none;
+      .item {
+        padding-left: 0;
+        display: block;
+      }
+    }
   }
 }
