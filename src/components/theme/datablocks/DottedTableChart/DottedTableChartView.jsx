@@ -40,19 +40,36 @@ const DottedTableChartView = (props) => {
     return res;
   }, [column_data, filteredData, row_data, size_data]);
 
+  // stores the last computed dot size
+  const dotSizeRef = React.useRef();
+
+  const getDotsCountForValue = React.useCallback(
+    (val) => {
+      if (typeof val === 'string') {
+        val = parseFloat(val);
+      }
+      return val / dotSizeRef.current;
+    },
+    [dotSizeRef.current],
+  );
+
   const renderDots = (value, color) => {
-    const dotValue = getDotSize(parseFloat(max_dot_count));
+    const dotValue = (dotSizeRef.current = getDotSize(
+      parseFloat(max_dot_count),
+    ));
     const val = parseFloat(value);
-    const arraySize = Math.ceil(Math.max(val / dotValue, 1));
+    const arraySize = Math.ceil(
+      Math.max(getDotsCountForValue(val) / dotSizeRef.current, 1),
+    );
 
     return (
       <div className="dot-cells">
         {val && dotValue && Math.floor(val / dotValue)
           ? new Array(arraySize)
-            .fill(1)
-            .map((_, i) => (
-              <div key={i} style={{ backgroundColor: color }}></div>
-            ))
+              .fill(1)
+              .map((_, i) => (
+                <div key={i} style={{ backgroundColor: color }}></div>
+              ))
           : ''}
       </div>
     );
@@ -79,8 +96,7 @@ const DottedTableChartView = (props) => {
     if (
       possible_columns.length === 0 ||
       possible_rows.length === 0 ||
-      typeof data_tree[possible_columns[0]][possible_rows[0]] !==
-      'string'
+      typeof data_tree[possible_columns[0]][possible_rows[0]] !== 'string'
     ) {
       return null;
     }
@@ -119,19 +135,38 @@ const DottedTableChartView = (props) => {
                     {row}
                   </Table.HeaderCell>
                   {possible_columns.map((col, y) => (
-                    <Table.Cell verticalAlign="top" key={`${col}-${y}`}>
+                    <Table.Cell
+                      verticalAlign="top"
+                      key={`${col}-${y}`}
+                      style={{
+                        // hack from https://stackoverflow.com/a/3542470/258462
+                        height: '1px',
+
+                        padding: '0',
+                      }}
+                    >
                       <Popup
-                        content={<>
-                          Value: <FormattedValue
-                            textTemplate={text_template}
-                            value={data_tree[col][row]}
-                            specifier={specifier}
-                          />
-                        </>}
+                        content={ // it might happen that the FormattedValue component returns empty string because of the input data
+                          <>
+                            Value:{' '}
+                            <FormattedValue
+                              textTemplate={text_template}
+                              value={data_tree[col][row]}
+                              specifier={specifier}
+                            />
+                          </>
+                        }
                         trigger={
-                          <span>
+                          <div
+                            style={{
+                              // hack from https://stackoverflow.com/a/3542470/258462
+                              height: '100%',
+
+                              padding: '0.78571429em', // value taken from SUIR's collections/table.less (possibly needs to be changed if compact table style is implemented in DottedTableChartView)
+                            }}
+                          >
                             {renderDots(data_tree[col][row], row_colors?.[row])}
-                          </span>
+                          </div>
                         }
                       />
                     </Table.Cell>
@@ -141,8 +176,8 @@ const DottedTableChartView = (props) => {
             </Table.Body>
           </Table>
         ) : (
-            ''
-          )}
+          ''
+        )}
       </div>
     </div>
   );
