@@ -2,14 +2,17 @@ import cx from 'classnames';
 import React, { Component } from 'react';
 
 import loadable from '@loadable/component';
-
 import { Placeholder } from 'semantic-ui-react';
 import { settings } from '~/config';
 import { flattenToAppURL } from '@plone/volto/helpers';
 
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
-import 'react-image-gallery/styles/css/image-gallery.css';
+import { Icon } from '@plone/volto/components';
+// import 'react-image-gallery/styles/css/image-gallery.css';
+import 'react-image-gallery/styles/css/image-gallery-no-icon.css';
+import leftSVG from '@plone/volto/icons/left-key.svg';
+import rightSVG from '@plone/volto/icons/right-key.svg';
 
 const ImageGallery = loadable(() => import('react-image-gallery'));
 
@@ -62,20 +65,33 @@ class Carousel extends Component {
     const { data } = this.props;
     const images = this.props.data.cards || [];
 
-    // renderLeftNav={(onClick, disabled) => (
-    //   <button
-    //     className="image-gallery-left-nav"
-    //     disabled={disabled}
-    //     onClick={onClick}
-    //   />
-    // )}
-    // renderRightNav={(onClick, disabled) => (
-    //   <button
-    //     className="image-gallery-right-nav"
-    //     disabled={disabled}
-    //     onClick={onClick}
-    //   />
-    // )}
+    function renderLeftNav(onClick, disabled) {
+      return (
+        <button
+          type="button"
+          className="image-gallery-custom-left-nav"
+          aria-label="Prev Slide"
+          disabled={disabled}
+          onClick={onClick}
+        >
+          <Icon name={leftSVG} size="55px" color="#fff" />
+        </button>
+      );
+    }
+
+  function renderRightNav(onClick, disabled) {
+    return (
+      <button
+        type="button"
+        className="image-gallery-custom-right-nav"
+        aria-label="Prev Slide"
+        disabled={disabled}
+        onClick={onClick}
+      >
+        <Icon name={rightSVG} size="55px" color="#fff" />
+      </button>
+    );
+  }
 
     return (
       <div
@@ -102,6 +118,8 @@ class Carousel extends Component {
               renderItem={this.renderSlide}
               slideDuration={300}
               slideInterval={100000}
+              renderLeftNav={renderLeftNav}
+              renderRightNav={renderRightNav}
             />
           </div>
         </div>
