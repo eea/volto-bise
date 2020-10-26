@@ -17,7 +17,7 @@ export const DottedTableChartSchema = () => ({
         'column_data',
         'row_data',
         'size_data',
-        'dot_value',
+        'max_dot_count',
       ],
     },
     {
@@ -36,8 +36,8 @@ export const DottedTableChartSchema = () => ({
       widget: 'pick_provider',
       title: 'Data provider',
     },
-    dot_value: {
-      title: 'Dot value',
+    max_dot_count: {
+      title: 'Maximum dot count',
       widget: 'number',
     },
     column_data: {

@@ -17,7 +17,7 @@ const DottedTableChartView = (props) => {
     column_data,
     row_data,
     size_data,
-    dot_value,
+    max_dot_count,
     row_colors = {},
   } = data;
 
@@ -38,7 +38,7 @@ const DottedTableChartView = (props) => {
   }, [column_data, filteredData, row_data, size_data]);
 
   const renderDots = (value, color) => {
-    const dotValue = parseFloat(dot_value);
+    const dotValue = getDotSize(parseFloat(max_dot_count));
     const val = parseFloat(value);
     const arraySize = Math.ceil(Math.max(val / dotValue, 1));
 
@@ -46,14 +46,44 @@ const DottedTableChartView = (props) => {
       <div className="dot-cells">
         {val && dotValue && Math.floor(val / dotValue)
           ? new Array(arraySize)
-              .fill(1)
-              .map((_, i) => (
-                <div key={i} style={{ backgroundColor: color }}></div>
-              ))
+            .fill(1)
+            .map((_, i) => (
+              <div key={i} style={{ backgroundColor: color }}></div>
+            ))
           : ''}
       </div>
     );
   };
+
+  const getMaxValue = React.useCallback(() => {
+    let max = 0;
+    // This loop can be optimized.
+    possible_columns.forEach((x) => {
+      possible_rows.forEach((y) => {
+        if (typeof data_tree[x][y] === 'string') {
+          const num = parseFloat(data_tree[x][y]);
+          max = Math.max(max, num);
+        }
+      });
+    });
+    return max;
+  }, [possible_columns, possible_rows, data_tree]);
+
+  /**
+   * Computes a dot size for the user's max_dot_count piece of information.
+   */
+  const getDotSize = React.useCallback(() => {
+    if (
+      possible_columns.length === 0 ||
+      possible_rows.length === 0 ||
+      typeof data_tree[possible_columns[0]][possible_rows[0]] !==
+      'string'
+    ) {
+      return null;
+    }
+
+    return getMaxValue() / data.max_dot_count;
+  }, [possible_columns, possible_rows, data_tree, data.max_dot_count]);
 
   return (
     <div className="dotted-table-chart">
@@ -102,8 +132,8 @@ const DottedTableChartView = (props) => {
             </Table.Body>
           </Table>
         ) : (
-          ''
-        )}
+            ''
+          )}
       </div>
     </div>
   );
