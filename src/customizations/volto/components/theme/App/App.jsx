@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { asyncConnect } from 'redux-connect';
 import { Segment } from 'semantic-ui-react';
-import Raven from 'raven-js';
+// import Raven from 'raven-js';
 import { renderRoutes } from 'react-router-config';
 import { Slide, ToastContainer, toast } from 'react-toastify';
 import split from 'lodash/split';
@@ -17,7 +17,7 @@ import join from 'lodash/join';
 import trim from 'lodash/trim';
 import cx from 'classnames';
 import { settings } from '~/config';
-
+import * as Sentry from '@sentry/browser';
 import Error from '@plone/volto/error';
 
 import {
@@ -66,11 +66,11 @@ class App extends Component {
    * @param {string} info The info
    * @returns {undefined}
    */
-  componentDidMount() {
-    if (__CLIENT__ && process.env.SENTRY_DSN) {
-      Raven.config(process.env.SENTRY_DSN).install();
-    }
-  }
+  // componentDidMount() {
+  //   if (__CLIENT__ && process.env.SENTRY_DSN) {
+  //     Raven.config(process.env.SENTRY_DSN).install();
+  //   }
+  // }
 
   /**
    * @method componentWillReceiveProps
@@ -85,17 +85,19 @@ class App extends Component {
     }
   }
 
-  /**
-   * ComponentDidCatch
-   * @method ComponentDidCatch
-   * @param {string} error  The error
-   * @param {string} info The info
-   * @returns {undefined}
-   */
+  // /**
+  //  * ComponentDidCatch
+  //  * @method ComponentDidCatch
+  //  * @param {string} error  The error
+  //  * @param {string} info The info
+  //  * @returns {undefined}
+  //  */
   componentDidCatch(error, info) {
     this.setState({ hasError: true, error, errorInfo: info });
-    if (__CLIENT__ && process.env.SENTRY_DSN) {
-      Raven.captureException(error, { extra: info });
+    if (__CLIENT__) {
+      if (window?.env?.RAZZLE_SENTRY_DSN || __SENTRY__?.SENTRY_DSN) {
+        Sentry.captureException(error);
+      }
     }
   }
 

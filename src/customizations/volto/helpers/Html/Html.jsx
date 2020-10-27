@@ -9,6 +9,7 @@ import { Helmet } from '@plone/volto/helpers';
 import serialize from 'serialize-javascript';
 import { join } from 'lodash';
 import { BodyClass } from '@plone/volto/helpers';
+import { runtimeConfig } from '@plone/volto/runtime_config';
 
 function optimize(state) {
   const whitelist = ['userSession', 'router'];
@@ -91,6 +92,11 @@ class Html extends Component {
           {process.env.NODE_ENV === 'production' && (
             <>{extractor.getStyleElements()}</>
           )}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `window.env = ${serialize(runtimeConfig)};`,
+            }}
+          />
         </head>
         <body className={bodyClass}>
           <div role="navigation" aria-label="Toolbar" id="toolbar" />
@@ -103,12 +109,14 @@ class Html extends Component {
             charSet="UTF-8"
           />
           {/* Add the crossorigin while in development */}
-          {extractor.getScriptElements().map((elem) =>
-            React.cloneElement(elem, {
-              crossOrigin:
-                process.env.NODE_ENV === 'production' ? undefined : 'true',
-            }),
-          )}
+          {this.props.extractScripts !== false
+            ? extractor.getScriptElements().map((elem) =>
+                React.cloneElement(elem, {
+                  crossOrigin:
+                    process.env.NODE_ENV === 'production' ? undefined : 'true',
+                }),
+              )
+            : ''}
         </body>
       </html>
     );
