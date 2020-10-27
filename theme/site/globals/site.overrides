@@ -1,9 +1,3 @@
-*,
-*:focus,
-*:hover {
-  outline: none;
-}
-
 .siteroot .ui.basic.segment.content-area {
   margin-top: 0;
   padding-top: 0;
@@ -12,6 +6,30 @@
 #toolbar,
 #sidebar {
   z-index: 1500 !important;
+}
+
+#page-add,
+#page-edit {
+  .DraftEditor-root h1 {
+   margin: 0 !important;
+ }
+}
+
+.documentFirstHeading {
+  margin-top: 0.5em !important;
+  border-bottom: none;
+
+  &:before {
+    border-bottom: none;
+  }
+}
+
+p > span:empty {
+  display: inline-block;
+
+  &:before {
+    content: "\a0";
+  }
 }
 
 .editor-toolbar-wrapper {
@@ -42,29 +60,35 @@
 .table-of-contents.default {
   .bulleted.list {
     margin-left: 0;
+
     .item {
       position: relative;
       padding: 0;
+
       a {
         font-size: 17px;
         padding: 0.5rem 0.7rem;
         display: block;
         border-left: 2px solid lightgray;
       }
+
       &:before {
         content: '';
       }
+
       &:hover {
         > a {
           border-color: @lightGreenColor;
         }
       }
     }
+
     .headline-3 {
       a {
         padding-left: 1rem;
       }
     }
+
     .headline-4,
     .headline-5,
     .headline-6 {

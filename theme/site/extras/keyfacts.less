@@ -59,7 +59,7 @@
 
         @media only screen and (max-width: 600px) {
           flex: 0 1 100%;
-          padding: 0.5rem 0;
+          padding: 0.5rem 0 0.5rem 1.5rem;
         }
       }
     }
@@ -90,7 +90,7 @@
 
         &::before {
           position: absolute;
-          top: 25%;
+          top: 15%;
           right: -32px;
           width: 0;
           height: 0;
@@ -99,7 +99,7 @@
           border-left: 32px solid #fff;
           content: '';
 
-          @media (max-width: 767px) {
+          @media (max-width: 1071px) {
             content: none;
           }
         }
@@ -107,10 +107,10 @@
         &::after {
           content: none;
 
-          @media (max-width: 767px) {
+          @media (max-width: 1071px) {
             position: absolute;
             bottom: 0;
-            left: 30%;
+            left: 100px;
             width: 0;
             height: 0;
             margin-bottom: -28px;
@@ -182,16 +182,11 @@
           .headline {
             margin-bottom: 2rem;
           }
-
-          &:before {
-            top: auto;
-            bottom: -64px;
-            left: 10%;
-            border-left: 32px solid transparent;
-            border-right: 32px solid transparent;
-            border-top: 32px solid #fff;
-          }
         }
+      }
+
+      .fact {
+        padding-left: 1rem;
       }
 
       .facts-wrapper {

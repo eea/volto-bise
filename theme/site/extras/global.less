@@ -1,15 +1,22 @@
 /*******************************
 Global Overrides
  *******************************/
+
 @h1: 43px;
 @h2: 36px;
 @h3: 25px;
 @h4: 18px;
 @h5: 15px;
 
+*,
+*:focus,
+*:hover {
+  outline: none;
+}
+
 body {
   color: @textColor;
-  font-size: 17px!important;
+  font-size: 17px !important;
 }
 
 h1,
@@ -49,32 +56,13 @@ h5 {
 
 a {
   color: @lightGreenColor;
+  word-break: break-word;
+
   &:hover {
     color: @darkGreenColor;
   }
+
   &:focus {
     outline: none !important;
   }
-}
-
-.documentFirstHeading {
-  margin-top: 0.5em !important;
-  border-bottom: none;
-  &:before {
-    border-bottom: none;
-  }
-}
-
-p > span:empty {
-  display: inline-block;
-  &:before {
-    content: "\a0";
-  }
-}
-
-#page-add,
-#page-edit {
-  .DraftEditor-root h1 {
-   margin: 0!important;
- }
 }
