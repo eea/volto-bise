@@ -19,6 +19,9 @@ const HeaderImage = ({ ...props }) => {
                 <h1 className="leadimage-title">{props.title}</h1>
                 <p>{props.description}</p>
               </div>
+              <div className="ui container">
+                <p className="leadimage-caption">{props.image_caption}</p>
+              </div>
             </div>
           </div>
         </div>

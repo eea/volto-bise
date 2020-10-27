@@ -68,8 +68,14 @@
   //   column-count: 3;
   // }
 
-  .fdl-listing-section > div {
-    width: 20%;
-    margin-bottom: 0.3em;
+  .fdl-listing-section {
+    > div {
+      // width: 20%;
+      margin-bottom: 0.3em;
+    }
+
+    @media only screen and (max-width: 480px) {
+      column-count: 2 !important;
+    }
   }
 }
