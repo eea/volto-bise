@@ -280,10 +280,10 @@
   body.has-toolbar-collapsed.has-sidebar-collapsed,
   body.has-toolbar-collapsed.has-sidebar {
     .navigation .ui.menu.large.screen.only {
-      display: none!important;
+      display: none !important;
     }
     .navigation .hamburger-wrapper.mobile.only {
-      display: block!important;
+      display: block !important;
     }
   }
 
@@ -329,37 +329,44 @@
       flex-direction: column;
       text-align: left;
       align-items: flex-start;
-      padding-left: 0!important;
-      padding-right: 0!important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
       position: relative;
       font-weight: 700;
 
       > .menu {
-        display: none!important;
+        display: none !important;
       }
 
       &.active > .menu,
       &.active:hover > .menu {
-        display: block!important;
+        display: block !important;
       }
 
       &:hover {
-        background: transparent!important;
-        border-color: transparent!important;
+        background: transparent !important;
+        border-color: transparent !important;
+
         >.menu {
-          display: none!important;
+          display: none !important;
         }
       }
 
       .menu {
         position: relative;
         top: 10px !important;
-        margin: 0;
-        background-color: transparent!important;
-        border: none!important;
+        margin: 0 !important;
+        background-color: transparent !important;
+        border: none !important;
         width: 100%;
+
         .submenu {
           column-count: unset;
+          padding-top: 0;
+        }
+        .countries-submenu {
+          column-count: 2;
+          max-width: 270px;
         }
       }
 
@@ -368,25 +375,25 @@
         font-size: 30px;
         position: absolute;
         top: 10px;
-        right: 15px;
+        right: 0;
         z-index: 999;
       }
     }
 
     .countries-submenu > .item.thirdLevel,
     .secondLevel {
-      font-size: 15px!important;
+      font-size: 15px !important;
     }
 
     .secondLevel:hover {
-      background-color: transparent!important;
+      background-color: transparent !important;
       color: #3c8000;
     }
 
     .secondLevel,
     .thirdLevel {
-      padding-left: 0!important;
-      padding-right: 0!important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
     }
   }
 }

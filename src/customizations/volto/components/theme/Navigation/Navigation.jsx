@@ -64,6 +64,7 @@ class Navigation extends Component {
     this.state = {
       isMobileMenuOpen: false,
     };
+    this.container = React.createRef();
   }
 
   /**
@@ -76,7 +77,20 @@ class Navigation extends Component {
       getBaseUrl(this.props.pathname),
       settings.navDepth,
     );
+    document.addEventListener("mousedown", this.handleClickOutsideNav);
   }
+
+   componentWillUnmount() {
+     document.removeEventListener("mousedown", this.handleClickOutsideNav);
+   }
+
+   handleClickOutsideNav = event => {
+     if (this.container.current && !this.container.current.contains(event.target)) {
+       this.setState({
+         isMobileMenuOpen: false,
+       });
+     }
+   };
 
   /**
    * Component will receive props
@@ -143,7 +157,7 @@ class Navigation extends Component {
    */
   render() {
     return (
-      <nav className="navigation">
+      <nav className="navigation" ref={this.container}>
         <div className="hamburger-wrapper mobile only">
           <button
             className={cx('hamburger hamburger--collapse', {
@@ -185,6 +199,7 @@ class Navigation extends Component {
               : 'tablet computer large screen widescreen only'
           }
           onClick={this.closeMobileMenu}
+          onBlur={() => this.closeMobileMenu}
         >
           {this.props.items.map((item) => {
             const flatUrl = flattenToAppURL(item.url);

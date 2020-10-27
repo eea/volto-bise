@@ -31,7 +31,9 @@ class Header extends Component {
     super(props);
     this.state = {
       isHomepage: this.props.actualPathName === '/',
+      windowWidth: 0,
     };
+    this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this);
   }
   /**
    * Property types.
@@ -54,19 +56,19 @@ class Header extends Component {
     token: null,
   };
 
-  componentWillMount() {
-    if (typeof window !== "undefined") {
-      window.addEventListener('resize', this.handleWindowSizeChange);
-    }
+  componentDidMount() {
+    this.handleWindowSizeChange();
+    window.addEventListener("resize", this.handleWindowSizeChange);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleWindowSizeChange);
+    window.removeEventListener("resize", this.handleWindowSizeChange);
   }
 
-  handleWindowSizeChange = () => {
-    this.setState({ width: window.innerWidth });
-  };
+  handleWindowSizeChange() {
+    let windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+    this.setState({ windowWidth });
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.actualPathName !== this.props.actualPathName) {
@@ -75,6 +77,7 @@ class Header extends Component {
       });
     }
   }
+
   componentDidUpdate(prevProps) {
     if (prevProps.actualPathName !== this.props.actualPathName) {
       this.setState({
@@ -92,8 +95,8 @@ class Header extends Component {
   render() {
     const defaultHeaderImage = this.props.defaultHeaderImage;
     let headerImageUrl = defaultHeaderImage?.image || defaultHeaderImage;
-    const { width } = this.state;
-    const isStickyHeader = width < 1654;
+    const { windowWidth } = this.state;
+    const isStickyHeader = windowWidth < 1654;
     return (
       <div>
         <Segment
