@@ -4,6 +4,7 @@ import { connectBlockToProviderData } from 'volto-datablocks/hocs';
 import { filterDataByParameters, connectToDataParameters } from '../utils';
 import { compose } from 'redux';
 import { serializeNodes } from 'volto-slate/editor/render';
+import FormattedValue from '../FormattedValue';
 import './styles.less';
 
 const DottedTableChartView = (props) => {
@@ -17,8 +18,10 @@ const DottedTableChartView = (props) => {
     column_data,
     row_data,
     size_data,
-    dot_value,
+    max_dot_count,
     row_colors = {},
+    text_template,
+    specifier,
   } = data;
 
   const possible_columns = Array.from(
@@ -37,10 +40,27 @@ const DottedTableChartView = (props) => {
     return res;
   }, [column_data, filteredData, row_data, size_data]);
 
+  // stores the last computed dot size
+  const dotSizeRef = React.useRef();
+
+  const getDotsCountForValue = React.useCallback(
+    (val) => {
+      if (typeof val === 'string') {
+        val = parseFloat(val);
+      }
+      return val / dotSizeRef.current;
+    },
+    [dotSizeRef.current],
+  );
+
   const renderDots = (value, color) => {
-    const dotValue = parseFloat(dot_value);
+    const dotValue = (dotSizeRef.current = getDotSize(
+      parseFloat(max_dot_count),
+    ));
     const val = parseFloat(value);
-    const arraySize = Math.ceil(Math.max(val / dotValue, 1));
+    const arraySize = Math.ceil(
+      Math.max(getDotsCountForValue(val) / dotSizeRef.current, 1),
+    );
 
     return (
       <div className="dot-cells">
@@ -54,6 +74,35 @@ const DottedTableChartView = (props) => {
       </div>
     );
   };
+
+  const getMaxValue = React.useCallback(() => {
+    let max = 0;
+    // This loop can be optimized.
+    possible_columns.forEach((x) => {
+      possible_rows.forEach((y) => {
+        if (typeof data_tree[x][y] === 'string') {
+          const num = parseFloat(data_tree[x][y]);
+          max = Math.max(max, num);
+        }
+      });
+    });
+    return max;
+  }, [possible_columns, possible_rows, data_tree]);
+
+  /**
+   * Computes a dot size for the user's max_dot_count piece of information.
+   */
+  const getDotSize = React.useCallback(() => {
+    if (
+      possible_columns.length === 0 ||
+      possible_rows.length === 0 ||
+      typeof data_tree[possible_columns[0]][possible_rows[0]] !== 'string'
+    ) {
+      return null;
+    }
+
+    return getMaxValue() / data.max_dot_count;
+  }, [possible_columns, possible_rows, data_tree, data.max_dot_count]);
 
   return (
     <div className="dotted-table-chart">
@@ -86,13 +135,38 @@ const DottedTableChartView = (props) => {
                     {row}
                   </Table.HeaderCell>
                   {possible_columns.map((col, y) => (
-                    <Table.Cell verticalAlign="top" key={`${col}-${y}`}>
+                    <Table.Cell
+                      verticalAlign="top"
+                      key={`${col}-${y}`}
+                      style={{
+                        // hack from https://stackoverflow.com/a/3542470/258462
+                        height: '1px',
+
+                        padding: '0',
+                      }}
+                    >
                       <Popup
-                        content={`Value: ${data_tree[col][row]}`}
+                        content={ // it might happen that the FormattedValue component returns empty string because of the input data
+                          <>
+                            Value:{' '}
+                            <FormattedValue
+                              textTemplate={text_template}
+                              value={data_tree[col][row]}
+                              specifier={specifier}
+                            />
+                          </>
+                        }
                         trigger={
-                          <span>
+                          <div
+                            style={{
+                              // hack from https://stackoverflow.com/a/3542470/258462
+                              height: '100%',
+
+                              padding: '0.78571429em', // value taken from SUIR's collections/table.less (possibly needs to be changed if compact table style is implemented in DottedTableChartView)
+                            }}
+                          >
                             {renderDots(data_tree[col][row], row_colors?.[row])}
-                          </span>
+                          </div>
                         }
                       />
                     </Table.Cell>

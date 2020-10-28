@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import React from 'react';
 import { connectBlockToProviderData } from 'volto-datablocks/hocs';
 import { serializeNodes } from 'volto-slate/editor/render';
-import FormattedValue from './FormattedValue';
+import FormattedValue from '../FormattedValue';
 import { filterDataByParameters, connectToDataParameters } from '../utils';
 
 import './styles.less';
