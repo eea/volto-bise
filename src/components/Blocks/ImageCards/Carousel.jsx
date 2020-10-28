@@ -1,18 +1,15 @@
-import cx from 'classnames';
 import React, { Component } from 'react';
-
 import loadable from '@loadable/component';
 import { Placeholder } from 'semantic-ui-react';
 import { settings } from '~/config';
 import { flattenToAppURL } from '@plone/volto/helpers';
-
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-
 import { Icon } from '@plone/volto/components';
-// import 'react-image-gallery/styles/css/image-gallery.css';
-import 'react-image-gallery/styles/css/image-gallery-no-icon.css';
 import leftSVG from '@plone/volto/icons/left-key.svg';
 import rightSVG from '@plone/volto/icons/right-key.svg';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import cx from 'classnames';
+
+import 'react-image-gallery/styles/css/image-gallery-no-icon.css';
 
 const ImageGallery = loadable(() => import('react-image-gallery'));
 

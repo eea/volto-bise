@@ -1,9 +1,9 @@
-import cx from 'classnames';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { settings } from '~/config';
 import { flattenToAppURL } from '@plone/volto/helpers';
-import React, { useEffect } from 'react';
 import { Grid } from 'semantic-ui-react';
+import cx from 'classnames';
 
 export const getPath = (url) =>
   url.startsWith('http') ? new URL(url).pathname : url;
@@ -28,13 +28,25 @@ export const Card = (props) => {
       {link ? (
         <>
           <Link to={link}>
-            <img src={thumbUrl(getPath(attachedimage))} alt={title} />
+            <div
+              className="card-image"
+              style={{
+                backgroundImage: `url(${thumbUrl(getPath(attachedimage))})`,
+              }}
+            >
+            </div>
             <h5>{title}</h5>
           </Link>
         </>
       ) : (
         <>
-          <img src={thumbUrl(getPath(attachedimage))} alt={title} />
+          <div
+            className="card-image"
+            style={{
+              backgroundImage: `url(${thumbUrl(getPath(attachedimage))})`,
+            }}
+          >
+          </div>
           <h5>{title}</h5>
         </>
       )}

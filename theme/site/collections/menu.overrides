@@ -304,8 +304,7 @@
   }
 
   .navigation .ui.pointing.secondary.stackable.open.menu {
-    display: flex;
-    flex-direction: column;
+    display: block;
     margin-top: 17px;
     margin-right: 0 !important;
     margin-left: 0;
