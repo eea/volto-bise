@@ -5,6 +5,7 @@ import { filterDataByParameters, connectToDataParameters } from '../utils';
 import { compose } from 'redux';
 import { serializeNodes } from 'volto-slate/editor/render';
 import FormattedValue from '../FormattedValue';
+import { DEFAULT_MAX_DOT_COUNT } from './constants';
 import './styles.less';
 
 const DottedTableChartView = (props) => {
@@ -18,7 +19,6 @@ const DottedTableChartView = (props) => {
     column_data,
     row_data,
     size_data,
-    max_dot_count,
     row_colors = {},
     text_template,
     specifier,
@@ -43,20 +43,15 @@ const DottedTableChartView = (props) => {
   // stores the last computed dot size
   const dotSizeRef = React.useRef();
 
-  const getDotsCountForValue = React.useCallback(
-    (val) => {
-      if (typeof val === 'string') {
-        val = parseFloat(val);
-      }
-      return val / dotSizeRef.current;
-    },
-    [dotSizeRef.current],
-  );
+  const getDotsCountForValue = React.useCallback((val) => {
+    if (typeof val === 'string') {
+      val = parseFloat(val);
+    }
+    return val / dotSizeRef.current;
+  }, []);
 
   const renderDots = (value, color) => {
-    const dotValue = (dotSizeRef.current = getDotSize(
-      parseFloat(max_dot_count),
-    ));
+    const dotValue = (dotSizeRef.current = getDotSize());
     const val = parseFloat(value);
     const arraySize = Math.ceil(
       Math.max(getDotsCountForValue(val) / dotSizeRef.current, 1),
@@ -90,7 +85,8 @@ const DottedTableChartView = (props) => {
   }, [possible_columns, possible_rows, data_tree]);
 
   /**
-   * Computes a dot size for the user's max_dot_count piece of information.
+   * Computes a dot size for the user's max_dot_count piece of information
+   * and uses, as a fallback, the old dot_value field's value.
    */
   const getDotSize = React.useCallback(() => {
     if (
@@ -101,8 +97,18 @@ const DottedTableChartView = (props) => {
       return null;
     }
 
+    if (!data.max_dot_count) {
+      return getMaxValue() / DEFAULT_MAX_DOT_COUNT;
+    }
+
     return getMaxValue() / data.max_dot_count;
-  }, [possible_columns, possible_rows, data_tree, data.max_dot_count]);
+  }, [
+    possible_columns,
+    possible_rows,
+    data_tree,
+    data.max_dot_count,
+    getMaxValue,
+  ]);
 
   return (
     <div className="dotted-table-chart">
@@ -146,7 +152,8 @@ const DottedTableChartView = (props) => {
                       }}
                     >
                       <Popup
-                        content={ // it might happen that the FormattedValue component returns empty string because of the input data
+                        content={
+                          // it might happen that the FormattedValue component returns empty string because of the input data
                           <>
                             Value:{' '}
                             <FormattedValue
