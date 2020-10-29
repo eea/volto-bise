@@ -58,7 +58,22 @@ const View = ({ data, provider_data, id, ...rest }) => {
 
         <Grid columns={12}>
           <Grid.Row>
-            <Grid.Column width={8}>
+            <Grid.Column largeScreen={4} tablet={12} mobile={12}>
+              {provider_data && (
+                <SelectCountry
+                  data={provider_data}
+                  id={`${id}-select-country`}
+                  onChange={(data) => {
+                    setFocusOn(data.value);
+                  }}
+                  defaultValue={
+                    focusOn ? { value: focusOn, label: focusOn } : null
+                  }
+                />
+              )}
+              <div>{serializeNodes(data.description)}</div>
+            </Grid.Column>
+            <Grid.Column largeScreen={8} tablet={12} mobile={12}>
               {provider_data
                 ? multiCharts.map((chart, index) => {
                     return (
@@ -80,21 +95,6 @@ const View = ({ data, provider_data, id, ...rest }) => {
                     );
                   })
                 : ''}
-            </Grid.Column>
-            <Grid.Column width={4} flated="right">
-              {provider_data && (
-                <SelectCountry
-                  data={provider_data}
-                  id={`${id}-select-country`}
-                  onChange={(data) => {
-                    setFocusOn(data.value);
-                  }}
-                  defaultValue={
-                    focusOn ? { value: focusOn, label: focusOn } : null
-                  }
-                />
-              )}
-              <div>{serializeNodes(data.description)}</div>
             </Grid.Column>
           </Grid.Row>
         </Grid>
