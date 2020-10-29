@@ -4,14 +4,15 @@ import { Placeholder } from 'semantic-ui-react';
 import { settings } from '~/config';
 import { flattenToAppURL } from '@plone/volto/helpers';
 import { Icon } from '@plone/volto/components';
+
 import leftSVG from '@plone/volto/icons/left-key.svg';
 import rightSVG from '@plone/volto/icons/right-key.svg';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import cx from 'classnames';
 
-import 'react-image-gallery/styles/css/image-gallery-no-icon.css';
+import 'slick-carousel/slick/slick.css';
+// import 'slick-carousel/slick/slick-theme.css';
 
-const ImageGallery = loadable(() => import('react-image-gallery'));
+const Slider = loadable(() => import('react-slick'));
 
 export const getPath = (url) =>
   url.startsWith('http') ? new URL(url).pathname : url;
@@ -21,38 +22,69 @@ export const fixUrl = (url) =>
     ? `${flattenToAppURL(url.replace('/api', ''))}/@@images/image`
     : `${url.replace('/api', '')}/@@images/image`;
 
+
 class Carousel extends Component {
+  constructor(props) {
+    super(props);
+    this.next = this.next.bind(this);
+    this.previous = this.previous.bind(this);
+  }
+
+  next() {
+    this.slider.slickNext();
+  }
+
+  previous() {
+    this.slider.slickPrev();
+  }
+
   componentDidMount() {
     require('./css/carousel.less');
   }
 
-  renderSlide = (card) => {
-    return (
-      <div className="slider-slide">
-        <LazyLoadImage
-          className="slide-img"
-          height={600}
-          effect="blur"
-          style={{
-            backgroundImage: `url(${fixUrl(getPath(card.attachedimage))})`,
-          }}
-          width={'100%'}
-          visibleByDefault={true}
-          placeholder={
-            <Placeholder>
-              <Placeholder.Image rectangular />
-            </Placeholder>
-          }
-        />
-        <div className="slide-overlay" />
-        <div className="ui container">
-          <div className="slide-body">
-            <div className="slide-title">{card.title || ''}</div>
-            <div
-              className="slide-description"
-              dangerouslySetInnerHTML={{ __html: card.text?.data || '' }}
-            />
+  renderSlide = (cards) => {
+    return cards.map((card, index) => {
+      return (
+        <div className="slider-slide" key={index}>
+          <div className="slide-img"
+            style={{
+              backgroundImage: `url(${fixUrl(getPath(card.attachedimage))})`,
+            }}
+          />
+          <div className="slide-overlay" />
+          <div className="ui container">
+            <div className="slide-body">
+              <div className="slide-title">{card.title || ''}</div>
+              <div
+                className="slide-description"
+                dangerouslySetInnerHTML={{ __html: card.text?.data || '' }}
+              />
+            </div>
           </div>
+        </div>
+      );
+    });
+  };
+
+  renderSlideArrows = () => {
+    return (
+      <div className="slider-arrow">
+        <div className="ui container">
+          <button
+            className="left-arrow"
+            aria-label="Prev Slide"
+            onClick={() => this.slider.slickPrev()}
+          >
+              <Icon name={leftSVG} size="55px" />
+          </button>
+
+          <button
+            className="right-arrow"
+            aria-label="Prev Slide"
+            onClick={() => this.slider.slickNext()}
+          >
+              <Icon name={rightSVG} size="55px" />
+          </button>
         </div>
       </div>
     );
@@ -60,35 +92,19 @@ class Carousel extends Component {
 
   render() {
     const { data } = this.props;
-    const images = this.props.data.cards || [];
+    const cards = this.props.data.cards || [];
 
-    function renderLeftNav(onClick, disabled) {
-      return (
-        <button
-          type="button"
-          className="image-gallery-custom-left-nav"
-          aria-label="Prev Slide"
-          disabled={disabled}
-          onClick={onClick}
-        >
-          <Icon name={leftSVG} size="55px" />
-        </button>
-      );
-    }
-
-  function renderRightNav(onClick, disabled) {
-    return (
-      <button
-        type="button"
-        className="image-gallery-custom-right-nav"
-        aria-label="Prev Slide"
-        disabled={disabled}
-        onClick={onClick}
-      >
-        <Icon name={rightSVG} size="55px" />
-      </button>
-    );
-  }
+    var settings = {
+     infinite: true,
+     speed: 500,
+     slidesToShow: 1,
+     slidesToScroll: 1,
+     autoplay: true,
+     autoplaySpeed: 5000,
+     fade: true,
+     pauseOnHover: true,
+     lazyLoad: 'ondemand',
+   };
 
     return (
       <div
@@ -106,19 +122,13 @@ class Carousel extends Component {
           })}
         >
           <div className="slider-wrapper">
-            <ImageGallery
-              className="mainSlider"
-              items={images}
-              showFullscreenButton={false}
-              showPlayButton={false}
-              autoPlay
-              renderItem={this.renderSlide}
-              slideDuration={300}
-              slideInterval={100000}
-              renderLeftNav={renderLeftNav}
-              renderRightNav={renderRightNav}
-              showThumbnails={false}
-            />
+            <Slider
+              {...settings}
+              ref={slider => (this.slider = slider)}
+            >
+              {this.renderSlide(cards)}
+            </Slider>
+            {this.renderSlideArrows()}
           </div>
         </div>
       </div>

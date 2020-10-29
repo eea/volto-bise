@@ -58,7 +58,7 @@
         }
 
         .slide-title {
-          margin-bottom: 3rem;
+          margin-bottom: 1rem;
           font-family: @headerFont;
           font-size: 60px;
           font-weight: bold;
@@ -83,39 +83,8 @@
     }
   }
 
-  .image-gallery-custom-left-nav,
-  .image-gallery-custom-right-nav {
-    appearance: none;
-    background-color: transparent;
-    border: 0;
-    cursor: pointer;
-    outline: none;
-    position: absolute;
-    z-index: 4;
-    color: #fff;
-    font-size: 5em;
-    padding: 50px 15px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
   .image-gallery-slide-wrapper {
     position: relative;
-  }
-
-  .image-gallery-custom-right-nav,
-  .image-gallery-custom-left-nav {
-    font-size: 3rem;
-
-    @media (max-width: 600px) {
-      bottom: 0;
-    }
-
-    .image-gallery-svg {
-      width: 30px;
-      height: 60px;
-    }
-
   }
 
   .image-gallery-custom-left-nav,
@@ -132,38 +101,6 @@
     }
   }
 
-  .image-gallery-custom-left-nav {
-    left: 6em;
-
-    @media screen and (max-width: 1500px) {
-      left: 3em;
-    }
-
-    @media screen and (max-width: 991px) {
-      left: 2em;
-    }
-
-    @media screen and (max-width: 768px) {
-      left: 15px;
-    }
-  }
-
-  .image-gallery-custom-right-nav {
-    left: 7em;
-
-    @media screen and (max-width: 1500px) {
-      left: 4em;
-    }
-
-    @media screen and (max-width: 991px) {
-      left: 3em;
-    }
-
-    @media screen and (max-width: 768px) {
-      left: 45px;
-    }
-  }
-
   .image-gallery-fullscreen-button:hover::before,
   .image-gallery-custom-left-nav:hover::before,
   .image-gallery-play-button:hover::before,
@@ -174,6 +111,44 @@
   .image-gallery-slides {
     white-space: normal !important;
   }
+}
+
+.slider-slide {
+  position: relative;
+}
+
+.slider-arrow {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: 15%;
+
+  .left-arrow,
+  .right-arrow {
+    appearance: none;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    outline: none;
+    z-index: 4;
+    color: #fff;
+    position: relative;
+    margin-bottom: 0;
+  }
+
+  .left-arrow {
+    left: -20px;
+  }
+
+  .right-arrow {
+    left: -30px;
+  }
+}
+
+.slick-arrow {
+  display: none !important;
 }
 
 .loadAddonOverrides();
