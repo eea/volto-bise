@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export const colorscale = [
   'rgb(166,206,227)',
   'rgb(31,120,180)',
@@ -56,6 +58,34 @@ export function mapByLevel(provider_data) {
     });
   });
   return byLevel;
+}
+
+export function mapToAllEU(provider_data, byLevel) {
+  const level2 = new Set(provider_data['Ecosystem_level2']);
+  const countries = new Set(provider_data['Country_name']);
+  const EUByLevel = Object.fromEntries(Array.from(level2).map((l) => [l, {}]));
+
+  let totalArea = 0;
+
+  level2.forEach((level) => {
+    EUByLevel[level] = 0;
+
+    countries.forEach((country) => {
+      byLevel[level][country].forEach((x) => {
+        EUByLevel[level] += parseFloat(x['Area (m2)']);
+      });
+    });
+
+    totalArea += EUByLevel[level];
+  });
+
+  const EUByLevelPercents = _.fromPairs(
+    _.map(Array.from(level2), (l) => {
+      return [l, (EUByLevel[l] / totalArea) * 100];
+    }),
+  );
+
+  return { EUByLevel, EUByLevelPercents };
 }
 
 export function makeTrace(level, levelData, index, focusOn) {
@@ -123,7 +153,11 @@ export function axesFromTemplate(prefix, count, tpl, getTitle) {
   return res;
 }
 
-export function chartTileLayout(index) {
+/**
+ * @param {number} index 
+ * @param {number} finalPercent 
+ */
+export function chartTileLayout(index, finalPercent) {
   return {
     height: 60,
     showlegend: false,
@@ -181,7 +215,7 @@ export function chartTileLayout(index) {
         y: 0.3,
         xanchor: 'right',
         yanchor: 'bottom',
-        text: '20%',
+        text: `${finalPercent.toFixed(2)}%`,
         showarrow: false,
       },
     ],
@@ -191,6 +225,7 @@ export function chartTileLayout(index) {
 export function makeChartTiles(provider_data, focusOn, focusEcosystem) {
   if (!provider_data) return;
   const byLevel = mapByLevel(provider_data);
+  const { EUByLevelPercents } = mapToAllEU(provider_data, byLevel);
 
   const ecosystems = Array.from(new Set(provider_data['Ecosystem_level2']));
   const countries = Array.from(new Set(provider_data['Country_name']));
@@ -211,7 +246,7 @@ export function makeChartTiles(provider_data, focusOn, focusEcosystem) {
     .map((level, index) => {
       if (focusEcosystem && level !== focusEcosystem) return null;
       return {
-        layout: chartTileLayout(index),
+        layout: chartTileLayout(index, EUByLevelPercents[level]),
         data: [makeTrace(level, byArea[level], index, focusOn)],
         title: level,
       };
