@@ -65,9 +65,11 @@ const Footer = ({ intl }) => (
             </Grid.Column>
             <Grid.Column mobile={16} tablet={2} computer={2}>
               <img
-                style={{ height: '50px', marginTop: '0.8rem' }}
+                className="bise-footer"
                 src={LogoImage}
                 alt="BISE"
+                height={50}
+                width={150}
               />
             </Grid.Column>
           </Grid.Row>
@@ -87,16 +89,20 @@ const Footer = ({ intl }) => (
                 <p>
                   The Biodiversity information system for Europe is a
                   partnership between <br /> the{' '}
-                  <a href="https://ec.europa.eu/" target="_blank">
+                  <a href="https://ec.europa.eu/"
+                     target="_blank"
+                     rel="noopener">
                     European Commission
                   </a>{' '}
                   and the{' '}
-                  <a href="https://www.eea.europa.eu/" target="_blank">
+                  <a href="https://www.eea.europa.eu/"
+                     target="_blank"
+                     rel="noopener">
                     European Environment Agency.
                   </a>
                 </p>{' '}
               </div>
-              <div>
+              <div className="site-info-logos">
                 <a href="https://ec.europa.eu/">
                   <LazyLoadImage
                     className="footerLogo"

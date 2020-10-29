@@ -71,7 +71,7 @@ class Carousel extends Component {
           disabled={disabled}
           onClick={onClick}
         >
-          <Icon name={leftSVG} size="55px" color="#fff" />
+          <Icon name={leftSVG} size="55px" />
         </button>
       );
     }
@@ -85,7 +85,7 @@ class Carousel extends Component {
         disabled={disabled}
         onClick={onClick}
       >
-        <Icon name={rightSVG} size="55px" color="#fff" />
+        <Icon name={rightSVG} size="55px" />
       </button>
     );
   }
@@ -117,6 +117,7 @@ class Carousel extends Component {
               slideInterval={100000}
               renderLeftNav={renderLeftNav}
               renderRightNav={renderRightNav}
+              showThumbnails={false}
             />
           </div>
         </div>
