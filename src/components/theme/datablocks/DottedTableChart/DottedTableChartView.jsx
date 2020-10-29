@@ -5,6 +5,7 @@ import { filterDataByParameters, connectToDataParameters } from '../utils';
 import { compose } from 'redux';
 import { serializeNodes } from 'volto-slate/editor/render';
 import FormattedValue from '../FormattedValue';
+import { DEFAULT_MAX_DOT_COUNT } from './constants';
 import './styles.less';
 
 const DottedTableChartView = (props) => {
@@ -97,7 +98,7 @@ const DottedTableChartView = (props) => {
     }
 
     if (!data.max_dot_count) {
-      return data.dot_value;
+      return getMaxValue() / DEFAULT_MAX_DOT_COUNT;
     }
 
     return getMaxValue() / data.max_dot_count;
@@ -105,7 +106,6 @@ const DottedTableChartView = (props) => {
     possible_columns,
     possible_rows,
     data_tree,
-    data.dot_value,
     data.max_dot_count,
     getMaxValue,
   ]);

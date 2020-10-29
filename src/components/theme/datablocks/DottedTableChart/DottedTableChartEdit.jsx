@@ -4,8 +4,7 @@ import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
 import { connectBlockToProviderData } from 'volto-datablocks/hocs';
 import DottedTableChartView from './DottedTableChartView';
 import { DottedTableChartSchema } from './schema';
-
-const DEFAULT_MAX_DOT_COUNT = 16;
+import { DEFAULT_MAX_DOT_COUNT } from './constants';
 
 class DottedTableChartEdit extends React.Component {
   getSchema = () => {
