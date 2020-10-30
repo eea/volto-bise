@@ -88,7 +88,7 @@ export function mapToAllEU(provider_data, byLevel) {
   return { EUByLevel, EUByLevelPercents };
 }
 
-export function makeTrace(level, levelData, index, focusOn) {
+export function makeTrace(level, levelData, index, focusOn, { hoverTemplate }) {
   const data = [
     ...Object.entries(levelData).filter(([k, v]) => k !== focusOn),
     [focusOn, levelData[focusOn]],
@@ -100,7 +100,11 @@ export function makeTrace(level, levelData, index, focusOn) {
   y.fill(0);
   y[y.length - 1] = 0.25; // we "lift" this value to "highlight" it
 
-  const hovertext = [...data.map(([k, v]) => k)];
+  // first element: country name
+  // second element: square kilometers (km2)
+  // third element: square megameters (Mm2)
+  const hovertext = _.map(data, (x) => [x[0], x[1] / 100, x[1] / 10000]);
+
   const text = [
     ...data.slice(0, data.length - 1).map((_) => null),
     `<b>${focusOn}</b>`,
@@ -120,13 +124,16 @@ export function makeTrace(level, levelData, index, focusOn) {
       '#182844',
     ],
   };
+  const ht =
+    hoverTemplate ||
+    '%{customdata[0]}: %{customdata[2]:,.0f} Mm²<extra></extra>';
   const res = {
     x,
     y,
     // hovertext,
     // See
     // https://plotly.com/javascript/reference/scatter/#scatter-hovertemplate
-    hovertemplate: '%{customdata}: %{x:.2f}<extra></extra>',
+    hovertemplate: ht,
     hoverinfo: 'y',
     customdata: hovertext,
     name: level,
@@ -222,7 +229,12 @@ export function chartTileLayout(index, finalPercent) {
   };
 }
 
-export function makeChartTiles(provider_data, focusOn, focusEcosystem) {
+export function makeChartTiles(
+  provider_data,
+  focusOn,
+  focusEcosystem,
+  { hoverTemplate },
+) {
   if (!provider_data) return;
   const byLevel = mapByLevel(provider_data);
   const { EUByLevelPercents } = mapToAllEU(provider_data, byLevel);
@@ -247,7 +259,9 @@ export function makeChartTiles(provider_data, focusOn, focusEcosystem) {
       if (focusEcosystem && level !== focusEcosystem) return null;
       return {
         layout: chartTileLayout(index, EUByLevelPercents[level]),
-        data: [makeTrace(level, byArea[level], index, focusOn)],
+        data: [
+          makeTrace(level, byArea[level], index, focusOn, { hoverTemplate }),
+        ],
         title: level,
       };
     })
