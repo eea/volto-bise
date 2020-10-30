@@ -87,9 +87,9 @@ const View = ({ data, provider_data, id, ...rest }) => {
                         config={{
                           displayModeBar: false,
                           editable: false,
-                          responsive: false,
-                          // useResizeHandler: true,
+                          responsive: true,
                         }}
+                        useResizeHandler={true}
                       />
                     </>
                   );
