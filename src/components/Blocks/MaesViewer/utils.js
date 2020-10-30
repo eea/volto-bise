@@ -154,8 +154,8 @@ export function axesFromTemplate(prefix, count, tpl, getTitle) {
 }
 
 /**
- * @param {number} index 
- * @param {number} finalPercent 
+ * @param {number} index
+ * @param {number} finalPercent
  */
 export function chartTileLayout(index, finalPercent) {
   return {

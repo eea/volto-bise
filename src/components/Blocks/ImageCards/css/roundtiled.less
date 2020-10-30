@@ -32,7 +32,6 @@
               height: 10rem;
               border-radius: 50%;
               margin: 0 auto;
-              margin-bottom: 1em;
               position: relative;
               overflow: hidden;
               background-size: cover;
@@ -40,18 +39,16 @@
               background-position: center;
             }
 
-            h5 {
+            .card-title {
               color: #333;
               font-family: @pageFont;
               font-size: 22px;
               font-weight: normal;
-
-              a {
-                color: inherit;
-              }
+              margin-top: 2rem;
+              display: inline-block;
             }
 
-            &:hover h5 {
+            >a:hover .card-title {
               text-decoration: underline;
             }
           }

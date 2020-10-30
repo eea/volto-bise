@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { settings } from '~/config';
 import { flattenToAppURL } from '@plone/volto/helpers';
 import { Grid } from 'semantic-ui-react';
+import { LazyLoadComponent } from 'react-lazy-load-image-component';
 import cx from 'classnames';
 
 export const getPath = (url) =>
@@ -28,6 +29,21 @@ export const Card = (props) => {
       {link ? (
         <>
           <Link to={link}>
+            <LazyLoadComponent>
+              <div
+                className="card-image"
+                style={{
+                  backgroundImage: `url(${thumbUrl(getPath(attachedimage))})`,
+                }}
+              >
+              </div>
+            </LazyLoadComponent>
+            <span className="card-title">{title}</span>
+          </Link>
+        </>
+      ) : (
+        <>
+          <LazyLoadComponent>
             <div
               className="card-image"
               style={{
@@ -35,19 +51,8 @@ export const Card = (props) => {
               }}
             >
             </div>
-            <h5>{title}</h5>
-          </Link>
-        </>
-      ) : (
-        <>
-          <div
-            className="card-image"
-            style={{
-              backgroundImage: `url(${thumbUrl(getPath(attachedimage))})`,
-            }}
-          >
-          </div>
-          <h5>{title}</h5>
+          </LazyLoadComponent>
+          <span className="card-title">{title}</span>
         </>
       )}
     </div>

@@ -20,6 +20,7 @@ const DottedTableChartView = (props) => {
     row_data,
     size_data,
     row_colors = {},
+    max_dot_count = DEFAULT_MAX_DOT_COUNT,
     text_template,
     specifier,
   } = data;
@@ -40,26 +41,22 @@ const DottedTableChartView = (props) => {
     return res;
   }, [column_data, filteredData, row_data, size_data]);
 
-  // stores the last computed dot size
-  const dotSizeRef = React.useRef();
+  const size_column_data = filteredData?.[size_data] || [];
+  // TODO: use sums to find the biggest value for a column?
+  const maxValue = React.useMemo(() => {
+    const numbers = size_column_data.map((s) =>
+      typeof s === 'string' ? parseFloat(s) : s,
+    );
+    return Math.max(...numbers);
+  }, [size_column_data]);
 
-  const getDotsCountForValue = React.useCallback((val) => {
-    if (typeof val === 'string') {
-      val = parseFloat(val);
-    }
-    return val / dotSizeRef.current;
-  }, []);
+  const dotSize = Math.ceil(maxValue / max_dot_count);
 
   const renderDots = (value, color) => {
-    const dotValue = (dotSizeRef.current = getDotSize());
-    const val = parseFloat(value);
-    const arraySize = Math.ceil(
-      Math.max(getDotsCountForValue(val) / dotSizeRef.current, 1),
-    );
-
+    const arraySize = Math.floor(value / dotSize);
     return (
       <div className="dot-cells">
-        {val && dotValue && Math.floor(val / dotValue)
+        {arraySize && dotSize
           ? new Array(arraySize)
               .fill(1)
               .map((_, i) => (
@@ -69,46 +66,6 @@ const DottedTableChartView = (props) => {
       </div>
     );
   };
-
-  const getMaxValue = React.useCallback(() => {
-    let max = 0;
-    // This loop can be optimized.
-    possible_columns.forEach((x) => {
-      possible_rows.forEach((y) => {
-        if (typeof data_tree[x][y] === 'string') {
-          const num = parseFloat(data_tree[x][y]);
-          max = Math.max(max, num);
-        }
-      });
-    });
-    return max;
-  }, [possible_columns, possible_rows, data_tree]);
-
-  /**
-   * Computes a dot size for the user's max_dot_count piece of information
-   * and uses, as a fallback, the old dot_value field's value.
-   */
-  const getDotSize = React.useCallback(() => {
-    if (
-      possible_columns.length === 0 ||
-      possible_rows.length === 0 ||
-      typeof data_tree[possible_columns[0]][possible_rows[0]] !== 'string'
-    ) {
-      return null;
-    }
-
-    if (!data.max_dot_count) {
-      return getMaxValue() / DEFAULT_MAX_DOT_COUNT;
-    }
-
-    return getMaxValue() / data.max_dot_count;
-  }, [
-    possible_columns,
-    possible_rows,
-    data_tree,
-    data.max_dot_count,
-    getMaxValue,
-  ]);
 
   return (
     <div className="dotted-table-chart">
@@ -193,4 +150,4 @@ const DottedTableChartView = (props) => {
 export default compose(
   connectBlockToProviderData,
   connectToDataParameters,
-)(DottedTableChartView);
+)(React.memo(DottedTableChartView));
