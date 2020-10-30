@@ -21,7 +21,6 @@ class Edit extends Component {
     const schema = this.getSchema();
     return (
       <div className="block">
-        <div className="block-inner-wrapper" />
         <CountryFlagView data={this.props.data} />
 
         <SidebarPortal selected={this.props.selected}>

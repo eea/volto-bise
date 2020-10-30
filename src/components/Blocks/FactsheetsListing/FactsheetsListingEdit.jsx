@@ -8,9 +8,9 @@ class Edit extends Component {
   render() {
     const { selected, block, data, onChangeBlock } = this.props;
     return (
-      <div className="block">
-        <div className="block-inner-wrapper" />
+      <>
         <FactsheetsListingView data={this.props.data} />
+
         <SidebarPortal selected={selected}>
           <InlineForm
             schema={schema}
@@ -24,7 +24,7 @@ class Edit extends Component {
             formData={data}
           />
         </SidebarPortal>
-      </div>
+      </>
     );
   }
 }

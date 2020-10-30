@@ -1,4 +1,6 @@
-const MaesViewerSchema = {
+import React from 'react';
+
+const MaesViewerSchema = () => ({
   title: 'Edit MAES Viewer',
 
   fieldsets: [
@@ -10,7 +12,7 @@ const MaesViewerSchema = {
     {
       id: 'source',
       title: 'Data source',
-      fields: ['provider_url', 'ecosystem'],
+      fields: ['provider_url', 'ecosystem', 'hoverTemplate'],
     },
   ],
 
@@ -31,9 +33,27 @@ const MaesViewerSchema = {
       title: 'Ecosystem',
       choices: [],
     },
+    hoverTemplate: {
+      title: 'Hover template',
+      // description: 'blabl',
+      description: (
+        <div>
+          See{' '}
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://github.com/d3/d3-3.x-api-reference/blob/master/Formatting.md#d3_format"
+          >
+            D3 format documentation
+          </a>
+        </div>
+      ),
+      defaultValue:
+        '%{customdata[0]}: %{customdata[2]:,.0f} Mm²<extra></extra>',
+    },
   },
 
   required: ['provider_url'],
-};
+});
 
 export default MaesViewerSchema;

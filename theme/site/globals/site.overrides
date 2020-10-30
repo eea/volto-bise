@@ -8,6 +8,14 @@
   z-index: 1500 !important;
 }
 
+aside.sidebar-container {
+  z-index: 1600 !important;
+}
+
+.ui.dimmer {
+  z-index: 1700 !important;
+}
+
 #page-add,
 #page-edit {
   .DraftEditor-root h1 {

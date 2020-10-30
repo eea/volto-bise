@@ -95,16 +95,16 @@ class Carousel extends Component {
     const cards = this.props.data.cards || [];
 
     var settings = {
-     infinite: true,
-     speed: 500,
-     slidesToShow: 1,
-     slidesToScroll: 1,
-     autoplay: true,
-     autoplaySpeed: 5000,
-     fade: true,
-     pauseOnHover: true,
-     lazyLoad: 'ondemand',
-   };
+      fade: true,
+      speed: 800,
+      infinite: true,
+      autoplay: true,
+      pauseOnHover: true,
+      autoplaySpeed: 10000,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      lazyLoad: 'ondemand',
+    };
 
     return (
       <div

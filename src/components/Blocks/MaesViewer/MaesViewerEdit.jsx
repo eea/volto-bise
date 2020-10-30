@@ -4,13 +4,18 @@ import cx from 'classnames';
 import { SidebarPortal } from '@plone/volto/components'; // EditBlock
 import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
 
-import schema from './schema';
+import MaesViewerSchema from './schema';
 import { connectBlockToProviderData } from 'volto-datablocks/hocs';
 import MaesViewerView from './MaesViewerView';
 
 class Edit extends Component {
-  getSchema = (schema) => {
-    if (!this.props.provider_data) return schema;
+  constructor(props) {
+    super(props);
+    this.schema = MaesViewerSchema();
+  }
+
+  getSchema = () => {
+    if (!this.props.provider_data) return this.schema;
     const provider_data = this.props.provider_data || {};
 
     const select_field = 'Ecosystem_level2';
@@ -18,21 +23,29 @@ class Edit extends Component {
       new Set(provider_data?.[select_field] || []),
     ).map((n) => [n, n]);
 
-    const newSchema = JSON.parse(JSON.stringify(schema));
+    const newSchema = this.schema;
     newSchema.properties.ecosystem.choices = choices;
+
+    if (this.props.data && !this.props.data.hoverTemplate) {
+      this.props.onChangeBlock(this.props.block, {
+        ...this.props.data,
+        hoverTemplate:
+          '%{customdata[0]}: %{customdata[2]:,.0f} Mm²<extra></extra>',
+      });
+    }
+
     return newSchema;
   };
 
   render() {
+    const schema = this.getSchema();
     return (
       <div className={cx('block', { selected: this.props.selected })}>
-        <div className="block-inner-wrapper" />
-
         <MaesViewerView data={this.props.data} />
 
         <SidebarPortal selected={this.props.selected}>
           <InlineForm
-            schema={this.getSchema(schema)}
+            schema={schema}
             title={schema.title}
             onChangeField={(id, value) => {
               this.props.onChangeBlock(this.props.block, {
