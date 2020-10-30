@@ -10,7 +10,7 @@ const MaesViewerSchema = {
     {
       id: 'source',
       title: 'Data source',
-      fields: ['provider_url', 'ecosystem'],
+      fields: ['provider_url', 'ecosystem', 'hoverTemplate'],
     },
   ],
 
@@ -30,6 +30,11 @@ const MaesViewerSchema = {
     ecosystem: {
       title: 'Ecosystem',
       choices: [],
+    },
+    hoverTemplate: {
+      title: 'Hover template',
+      defaultValue:
+        '%{customdata[0]}: %{customdata[2]:,.0f} Mm²<extra></extra>',
     },
   },
 

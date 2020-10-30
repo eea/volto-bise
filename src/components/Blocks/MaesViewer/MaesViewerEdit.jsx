@@ -20,6 +20,15 @@ class Edit extends Component {
 
     const newSchema = JSON.parse(JSON.stringify(schema));
     newSchema.properties.ecosystem.choices = choices;
+
+    if (this.props.data && !this.props.data.hoverTemplate) {
+      this.props.onChangeBlock(this.props.block, {
+        ...this.props.data,
+        hoverTemplate:
+          '%{customdata[0]}: %{customdata[2]:,.0f} Mm²<extra></extra>',
+      });
+    }
+
     return newSchema;
   };
 
