@@ -26,8 +26,6 @@ class Edit extends Component {
   render() {
     return (
       <div className={cx('block', { selected: this.props.selected })}>
-        <div className="block-inner-wrapper" />
-
         <MaesViewerView data={this.props.data} />
 
         <SidebarPortal selected={this.props.selected}>
