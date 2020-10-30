@@ -54,7 +54,7 @@
 
 } */
 
-.js-plotly-plot {
+.maes-viewer-grid .js-plotly-plot {
   /* this would have been overriden by inline CSS inside the react-plotly.js
   component if it was not marked !important */
   /* this rule is needed to make the small charts inside the MAES Viewer
