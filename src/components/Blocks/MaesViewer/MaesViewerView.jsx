@@ -42,9 +42,14 @@ const View = ({ data, provider_data, id, ...rest }) => {
   const [multiCharts, setMultiCharts] = React.useState([]);
   React.useEffect(() => {
     if (provider_data) {
-      setMultiCharts(makeChartTiles(provider_data, focusOn, focusEcosystem));
+      const { hoverTemplate } = data;
+      setMultiCharts(
+        makeChartTiles(provider_data, focusOn, focusEcosystem, {
+          hoverTemplate,
+        }),
+      );
     }
-  }, [provider_data, focusOn, focusEcosystem]);
+  }, [provider_data, focusOn, focusEcosystem, data]);
 
   return (
     <div className={cx('block align', data.align)}>
