@@ -1,4 +1,5 @@
 import React from 'react';
+import { defaultHoverTemplate } from './constants';
 
 const MaesViewerSchema = () => ({
   title: 'Edit MAES Viewer',
@@ -35,9 +36,10 @@ const MaesViewerSchema = () => ({
     },
     hoverTemplate: {
       title: 'Hover template',
-      // description: 'blabl',
       description: (
         <div>
+          {'You can use %{country}, %{km2} and %{mm2}.'}
+          <br />
           See{' '}
           <a
             target="_blank"
@@ -48,8 +50,7 @@ const MaesViewerSchema = () => ({
           </a>
         </div>
       ),
-      defaultValue:
-        '%{customdata[0]}: %{customdata[2]:,.0f} Mm²<extra></extra>',
+      defaultValue: defaultHoverTemplate,
     },
   },
 
