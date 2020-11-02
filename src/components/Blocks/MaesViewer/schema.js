@@ -1,3 +1,5 @@
+import React from 'react';
+
 const MaesViewerSchema = {
   title: 'Edit MAES Viewer',
 
@@ -33,8 +35,21 @@ const MaesViewerSchema = {
     },
     hoverTemplate: {
       title: 'Hover template',
-      defaultValue:
-        '%{customdata[0]}: %{customdata[2]:,.0f} Mm²<extra></extra>',
+      description: (
+        <div>
+          {'You can use %{country}, %{km2} and %{mm2}.'}
+          <br />
+          See{' '}
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://github.com/d3/d3-3.x-api-reference/blob/master/Formatting.md#d3_format"
+          >
+            D3 format documentation
+          </a>
+        </div>
+      ),
+      defaultValue: '%{country}: %{mm2:,.0f} Mm²<extra></extra>',
     },
   },
 

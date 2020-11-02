@@ -24,8 +24,7 @@ class Edit extends Component {
     if (this.props.data && !this.props.data.hoverTemplate) {
       this.props.onChangeBlock(this.props.block, {
         ...this.props.data,
-        hoverTemplate:
-          '%{customdata[0]}: %{customdata[2]:,.0f} Mm²<extra></extra>',
+        hoverTemplate: '%{country}: %{mm2:,.0f} Mm²<extra></extra>',
       });
     }
 

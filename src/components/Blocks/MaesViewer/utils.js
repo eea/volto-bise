@@ -88,7 +88,13 @@ export function mapToAllEU(provider_data, byLevel) {
   return { EUByLevel, EUByLevelPercents };
 }
 
-export function makeTrace(level, levelData, index, focusOn, { hoverTemplate }) {
+export function makeTrace(
+  level,
+  levelData,
+  index,
+  focusOn,
+  { hoverTemplate = '%{country}: %{mm2:,.0f} Mm²<extra></extra>' },
+) {
   const data = [
     ...Object.entries(levelData).filter(([k, v]) => k !== focusOn),
     [focusOn, levelData[focusOn]],
@@ -124,9 +130,10 @@ export function makeTrace(level, levelData, index, focusOn, { hoverTemplate }) {
       '#182844',
     ],
   };
-  const ht =
-    hoverTemplate ||
-    '%{customdata[0]}: %{customdata[2]:,.0f} Mm²<extra></extra>';
+  const ht = hoverTemplate
+    .replace(/\{(.*?)country(.*?)\}/, '{$1customdata[0]$2}')
+    .replace(/\{(.*?)km2(.*?)\}/, '{$1customdata[1]$2}')
+    .replace(/\{(.*?)mm2(.*?)\}/, '{$1customdata[2]$2}');
   const res = {
     x,
     y,
