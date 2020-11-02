@@ -19,7 +19,7 @@
   right: auto;
   left: 0;
   top: 0;
-  z-index: 1030;
+  z-index: 2;
   min-height: 60px;
   width: 100%;
   max-width: 100vw;
@@ -27,9 +27,14 @@
   border: 1px solid #eee;
   border-width: 0 1px 1px 1px;
 
+  @media only screen and (max-width: 768px) {
+    z-index: 1000;
+  }
+
   .ui.vertical.segment.breadcrumbs {
     top: 80px;
   }
+
 }
 
 @media only screen and (max-width: 1654px) {

@@ -3,19 +3,6 @@
   padding-top: 0;
 }
 
-#toolbar,
-#sidebar {
-  z-index: 1500 !important;
-}
-
-aside.sidebar-container {
-  z-index: 1600 !important;
-}
-
-.ui.dimmer {
-  z-index: 1700 !important;
-}
-
 #page-add,
 #page-edit {
   .DraftEditor-root h1 {
@@ -23,13 +10,17 @@ aside.sidebar-container {
  }
 }
 
+#view {
+  .documentFirstHeading {
+    border-bottom: none !important;
+    &:before {
+      border-bottom: none !important;
+    }
+  }
+}
+
 .documentFirstHeading {
   margin-top: 0.5em !important;
-  border-bottom: none;
-
-  &:before {
-    border-bottom: none;
-  }
 }
 
 p > span:empty {

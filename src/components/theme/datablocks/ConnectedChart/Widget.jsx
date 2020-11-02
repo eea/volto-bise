@@ -37,7 +37,7 @@ class ModalChartEditor extends Component {
         <Modal.Actions>
           <Grid>
             <Grid.Row>
-              <Grid.Column width="8">
+              <Grid.Column computer={8} tablet={12}>
                 <PickProvider
                   title="Select data source"
                   onChange={(id, provider_url) => {
@@ -52,8 +52,9 @@ class ModalChartEditor extends Component {
                   showReload={true}
                 />
               </Grid.Column>
-              <Grid.Column width="4">
+              <Grid.Column computer={4} tablet={12}>
                 <Button
+                  primary
                   floated="right"
                   onClick={() => this.props.onChange(this.state.value)}
                 >

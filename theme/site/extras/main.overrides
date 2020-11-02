@@ -25,21 +25,6 @@ body {
   flex-direction: column;
 }
 
-.documentFirstHeading {
-  position: relative;
-  border-bottom: 2px solid @purpleBackground;
-
-  &::before {
-    position: absolute;
-    bottom: -3px;
-    left: 0;
-    width: 30px;
-    height: 0;
-    border-bottom: 3px solid @pink;
-    content: '';
-  }
-}
-
 .documentDescription {
   color: #5d7a8e;
   font-size: 1.125rem;
