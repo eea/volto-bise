@@ -26,9 +26,7 @@ class Edit extends Component {
   render() {
     const schema = this.getSchema();
     return (
-      <div className="block">
-        <div className="block-inner-wrapper" />
-
+      <>
         <SimpleDataTableView data={this.props.data} />
 
         <SidebarPortal selected={this.props.selected}>
@@ -44,7 +42,7 @@ class Edit extends Component {
             formData={this.props.data}
           />
         </SidebarPortal>
-      </div>
+      </>
     );
   }
 }

@@ -24,9 +24,9 @@ const Edit = (props) => {
   );
 
   return (
-    <div className="block selected">
-      <div className="block-inner-wrapper" />
+    <>
       <DataQueryFilterView {...props} mode="edit" />
+
       <SidebarPortal selected={selected}>
         <InlineForm
           schema={tweakSchema(schema)}
@@ -40,7 +40,7 @@ const Edit = (props) => {
           formData={data}
         />
       </SidebarPortal>
-    </div>
+    </>
   );
 };
 

@@ -11,6 +11,7 @@ import {
   selectTheme,
 } from '@plone/volto/components/manage/Widgets/SelectStyling';
 import { makeChartTiles } from './utils';
+import './style.css';
 
 const Select = loadable(() => import('react-select'));
 const LoadablePlot = loadable(() => import('react-plotly.js'));
@@ -61,48 +62,46 @@ const View = ({ data, provider_data, id, ...rest }) => {
         <h3>{data.title}</h3>
         {/* <div className="block-wrapper">{JSON.stringify(data)}</div> */}
 
-        <Grid columns={12}>
-          <Grid.Row>
-            <Grid.Column largeScreen={4} tablet={12} mobile={12}>
-              {provider_data && (
-                <SelectCountry
-                  data={provider_data}
-                  id={`${id}-select-country`}
-                  onChange={(data) => {
-                    setFocusOn(data.value);
-                  }}
-                  defaultValue={
-                    focusOn ? { value: focusOn, label: focusOn } : null
-                  }
-                />
-              )}
-              <div>{serializeNodes(data.description)}</div>
-            </Grid.Column>
-            <Grid.Column largeScreen={8} tablet={12} mobile={12}>
-              {provider_data
-                ? multiCharts.map((chart, index) => {
-                    return (
-                      <>
-                        <div>{chart.title}</div>
-                        <LoadablePlot
-                          key={index}
-                          data={chart.data}
-                          layout={chart.layout}
-                          frames={[]}
-                          config={{
-                            displayModeBar: false,
-                            editable: false,
-                            responsive: false,
-                            // useResizeHandler: true,
-                          }}
-                        />
-                      </>
-                    );
-                  })
-                : ''}
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+        <div class="maes-viewer-grid">
+          <div class="maes-viewer-select">
+            {provider_data && (
+              <SelectCountry
+                data={provider_data}
+                id={`${id}-select-country`}
+                onChange={(data) => {
+                  setFocusOn(data.value);
+                }}
+                defaultValue={
+                  focusOn ? { value: focusOn, label: focusOn } : null
+                }
+              />
+            )}
+            <div>{serializeNodes(data.description)}</div>
+          </div>
+          <div class="maes-viewer-charts">
+            {provider_data
+              ? multiCharts.map((chart, index) => {
+                  return (
+                    <>
+                      <div>{chart.title}</div>
+                      <LoadablePlot
+                        key={index}
+                        data={chart.data}
+                        layout={chart.layout}
+                        frames={[]}
+                        config={{
+                          displayModeBar: false,
+                          editable: false,
+                          responsive: true,
+                        }}
+                        useResizeHandler={true}
+                      />
+                    </>
+                  );
+                })
+              : ''}
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MaesViewerSchema = {
+const MaesViewerSchema = () => ({
   title: 'Edit MAES Viewer',
 
   fieldsets: [
@@ -54,6 +54,6 @@ const MaesViewerSchema = {
   },
 
   required: ['provider_url'],
-};
+});
 
 export default MaesViewerSchema;

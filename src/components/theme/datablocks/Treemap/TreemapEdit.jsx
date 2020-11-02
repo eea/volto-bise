@@ -23,9 +23,7 @@ class Edit extends Component {
 
   render() {
     return (
-      <div className="block">
-        <div className="block-inner-wrapper" />
-
+      <>
         <TreemapView data={this.props.data} />
 
         <SidebarPortal selected={this.props.selected}>
@@ -41,7 +39,7 @@ class Edit extends Component {
             formData={this.props.data}
           />
         </SidebarPortal>
-      </div>
+      </>
     );
   }
 }

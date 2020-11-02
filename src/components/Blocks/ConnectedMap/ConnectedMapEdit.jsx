@@ -9,9 +9,7 @@ import SchemaProvider from './SchemaProvider';
 class Edit extends Component {
   render() {
     return (
-      <div className="block selected">
-        <div className="block-inner-wrapper" />
-
+      <>
         <ConnectedMapView data={this.props.data} />
 
         <SidebarPortal selected={this.props.selected}>
@@ -31,7 +29,7 @@ class Edit extends Component {
             )}
           </SchemaProvider>
         </SidebarPortal>
-      </div>
+      </>
     );
   }
 }

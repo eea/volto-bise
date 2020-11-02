@@ -1,0 +1,63 @@
+@media screen and (min-width: 1440px) {
+  .maes-viewer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+  }
+  .maes-viewer-select {
+    grid-column: 9/13;
+    grid-row: 1/2;
+  }
+  .maes-viewer-charts {
+    grid-column: 1/9; 
+    grid-row: 1/2;
+    overflow-x: auto;
+  }
+}
+
+/* @media screen and (max-width: 320px) {
+  .maes-viewer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    /* grid-template-columns: 1fr;
+  }
+  .maes-viewer-select {
+    grid-column: 1/13;
+    grid-row: 1/2;
+  }
+  .maes-viewer-charts {
+    grid-column: 1/13; 
+    grid-row: 2/3;
+  }
+} */
+
+@media screen and (max-width: 1440px) {
+  .maes-viewer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    /* grid-template-columns: 1fr; */
+  } 
+  .maes-viewer-select {
+    grid-column: 1/13;
+    grid-row: 1/2;
+  }
+  .maes-viewer-charts {
+    grid-column: 1/13; 
+    grid-row: 2/3;
+    overflow-x: auto;
+  }
+}
+/* 
+@media screen and (max-width: 1440px) {
+
+} */
+
+.maes-viewer-grid .js-plotly-plot {
+  /* this would have been overriden by inline CSS inside the react-plotly.js
+  component if it was not marked !important */
+  /* this rule is needed to make the small charts inside the MAES Viewer
+  responsive */
+  display: block !important;
+}

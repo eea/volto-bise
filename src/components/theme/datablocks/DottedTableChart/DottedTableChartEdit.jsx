@@ -40,9 +40,7 @@ class DottedTableChartEdit extends React.Component {
     const schema = this.getSchema();
 
     return (
-      <div className="block">
-        <div className="block-inner-wrapper" />
-
+      <>
         <DottedTableChartView {...this.props} />
 
         <SidebarPortal selected={selected}>
@@ -58,7 +56,7 @@ class DottedTableChartEdit extends React.Component {
             formData={data}
           />
         </SidebarPortal>
-      </div>
+      </>
     );
   }
 }
