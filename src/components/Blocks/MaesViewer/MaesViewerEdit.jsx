@@ -7,6 +7,7 @@ import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
 import MaesViewerSchema from './schema';
 import { connectBlockToProviderData } from 'volto-datablocks/hocs';
 import MaesViewerView from './MaesViewerView';
+import { defaultHoverTemplate } from './constants';
 
 class Edit extends Component {
   constructor(props) {
@@ -29,7 +30,7 @@ class Edit extends Component {
     if (this.props.data && !this.props.data.hoverTemplate) {
       this.props.onChangeBlock(this.props.block, {
         ...this.props.data,
-        hoverTemplate: '%{country}: %{mm2:,.0f} Mm²<extra></extra>',
+        hoverTemplate: defaultHoverTemplate,
       });
     }
 

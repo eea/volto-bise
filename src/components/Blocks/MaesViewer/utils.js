@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { defaultHoverTemplate } from './constants';
 
 export const colorscale = [
   'rgb(166,206,227)',
@@ -93,7 +94,7 @@ export function makeTrace(
   levelData,
   index,
   focusOn,
-  { hoverTemplate = '%{country}: %{mm2:,.0f} Mm²<extra></extra>' },
+  { hoverTemplate = defaultHoverTemplate },
 ) {
   const data = [
     ...Object.entries(levelData).filter(([k, v]) => k !== focusOn),
