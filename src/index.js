@@ -20,6 +20,7 @@ import ObjectListWidget from './components/Widgets/ObjectList';
 import AttachedImageWidget from './components/Widgets/AttachedImage';
 
 import blockdata from 'volto-bise/reducers/blockdata';
+import installRdfProxy from './rdf-proxy';
 
 import './slate-styles.css';
 import './box-styles.less';
@@ -106,6 +107,11 @@ export default (config) => {
     'marine.discomap.eea.europa.eu',
   ];
 
+  // config.settings.backendResourceMatch = [
+  //   ...(config.settings.backendResourceMatch || []),
+  //   (request) => request.path.match(/(.*)\/@@rdf/),
+  // ];
+
   config.views = {
     ...config.views,
     contentTypesViews: {
@@ -170,5 +176,6 @@ export default (config) => {
     installImageCards,
     installStyles,
     installFactsheetListingView,
+    installRdfProxy,
   ].reduce((acc, apply) => apply(acc), config);
 };
