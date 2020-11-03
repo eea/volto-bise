@@ -20,7 +20,6 @@ import ObjectListWidget from './components/Widgets/ObjectList';
 import AttachedImageWidget from './components/Widgets/AttachedImage';
 
 import blockdata from 'volto-bise/reducers/blockdata';
-import installRdfProxy from './rdf-proxy';
 
 import './slate-styles.css';
 import './box-styles.less';
@@ -176,6 +175,5 @@ export default (config) => {
     installImageCards,
     installStyles,
     installFactsheetListingView,
-    installRdfProxy,
   ].reduce((acc, apply) => apply(acc), config);
 };
