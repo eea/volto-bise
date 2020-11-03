@@ -1,20 +1,9 @@
-/**
- * Sitemap helper.
- * @module helpers/Sitemap
- */
-
 import superagent from 'superagent';
 import cookie from 'react-cookie';
 import { parse as parseUrl } from 'url';
 
 import { settings } from '~/config';
 
-/**
- * Get a resource image/file with authenticated (if token exist) API headers
- * @function getAPIResourceWithAuth
- * @param {Object} req Request object
- * @return {string} The response with the image
- */
 export const getAPIResourceWithAuth = (req) =>
   new Promise((resolve) => {
     const internalApiUrl = parseUrl(
@@ -50,7 +39,7 @@ export default (config) => {
         res.send(resource.body);
       });
     });
-    middleware.id = 'test-middleware';
+    middleware.id = 'rdf-proxy-middleware';
 
     config.settings.expressMiddleware = [
       ...config.settings.expressMiddleware,
