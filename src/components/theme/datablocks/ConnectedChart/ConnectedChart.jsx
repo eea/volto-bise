@@ -45,6 +45,12 @@ function ConnectedChart(props) {
       ...layout.font,
       family: settings.chartLayoutFontFamily || "'Roboto', sans-serif",
     },
+    margin: {
+      l: 40, // default: 80
+      r: 40, // default: 80
+      b: 40, // default: 80
+      t: 50, // default: 100
+    },
   };
 
   if (layout.xaxis)
