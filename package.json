@@ -18,7 +18,7 @@
   "homepage": "https://github.com/eea/volto-bise#readme",
   "customizationsPath": "src/customizations",
   "dependencies": {
-    "plotly.js": "1.35.0",
+    "plotly.js": "1.55.2",
     "react-plotly.js": "2.5.0"
   }
 }
