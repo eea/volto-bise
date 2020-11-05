@@ -1,16 +1,18 @@
 import React from 'react';
 import cx from 'classnames';
-import { connectBlockToProviderData } from 'volto-datablocks/hocs';
-import { Grid } from 'semantic-ui-react';
 import loadable from '@loadable/component';
-import { serializeNodes } from 'volto-slate/editor/render';
+
 import {
   customSelectStyles,
   DropdownIndicator,
   Option,
   selectTheme,
 } from '@plone/volto/components/manage/Widgets/SelectStyling';
+
+import { serializeNodes } from 'volto-slate/editor/render';
+import { connectBlockToProviderData } from 'volto-datablocks/hocs';
 import { makeChartTiles } from './utils';
+
 import './style.css';
 
 const Select = loadable(() => import('react-select'));
