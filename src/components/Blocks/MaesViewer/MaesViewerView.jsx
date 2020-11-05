@@ -13,15 +13,18 @@ import {
 import { makeChartTiles } from './utils';
 import './style.css';
 
-const Select = loadable(() => import('react-select'));
-const LoadablePlot = loadable(() => import('react-plotly.js'));
+const LoadableSelect = loadable(() => import('react-select'));
+const LoadablePlotly = loadable.lib(() => import('plotly.js/lib/index-basic'));
+const LoadableReactPlotly = loadable.lib(() =>
+  import('react-plotly.js/factory'),
+);
 
 const SelectCountry = (props) => {
   const { id, onChange, data } = props;
   const countries = Array.from(new Set(data['Country_name']));
   const options = countries.map((c) => ({ label: c, value: c }));
   return (
-    <Select
+    <LoadableSelect
       id={`field-${id}`}
       name={id}
       className="react-select-container"
@@ -85,27 +88,38 @@ const View = ({ data, provider_data, id, ...rest }) => {
             <div>{serializeNodes(data.description)}</div>
           </div>
           <div class="maes-viewer-charts">
-            {provider_data
-              ? multiCharts.map((chart, index) => {
-                  return (
-                    <>
-                      <div>{chart.title}</div>
-                      <LoadablePlot
-                        key={index}
-                        data={chart.data}
-                        layout={chart.layout}
-                        frames={[]}
-                        config={{
-                          displayModeBar: false,
-                          editable: false,
-                          responsive: true,
-                        }}
-                        useResizeHandler={true}
-                      />
-                    </>
-                  );
-                })
-              : ''}
+            <LoadablePlotly>
+              {(Plotly) => {
+                return (
+                  <LoadableReactPlotly>
+                    {({ default: createPlotlyComponent }) => {
+                      const Plot = createPlotlyComponent(Plotly);
+                      return provider_data
+                        ? multiCharts.map((chart, index) => {
+                            return (
+                              <>
+                                <div>{chart.title}</div>
+                                <Plot
+                                  key={index}
+                                  data={chart.data}
+                                  layout={chart.layout}
+                                  frames={[]}
+                                  config={{
+                                    displayModeBar: false,
+                                    editable: false,
+                                    responsive: true,
+                                  }}
+                                  useResizeHandler={true}
+                                />
+                              </>
+                            );
+                          })
+                        : '';
+                    }}
+                  </LoadableReactPlotly>
+                );
+              }}
+            </LoadablePlotly>
           </div>
         </div>
       </div>
