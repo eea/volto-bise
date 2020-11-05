@@ -106,6 +106,11 @@ export default (config) => {
     'marine.discomap.eea.europa.eu',
   ];
 
+  // config.settings.backendResourceMatch = [
+  //   ...(config.settings.backendResourceMatch || []),
+  //   (request) => request.path.match(/(.*)\/@@rdf/),
+  // ];
+
   config.views = {
     ...config.views,
     contentTypesViews: {

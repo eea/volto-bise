@@ -1,36 +1,7 @@
-@media screen and (min-width: 1440px) {
-  .maes-viewer-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto;
-  }
-  .maes-viewer-select {
-    grid-column: 9/13;
-    grid-row: 1/2;
-  }
-  .maes-viewer-charts {
-    grid-column: 1/9; 
-    grid-row: 1/2;
-    overflow-x: hidden;
-  }
-}
-
-@media screen and (max-width: 1440px) {
-  .maes-viewer-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto auto;
-    /* grid-template-columns: 1fr; */
-  } 
-  .maes-viewer-select {
-    grid-column: 1/13;
-    grid-row: 1/2;
-  }
-  .maes-viewer-charts {
-    grid-column: 1/13; 
-    grid-row: 2/3;
-    overflow-x: hidden;
-  }
+.maes-viewer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  margin: 3em 0;
 }
 
 .maes-viewer-grid .js-plotly-plot {
@@ -39,4 +10,55 @@
   /* this rule is needed to make the small charts inside the MAES Viewer
   responsive */
   display: block !important;
+}
+
+.maes-select-label {
+  font-weight: bold;
+  font-size: 19px;
+  margin-bottom: 1rem;
+  display: inline-block;
+}
+
+@media only screen and (min-width: 1440px) {
+  .maes-viewer-grid {
+    column-gap: 2rem;
+  }
+
+  .maes-viewer-select {
+    grid-column: 9/13;
+    grid-row: 1/2;
+  }
+
+  .maes-viewer-charts {
+    grid-column: 1/9;
+    grid-row: 1/2;
+    overflow-x: hidden;
+  }
+}
+
+@media only screen and (max-width: 1440px) {
+  .maes-viewer-grid {
+    grid-template-rows: auto auto;
+    /* grid-template-columns: 1fr; */
+  }
+
+  .maes-viewer-select {
+    grid-column: 1/5;
+    grid-row: 1/2;
+    margin-bottom: 3em;
+  }
+
+  .maes-viewer-charts {
+    grid-column: 1/13;
+    grid-row: 2/3;
+    overflow-x: hidden;
+  }
+}
+
+@media only screen and (max-width: 1282px) {
+  .maes-viewer-select {
+    grid-column: 1/13;
+    width: 100%;
+    max-width: 320px;
+  }
 }

@@ -33,6 +33,7 @@ const SelectCountry = (props) => {
       components={{ DropdownIndicator, Option }}
       defaultValue={null}
       onChange={onChange}
+      placeholder="Select country..."
     />
   );
 };
@@ -65,16 +66,21 @@ const View = ({ data, provider_data, id, ...rest }) => {
         <div class="maes-viewer-grid">
           <div class="maes-viewer-select">
             {provider_data && (
-              <SelectCountry
-                data={provider_data}
-                id={`${id}-select-country`}
-                onChange={(data) => {
-                  setFocusOn(data.value);
-                }}
-                defaultValue={
-                  focusOn ? { value: focusOn, label: focusOn } : null
-                }
-              />
+              <>
+                <span className="maes-select-label">
+                  Compare countries across Europe
+                </span>
+                <SelectCountry
+                  data={provider_data}
+                  id={`${id}-select-country`}
+                  onChange={(data) => {
+                    setFocusOn(data.value);
+                  }}
+                  defaultValue={
+                    focusOn ? { value: focusOn, label: focusOn } : null
+                  }
+                />
+              </>
             )}
             <div>{serializeNodes(data.description)}</div>
           </div>
