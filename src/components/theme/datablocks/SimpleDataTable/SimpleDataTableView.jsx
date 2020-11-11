@@ -32,7 +32,7 @@ const selectedColumnValidator = (allColDefs) => (colDef) => {
 
 const getCellValue = (tableData, colDef, rowIndex) => {
   return typeof colDef === 'string' ? (
-    tableData[colDef]?.[rowIndex]
+    <span>tableData[colDef]?.[rowIndex]</span>
   ) : (
     <FormattedValue
       textTemplate={colDef.textTemplate}
@@ -92,9 +92,7 @@ const SimpleDataTableView = (props) => {
                 ))}
               </Table.Row>
             </Table.Header>
-          ) : (
-            ''
-          )}
+          ) : null}
           <Table.Body>
             {Array(Math.max(0, row_size))
               .fill()
