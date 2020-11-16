@@ -2,6 +2,8 @@
 
 ## Import the data from snapshots into ES
 
+Download the script from [this gist](https://gist.github.com/tiberiuichim/7453edda00b2c8eabeb8b8070f648e41) and name its file `es.py`, make it executable (`$ chmod u+x es.py`), then run:
+
 ```bash
 $ sudo chown -R 105 snapshots/
 $ ./es.py localhost init
