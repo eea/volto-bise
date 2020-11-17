@@ -1,6 +1,7 @@
 import React from 'react';
 import schema from './schema';
-import { SidebarPortal, InlineForm } from '@plone/volto/components';
+import { SidebarPortal } from '@plone/volto/components';
+import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
 import DataCatalogueView from './DataCatalogueView';
 
 const DataCatalogueEdit = (props) => {

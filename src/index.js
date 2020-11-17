@@ -5,7 +5,7 @@ import {
   installKeyFacts,
   installMaesViewer,
   installConnectedMap,
-  // installDataCatalogue,
+  installDataCatalogue,
   installTabsBlockExtensions,
   installDataComponents,
   installImageCards,
@@ -166,7 +166,7 @@ export default (config) => {
   ];
 
   return [
-    // installDataCatalogue,
+    installDataCatalogue,
     installKeyFacts,
     installMaesViewer,
     installConnectedMap,
