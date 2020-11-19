@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import loadable from '@loadable/component';
-import { Placeholder } from 'semantic-ui-react';
-import { settings } from '~/config';
-import { flattenToAppURL } from '@plone/volto/helpers';
 import { Icon } from '@plone/volto/components';
 
 import leftSVG from '@plone/volto/icons/left-key.svg';
@@ -10,17 +7,12 @@ import rightSVG from '@plone/volto/icons/right-key.svg';
 import cx from 'classnames';
 
 import 'slick-carousel/slick/slick.css';
+import { fixUrl, getPath } from 'volto-bise/utils';
+
+// import { Placeholder } from 'semantic-ui-react';
 // import 'slick-carousel/slick/slick-theme.css';
 
 const Slider = loadable(() => import('react-slick'));
-
-export const getPath = url =>
-  url.startsWith('http') ? new URL(url).pathname : url;
-
-export const fixUrl = url =>
-  (url || '').includes(settings.apiPath)
-    ? `${flattenToAppURL(url.replace('/api', ''))}/@@images/image`
-    : `${url.replace('/api', '')}/@@images/image`;
 
 class Carousel extends Component {
   constructor(props) {
@@ -41,17 +33,21 @@ class Carousel extends Component {
     require('./css/carousel.less');
   }
 
-  renderSlide = cards => {
+  renderSlide = (cards) => {
     return cards.map((card, index) => {
       return (
         <div className="slider-slide" key={index}>
           <div
             className="slide-img"
-            style={{
-              backgroundImage: card.attachedimage
-                ? `url(${fixUrl(getPath(card.attachedimage))})`
-                : '',
-            }}
+            style={
+              card.attachedimage
+                ? {
+                    backgroundImage: `url(${fixUrl(
+                      getPath(card.attachedimage),
+                    )})`,
+                  }
+                : {}
+            }
           />
           <div className="slide-overlay" />
           <div className="ui container">
@@ -124,7 +120,7 @@ class Carousel extends Component {
           })}
         >
           <div className="slider-wrapper">
-            <Slider {...settings} ref={slider => (this.slider = slider)}>
+            <Slider {...settings} ref={(slider) => (this.slider = slider)}>
               {this.renderSlide(cards)}
             </Slider>
             {this.renderSlideArrows()}

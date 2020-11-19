@@ -1,13 +1,15 @@
+import cx from 'classnames';
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { settings } from '~/config';
 import { flattenToAppURL } from '@plone/volto/helpers';
 import { Grid } from 'semantic-ui-react';
 import { LazyLoadComponent } from 'react-lazy-load-image-component';
-import cx from 'classnames';
 
-export const getPath = (url) =>
-  url.startsWith('http') ? new URL(url).pathname : url;
+import { fixUrl, getPath } from 'volto-bise/utils';
+
+// export const getPath = (url) =>
+//   url.startsWith('http') ? new URL(url).pathname : url;
 
 // TODO: the approach for the URL path generation is not correct, it does not
 // work on local;
@@ -32,11 +34,16 @@ export const Card = (props) => {
             <LazyLoadComponent>
               <div
                 className="card-image"
-                style={{
-                  backgroundImage: `url(${thumbUrl(getPath(attachedimage))})`,
-                }}
-              >
-              </div>
+                style={
+                  attachedimage
+                    ? {
+                        backgroundImage: `url(${fixUrl(
+                          getPath(attachedimage),
+                        )})`,
+                      }
+                    : {}
+                }
+              ></div>
             </LazyLoadComponent>
             <span className="card-title">{title}</span>
           </Link>
@@ -49,8 +56,7 @@ export const Card = (props) => {
               style={{
                 backgroundImage: `url(${thumbUrl(getPath(attachedimage))})`,
               }}
-            >
-            </div>
+            ></div>
           </LazyLoadComponent>
           <span className="card-title">{title}</span>
         </>

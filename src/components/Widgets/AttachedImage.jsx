@@ -1,65 +1,24 @@
 import { readAsDataURL } from 'promise-file-reader';
 import { connect } from 'react-redux';
-import {
-  Dimmer,
-  Form,
-  Grid,
-  Loader,
-  Label,
-  Item,
-  Icon as IconOld,
-  Message,
-} from 'semantic-ui-react';
+import { Dimmer, Loader, Item, Message } from 'semantic-ui-react';
 import Dropzone from 'react-dropzone';
 import React, { Component } from 'react';
-import { Icon as VoltoIcon } from '@plone/volto/components';
-import { defineMessages } from 'react-intl';
-import { map } from 'lodash';
 import { flattenToAppURL, getBaseUrl } from '@plone/volto/helpers';
 
 import imageBlockSVG from '@plone/volto/components/manage/Blocks/Image/block-image.svg';
 import { createContent } from '@plone/volto/actions';
+import { FormFieldWrapper } from '@plone/volto/components';
+import { v4 as uuid } from 'uuid';
 
 import { settings } from '~/config';
-
-const messages = defineMessages({
-  default: {
-    id: 'Default',
-    defaultMessage: 'Default',
-  },
-  idTitle: {
-    id: 'Short Name',
-    defaultMessage: 'Short Name',
-  },
-  idDescription: {
-    id: 'Used for programmatic access to the fieldset.',
-    defaultMessage: 'Used for programmatic access to the fieldset.',
-  },
-  title: {
-    id: 'Title',
-    defaultMessage: 'Title',
-  },
-  description: {
-    id: 'Description',
-    defaultMessage: 'Description',
-  },
-  required: {
-    id: 'Required',
-    defaultMessage: 'Required',
-  },
-  delete: {
-    id: 'Delete',
-    defaultMessage: 'Delete',
-  },
-});
 
 export const oldThumbUrl = (url) =>
   (url || '').includes(settings.apiPath)
     ? `${flattenToAppURL(url)}/@@images/image/thumb`
     : url;
 
-export const thumbUrl = (content) => {
-  return content?.image?.scales?.thumb?.download || '';
+export const thumbUrl = (url, preview_size) => {
+  return `${url}/@@images/image/${preview_size}`;
 };
 
 export class UnconnectedAttachedImageWidget extends Component {
@@ -70,6 +29,7 @@ export class UnconnectedAttachedImageWidget extends Component {
     super(props);
     this.state = {
       uploading: false,
+      uid: uuid(),
     };
 
     this.onDrop = this.onDrop.bind(this);
@@ -83,15 +43,15 @@ export class UnconnectedAttachedImageWidget extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (
-      prevProps.request.loading &&
-      this.props.request.loaded &&
+      prevProps.requests?.[this.state.uid]?.loading &&
+      this.props.requests?.[this.state.uid]?.loaded &&
       this.state.uploading
     ) {
       this.setState({
         uploading: false,
       });
 
-      const url = this.props.content['@id'];
+      const url = this.props.requests[this.state.uid].data['@id'];
       this.props.onChange(this.props.id, flattenToAppURL(url));
     }
   }
@@ -106,9 +66,8 @@ export class UnconnectedAttachedImageWidget extends Component {
     acceptedFiles.forEach((file) => {
       const p = readAsDataURL(file).then((data) => {
         const fields = data.match(/^data:(.*);(.*),(.*)$/);
-        // console.log('fields', fields);
 
-        return this.props.createContent(getBaseUrl(this.props.pathname), {
+        const payload = {
           '@type': 'Image',
           title: file.name,
           image: {
@@ -117,7 +76,12 @@ export class UnconnectedAttachedImageWidget extends Component {
             'content-type': fields[1],
             filename: file.name,
           },
-        });
+        };
+        return this.props.createContent(
+          getBaseUrl(this.props.pathname),
+          payload,
+          this.state.uid,
+        );
       });
       promises.push(p);
     });
@@ -130,151 +94,43 @@ export class UnconnectedAttachedImageWidget extends Component {
   }
 
   render() {
-    const {
-      id,
-      title,
-      required,
-      description,
-      error,
-      value,
-      onEdit,
-      onDelete,
-      intl,
-      icon,
-      iconAction,
-      fieldSet,
-      pathname,
-      content,
-      request,
-    } = this.props;
-
-    const schema = {
-      fieldsets: [
-        {
-          id: 'default',
-          title: intl.formatMessage(messages.default),
-          fields: ['title', 'id', 'description', 'required'],
-        },
-      ],
-      properties: {
-        id: {
-          type: 'string',
-          title: intl.formatMessage(messages.idTitle),
-          description: intl.formatMessage(messages.idDescription),
-        },
-        title: {
-          type: 'string',
-          title: intl.formatMessage(messages.title),
-        },
-        description: {
-          type: 'string',
-          widget: 'textarea',
-          title: intl.formatMessage(messages.description),
-        },
-        required: {
-          type: 'boolean',
-          title: intl.formatMessage(messages.required),
-        },
-      },
-      required: ['id', 'title'],
-    };
-
-    // console.log('o', { value, tu: oldThumbUrl(value), fu: flattenToAppURL(oldThumbUrl(value) || ''), pathname, content, request });
-
-
-    // console.log('d', { x: content.image.scales.thumb.download });
+    const { value, preview_size = 'thumb' } = this.props;
 
     return (
-      <Form.Field
-        inline
-        required={required}
-        error={(error || []).length > 0}
-        className={description ? 'help text' : 'text'}
-        id={`${fieldSet || 'field'}-${id}`}
-      >
-        <Grid>
-          <Grid.Row stretched>
-            <Grid.Column width="4">
-              <div className="wrapper">
-                <label htmlFor={`field-${id}`}>
-                  {onEdit && (
-                    <i
-                      aria-hidden="true"
-                      className="grey bars icon drag handle"
-                    />
+      <FormFieldWrapper {...this.props}>
+        <div>
+          <Dropzone onDrop={this.onDrop} className="dropzone">
+            {({ getRootProps, getInputProps }) => {
+              return (
+                <Message {...getRootProps()}>
+                  {this.state.uploading && (
+                    <Dimmer active>
+                      <Loader indeterminate>Uploading</Loader>
+                    </Dimmer>
                   )}
-                  {title}
-                </label>
-              </div>
-            </Grid.Column>
-            <Grid.Column width="8">
-              {onEdit && (
-                <div className="toolbar">
-                  <button
-                    className="item ui noborder button"
-                    onClick={() => onEdit(id, schema)}
-                  >
-                    <IconOld name="write square" size="large" color="blue" />
-                  </button>
-                  <button
-                    aria-label={this.props.intl.formatMessage(messages.delete)}
-                    className="item ui noborder button"
-                    onClick={() => onDelete(id)}
-                  >
-                    <IconOld name="close" size="large" color="red" />
-                  </button>
-                </div>
-              )}
-
-              {value ? (
-                <Item>
-                  <Item.Image src={flattenToAppURL(thumbUrl(content))} />
-                </Item>
-              ) : (
-                <div>
-                  <Dropzone onDrop={this.onDrop} className="dropzone">
-                    {({ getRootProps, getInputProps }) => {
-                      return (
-                        <Message {...getRootProps()}>
-                          {this.state.uploading && (
-                            <Dimmer active>
-                              <Loader indeterminate>Uploading</Loader>
-                            </Dimmer>
-                          )}
-
-                          <center>
-                            <img src={imageBlockSVG} alt="" />
-                            <input {...getInputProps()} />
-                            <div className="discreet">Click or drag file here</div>
-                          </center>
-                        </Message>
-                      );
-                    }}
-                  </Dropzone>
-                </div>
-              )}
-
-              {map(error, (message) => (
-                <Label key={message} basic color="red" pointing>
-                  {message}
-                </Label>
-              ))}
-              {icon && iconAction && (
-                <button onClick={iconAction}>
-                  <VoltoIcon name={icon} size="18px" />
-                </button>
-              )}
-            </Grid.Column>
-          </Grid.Row>
-          {description && (
-            <Grid.Row stretched>
-              <Grid.Column stretched width="12">
-                <p className="help">{description}</p>
-              </Grid.Column>
-            </Grid.Row>
-          )}
-        </Grid>
-      </Form.Field>
+                  <center>
+                    <Item>
+                      <input {...getInputProps()} />
+                      {value ? (
+                        <Item.Image
+                          src={flattenToAppURL(thumbUrl(value, preview_size))}
+                        />
+                      ) : (
+                        <>
+                          <img src={imageBlockSVG} alt="" />
+                          <div className="discreet">
+                            Click or drag file here
+                          </div>
+                        </>
+                      )}
+                    </Item>
+                  </center>
+                </Message>
+              );
+            }}
+          </Dropzone>
+        </div>
+      </FormFieldWrapper>
     );
   }
 }
@@ -282,8 +138,7 @@ export class UnconnectedAttachedImageWidget extends Component {
 export default connect(
   (state, props) => ({
     pathname: state.router.location.pathname,
-    content: state.content.data,
-    request: state.content.create,
+    requests: state.content.subrequests,
   }),
   {
     createContent,
