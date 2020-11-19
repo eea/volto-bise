@@ -241,3 +241,8 @@ button {
 div#view .ui.container > * {
   margin-bottom: 1.5rem;
 }
+
+// Overrides for the search catalog
+input.sk-search-box__text::placeholder {
+  color: gray !important;
+}
