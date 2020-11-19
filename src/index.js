@@ -165,6 +165,12 @@ export default (config) => {
     },
   ];
 
+  delete config.blocks.blocksConfig.data_connected_block;
+  delete config.blocks.blocksConfig.auto_select_parameter;
+  delete config.blocks.blocksConfig.discodata_connector_block;
+  delete config.blocks.blocksConfig.discodata_sql_builder;
+  delete config.blocks.blocksConfig.discodata_table_block;
+
   return [
     installDataCatalogue,
     installKeyFacts,
