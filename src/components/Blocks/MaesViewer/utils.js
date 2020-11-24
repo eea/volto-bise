@@ -32,10 +32,24 @@ const mapLongLevelNameToShort = (x) => {
   return obj[x] || x;
 };
 
+const filterGettingOriginalIndices = (a, fn) => {
+  return a
+    .map((c, i) => [c, i])
+    .filter(([c, i]) => fn(c, i))
+    .map(([, i]) => i);
+};
+
 class ProviderData {
   static ecosystemColumnName = 'Ecosystem_level2';
   static countryColumnName = 'Country_name';
 
+  /**
+   * Takes an object like:
+   *
+   * { Area: [...], Source: [...] }
+   *
+   * where each item in the lists represents a table column value.
+   */
   constructor(data) {
     this.data = data;
   }
@@ -100,36 +114,23 @@ class ProviderData {
     const filtersResults = filters.map((f) => f(this.data, index));
     return filtersResults.every((t) => t);
   }
-}
 
-const filterGettingOriginalIndices = (a, fn) => {
-  return a
-    .map((c, i) => [c, i])
-    .filter(([c, i]) => fn(c, i))
-    .map(([, i]) => i);
-};
-
-/**
- * Filters data. Given an object like:
- *
- * { Area: [...], Source: [...] }
- *
- * where each item in the list represents a table column value, returns a list
- * of objects, where each object represents the data for that index
- *
- */
-export function query(provider_data, country, filters) {
-  const pd = new ProviderData(provider_data);
-
-  const countriesColumn = pd.getCountriesColumn();
-  const filteredIndices = filterGettingOriginalIndices(
-    countriesColumn,
-    (c, i) => {
-      return c === country && pd.rowSatisfiesFilters(i, filters);
-    },
-  );
-
-  return filteredIndices.map((i) => pd.createRowObject(i));
+  /**
+   * Filters the data. Given a country name and an array of filter functions
+   * which receive two parameters, provider_data and rowIndex, returns an array
+   * of objects containing the data for each matching row in the DataProvider.
+   */
+  query(country, filters) {
+    const countriesColumn = this.getCountriesColumn();
+    const filteredIndices = filterGettingOriginalIndices(
+      countriesColumn,
+      (c, i) => {
+        return c === country && this.rowSatisfiesFilters(i, filters);
+      },
+    );
+    const rowObjects = filteredIndices.map((i) => this.createRowObject(i));
+    return rowObjects;
+  }
 }
 
 export function mapByLevel(provider_data) {
@@ -141,7 +142,7 @@ export function mapByLevel(provider_data) {
     const filters = [
       (provider_data, index) => pd.hasEcosystemAtRowIndex(index, level),
     ];
-    const country_data = query(pd.data, country, filters);
+    const country_data = pd.query(country, filters);
     byLevel[level][country] = country_data;
   });
 
