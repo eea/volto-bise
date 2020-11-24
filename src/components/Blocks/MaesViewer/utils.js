@@ -102,6 +102,13 @@ class ProviderData {
   }
 }
 
+const filterGettingOriginalIndices = (a, fn) => {
+  return a
+    .map((c, i) => [c, i])
+    .filter(([c, i]) => fn(c, i))
+    .map(([, i]) => i);
+};
+
 /**
  * Filters data. Given an object like:
  *
@@ -115,18 +122,16 @@ export function query(provider_data, country, filters) {
   const pd = new ProviderData(provider_data);
 
   const countriesColumn = pd.getCountriesColumn();
-  const filteredCells = countriesColumn
-    .map((c, i) => [c, i])
-    .filter(([c]) => {
-      return c === country;
-    });
-  const fullyFilteredRowIndices = filteredCells
-    .map(([, i]) => i)
-    .filter((i) => pd.rowSatisfiesFilters(i, filters));
+  const filteredIndices = filterGettingOriginalIndices(
+    countriesColumn,
+    (c, i) => {
+      return c === country && pd.rowSatisfiesFilters(i, filters);
+    },
+  );
 
   const res = [];
-  fullyFilteredRowIndices.forEach((index) => {
-    res.push(pd.createRowObject(index));
+  filteredIndices.forEach((i) => {
+    res.push(pd.createRowObject(i));
   });
   return res;
 }
