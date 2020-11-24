@@ -14,6 +14,24 @@ export const colorscale = [
   'rgb(227,120,180)',
 ];
 
+const mapLongLevelNameToShort = (x) => {
+  const obj = {
+    'A - Marine habitats': 'Marine habitats',
+    'B - Coastal habitats': 'Coastal habitats',
+    'C - Inland surface waters': 'Inland waters',
+    'D - Mires, bogs and fens': 'Mires, bogs and fens',
+    'E - Grasslands and land dominated by forbs, mosses or lichens':
+      'Grassland',
+    'F - Heathland, scrub and tundra': 'Heathland',
+    'G - Woodland, forest and other wooded land': 'Woodlands',
+    'H - Inland unvegetated or sparsely vegetated habitats':
+      'Inland unvegetated or sparsely vegetated habitats',
+    'I - Arable land and market gardens': 'Cropland',
+    'J - constructed, industrial and other artificial habitats': 'Urban',
+  };
+  return obj[x] || x;
+};
+
 /**
  * Filters data. Given an object like:
  *
@@ -271,7 +289,7 @@ export function makeChartTiles(
         data: [
           makeTrace(level, byArea[level], index, focusOn, { hoverTemplate }),
         ],
-        title: level,
+        title: mapLongLevelNameToShort(level),
       };
     })
     .filter((c) => !!c);
