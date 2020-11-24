@@ -24,7 +24,7 @@ import {
   SortingSelector,
   TermsQuery,
   ViewSwitcherHits,
-  // ViewSwitcherToggle,
+  ViewSwitcherToggle,
   DynamicRangeFilter,
   CheckboxItemList,
   Tabs,
@@ -38,9 +38,9 @@ import {
   // NumericRefinementListFilter,
   // TopBar,
   // FacetFilter,
-} from './searchkit';
+} from 'searchkit';
 import { Icon } from '@plone/volto/components';
-// import tableSVG from '@plone/volto/icons/table.svg';
+import tableSVG from '@plone/volto/icons/table.svg';
 
 import { GridItem, ListItem, TableView } from './Tiles';
 import './styles.less';

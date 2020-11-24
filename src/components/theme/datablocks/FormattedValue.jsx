@@ -15,7 +15,7 @@ const FormattedValue = ({ textTemplate, specifier, value }) => {
           value = textTemplate.replace('{}', value);
         }
 
-        return value || '';
+        return <span>{value || ''}</span>;
       }}
     </D3>
   );

@@ -77,20 +77,18 @@ class Navigation extends Component {
       getBaseUrl(this.props.pathname),
       settings.navDepth,
     );
-    document.addEventListener("mousedown", this.handleClickOutsideNav);
   }
 
-   componentWillUnmount() {
-     document.removeEventListener("mousedown", this.handleClickOutsideNav);
-   }
-
-   handleClickOutsideNav = event => {
-     if (this.container.current && !this.container.current.contains(event.target)) {
-       this.setState({
-         isMobileMenuOpen: false,
-       });
-     }
-   };
+  handleClickOutsideNav = (event) => {
+    if (
+      this.container.current &&
+      !this.container.current.contains(event.target)
+    ) {
+      this.setState({
+        isMobileMenuOpen: false,
+      });
+    }
+  };
 
   /**
    * Component will receive props
@@ -135,7 +133,11 @@ class Navigation extends Component {
    * @returns {undefined}
    */
   toggleMobileMenu() {
-    this.setState({ isMobileMenuOpen: !this.state.isMobileMenuOpen });
+    this.setState({ isMobileMenuOpen: !this.state.isMobileMenuOpen }, () => {
+      if (this.state.isMobileMenuOpen) {
+        document.addEventListener('mousedown', this.handleClickOutsideNav);
+      }
+    });
   }
 
   /**
@@ -147,7 +149,9 @@ class Navigation extends Component {
     if (!this.state.isMobileMenuOpen) {
       return;
     }
-    this.setState({ isMobileMenuOpen: false });
+    this.setState({ isMobileMenuOpen: false }, () => {
+      document.removeEventListener('mousedown', this.handleClickOutsideNav);
+    });
   }
 
   /**
@@ -249,7 +253,10 @@ class Navigation extends Component {
                   <Dropdown.Menu>
                     {item.items.map((subitem) => {
                       const flatSubUrl = flattenToAppURL(subitem.url);
-                      const subItemID = subitem.title.split(' ').join('-').toLowerCase();
+                      const subItemID = subitem.title
+                        .split(' ')
+                        .join('-')
+                        .toLowerCase();
                       return (
                         <Dropdown.Item key={flatSubUrl}>
                           <div className="secondLevel-wrapper">
@@ -259,10 +266,10 @@ class Navigation extends Component {
                               key={flatSubUrl}
                               className={
                                 this.isActive(flatSubUrl)
-                                ? 'item secondLevel menuActive'
-                                : 'item secondLevel'
+                                  ? 'item secondLevel menuActive'
+                                  : 'item secondLevel'
                               }
-                              >
+                            >
                               {subitem.title}
                             </Link>
                           </div>

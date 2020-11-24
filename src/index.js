@@ -5,7 +5,7 @@ import {
   installKeyFacts,
   installMaesViewer,
   installConnectedMap,
-  // installDataCatalogue,
+  installDataCatalogue,
   installTabsBlockExtensions,
   installDataComponents,
   installImageCards,
@@ -165,8 +165,13 @@ export default (config) => {
     },
   ];
 
+  delete config.blocks.blocksConfig.data_connected_block;
+  delete config.blocks.blocksConfig.auto_select_parameter;
+  delete config.blocks.blocksConfig.data_connected_embed;
+  delete config.blocks.blocksConfig.discodata_connector_block;
+
   return [
-    // installDataCatalogue,
+    installDataCatalogue,
     installKeyFacts,
     installMaesViewer,
     installConnectedMap,

@@ -1,16 +1,18 @@
 import React from 'react';
 import cx from 'classnames';
-import { connectBlockToProviderData } from 'volto-datablocks/hocs';
-import { Grid } from 'semantic-ui-react';
 import loadable from '@loadable/component';
-import { serializeNodes } from 'volto-slate/editor/render';
+
 import {
   customSelectStyles,
   DropdownIndicator,
   Option,
   selectTheme,
 } from '@plone/volto/components/manage/Widgets/SelectStyling';
+
+import { serializeNodes } from 'volto-slate/editor/render';
+import { connectBlockToProviderData } from 'volto-datablocks/hocs';
 import { makeChartTiles } from './utils';
+
 import './style.css';
 
 const LoadableSelect = loadable(() => import('react-select'));
@@ -45,16 +47,31 @@ const View = ({ data, provider_data, id, ...rest }) => {
   const focusEcosystem = data.ecosystem;
   const [focusOn, setFocusOn] = React.useState();
   const [multiCharts, setMultiCharts] = React.useState([]);
+  const [firstRender, setFirstRender] = React.useState(true);
   React.useEffect(() => {
     if (provider_data) {
       const { hoverTemplate } = data;
-      setMultiCharts(
-        makeChartTiles(provider_data, focusOn, focusEcosystem, {
-          hoverTemplate,
-        }),
-      );
+      const ct = makeChartTiles(provider_data, focusOn, focusEcosystem, {
+        hoverTemplate,
+      });
+      setMultiCharts(ct);
+
+      // TODO: avoid this hack:
+      // hack to make the first-in-time selected country's label appear above
+      // the blue disc in the View of the MAES Viewer block
+      // (to make sure the hack is not needed anymore, remove this piece of code
+      // and if in the View of the page with the MAES Viewer's block the View of
+      // the MAES Viewer does not show the text above the black disc when first
+      // selecting a country in the CountrySelect, the hack is still needed
+      // because plotly.js or react-plotly.js puts the label of the black disc
+      // asynchronously and I think there is no Promise to depend on it)
+      if (firstRender) {
+        setTimeout(() => {
+          setFirstRender(false);
+        }, 2000);
+      }
     }
-  }, [provider_data, focusOn, focusEcosystem, data]);
+  }, [provider_data, focusOn, focusEcosystem, data, firstRender]);
 
   return (
     <div className={cx('block align', data.align)}>
