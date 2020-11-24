@@ -129,11 +129,7 @@ export function query(provider_data, country, filters) {
     },
   );
 
-  const res = [];
-  filteredIndices.forEach((i) => {
-    res.push(pd.createRowObject(i));
-  });
-  return res;
+  return filteredIndices.map((i) => pd.createRowObject(i));
 }
 
 export function mapByLevel(provider_data) {
