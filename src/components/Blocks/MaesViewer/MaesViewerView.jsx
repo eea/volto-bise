@@ -21,7 +21,9 @@ const LoadablePlot = loadable(() => import('react-plotly.js'));
 const SelectCountry = (props) => {
   const { id, onChange, data } = props;
   const countries = Array.from(new Set(data['Country_name']));
-  const options = countries.map((c) => ({ label: c, value: c }));
+  const options = countries
+    .map((c) => ({ label: c, value: c }))
+    .concat({ label: 'EU', value: 'EU' });
   return (
     <Select
       id={`field-${id}`}

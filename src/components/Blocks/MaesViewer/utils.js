@@ -245,10 +245,10 @@ export function makeChartTiles(
 ) {
   if (!provider_data) return;
   const byLevel = mapByLevel(provider_data);
-  const { EUByLevelPercents } = mapToAllEU(provider_data, byLevel);
+  const { EUByLevel, EUByLevelPercents } = mapToAllEU(provider_data, byLevel);
 
-  const ecosystems = Array.from(new Set(provider_data['Ecosystem_level2']));
-  const countries = Array.from(new Set(provider_data['Country_name']));
+  const ecosystems = _.uniq(provider_data['Ecosystem_level2']);
+  const countries = _.uniq(provider_data['Country_name']);
 
   const byArea = Object.fromEntries(ecosystems.map((l) => [l, {}]));
   ecosystems.forEach((level) => {
@@ -260,6 +260,7 @@ export function makeChartTiles(
       );
       byArea[level][country] = total;
     });
+    byArea[level]['EU'] = EUByLevel[level];
   });
 
   const tiles = ecosystems
