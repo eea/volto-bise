@@ -230,7 +230,7 @@ export function chartTileLayout(index, finalPercent) {
         y: 0.3,
         xanchor: 'right',
         yanchor: 'bottom',
-        text: `${finalPercent.toFixed(2)}%`,
+        text: `${Math.round(finalPercent).toFixed(0)}%`,
         showarrow: false,
       },
     ],
