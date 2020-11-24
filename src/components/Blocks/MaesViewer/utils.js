@@ -32,6 +32,76 @@ const mapLongLevelNameToShort = (x) => {
   return obj[x] || x;
 };
 
+class ProviderData {
+  static ecosystemColumnName = 'Ecosystem_level2';
+  static countryColumnName = 'Country_name';
+
+  constructor(data) {
+    this.data = data;
+  }
+
+  getColumnData(name) {
+    return this.data[name];
+  }
+
+  getUniqueColumnData(name) {
+    return _.uniq(this.data[name]);
+  }
+
+  getEcosystems() {
+    return this.getUniqueColumnData(ProviderData.ecosystemColumnName);
+  }
+
+  getCountries() {
+    return this.getUniqueColumnData(ProviderData.countryColumnName).concat(
+      'EU',
+    );
+  }
+
+  getCountriesColumn() {
+    return this.getColumnData(ProviderData.countryColumnName);
+  }
+
+  forEachCountryAndLevel(fn) {
+    const c = this.getCountries();
+    const e = this.getEcosystems();
+    c.forEach((country) => {
+      e.forEach((level) => {
+        fn(country, level);
+      });
+    });
+  }
+
+  getEcosystemForRowIndex(i) {
+    return this.data[ProviderData.ecosystemColumnName][i];
+  }
+
+  hasEcosystemAtRowIndex(i, ecosystem) {
+    return this.getEcosystemForRowIndex(i) === ecosystem;
+  }
+
+  getColumnNames() {
+    return _.keys(this.data);
+  }
+
+  getCellValue(columnName, rowIndex) {
+    return this.getColumnData(columnName)[rowIndex];
+  }
+
+  createRowObject(rowIndex) {
+    const obj = {};
+    this.getColumnNames().forEach((cn) => {
+      obj[cn] = this.getCellValue(cn, rowIndex);
+    });
+    return obj;
+  }
+
+  rowSatisfiesFilters(index, filters) {
+    const filtersResults = filters.map((f) => f(this.data, index));
+    return filtersResults.every((t) => t);
+  }
+}
+
 /**
  * Filters data. Given an object like:
  *
@@ -42,40 +112,38 @@ const mapLongLevelNameToShort = (x) => {
  *
  */
 export function query(provider_data, country, filters) {
+  const pd = new ProviderData(provider_data);
+
+  const countriesColumn = pd.getCountriesColumn();
+  const filteredCells = countriesColumn
+    .map((c, i) => [c, i])
+    .filter(([c]) => {
+      return c === country;
+    });
+  const fullyFilteredRowIndices = filteredCells
+    .map(([, i]) => i)
+    .filter((i) => pd.rowSatisfiesFilters(i, filters));
+
   const res = [];
-
-  const countries_row = provider_data['Country_name'];
-
-  countries_row.forEach((name, index) => {
-    if (name === country) {
-      const truth = filters.map((f) => f(provider_data, index));
-      if (truth.every((t) => t)) {
-        const obj = {};
-        Object.keys(provider_data).forEach((k) => {
-          obj[k] = provider_data[k][index];
-        });
-        res.push(obj);
-      }
-    }
+  fullyFilteredRowIndices.forEach((index) => {
+    res.push(pd.createRowObject(index));
   });
-
   return res;
 }
 
 export function mapByLevel(provider_data) {
-  const level2 = new Set(provider_data['Ecosystem_level2']);
-  const countries = new Set(provider_data['Country_name']);
-  const byLevel = Object.fromEntries(Array.from(level2).map((l) => [l, {}]));
-  countries.forEach((country) => {
-    level2.forEach((level) => {
-      const filters = [
-        (provider_data, index) =>
-          provider_data['Ecosystem_level2'][index] === level,
-      ];
-      const country_data = query(provider_data, country, filters);
-      byLevel[level][country] = country_data;
-    });
+  const pd = new ProviderData(provider_data);
+
+  const byLevel = _.fromPairs(pd.getEcosystems().map((l) => [l, {}]));
+
+  pd.forEachCountryAndLevel((country, level) => {
+    const filters = [
+      (provider_data, index) => pd.hasEcosystemAtRowIndex(index, level),
+    ];
+    const country_data = query(pd.data, country, filters);
+    byLevel[level][country] = country_data;
   });
+
   return byLevel;
 }
 
