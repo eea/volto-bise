@@ -16,7 +16,7 @@ import split from 'lodash/split';
 import join from 'lodash/join';
 import trim from 'lodash/trim';
 import cx from 'classnames';
-import { settings } from '~/config';
+import { settings, views } from '~/config';
 import * as Sentry from '@sentry/browser';
 import Error from '@plone/volto/error';
 
@@ -26,8 +26,9 @@ import {
   Header,
   Icon,
   OutdatedBrowser,
+  AppExtras,
 } from '@plone/volto/components';
-import { BodyClass, getBaseUrl, getView } from '@plone/volto/helpers';
+import { BodyClass, getBaseUrl, getView, isCmsUi } from '@plone/volto/helpers';
 import {
   getBreadcrumbs,
   getContent,
@@ -37,6 +38,8 @@ import {
 } from '@plone/volto/actions';
 
 import clearSVG from '@plone/volto/icons/clear.svg';
+
+// import MultilingualRedirector from '../MultilingualRedirector/MultilingualRedirector';
 
 /**
  * @export
@@ -85,13 +88,13 @@ class App extends Component {
     }
   }
 
-  // /**
-  //  * ComponentDidCatch
-  //  * @method ComponentDidCatch
-  //  * @param {string} error  The error
-  //  * @param {string} info The info
-  //  * @returns {undefined}
-  //  */
+  /**
+   * ComponentDidCatch
+   * @method ComponentDidCatch
+   * @param {string} error  The error
+   * @param {string} info The info
+   * @returns {undefined}
+   */
   componentDidCatch(error, info) {
     this.setState({ hasError: true, error, errorInfo: info });
     if (__CLIENT__) {
@@ -110,6 +113,9 @@ class App extends Component {
     const path = getBaseUrl(this.props.pathname);
     const action = getView(this.props.pathname);
     const headerImage = this.props.content?.image?.download;
+
+    const isCmsUI = isCmsUi(this.props.pathname);
+    const ConnectionRefusedView = views.errorViews.ECONNREFUSED;
 
     return (
       <Fragment>
@@ -130,6 +136,10 @@ class App extends Component {
             [trim(join(split(this.props.pathname, '/'), ' section-'))]:
               this.props.pathname !== '/',
             siteroot: this.props.pathname === '/',
+            'is-authenticated': !!this.props.token,
+            'is-anonymous': !this.props.token,
+            'cms-ui': isCmsUI,
+            'public-ui': !isCmsUI,
           })}
         />
 
@@ -141,17 +151,24 @@ class App extends Component {
           {...this.props.content}
         />
 
+        {/* <Breadcrumbs pathname={path} />
+        <MultilingualRedirector pathname={this.props.pathname}></MultilingualRedirector> */}
+
         <Segment basic className="content-area">
           <main>
             <div className="editor-toolbar-wrapper" />
             <OutdatedBrowser />
-            {this.state.hasError ? (
+            {this.props.connectionRefused ? (
+              <ConnectionRefusedView />
+            ) : this.state.hasError ? (
               <Error
                 message={this.state.error.message}
                 stackTrace={this.state.errorInfo.componentStack}
               />
             ) : (
-              renderRoutes(this.props.route.routes)
+              renderRoutes(this.props.route.routes, {
+                staticContext: this.props.staticContext,
+              })
             )}
           </main>
         </Segment>
@@ -169,6 +186,7 @@ class App extends Component {
             />
           }
         />
+        <AppExtras {...this.props} />
       </Fragment>
     );
   }
@@ -177,7 +195,10 @@ class App extends Component {
 export const __test__ = connect(
   (state, props) => ({
     pathname: props.location.pathname,
+    token: state.userSession.token,
     content: state.content.data,
+    apiError: state.apierror.error,
+    connectionRefused: state.apierror.connectionRefused,
   }),
   {},
 )(App);
@@ -259,11 +280,12 @@ export default compose(
   connect(
     (state, props) => ({
       pathname: props.location.pathname,
+      token: state.userSession.token,
       content: state.content.data,
       apiError: state.apierror.error,
       connectionRefused: state.apierror.connectionRefused,
       navigation: state.navigation.items,
     }),
-    {},
+    null,
   ),
 )(App);
