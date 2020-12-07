@@ -51,7 +51,11 @@ class Carousel extends Component {
                 : {}
             }
           />
-          <div className="slide-overlay" />
+          <div className="slide-overlay">
+            <div className="slide-copyright">
+              {serializeNodes(card.copyright)}
+            </div>
+          </div>
           <div className="ui container">
             <div className="slide-body">
               <div className="slide-title">{card.title || ''}</div>

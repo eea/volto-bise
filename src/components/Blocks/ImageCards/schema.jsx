@@ -4,7 +4,7 @@ const ImageCard = {
     {
       id: 'default',
       title: 'Default',
-      fields: ['title', 'text', 'attachedimage', 'link'],
+      fields: ['title', 'text', 'attachedimage', 'link', 'copyright'],
     },
   ],
 
@@ -24,6 +24,10 @@ const ImageCard = {
     attachedimage: {
       widget: 'attachedimage',
       title: 'Image',
+    },
+    copyright: {
+      widget: 'slate_richtext',
+      title: 'Copyright',
     },
   },
 
