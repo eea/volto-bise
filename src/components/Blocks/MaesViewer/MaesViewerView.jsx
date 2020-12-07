@@ -21,7 +21,9 @@ const LoadablePlot = loadable(() => import('react-plotly.js'));
 const SelectCountry = (props) => {
   const { id, onChange, data } = props;
   const countries = Array.from(new Set(data['Country_name']));
-  const options = countries.map((c) => ({ label: c, value: c }));
+  const options = countries
+    .map((c) => ({ label: c, value: c }))
+    .concat({ label: 'EU', value: 'EU' });
   return (
     <Select
       id={`field-${id}`}
@@ -80,8 +82,8 @@ const View = ({ data, provider_data, id, ...rest }) => {
         <h3>{data.title}</h3>
         {/* <div className="block-wrapper">{JSON.stringify(data)}</div> */}
 
-        <div class="maes-viewer-grid">
-          <div class="maes-viewer-select">
+        <div className="maes-viewer-grid">
+          <div className="maes-viewer-select">
             {provider_data && (
               <>
                 <span className="maes-select-label">
@@ -101,7 +103,7 @@ const View = ({ data, provider_data, id, ...rest }) => {
             )}
             <div>{serializeNodes(data.description)}</div>
           </div>
-          <div class="maes-viewer-charts">
+          <div className="maes-viewer-charts">
             {provider_data
               ? multiCharts.map((chart, index) => {
                   return (

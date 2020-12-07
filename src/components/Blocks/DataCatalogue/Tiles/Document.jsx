@@ -12,7 +12,7 @@ export const DocumentListItem = ({ source, bemBlocks }) => {
           rel="noreferrer"
           href={`${catalogueHost}${source.file_name}`}
         >
-          <sup class="cell-document-type">
+          <sup className="cell-document-type">
             {source.content_type.includes('/')
               ? source.content_type.split('/')[1]
               : source.content_type}
