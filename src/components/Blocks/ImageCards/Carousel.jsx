@@ -9,6 +9,8 @@ import cx from 'classnames';
 import 'slick-carousel/slick/slick.css';
 import { fixUrl, getPath } from 'volto-bise/utils';
 
+import { serializeNodes } from 'volto-slate/editor/render';
+
 // import { Placeholder } from 'semantic-ui-react';
 // import 'slick-carousel/slick/slick-theme.css';
 
@@ -53,10 +55,17 @@ class Carousel extends Component {
           <div className="ui container">
             <div className="slide-body">
               <div className="slide-title">{card.title || ''}</div>
-              <div
-                className="slide-description"
-                dangerouslySetInnerHTML={{ __html: card.text?.data || '' }}
-              />
+              {/* Incomplete backward-compatibility: */}
+              {card.text?.data ? (
+                <div
+                  className="slide-description"
+                  dangerouslySetInnerHTML={{ __html: card.text?.data || '' }}
+                />
+              ) : (
+                <div className="slide-description">
+                  {serializeNodes(card.text)}
+                </div>
+              )}
             </div>
           </div>
         </div>

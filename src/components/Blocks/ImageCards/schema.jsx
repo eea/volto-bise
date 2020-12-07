@@ -14,7 +14,7 @@ const ImageCard = {
       title: 'Title',
     },
     text: {
-      widget: 'richtext',
+      widget: 'slate_richtext',
       title: 'Text',
     },
     link: {
@@ -47,7 +47,7 @@ const ImageCards = {
       title: 'Title',
     },
     text: {
-      widget: 'richtext',
+      widget: 'slate_richtext',
       title: 'Text',
     },
     display: {
