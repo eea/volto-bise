@@ -82,8 +82,8 @@ const View = ({ data, provider_data, id, ...rest }) => {
         <h3>{data.title}</h3>
         {/* <div className="block-wrapper">{JSON.stringify(data)}</div> */}
 
-        <div class="maes-viewer-grid">
-          <div class="maes-viewer-select">
+        <div className="maes-viewer-grid">
+          <div className="maes-viewer-select">
             {provider_data && (
               <>
                 <span className="maes-select-label">
@@ -103,7 +103,7 @@ const View = ({ data, provider_data, id, ...rest }) => {
             )}
             <div>{serializeNodes(data.description)}</div>
           </div>
-          <div class="maes-viewer-charts">
+          <div className="maes-viewer-charts">
             {provider_data
               ? multiCharts.map((chart, index) => {
                   return (
