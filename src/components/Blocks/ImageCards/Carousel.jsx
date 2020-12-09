@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import loadable from '@loadable/component';
 import { Icon } from '@plone/volto/components';
+import { Link } from 'react-router-dom';
 
 import leftSVG from '@plone/volto/icons/left-key.svg';
 import rightSVG from '@plone/volto/icons/right-key.svg';
@@ -51,14 +52,16 @@ class Carousel extends Component {
                 : {}
             }
           />
-          <div className="slide-overlay">
-            <div className="slide-copyright">
-              {serializeNodes(card.copyright)}
-            </div>
-          </div>
+          <div className="slide-overlay"></div>
           <div className="ui container">
             <div className="slide-body">
-              <div className="slide-title">{card.title || ''}</div>
+              {card.link ? (
+                <Link to={card.link}>
+                  <div className="slide-title">{card.title || ''}</div>
+                </Link>
+              ) : (
+                <div className="slide-title">{card.title || ''}</div>
+              )}
               {/* Incomplete backward-compatibility: */}
               {card.text?.data ? (
                 <div
@@ -70,6 +73,9 @@ class Carousel extends Component {
                   {serializeNodes(card.text)}
                 </div>
               )}
+            </div>
+            <div className="slide-copyright">
+              {serializeNodes(card.copyright)}
             </div>
           </div>
         </div>
