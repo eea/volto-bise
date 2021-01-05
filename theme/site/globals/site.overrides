@@ -37,24 +37,6 @@ p > span:empty {
   z-index: 2;
 }
 
-.searchbox div.input {
-  border: none;
-  border-bottom: 1px solid #ddd;
-  padding-left: 0.5em;
-  padding-right: 1.5em;
-  height: 27px;
-  font-size: 15px;
-}
-
-.searchbox .icon {
-  fill: #606060;
-  position: absolute;
-  z-index: 1;
-  left: -23px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
 /* Table of contents */
 .table-of-contents.default {
   .bulleted.list {
@@ -189,5 +171,63 @@ p > span:empty {
     .ui.column.grid > [class*='eight wide computer'].column {
       width: 100% !important;
     }
+  }
+}
+
+/* TODO: make the two magnifier glass icons thicker */
+#search-widget-root {
+  border-left: 1px solid #B8C6C8;
+  border-radius: 0 0 0 0;
+  padding-left: 1rem;
+  color: #3c8000 !important;
+  transform: scale(1.25);
+
+  svg {
+    transition: transform 0.75s;
+    &:hover {
+      transform: scale(1.5);
+    }
+  }
+}
+
+#search-widget-popup {
+  position: absolute !important;
+  top: 18px; // TODO: remove this
+  right: 6rem; // TODO: remove this
+  display:  block;
+  z-index: 10;
+  background-color: white;
+  box-shadow: 0 0 0.25rem grey;
+  padding: 1rem;
+}
+
+#search-widget-box {
+  border: 0.1rem solid lightgray;
+  padding: 0;
+  border-radius: 1rem;
+  padding-left: 0.5rem;
+  height: 2rem;
+  display: flex;
+  background-color: #EEE;
+
+  input {
+    border: 0;
+    font-size: smaller;
+    background-color: transparent;
+  }
+
+  button {
+    border: 0;
+    color: white;
+    margin: 0;
+    background: green;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    font-size: small;
+    cursor: pointer;
+  }
+
+  svg {
+    height: 1rem !important;
   }
 }

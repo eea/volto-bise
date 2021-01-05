@@ -5,7 +5,7 @@
 
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Form, Input } from 'semantic-ui-react';
+import { Form, Input, Button } from 'semantic-ui-react';
 import { compose } from 'redux';
 import { PropTypes } from 'prop-types';
 import { defineMessages, injectIntl } from 'react-intl';
@@ -20,7 +20,7 @@ const messages = defineMessages({
   },
   searchSite: {
     id: 'Search Site',
-    defaultMessage: 'Search',
+    defaultMessage: 'Search all site ...',
   },
 });
 
@@ -43,7 +43,7 @@ class SearchWidget extends Component {
    * Constructor
    * @method constructor
    * @param {Object} props Component properties
-   * @constructs WysiwygEditor
+   * @constructs SearchWidget
    */
   constructor(props) {
     super(props);
@@ -53,7 +53,11 @@ class SearchWidget extends Component {
     this.state = {
       text: '',
       section: false,
+      searchPopupVisible: false,
     };
+
+    this.searchFormRef = React.createRef(null);
+    this.searchButtonRef = React.createRef(null);
   }
 
   /**
@@ -96,6 +100,62 @@ class SearchWidget extends Component {
     event.preventDefault();
   }
 
+  handleClickOutside = (ev) => {
+    function overlaps(x, y) {
+      return y.contains(y);
+
+      // const r1 = x.getBoundingClientRect();
+      // const r2 = y.getBoundingClientRect();
+
+      // return (
+      //   r1.right < r2.left ||
+      //   r1.left > r2.right ||
+      //   r1.bottom < r2.top ||
+      //   r1.top > r2.bottom
+      // );
+    }
+
+    this.setState((state, props) => {
+      if (
+        state.searchPopupVisible &&
+        this.searchFormRef.current &&
+        ev.target !== this.searchFormRef.current &&
+        !overlaps(this.searchFormRef.current, ev.target)
+      ) {
+        return { searchPopupVisible: false };
+      }
+
+      return {};
+    });
+  };
+
+  componentDidMount = () => {
+    window.addEventListener('click', this.handleClickOutside, false);
+  };
+
+  componentWillUnmount = () => {
+    window.removeEventListener('click', this.handleClickOutside);
+  };
+
+  handleClick = () => {
+    this.setState((state, props) => {
+      if (
+        !state.searchPopupVisible &&
+        this.searchFormRef.current &&
+        this.searchButtonRef.current
+      ) {
+        // TODO: set the position and size of the popup here
+        console.log('search btn ref', this.searchButtonRef);
+        // this.searchFormRef.current.style.right = `${
+        //   window.getComputedStyle(this.searchButtonRef.current).style.right
+        // }px`;
+      }
+      return {
+        searchPopupVisible: !state.searchPopupVisible,
+      };
+    });
+  };
+
   /**
    * Render method.
    * @method render
@@ -103,22 +163,46 @@ class SearchWidget extends Component {
    */
   render() {
     return (
-      <Form action="/search" onSubmit={this.onSubmit}>
-        <Form.Field className="searchbox">
-          <Input
-            aria-label={this.props.intl.formatMessage(messages.search)}
-            onChange={this.onChangeText}
-            name="SearchableText"
-            value={this.state.text}
-            transparent
-            placeholder={this.props.intl.formatMessage(messages.searchSite)}
-            title={this.props.intl.formatMessage(messages.search)}
-          />
-          <button aria-label={this.props.intl.formatMessage(messages.search)}>
-            <Icon name={zoomSVG} size="18px" />
-          </button>
-        </Form.Field>
-      </Form>
+      <div>
+        <Button
+          basic={true}
+          id="search-widget-root"
+          ref={this.searchButtonRef}
+          onClick={this.handleClick}
+        >
+          <Icon name={zoomSVG} size="18px" />
+        </Button>
+
+        <form
+          action="/search"
+          onSubmit={this.onSubmit}
+          id="search-widget-popup"
+          ref={this.searchFormRef}
+          style={{
+            visibility:
+              typeof this.state.searchPopupVisible === 'boolean' &&
+              this.state.searchPopupVisible
+                ? 'visible'
+                : 'collapse',
+          }}
+        >
+          <div id="search-widget-box">
+            <Input
+              aria-label={this.props.intl.formatMessage(messages.search)}
+              onChange={this.onChangeText}
+              name="SearchableText"
+              value={this.state.text}
+              transparent
+              placeholder={this.props.intl.formatMessage(messages.searchSite)}
+              title={this.props.intl.formatMessage(messages.search)}
+              type="search"
+            />
+            <button aria-label={this.props.intl.formatMessage(messages.search)}>
+              <Icon name={zoomSVG} size="18px" />
+            </button>
+          </div>
+        </form>
+      </div>
     );
   }
 }

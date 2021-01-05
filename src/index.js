@@ -71,8 +71,9 @@ const installStyles = (config) => {
     '#000000',
   ];
 
+  config.settings.slate.styleMenu = config.settings.slate.styleMenu || {};
   config.settings.slate.styleMenu.inlineStyles = [
-    ...config.settings.slate.styleMenu.inlineStyles,
+    ...(config.settings.slate.styleMenu?.inlineStyles || []),
     { cssClass: 'primary-big-text', label: 'Big text' },
     { cssClass: 'medium-text', label: 'Medium text' },
     { cssClass: 'dark-green-text', label: 'Dark green text' },
