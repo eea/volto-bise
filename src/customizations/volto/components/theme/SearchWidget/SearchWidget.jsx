@@ -98,6 +98,7 @@ class SearchWidget extends Component {
       `/search?SearchableText=${this.state.text}${section}`,
     );
     event.preventDefault();
+    this.setState({ searchPopupVisible: false });
   }
 
   handleClickOutside = (ev) => {
@@ -129,12 +130,28 @@ class SearchWidget extends Component {
     });
   };
 
+  updateWidth = () => {
+    const el = this.searchButtonRef.current.ref.current;
+    const s = window.getComputedStyle(el);
+
+    // this.searchFormRef.current.style.left = '25rem';
+    // this.searchFormRef.current.style.right = `calc(100vw - ${
+    //   el.offsetLeft
+    // }px)`;
+  };
+
+  handleResize = () => {
+    this.updateWidth();
+  };
+
   componentDidMount = () => {
     window.addEventListener('click', this.handleClickOutside, false);
+    window.addEventListener('resize', this.handleResize, false);
   };
 
   componentWillUnmount = () => {
     window.removeEventListener('click', this.handleClickOutside);
+    window.removeEventListener('resize', this.handleResize);
   };
 
   handleClick = () => {
@@ -142,13 +159,17 @@ class SearchWidget extends Component {
       if (
         !state.searchPopupVisible &&
         this.searchFormRef.current &&
-        this.searchButtonRef.current
+        this.searchButtonRef.current?.ref?.current
       ) {
-        // TODO: set the position and size of the popup here
-        console.log('search btn ref', this.searchButtonRef);
-        // this.searchFormRef.current.style.right = `${
-        //   window.getComputedStyle(this.searchButtonRef.current).style.right
-        // }px`;
+        const el = this.searchButtonRef.current.ref.current;
+        // const s = window.getComputedStyle(el);
+
+        let y = document.querySelector('.navigation').clientHeight;
+        // y = el.offsetHeight + el.offsetTop;
+
+        this.searchFormRef.current.style.top = `${y}px`;
+
+        this.updateWidth();
       }
       return {
         searchPopupVisible: !state.searchPopupVisible,
