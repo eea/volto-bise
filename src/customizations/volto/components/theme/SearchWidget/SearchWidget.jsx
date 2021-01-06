@@ -8,7 +8,7 @@ import { withRouter } from 'react-router-dom';
 import { Form, Input, Button } from 'semantic-ui-react';
 import { compose } from 'redux';
 import { PropTypes } from 'prop-types';
-import { defineMessages, injectIntl } from 'react-intl';
+import { defineMessages, injectIntl, useIntl } from 'react-intl';
 
 import { Icon } from '@plone/volto/components';
 import zoomSVG from '@plone/volto/icons/zoom.svg';
@@ -183,6 +183,10 @@ class SearchWidget extends Component {
    * @returns {string} Markup for the component.
    */
   render() {
+    const visible =
+      typeof this.state.searchPopupVisible === 'boolean' &&
+      this.state.searchPopupVisible;
+
     return (
       <div>
         <Button
@@ -193,39 +197,56 @@ class SearchWidget extends Component {
         >
           <Icon name={zoomSVG} size="18px" />
         </Button>
-
-        <form
-          action="/search"
+        <SearchBox
           onSubmit={this.onSubmit}
-          id="search-widget-popup"
-          ref={this.searchFormRef}
-          style={{
-            visibility:
-              typeof this.state.searchPopupVisible === 'boolean' &&
-              this.state.searchPopupVisible
-                ? 'visible'
-                : 'collapse',
-          }}
-        >
-          <div id="search-widget-box">
-            <Input
-              aria-label={this.props.intl.formatMessage(messages.search)}
-              onChange={this.onChangeText}
-              name="SearchableText"
-              value={this.state.text}
-              transparent
-              placeholder={this.props.intl.formatMessage(messages.searchSite)}
-              title={this.props.intl.formatMessage(messages.search)}
-              type="search"
-            />
-            <button aria-label={this.props.intl.formatMessage(messages.search)}>
-              <Icon name={zoomSVG} size="18px" />
-            </button>
-          </div>
-        </form>
+          searchFormRef={this.searchFormRef}
+          visible={visible}
+          id="search-widget-box"
+          onChangeText={this.onChangeText}
+          text={this.state.text}
+        ></SearchBox>
       </div>
     );
   }
 }
+
+export const SearchBox = ({
+  onSubmit,
+  searchFormRef,
+  visible,
+  id,
+  onChangeText,
+  text,
+}) => {
+  const intl = useIntl();
+
+  return (
+    <form
+      action="/search"
+      onSubmit={onSubmit}
+      id="search-widget-popup"
+      ref={searchFormRef}
+      style={{
+        visibility: visible ? 'visible' : 'collapse',
+      }}
+    >
+      <div id={id}>
+        <Input
+          aria-label={intl.formatMessage(messages.search)}
+          onChange={onChangeText}
+          name="SearchableText"
+          value={text}
+          transparent
+          placeholder={intl.formatMessage(messages.searchSite)}
+          title={intl.formatMessage(messages.search)}
+          type="search"
+        />
+        <button aria-label={intl.formatMessage(messages.search)}>
+          <Icon name={zoomSVG} size="18px" />
+        </button>
+      </div>
+    </form>
+  );
+};
 
 export default compose(withRouter, injectIntl)(SearchWidget);
