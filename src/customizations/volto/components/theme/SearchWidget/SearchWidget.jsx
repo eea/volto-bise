@@ -191,7 +191,7 @@ class SearchWidget extends Component {
       <div>
         <Button
           basic={true}
-          id="search-widget-root"
+          id="search-widget-toggle"
           ref={this.searchButtonRef}
           onClick={this.handleClick}
         >
@@ -201,7 +201,7 @@ class SearchWidget extends Component {
           onSubmit={this.onSubmit}
           searchFormRef={this.searchFormRef}
           visible={visible}
-          id="search-widget-box"
+          id="search-widget-popup"
           onChangeText={this.onChangeText}
           text={this.state.text}
         ></SearchBox>
@@ -224,13 +224,13 @@ export const SearchBox = ({
     <form
       action="/search"
       onSubmit={onSubmit}
-      id="search-widget-popup"
+      id={id}
       ref={searchFormRef}
       style={{
         visibility: visible ? 'visible' : 'collapse',
       }}
     >
-      <div id={id}>
+      <div className="search-widget-box">
         <Input
           aria-label={intl.formatMessage(messages.search)}
           onChange={onChangeText}

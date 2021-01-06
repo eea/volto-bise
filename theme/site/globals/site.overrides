@@ -175,7 +175,7 @@ p > span:empty {
 }
 
 /* TODO: make the two magnifier glass icons thicker */
-#search-widget-root {
+#search-widget-toggle {
   border-left: 1px solid #B8C6C8;
   border-radius: 0 0 0 0;
   padding-left: 1rem;
@@ -202,55 +202,56 @@ p > span:empty {
   box-shadow: 0 0 0.25rem grey;
   padding: 1rem;
   right: 0;
-}
 
-#search-widget-box {
-  border: 0.1rem solid lightgray;
-  padding: 0;
-  border-radius: 1rem;
-  padding-left: 0.5rem;
-  height: 2rem;
-  background-color: #EEE;
-  display: grid;
-  grid-template-columns: 1fr auto;
-
-  div {
-    grid-row-start: 1;
-    grid-row-end: 2;
-    grid-column-start: 1;
-    grid-column-end: 3;
-  }
-
-  input {
-    border: 0;
-    font-size: smaller;
-    background-color: transparent;
-    padding-right: 2rem !important;
-  }
-
-  button {
-    border: 0;
-    color: white;
-    margin: 0;
-    background-color: green;
+  .search-widget-box {
+    border: 0.1rem solid lightgray;
+    padding: 0;
     border-radius: 1rem;
-    font-size: small;
-    cursor: pointer;
-    transition: background-color 0.5s;
+    padding-left: 0.5rem;
+    height: 2rem;
+    background-color: #EEE;
+    display: grid;
+    grid-template-columns: 1fr auto;
 
-    grid-column-start: 2;
-    grid-column-end: 3;
-    grid-row-start: 1;
-    grid-row-end: 2;
+    div {
+      grid-row-start: 1;
+      grid-row-end: 2;
+      grid-column-start: 1;
+      grid-column-end: 3;
+    }
 
-    z-index: 1;
+    input {
+      border: 0;
+      font-size: smaller;
+      background-color: transparent;
+      padding-right: 2rem !important;
+    }
 
-    &:hover {
-      background-color: #050;
+    button {
+      border: 0;
+      color: white;
+      margin: 0;
+      background-color: green;
+      border-radius: 1rem;
+      font-size: small;
+      cursor: pointer;
+      transition: background-color 0.5s;
+
+      grid-column-start: 2;
+      grid-column-end: 3;
+      grid-row-start: 1;
+      grid-row-end: 2;
+
+      z-index: 1;
+
+      &:hover {
+        background-color: #050;
+      }
+    }
+
+    svg {
+      height: 1rem !important;
     }
   }
-
-  svg {
-    height: 1rem !important;
-  }
 }
+
