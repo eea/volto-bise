@@ -5,10 +5,12 @@
 
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Form, Input, Button } from 'semantic-ui-react';
+import { Form, Input, Button, Grid } from 'semantic-ui-react';
 import { compose } from 'redux';
 import { PropTypes } from 'prop-types';
 import { defineMessages, injectIntl, useIntl } from 'react-intl';
+
+import cx from 'classnames';
 
 import { Icon } from '@plone/volto/components';
 import zoomSVG from '@plone/volto/icons/zoom.svg';
@@ -197,6 +199,13 @@ class SearchWidget extends Component {
         >
           <Icon name={zoomSVG} size="18px" />
         </Button>
+        {/* <Grid columns={1}>
+          <Grid.Column
+            only="computer largeScreen widescreen"
+            largeScreen={1}
+            widescreen={1}
+            computer={1}
+          > */}
         <SearchBox
           onSubmit={this.onSubmit}
           searchFormRef={this.searchFormRef}
@@ -205,6 +214,8 @@ class SearchWidget extends Component {
           onChangeText={this.onChangeText}
           text={this.state.text}
         ></SearchBox>
+        {/* </Grid.Column> */}
+        {/* </Grid> */}
       </div>
     );
   }
@@ -217,14 +228,17 @@ export const SearchBox = ({
   id,
   onChangeText,
   text,
+  className,
 }) => {
   const intl = useIntl();
 
+  console.log('id - visible:', id, visible);
   return (
     <form
       action="/search"
       onSubmit={onSubmit}
       id={id}
+      className={cx(className)}
       ref={searchFormRef}
       style={{
         visibility: visible ? 'visible' : 'collapse',

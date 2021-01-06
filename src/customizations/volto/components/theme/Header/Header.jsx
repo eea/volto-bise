@@ -4,7 +4,7 @@
  */
 
 import React, { Component } from 'react';
-import { Container, Segment } from 'semantic-ui-react';
+import { Container, Segment, Grid } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Portal } from 'react-portal';
@@ -20,6 +20,8 @@ import {
 } from '@plone/volto/components';
 
 import HeaderImage from 'volto-bise/components/theme/Header/HeaderImage';
+
+import { SearchBox } from '../SearchWidget/SearchWidget';
 
 /**
  * Header component class.
@@ -58,15 +60,15 @@ class Header extends Component {
 
   componentDidMount() {
     this.handleWindowSizeChange();
-    window.addEventListener("resize", this.handleWindowSizeChange);
+    window.addEventListener('resize', this.handleWindowSizeChange);
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.handleWindowSizeChange);
+    window.removeEventListener('resize', this.handleWindowSizeChange);
   }
 
   handleWindowSizeChange() {
-    let windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+    let windowWidth = typeof window !== 'undefined' ? window.innerWidth : 0;
     this.setState({ windowWidth });
   }
 
@@ -100,13 +102,13 @@ class Header extends Component {
     return (
       <div>
         <Segment
-           basic
-           role="banner"
-           className={cx('header-wrapper', (isStickyHeader)
-              ? 'sticky-header'
-              : ''
-            )}
-          >
+          basic
+          role="banner"
+          className={cx(
+            'header-wrapper',
+            isStickyHeader ? 'sticky-header' : '',
+          )}
+        >
           <Container>
             <div className="header">
               <div className="logo-nav-wrapper">
@@ -114,6 +116,19 @@ class Header extends Component {
                   <Logo />
                 </div>
                 <div className="tools-search-wrapper">
+                  <Grid columns={1}>
+                    <Grid.Column only="mobile tablet" mobile={1} tablet={1}>
+                      <SearchBox
+                        // TODO:
+                        // onSubmit={this.onSubmit}
+                        // searchFormRef={this.searchFormRef}
+                        visible={true}
+                        id="search-widget-tablet"
+                        // onChangeText={this.onChangeText}
+                        // text={this.state.text}
+                      ></SearchBox>
+                    </Grid.Column>
+                  </Grid>
                   <Navigation
                     pathname={this.props.pathname}
                     navigation={this.props.navigationItems}

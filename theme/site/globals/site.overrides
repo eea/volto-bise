@@ -190,26 +190,20 @@ p > span:empty {
   }
 }
 
-#search-widget-popup {
-  position: absolute !important;
+#search-widget-popup, #search-widget-tablet {
   width: 20vw;
   min-width: 18rem;
-  // left: 75vw;
   box-sizing: border-box;
   display:  block;
   z-index: 10;
-  background-color: white;
-  box-shadow: 0 0 0.25rem grey;
   padding: 1rem;
   right: 0;
 
   .search-widget-box {
     border: 0.1rem solid lightgray;
-    padding: 0;
     border-radius: 1rem;
     padding-left: 0.5rem;
     height: 2rem;
-    background-color: #EEE;
     display: grid;
     grid-template-columns: 1fr auto;
 
@@ -221,17 +215,12 @@ p > span:empty {
     }
 
     input {
-      border: 0;
       font-size: smaller;
-      background-color: transparent;
-      padding-right: 2rem !important;
     }
 
     button {
       border: 0;
-      color: white;
       margin: 0;
-      background-color: green;
       border-radius: 1rem;
       font-size: small;
       cursor: pointer;
@@ -243,10 +232,6 @@ p > span:empty {
       grid-row-end: 2;
 
       z-index: 1;
-
-      &:hover {
-        background-color: #050;
-      }
     }
 
     svg {
@@ -255,3 +240,46 @@ p > span:empty {
   }
 }
 
+#search-widget-tablet {
+  position: static !important;
+  visibility: visible;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  padding: 0;
+
+  .search-widget-box {
+    padding: 0;
+    background-color: transparent;
+
+    input {
+      padding-left: 0.5rem !important;
+    }
+
+    button {
+      color: green;
+      background-color: white;
+    }
+  }
+}
+
+#search-widget-popup {
+  position: absolute !important;
+  visibility: collapse;
+  box-shadow: 0 0 0.25rem grey;
+  background-color: white;
+
+  .search-widget-box {
+    background-color: #EEE;
+    padding: 0;
+  }
+
+  input {
+    padding-left: 0.5rem !important;
+  }
+
+  button {
+    background-color: #3c8000;
+    border: 0;
+    color: white;
+  }
+}
