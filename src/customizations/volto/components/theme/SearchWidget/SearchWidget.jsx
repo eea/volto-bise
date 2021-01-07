@@ -15,6 +15,8 @@ import cx from 'classnames';
 import { Icon } from '@plone/volto/components';
 import zoomSVG from '@plone/volto/icons/zoom.svg';
 
+import { createPortal } from 'react-dom';
+
 const messages = defineMessages({
   search: {
     id: 'Search',
@@ -77,6 +79,10 @@ class SearchWidget extends Component {
    */
   static propTypes = {
     pathname: PropTypes.string.isRequired,
+    /**
+     * One of 'desktop' (the default) and 'mobile'.
+     */
+    displayMode: PropTypes.string.isRequired,
   };
 
   /**
@@ -153,18 +159,36 @@ class SearchWidget extends Component {
     });
   };
 
-  updateWidth = () => {
+  updateSizeAndPosition = () => {
     // const el = this.searchButtonRef.current.ref.current;
     // const s = window.getComputedStyle(el);
-
     // this.searchFormRef.current.style.left = '25rem';
     // this.searchFormRef.current.style.right = `calc(100vw - ${
     //   el.offsetLeft
     // }px)`;
+
+    const el = this.searchButtonRef.current.ref.current;
+    // const s = window.getComputedStyle(el);
+
+    let nav = document.querySelector('.navigation');
+    let y = nav.clientHeight;
+    // y = el.offsetHeight + el.offsetTop;
+    this.searchFormRef.current.style.top = `${y}px`;
+    this.searchFormRef.current.style.right = `calc(100vw - ${
+      el.getBoundingClientRect().left +
+      el.getBoundingClientRect()
+        .width /* -
+          this.searchFormRef.current.getBoundingClientRect().width */
+    }px)`;
+
+    if (this.props.displayMode === 'mobile') {
+      this.searchFormRef.current.style.left = '0';
+      this.searchFormRef.current.style.width = '100vw';
+    }
   };
 
   handleResize = () => {
-    this.updateWidth();
+    this.updateSizeAndPosition();
   };
 
   componentDidMount = () => {
@@ -184,15 +208,7 @@ class SearchWidget extends Component {
         this.searchFormRef.current &&
         this.searchButtonRef.current?.ref?.current
       ) {
-        const el = this.searchButtonRef.current.ref.current;
-        // const s = window.getComputedStyle(el);
-
-        let y = document.querySelector('.navigation').clientHeight;
-        // y = el.offsetHeight + el.offsetTop;
-
-        this.searchFormRef.current.style.top = `${y}px`;
-
-        this.updateWidth();
+        this.updateSizeAndPosition();
       }
       return {
         searchPopupVisible: !state.searchPopupVisible,
@@ -211,30 +227,63 @@ class SearchWidget extends Component {
       this.state.searchPopupVisible;
 
     return (
-      <Grid columns={1} className={this.props.className}>
-        <Grid.Column width={1}>
-          <div>
-            <SearchButton
-              id="search-widget-toggle"
-              ref={this.searchButtonRef}
-              onClick={this.handleClick}
-            />
-            <SearchBox
-              onSubmit={this.onSubmit}
-              searchFormRef={this.searchFormRef}
-              visible={visible}
-              id="search-widget-popup"
-              onChangeText={this.onChangeText}
-              text={this.state.text}
-            ></SearchBox>
-          </div>
-        </Grid.Column>
-      </Grid>
+      <>
+        {this.props.displayMode === 'mobile' && (
+          <Grid columns={1} id="search-widget-mobile-wrapper-grid">
+            <Grid.Column only="mobile" mobile={1}>
+              <div>
+                <SearchButton
+                  id="search-button-mobile"
+                  ref={this.searchButtonRef}
+                  onClick={this.handleClick}
+                />
+                {__CLIENT__ &&
+                  createPortal(
+                    <SearchBox
+                      onSubmit={this.onSubmit}
+                      searchFormRef={this.searchFormRef}
+                      visible={visible}
+                      id="search-widget-mobile-popup"
+                      onChangeText={this.onChangeText}
+                      text={this.state.text}
+                    ></SearchBox>,
+                    document.body,
+                  )}
+              </div>
+            </Grid.Column>
+          </Grid>
+        )}
+        {this.props.displayMode === 'desktop' && (
+          <Grid columns={1} className={this.props.className}>
+            <Grid.Column width={1}>
+              <div>
+                <SearchButton
+                  id="search-widget-toggle"
+                  ref={this.searchButtonRef}
+                  onClick={this.handleClick}
+                />
+                {__CLIENT__ &&
+                  createPortal(
+                    <SearchBox
+                      onSubmit={this.onSubmit}
+                      searchFormRef={this.searchFormRef}
+                      visible={visible}
+                      id="search-widget-popup"
+                      onChangeText={this.onChangeText}
+                      text={this.state.text}
+                    ></SearchBox>,
+                    document.body,
+                  )}
+              </div>
+            </Grid.Column>
+          </Grid>
+        )}
+      </>
     );
   }
 }
 
-export const SearchButton = React.forwardRef(({ id, ref, onClick }) => {
+export const SearchButton = React.forwardRef(({ id, onClick }, ref) => {
   return (
     <Button basic={true} id={id} ref={ref} onClick={onClick}>
       <Icon name={zoomSVG} size="18px" />
@@ -294,25 +343,6 @@ export const TabletSearchWidget = ({ onSubmit, onChangeText, searchText }) => {
           onChangeText={onChangeText}
           text={searchText}
         ></SearchBox>
-      </Grid.Column>
-    </Grid>
-  );
-};
-
-export const MobileSearchWidget = () => {
-  return (
-    <Grid columns={1} id="search-widget-mobile-wrapper-grid">
-      <Grid.Column only="mobile" mobile={1}>
-        <SearchButton id="search-button-mobile" ref={null} onClick={() => {
-
-        }} />
-        {/* <SearchBox
-          onSubmit={onSubmit}
-          visible={true}
-          id="search-widget-tablet"
-          onChangeText={onChangeText}
-          text={searchText}
-        ></SearchBox> */}
       </Grid.Column>
     </Grid>
   );

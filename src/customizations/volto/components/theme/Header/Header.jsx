@@ -153,7 +153,11 @@ class Header extends Component {
                     onChangeText={this.onChangeText}
                     searchText={this.state.searchText}
                   />
-                  <MobileSearchWidget></MobileSearchWidget>
+                  <SearchWidget
+                    pathname={this.props.pathname}
+                    className="search"
+                    displayMode="mobile"
+                  ></SearchWidget>
                   <Navigation
                     pathname={this.props.pathname}
                     navigation={this.props.navigationItems}
@@ -170,6 +174,7 @@ class Header extends Component {
                   <SearchWidget
                     pathname={this.props.pathname}
                     className="search"
+                    displayMode="desktop"
                   />
                 </div>
               </div>
