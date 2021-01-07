@@ -154,8 +154,8 @@ class SearchWidget extends Component {
   };
 
   updateWidth = () => {
-    const el = this.searchButtonRef.current.ref.current;
-    const s = window.getComputedStyle(el);
+    // const el = this.searchButtonRef.current.ref.current;
+    // const s = window.getComputedStyle(el);
 
     // this.searchFormRef.current.style.left = '25rem';
     // this.searchFormRef.current.style.right = `calc(100vw - ${
@@ -214,14 +214,11 @@ class SearchWidget extends Component {
       <Grid columns={1} className={this.props.className}>
         <Grid.Column width={1}>
           <div>
-            <Button
-              basic={true}
+            <SearchButton
               id="search-widget-toggle"
               ref={this.searchButtonRef}
               onClick={this.handleClick}
-            >
-              <Icon name={zoomSVG} size="18px" />
-            </Button>
+            />
             <SearchBox
               onSubmit={this.onSubmit}
               searchFormRef={this.searchFormRef}
@@ -236,6 +233,14 @@ class SearchWidget extends Component {
     );
   }
 }
+
+export const SearchButton = React.forwardRef(({ id, ref, onClick }) => {
+  return (
+    <Button basic={true} id={id} ref={ref} onClick={onClick}>
+      <Icon name={zoomSVG} size="18px" />
+    </Button>
+  );
+});
 
 export const SearchBox = ({
   onSubmit,
@@ -281,7 +286,7 @@ export const SearchBox = ({
 export const TabletSearchWidget = ({ onSubmit, onChangeText, searchText }) => {
   return (
     <Grid columns={1} id="search-widget-tablet-wrapper-grid">
-      <Grid.Column only="mobile tablet" mobile={1} tablet={1}>
+      <Grid.Column only="tablet" tablet={1}>
         <SearchBox
           onSubmit={onSubmit}
           visible={true}
@@ -289,6 +294,25 @@ export const TabletSearchWidget = ({ onSubmit, onChangeText, searchText }) => {
           onChangeText={onChangeText}
           text={searchText}
         ></SearchBox>
+      </Grid.Column>
+    </Grid>
+  );
+};
+
+export const MobileSearchWidget = () => {
+  return (
+    <Grid columns={1} id="search-widget-mobile-wrapper-grid">
+      <Grid.Column only="mobile" mobile={1}>
+        <SearchButton id="search-button-mobile" ref={null} onClick={() => {
+
+        }} />
+        {/* <SearchBox
+          onSubmit={onSubmit}
+          visible={true}
+          id="search-widget-tablet"
+          onChangeText={onChangeText}
+          text={searchText}
+        ></SearchBox> */}
       </Grid.Column>
     </Grid>
   );

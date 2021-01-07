@@ -174,12 +174,13 @@ p > span:empty {
   }
 }
 
-#search-widget-toggle {
+#search-widget-toggle, #search-button-mobile {
   border-left: 1px solid #B8C6C8;
   border-radius: 0 0 0 0;
   padding-left: 1rem;
   color: #3c8000 !important;
   transform: scale(1.25);
+  background-color: transparent !important;
 
   svg {
     transition: transform 0.75s;
@@ -187,9 +188,18 @@ p > span:empty {
       transform: scale(1.5);
     }
   }
+}
 
+#search-widget-toggle {
   @media only screen and (max-width: 991px) {
     display: none;
+  }
+}
+
+#search-button-mobile {
+  border: none;
+  svg {
+    height: 1.75rem !important;
   }
 }
 
@@ -302,4 +312,10 @@ p > span:empty {
 
 #search-widget-tablet-wrapper-grid {
   margin-bottom: -0.5rem;
+  margin-right: unset;
+}
+
+#search-widget-mobile-wrapper-grid {
+  margin-top: 0;
+  margin-bottom: 0;
 }

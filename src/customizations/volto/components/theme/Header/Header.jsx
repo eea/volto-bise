@@ -25,7 +25,10 @@ import {
 
 import HeaderImage from 'volto-bise/components/theme/Header/HeaderImage';
 
-import { TabletSearchWidget } from '../SearchWidget/SearchWidget';
+import {
+  TabletSearchWidget,
+  MobileSearchWidget,
+} from '../SearchWidget/SearchWidget';
 
 /**
  * Header component class.
@@ -150,6 +153,7 @@ class Header extends Component {
                     onChangeText={this.onChangeText}
                     searchText={this.state.searchText}
                   />
+                  <MobileSearchWidget></MobileSearchWidget>
                   <Navigation
                     pathname={this.props.pathname}
                     navigation={this.props.navigationItems}
