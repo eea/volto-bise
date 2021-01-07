@@ -26,6 +26,44 @@ const messages = defineMessages({
   },
 });
 
+// handleClickOutsideNav = (event) => {
+//   if (
+//     this.container.current &&
+//     !this.container.current.contains(event.target)
+//   ) {
+//     this.setState({
+//       isMobileMenuOpen: false,
+//     });
+//   }
+// };
+
+// /**
+//  * Toggle mobile menu's open state
+//  * @method toggleMobileMenu
+//  * @returns {undefined}
+//  */
+// toggleMobileMenu() {
+//   this.setState({ isMobileMenuOpen: !this.state.isMobileMenuOpen }, () => {
+//     if (this.state.isMobileMenuOpen) {
+//       document.addEventListener('mousedown', this.handleClickOutsideNav);
+//     }
+//   });
+// }
+
+// /**
+//  * Close mobile menu
+//  * @method closeMobileMenu
+//  * @returns {undefined}
+//  */
+// closeMobileMenu() {
+//   if (!this.state.isMobileMenuOpen) {
+//     return;
+//   }
+//   this.setState({ isMobileMenuOpen: false }, () => {
+//     document.removeEventListener('mousedown', this.handleClickOutsideNav);
+//   });
+// }
+
 /**
  * SearchWidget component class.
  * @class SearchWidget
@@ -173,7 +211,7 @@ class SearchWidget extends Component {
       this.state.searchPopupVisible;
 
     return (
-      <Grid columns={1}>
+      <Grid columns={1} className={this.props.className}>
         <Grid.Column width={1}>
           <div>
             <Button
@@ -237,6 +275,22 @@ export const SearchBox = ({
         </button>
       </div>
     </form>
+  );
+};
+
+export const TabletSearchWidget = ({ onSubmit, onChangeText, searchText }) => {
+  return (
+    <Grid columns={1} id="search-widget-tablet-wrapper-grid">
+      <Grid.Column only="mobile tablet" mobile={1} tablet={1}>
+        <SearchBox
+          onSubmit={onSubmit}
+          visible={true}
+          id="search-widget-tablet"
+          onChangeText={onChangeText}
+          text={searchText}
+        ></SearchBox>
+      </Grid.Column>
+    </Grid>
   );
 };
 

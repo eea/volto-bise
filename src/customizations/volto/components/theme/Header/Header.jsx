@@ -4,7 +4,7 @@
  */
 
 import React, { Component } from 'react';
-import { Container, Segment, Grid } from 'semantic-ui-react';
+import { Container, Segment } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Portal } from 'react-portal';
@@ -13,7 +13,7 @@ import cx from 'classnames';
 
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { defineMessages, injectIntl, useIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 
 import {
   Anontools,
@@ -25,7 +25,7 @@ import {
 
 import HeaderImage from 'volto-bise/components/theme/Header/HeaderImage';
 
-import { SearchBox } from '../SearchWidget/SearchWidget';
+import { TabletSearchWidget } from '../SearchWidget/SearchWidget';
 
 /**
  * Header component class.
@@ -145,17 +145,11 @@ class Header extends Component {
                   <Logo />
                 </div>
                 <div className="tools-search-wrapper">
-                  <Grid columns={1} id="search-widget-tablet-wrapper-grid">
-                    <Grid.Column only="mobile tablet" mobile={1} tablet={1}>
-                      <SearchBox
-                        onSubmit={this.onSubmit}
-                        visible={true}
-                        id="search-widget-tablet"
-                        onChangeText={this.onChangeText}
-                        text={this.state.searchText}
-                      ></SearchBox>
-                    </Grid.Column>
-                  </Grid>
+                  <TabletSearchWidget
+                    onSubmit={this.onSubmit}
+                    onChangeText={this.onChangeText}
+                    searchText={this.state.searchText}
+                  />
                   <Navigation
                     pathname={this.props.pathname}
                     navigation={this.props.navigationItems}
@@ -169,9 +163,10 @@ class Header extends Component {
                       <Anontools />
                     </Portal>
                   )}
-                  <div className="search">
-                    <SearchWidget pathname={this.props.pathname} />
-                  </div>
+                  <SearchWidget
+                    pathname={this.props.pathname}
+                    className="search"
+                  />
                 </div>
               </div>
             </div>
