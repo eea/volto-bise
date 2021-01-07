@@ -116,7 +116,7 @@ class Header extends Component {
                   <Logo />
                 </div>
                 <div className="tools-search-wrapper">
-                  <Grid columns={1}>
+                  <Grid columns={1} id="search-widget-tablet-wrapper-grid">
                     <Grid.Column only="mobile tablet" mobile={1} tablet={1}>
                       <SearchBox
                         // TODO:

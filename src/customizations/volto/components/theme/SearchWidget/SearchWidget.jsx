@@ -190,33 +190,37 @@ class SearchWidget extends Component {
       this.state.searchPopupVisible;
 
     return (
-      <div>
-        <Button
-          basic={true}
-          id="search-widget-toggle"
-          ref={this.searchButtonRef}
-          onClick={this.handleClick}
+      <Grid columns={1}>
+        <Grid.Column
+          // only="computer largeScreen widescreen"
+          // only="mobile tablet"
+          largeScreen={1}
+          widescreen={1}
+          computer={1}
+          // tablet={1}
+          // mobile={1}
         >
-          <Icon name={zoomSVG} size="18px" />
-        </Button>
-        {/* <Grid columns={1}>
-          <Grid.Column
-            only="computer largeScreen widescreen"
-            largeScreen={1}
-            widescreen={1}
-            computer={1}
-          > */}
-        <SearchBox
-          onSubmit={this.onSubmit}
-          searchFormRef={this.searchFormRef}
-          visible={visible}
-          id="search-widget-popup"
-          onChangeText={this.onChangeText}
-          text={this.state.text}
-        ></SearchBox>
-        {/* </Grid.Column> */}
-        {/* </Grid> */}
-      </div>
+          <div>
+          <Button
+            basic={true}
+            id="search-widget-toggle"
+            ref={this.searchButtonRef}
+            onClick={this.handleClick}
+          >
+            <Icon name={zoomSVG} size="18px" />
+          </Button>
+          <SearchBox
+            onSubmit={this.onSubmit}
+            searchFormRef={this.searchFormRef}
+            visible={visible}
+            id="search-widget-popup"
+            onChangeText={this.onChangeText}
+            text={this.state.text}
+          ></SearchBox>
+          </div>
+
+        </Grid.Column>
+      </Grid>
     );
   }
 }
