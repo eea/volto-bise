@@ -5,7 +5,7 @@
 
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Form, Input, Button, Grid } from 'semantic-ui-react';
+import { Input, Button, Grid } from 'semantic-ui-react';
 import { compose } from 'redux';
 import { PropTypes } from 'prop-types';
 import { defineMessages, injectIntl, useIntl } from 'react-intl';
@@ -50,7 +50,6 @@ class SearchWidget extends Component {
   constructor(props) {
     super(props);
     this.onChangeText = this.onChangeText.bind(this);
-    this.onChangeSection = this.onChangeSection.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.state = {
       text: '',
@@ -76,29 +75,13 @@ class SearchWidget extends Component {
   }
 
   /**
-   * On change section
-   * @method onChangeSection
-   * @param {object} event Event object.
-   * @param {bool} checked Section checked.
-   * @returns {undefined}
-   */
-  onChangeSection(event, { checked }) {
-    this.setState({
-      section: checked,
-    });
-  }
-
-  /**
    * Submit handler
    * @method onSubmit
    * @param {event} event Event object.
    * @returns {undefined}
    */
   onSubmit(event) {
-    const section = this.state.section ? `&path=${this.props.pathname}` : '';
-    this.props.history.push(
-      `/search?SearchableText=${this.state.text}${section}`,
-    );
+    this.props.history.push(`/search?SearchableText=${this.state.text}`);
     event.preventDefault();
     this.setState({ searchPopupVisible: false });
   }
@@ -191,34 +174,25 @@ class SearchWidget extends Component {
 
     return (
       <Grid columns={1}>
-        <Grid.Column
-          // only="computer largeScreen widescreen"
-          // only="mobile tablet"
-          largeScreen={1}
-          widescreen={1}
-          computer={1}
-          // tablet={1}
-          // mobile={1}
-        >
+        <Grid.Column width={1}>
           <div>
-          <Button
-            basic={true}
-            id="search-widget-toggle"
-            ref={this.searchButtonRef}
-            onClick={this.handleClick}
-          >
-            <Icon name={zoomSVG} size="18px" />
-          </Button>
-          <SearchBox
-            onSubmit={this.onSubmit}
-            searchFormRef={this.searchFormRef}
-            visible={visible}
-            id="search-widget-popup"
-            onChangeText={this.onChangeText}
-            text={this.state.text}
-          ></SearchBox>
+            <Button
+              basic={true}
+              id="search-widget-toggle"
+              ref={this.searchButtonRef}
+              onClick={this.handleClick}
+            >
+              <Icon name={zoomSVG} size="18px" />
+            </Button>
+            <SearchBox
+              onSubmit={this.onSubmit}
+              searchFormRef={this.searchFormRef}
+              visible={visible}
+              id="search-widget-popup"
+              onChangeText={this.onChangeText}
+              text={this.state.text}
+            ></SearchBox>
           </div>
-
         </Grid.Column>
       </Grid>
     );
@@ -236,7 +210,6 @@ export const SearchBox = ({
 }) => {
   const intl = useIntl();
 
-  console.log('id - visible:', id, visible);
   return (
     <form
       action="/search"

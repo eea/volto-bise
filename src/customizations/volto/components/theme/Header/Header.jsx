@@ -11,6 +11,10 @@ import { Portal } from 'react-portal';
 
 import cx from 'classnames';
 
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
+import { defineMessages, injectIntl, useIntl } from 'react-intl';
+
 import {
   Anontools,
   Logo,
@@ -34,6 +38,7 @@ class Header extends Component {
     this.state = {
       isHomepage: this.props.actualPathName === '/',
       windowWidth: 0,
+      searchText: '',
     };
     this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this);
   }
@@ -89,11 +94,35 @@ class Header extends Component {
   }
 
   /**
+   * Submit handler
+   * @method onSubmit
+   * @param {event} event Event object.
+   * @returns {undefined}
+   */
+  onSubmit = (event) => {
+    this.props.history.push(`/search?SearchableText=${this.state.searchText}`);
+    event.preventDefault();
+    this.setState({ searchPopupVisible: false });
+  };
+
+  /**
+   * On change text
+   * @method onChangeText
+   * @param {object} event Event object.
+   * @param {string} value Text value.
+   * @returns {undefined}
+   */
+  onChangeText = (event, { value }) => {
+    this.setState({
+      searchText: value,
+    });
+  };
+
+  /**
    * Render method.
    * @method render
    * @returns {string} Markup for the component.
    */
-
   render() {
     const defaultHeaderImage = this.props.defaultHeaderImage;
     let headerImageUrl = defaultHeaderImage?.image || defaultHeaderImage;
@@ -119,13 +148,11 @@ class Header extends Component {
                   <Grid columns={1} id="search-widget-tablet-wrapper-grid">
                     <Grid.Column only="mobile tablet" mobile={1} tablet={1}>
                       <SearchBox
-                        // TODO:
-                        // onSubmit={this.onSubmit}
-                        // searchFormRef={this.searchFormRef}
+                        onSubmit={this.onSubmit}
                         visible={true}
                         id="search-widget-tablet"
-                        // onChangeText={this.onChangeText}
-                        // text={this.state.text}
+                        onChangeText={this.onChangeText}
+                        text={this.state.searchText}
                       ></SearchBox>
                     </Grid.Column>
                   </Grid>
@@ -169,6 +196,11 @@ class Header extends Component {
   }
 }
 
-export default connect((state) => ({
-  token: state.userSession.token,
-}))(Header);
+export default compose(
+  withRouter,
+  injectIntl,
+)(
+  connect((state) => ({
+    token: state.userSession.token,
+  }))(Header),
+);

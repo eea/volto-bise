@@ -174,7 +174,6 @@ p > span:empty {
   }
 }
 
-/* TODO: make the two magnifier glass icons thicker */
 #search-widget-toggle {
   border-left: 1px solid #B8C6C8;
   border-radius: 0 0 0 0;
@@ -189,12 +188,6 @@ p > span:empty {
     }
   }
 
-  // @media screen and (min-width: 1000px) /* and (max-width: 1900px) */ {
-  //   display: block !important;
-  // }
-  // @media screen and (max-width: 1000px) {
-  //   display: none !important;
-  // }
   @media only screen and (max-width: 991px) {
     display: none;
   }
@@ -297,7 +290,7 @@ p > span:empty {
   input {
     padding-left: 0.5rem !important;
     padding-right: 2rem !important;
-    text-overflow: ellipsis !important;
+    text-overflow: ellipsis;
   }
 
   button {
