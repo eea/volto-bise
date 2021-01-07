@@ -28,44 +28,6 @@ const messages = defineMessages({
   },
 });
 
-// handleClickOutsideNav = (event) => {
-//   if (
-//     this.container.current &&
-//     !this.container.current.contains(event.target)
-//   ) {
-//     this.setState({
-//       isMobileMenuOpen: false,
-//     });
-//   }
-// };
-
-// /**
-//  * Toggle mobile menu's open state
-//  * @method toggleMobileMenu
-//  * @returns {undefined}
-//  */
-// toggleMobileMenu() {
-//   this.setState({ isMobileMenuOpen: !this.state.isMobileMenuOpen }, () => {
-//     if (this.state.isMobileMenuOpen) {
-//       document.addEventListener('mousedown', this.handleClickOutsideNav);
-//     }
-//   });
-// }
-
-// /**
-//  * Close mobile menu
-//  * @method closeMobileMenu
-//  * @returns {undefined}
-//  */
-// closeMobileMenu() {
-//   if (!this.state.isMobileMenuOpen) {
-//     return;
-//   }
-//   this.setState({ isMobileMenuOpen: false }, () => {
-//     document.removeEventListener('mousedown', this.handleClickOutsideNav);
-//   });
-// }
-
 /**
  * SearchWidget component class.
  * @class SearchWidget
@@ -124,39 +86,49 @@ class SearchWidget extends Component {
    * @param {event} event Event object.
    * @returns {undefined}
    */
-  onSubmit(event) {
-    this.props.history.push(`/search?SearchableText=${this.state.text}`);
+  onSubmit = (event) => {
     event.preventDefault();
-    this.setState({ searchPopupVisible: false });
-  }
+    this.props.history.push(`/search?SearchableText=${this.state.text}`);
+    this.closePopup();
+  };
 
-  handleClickOutside = (ev) => {
-    function overlaps(x, y) {
-      return y.contains(y);
-
-      // const r1 = x.getBoundingClientRect();
-      // const r2 = y.getBoundingClientRect();
-
-      // return (
-      //   r1.right < r2.left ||
-      //   r1.left > r2.right ||
-      //   r1.bottom < r2.top ||
-      //   r1.top > r2.bottom
-      // );
+  togglePopup = () => {
+    if (this.state.searchPopupVisible) {
+      this.closePopup();
+      return;
     }
 
     this.setState((state, props) => {
       if (
-        state.searchPopupVisible &&
+        !state.searchPopupVisible /* &&
         this.searchFormRef.current &&
-        ev.target !== this.searchFormRef.current &&
-        !overlaps(this.searchFormRef.current, ev.target)
+        this.searchButtonRef.current?.ref?.current */
       ) {
-        return { searchPopupVisible: false };
+        document.addEventListener('mousedown', this.handleClickOutside);
+        this.updateSizeAndPosition();
       }
-
-      return {};
+      return {
+        searchPopupVisible: true,
+      };
     });
+  };
+
+  closePopup = () => {
+    if (!this.state.searchPopupVisible) {
+      return;
+    }
+    this.setState({ searchPopupVisible: false }, () => {
+      document.removeEventListener('mousedown', this.handleClickOutside);
+    });
+  };
+
+  handleClickOutside = (event) => {
+    if (
+      this.searchFormRef.current &&
+      !this.searchFormRef.current.contains(event.target)
+    ) {
+      this.closePopup();
+    }
   };
 
   updateSizeAndPosition = () => {
@@ -192,28 +164,15 @@ class SearchWidget extends Component {
   };
 
   componentDidMount = () => {
-    window.addEventListener('click', this.handleClickOutside, false);
     window.addEventListener('resize', this.handleResize, false);
   };
 
   componentWillUnmount = () => {
-    window.removeEventListener('click', this.handleClickOutside);
     window.removeEventListener('resize', this.handleResize);
   };
 
   handleClick = () => {
-    this.setState((state, props) => {
-      if (
-        !state.searchPopupVisible &&
-        this.searchFormRef.current &&
-        this.searchButtonRef.current?.ref?.current
-      ) {
-        this.updateSizeAndPosition();
-      }
-      return {
-        searchPopupVisible: !state.searchPopupVisible,
-      };
-    });
+    this.togglePopup();
   };
 
   /**
