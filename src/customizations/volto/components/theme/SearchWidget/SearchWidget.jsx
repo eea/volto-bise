@@ -154,7 +154,7 @@ class SearchWidget extends Component {
     // the 13px is hardcoded in another part of CSS
     let y =
       nav.getBoundingClientRect().height -
-      1 +
+      3 + // necessary but not understood
       (this.props.displayMode === 'desktop' ? 13 : 0);
 
     // y = el.offsetHeight + el.offsetTop;

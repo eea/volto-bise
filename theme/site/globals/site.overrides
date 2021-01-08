@@ -305,6 +305,11 @@ p > span:empty {
 
 #search-widget-popup, #search-widget-mobile-popup {
   position: absolute !important;
+
+  @media only screen and (max-width: 1654px) {
+    position: fixed !important;
+  }
+
   visibility: collapse;
   box-shadow: 0 0 0.25rem grey;
   background-color: white;
