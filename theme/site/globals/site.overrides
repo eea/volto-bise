@@ -249,11 +249,21 @@ p > span:empty {
       grid-row-start: 1;
       grid-row-end: 2;
 
+      user-select: none;
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+
       z-index: 1;
+
+      &:hover svg {
+        transform: rotate(30deg);
+      }
     }
 
     svg {
       height: 1rem !important;
+      transition: transform 0.5s;
     }
   }
 }
@@ -283,6 +293,11 @@ p > span:empty {
     button {
       color: green;
       background-color: transparent;
+      border-radius: 1.5rem;
+
+      &:hover {
+        background-color: #EEE;
+      }
 
       svg {
         height: 2rem !important;
@@ -318,6 +333,10 @@ p > span:empty {
     background-color: #3c8000;
     border: 0;
     color: white;
+
+    &:hover {
+      background-color: #008000;
+    }
   }
 }
 
