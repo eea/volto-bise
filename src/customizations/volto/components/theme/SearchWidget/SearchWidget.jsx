@@ -65,6 +65,9 @@ class SearchWidget extends Component {
 
     this.searchFormRef = React.createRef(null);
     this.searchButtonRef = React.createRef(null);
+
+    this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   /**
@@ -92,42 +95,46 @@ class SearchWidget extends Component {
     this.closePopup();
   };
 
-  togglePopup = () => {
-    if (this.state.searchPopupVisible) {
-      this.closePopup();
-      return;
-    }
-
-    this.setState((state, props) => {
-      if (
-        !state.searchPopupVisible /* &&
-        this.searchFormRef.current &&
-        this.searchButtonRef.current?.ref?.current */
-      ) {
+  openPopup = () => {
+    this.setState(
+      (state, props) => {
+        if (state.searchPopupVisible) {
+          return {};
+        }
+        return {
+          searchPopupVisible: true,
+        };
+      },
+      () => {
         document.addEventListener('mousedown', this.handleClickOutside);
         this.updateSizeAndPosition();
-      }
-      return {
-        searchPopupVisible: true,
-      };
-    });
+      },
+    );
   };
 
   closePopup = () => {
-    if (!this.state.searchPopupVisible) {
-      return;
-    }
-    this.setState({ searchPopupVisible: false }, () => {
-      document.removeEventListener('mousedown', this.handleClickOutside);
-    });
+    this.setState(
+      (state, props) => {
+        if (!state.searchPopupVisible) {
+          return {};
+        }
+        return { searchPopupVisible: false };
+      },
+      () => {
+        document.removeEventListener('mousedown', this.handleClickOutside);
+      },
+    );
   };
 
   handleClickOutside = (event) => {
     if (
       this.searchFormRef.current &&
-      !this.searchFormRef.current.contains(event.target)
+      !this.searchFormRef.current.contains(event.target) &&
+      !this.searchButtonRef.current.ref.current.contains(event.target)
     ) {
       this.closePopup();
+      event.preventDefault();
+      event.stopPropagation();
     }
   };
 
@@ -142,8 +149,14 @@ class SearchWidget extends Component {
     const el = this.searchButtonRef.current.ref.current;
     // const s = window.getComputedStyle(el);
 
-    let nav = document.querySelector('.navigation');
-    let y = nav.clientHeight;
+    let nav = document.querySelector('.header'); // better than .tools-search-wrapper or .navigation
+
+    // the 13px is hardcoded in another part of CSS
+    let y =
+      nav.getBoundingClientRect().height -
+      1 +
+      (this.props.displayMode === 'desktop' ? 13 : 0);
+
     // y = el.offsetHeight + el.offsetTop;
     this.searchFormRef.current.style.top = `${y}px`;
     this.searchFormRef.current.style.right = `calc(100vw - ${
@@ -171,8 +184,16 @@ class SearchWidget extends Component {
     window.removeEventListener('resize', this.handleResize);
   };
 
-  handleClick = () => {
-    this.togglePopup();
+  handleClick = (event) => {
+    // this.openPopup();
+    // if (this.searchButtonRef.current.ref.current.contains(event.target)) {
+    if (this.state.searchPopupVisible) {
+      this.closePopup();
+    } else {
+      this.openPopup();
+    }
+    // this.openPopup();
+    // }
   };
 
   /**
