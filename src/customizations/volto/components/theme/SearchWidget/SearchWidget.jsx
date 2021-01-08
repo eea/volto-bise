@@ -139,31 +139,22 @@ class SearchWidget extends Component {
   };
 
   updateSizeAndPosition = () => {
-    // const el = this.searchButtonRef.current.ref.current;
-    // const s = window.getComputedStyle(el);
-    // this.searchFormRef.current.style.left = '25rem';
-    // this.searchFormRef.current.style.right = `calc(100vw - ${
-    //   el.offsetLeft
-    // }px)`;
-
     const el = this.searchButtonRef.current.ref.current;
-    // const s = window.getComputedStyle(el);
 
-    let nav = document.querySelector('.header'); // better than .tools-search-wrapper or .navigation
+    // better than .tools-search-wrapper or .navigation:
+    let nav = document.querySelector('.header');
 
     // the 13px is hardcoded in another part of CSS
-    let y =
+    const y =
       nav.getBoundingClientRect().height -
       3 + // necessary but not understood
       (this.props.displayMode === 'desktop' ? 13 : 0);
 
-    // y = el.offsetHeight + el.offsetTop;
+    const rect = el.getBoundingClientRect();
+
     this.searchFormRef.current.style.top = `${y}px`;
     this.searchFormRef.current.style.right = `calc(100vw - ${
-      el.getBoundingClientRect().left +
-      el.getBoundingClientRect()
-        .width /* -
-          this.searchFormRef.current.getBoundingClientRect().width */
+      rect.left + rect.width
     }px)`;
 
     if (this.props.displayMode === 'mobile') {
@@ -184,16 +175,12 @@ class SearchWidget extends Component {
     window.removeEventListener('resize', this.handleResize);
   };
 
-  handleClick = (event) => {
-    // this.openPopup();
-    // if (this.searchButtonRef.current.ref.current.contains(event.target)) {
+  handleClick = () => {
     if (this.state.searchPopupVisible) {
       this.closePopup();
     } else {
       this.openPopup();
     }
-    // this.openPopup();
-    // }
   };
 
   /**

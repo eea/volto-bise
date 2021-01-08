@@ -25,10 +25,7 @@ import {
 
 import HeaderImage from 'volto-bise/components/theme/Header/HeaderImage';
 
-import {
-  TabletSearchWidget,
-  MobileSearchWidget,
-} from '../SearchWidget/SearchWidget';
+import { TabletSearchWidget } from '../SearchWidget/SearchWidget';
 
 /**
  * Header component class.

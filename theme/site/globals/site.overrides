@@ -234,18 +234,6 @@ p > span:empty {
 
     input {
       font-size: smaller;
-      // z-index: -1;
-
-      // &:-internal-autofill-selected {
-      //   // appearance: menulist-button;
-      //   background-color: transparent !important;
-      //   background-image: none !important;
-      //   color: -internal-light-dark(black, white) !important;
-      // }
-
-        // box-shadow: 0 0 0px 1000px white inset;
-      // &:-webkit-autofill {
-      // }
     }
 
     button {
