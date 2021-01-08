@@ -37,24 +37,6 @@ p > span:empty {
   z-index: 2;
 }
 
-.searchbox div.input {
-  border: none;
-  border-bottom: 1px solid #ddd;
-  padding-left: 0.5em;
-  padding-right: 1.5em;
-  height: 27px;
-  font-size: 15px;
-}
-
-.searchbox .icon {
-  fill: #606060;
-  position: absolute;
-  z-index: 1;
-  left: -23px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
 /* Table of contents */
 .table-of-contents.default {
   .bulleted.list {
@@ -190,4 +172,210 @@ p > span:empty {
       width: 100% !important;
     }
   }
+}
+
+#search-widget-toggle, #search-button-mobile {
+  border-left: 1px solid #B8C6C8;
+  border-radius: 0 0 0 0;
+  padding-left: 1rem;
+  color: #3c8000 !important;
+  transform: scale(1.25);
+  background-color: transparent !important;
+
+  svg {
+    transition: transform 0.75s;
+    &:hover {
+      transform: scale(1.5);
+    }
+  }
+}
+
+#search-widget-toggle {
+  @media only screen and (max-width: 991px) {
+    display: none;
+  }
+  position: relative;
+  top: 13px; // this 13px value is hardcoded in another style file
+  @media only screen and (max-width: 1654px) {
+    top: 0;
+  }
+}
+
+#search-button-mobile {
+  border: none;
+  svg {
+    height: 1.75rem !important;
+  }
+}
+
+#search-widget-popup, #search-widget-tablet, #search-widget-mobile-popup {
+  width: 20vw;
+  min-width: 18rem;
+  box-sizing: border-box;
+  display:  block;
+  z-index: 10;
+  padding: 1rem;
+  right: 0;
+
+  .search-widget-box {
+    border: 0.1rem solid lightgray;
+    border-radius: 1rem;
+    padding-left: 0.5rem;
+    height: 2rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+
+    div {
+      grid-row-start: 1;
+      grid-row-end: 2;
+      grid-column-start: 1;
+      grid-column-end: 3;
+    }
+
+    input {
+      font-size: smaller;
+    }
+
+    button {
+      border: 0;
+      margin: 0;
+      border-radius: 1rem;
+      font-size: small;
+      cursor: pointer;
+      transition: background-color 0.5s;
+
+      grid-column-start: 2;
+      grid-column-end: 3;
+      grid-row-start: 1;
+      grid-row-end: 2;
+
+      user-select: none;
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+
+      z-index: 1;
+
+      &:hover svg {
+        transform: rotate(30deg);
+      }
+    }
+
+    svg {
+      height: 1rem !important;
+      transition: transform 0.5s;
+    }
+  }
+}
+
+#search-widget-tablet {
+  position: static !important;
+  visibility: visible;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  padding: 0;
+  margin-right: 1rem;
+
+  .search-widget-box {
+    padding: 0;
+    background-color: transparent;
+    height: 3rem;
+    border-radius: 1.5rem;
+
+    input {
+      font-size: 1.25rem;
+      color: gray;
+      padding-left: 1rem !important;
+      padding-right: 3rem !important;
+      text-overflow: ellipsis;
+    }
+
+    button {
+      color: green;
+      background-color: transparent;
+      border-radius: 1.5rem;
+
+      &:hover {
+        background-color: #EEE;
+      }
+
+      svg {
+        height: 2rem !important;
+      }
+    }
+  }
+}
+
+#search-widget-popup, #search-widget-mobile-popup {
+  position: absolute !important;
+
+  @media only screen and (max-width: 1654px) {
+    position: fixed !important;
+  }
+
+  visibility: collapse;
+  box-shadow: 0 0 0.25rem grey;
+  background-color: white;
+  z-index: 9999;
+
+  .search-widget-box {
+    background-color: #EEE;
+    padding: 0;
+  }
+
+  input {
+    padding-left: 0.5rem !important;
+    padding-right: 2rem !important;
+    text-overflow: ellipsis;
+  }
+
+  button {
+    background-color: #3c8000;
+    border: 0;
+    color: white;
+
+    &:hover {
+      background-color: #008000;
+    }
+  }
+}
+
+#search-widget-mobile-popup {
+  background-color: rgb(238, 238, 238);
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 0.25rem 0.25rem;
+  margin-top: 1.5rem;
+
+  @media only screen and (min-width: 768px) {
+    display: none;
+  }
+
+  .search-widget-box {
+    background-color: white;
+    margin: 0.5rem 2rem;
+    height: 3rem;
+    border-radius: 1.5rem;
+
+    input {
+      padding-right: 3rem !important;
+    }
+
+    button {
+      width: 3rem;
+      border-radius: 2rem;
+
+      svg {
+        height: 1.5rem !important;
+      }
+    }
+  }
+}
+
+#search-widget-tablet-wrapper-grid {
+  margin-bottom: -0.5rem;
+  margin-right: unset;
+}
+
+#search-widget-mobile-wrapper-grid {
+  margin-top: 0;
+  margin-bottom: 0;
 }
