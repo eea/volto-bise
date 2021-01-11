@@ -379,3 +379,21 @@ p > span:empty {
   margin-top: 0;
   margin-bottom: 0;
 }
+
+// BEGIN: Center the header in the full viewport width when the full viewport width
+// exceeds a limit (useful especially when the width of the header is bigger
+// than the width of the content area below it).
+@media only screen and (min-width: 1655px) {
+  #main .header-wrapper > .ui.container {
+    width: 100% !important;
+  }
+
+  #main .header-wrapper .tools-search-wrapper {
+    flex-grow: 0 !important;
+  }
+}
+
+#main .header-wrapper .logo {
+  flex-grow: 0 !important;
+}
+// END.
