@@ -384,16 +384,16 @@ p > span:empty {
 // exceeds a limit (useful especially when the width of the header is bigger
 // than the width of the content area below it).
 @media only screen and (min-width: 1655px) {
-  #main > div:nth-child(1) > div.ui.basic.segment.header-wrapper > div.ui.container {
+  #main .header-wrapper > .ui.container {
     width: 100% !important;
   }
 
-  #main > div:nth-child(1) > div.ui.basic.segment.header-wrapper > div > div > div > div.tools-search-wrapper {
+  #main .header-wrapper .tools-search-wrapper {
     flex-grow: 0 !important;
   }
 }
 
-#main > div:nth-child(1) > div.ui.basic.segment.header-wrapper > div > div > div > div.logo {
+#main .header-wrapper .logo {
   flex-grow: 0 !important;
 }
 // END.
