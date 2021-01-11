@@ -261,6 +261,7 @@ const DataCatalogueView = (props) => {
                       title="By Site Name"
                       field="site.name"
                       listComponent={Tabs}
+                      exclude="BISE"
                     />
                   </ActionBarRow>
                 </ActionBar>
