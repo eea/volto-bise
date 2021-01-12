@@ -8,6 +8,7 @@ import { DocumentListItem } from './Document';
 import { HabitatListItem } from './Habitat';
 import { LinkListItem } from './Link';
 import { SiteListItem } from './Site';
+import { ProtectedAreaListItem } from './ProtectedArea';
 
 const gridItemTypes = {
   species: SpeciesGridItem,
@@ -20,6 +21,7 @@ const listItemTypes = {
   habitat: HabitatListItem,
   link: LinkListItem,
   site: SiteListItem,
+  protected_area: ProtectedAreaListItem,
 };
 
 export const GridItem = (props) => {
@@ -83,12 +85,15 @@ export const ListItem = (props) => {
       ) : (
         <>
           <div className={bemBlocks.item('details')}>
-            <a href={url} target="_blank" rel="noreferrer">
-              <h2
-                className={bemBlocks.item('title')}
-                dangerouslySetInnerHTML={{ __html: source.title }}
-              ></h2>
-            </a>
+            {/* <a href={url} target="_blank" rel="noreferrer"> */}
+            <h4>Search for: {source.query}</h4>
+            <small>
+              on {source.queried_at} in {source.categories.join(', ')}
+            </small>
+            <small>
+              in page {source.page} / {source.per}
+            </small>
+            {/* </a> */}
           </div>
         </>
       )}
