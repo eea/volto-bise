@@ -236,13 +236,13 @@ const DataCatalogueView = (props) => {
                       options={[
                         { label: 'Relevance', field: '_score', order: 'desc' },
                         {
-                          label: 'Latest Modifications',
-                          field: 'modified',
+                          label: 'Latest',
+                          field: 'published_on',
                           order: 'desc',
                         },
                         {
-                          label: 'Earliest Modifications',
-                          field: 'modified',
+                          label: 'Earliest',
+                          field: 'published_on',
                           order: 'asc',
                         },
                       ]}
@@ -261,6 +261,7 @@ const DataCatalogueView = (props) => {
                       title="By Site Name"
                       field="site.name"
                       listComponent={Tabs}
+                      exclude="BISE"
                     />
                   </ActionBarRow>
                 </ActionBar>
