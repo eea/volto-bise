@@ -168,11 +168,11 @@ class Header extends Component {
                       <Anontools />
                     </Portal>
                   )}
-                  <SearchWidget
-                    pathname={this.props.pathname}
-                    className="search"
-                    displayMode="desktop"
-                  />
+                  {/* <SearchWidget */}
+                  {/*   pathname={this.props.pathname} */}
+                  {/*   className="search" */}
+                  {/*   displayMode="desktop" */}
+                  {/* /> */}
                 </div>
               </div>
             </div>
