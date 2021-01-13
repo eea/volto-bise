@@ -222,7 +222,15 @@ const DataCatalogueView = (props) => {
                 <SearchBox
                   autofocus={true}
                   searchOnChange={true}
-                  queryFields={['title']}
+                  // I am not sure if it is worth replacing the default value
+                  // (_all) here, or what powers are best to give to each query
+                  // field:
+                  // queryFields={[
+                  //   // 'title',
+                  //   'name',
+                  //   // 'query',
+                  //   // 'scientific_name',
+                  // ]}
                 />
                 <ActionBar>
                   <ActionBarRow>
@@ -296,7 +304,23 @@ const DataCatalogueView = (props) => {
                   ]}
                   scrollTo="body"
                 />
-                <NoHits suggestionsField={'title'} />
+                {/* We should get suggestions in NoHits component just for
+                the 'title' field, and there are search results that do not
+                have 'title' but 'name', 'query' or 'scientific_name', and
+                because of this they are not displayed in the Hits component.
+                Giving the alternative NoHits-s with 'suggestionsField' prop
+                set to these other possible values, even though it is not
+                displayed, it lets the search results appear in the Hits
+                component for types that don't have the 'title' field. */}
+                <NoHits suggestionsField="title" />
+                <div style={{ display: 'none' }}>
+                  <NoHits suggestionsField="name" />
+                  {/* Uncommenting the following 2 lines breaks the search results
+                  for 'Mediterranean gypsum scrubs' which should have as
+                  first result's title, the same search string. */}
+                  {/* <NoHits suggestionsField="query" /> */}
+                  {/* <NoHits suggestionsField="scientific_name" /> */}
+                </div>
                 <Pagination showNumbers={true} />
               </LayoutResults>
               <SideBar>
