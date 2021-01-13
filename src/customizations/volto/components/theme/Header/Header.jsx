@@ -145,16 +145,16 @@ class Header extends Component {
                   <Logo />
                 </div>
                 <div className="tools-search-wrapper">
-                  {/* <TabletSearchWidget */}
-                  {/*   onSubmit={this.onSubmit} */}
-                  {/*   onChangeText={this.onChangeText} */}
-                  {/*   searchText={this.state.searchText} */}
-                  {/* /> */}
-                  {/* <SearchWidget */}
-                  {/*   pathname={this.props.pathname} */}
-                  {/*   className="search" */}
-                  {/*   displayMode="mobile" */}
-                  {/* ></SearchWidget> */}
+                  <TabletSearchWidget
+                    onSubmit={this.onSubmit}
+                    onChangeText={this.onChangeText}
+                    searchText={this.state.searchText}
+                  />
+                  <SearchWidget
+                    pathname={this.props.pathname}
+                    className="search"
+                    displayMode="mobile"
+                  ></SearchWidget>
                   <Navigation
                     pathname={this.props.pathname}
                     navigation={this.props.navigationItems}
@@ -168,11 +168,11 @@ class Header extends Component {
                       <Anontools />
                     </Portal>
                   )}
-                  {/* <SearchWidget */}
-                  {/*   pathname={this.props.pathname} */}
-                  {/*   className="search" */}
-                  {/*   displayMode="desktop" */}
-                  {/* /> */}
+                  <SearchWidget
+                    pathname={this.props.pathname}
+                    className="search"
+                    displayMode="desktop"
+                  />
                 </div>
               </div>
             </div>
