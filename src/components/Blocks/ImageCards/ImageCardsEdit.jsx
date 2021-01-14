@@ -1,6 +1,6 @@
 import React from 'react';
 import { SidebarPortal } from '@plone/volto/components'; // EditBlock
-import { BlockEditForm } from 'volto-addons/BlockForm';
+// import { BlockEditForm } from 'volto-addons/BlockForm';
 import ImageCardsView from './ImageCardsView';
 
 import schema from './schema';
@@ -11,7 +11,7 @@ const ImageCardEdit = (props) => {
       <ImageCardsView data={props.data} />
 
       <SidebarPortal selected={props.selected}>
-        <BlockEditForm
+        {/* <BlockEditForm
           schema={schema}
           title={schema.title}
           onChangeField={(id, value) => {
@@ -22,7 +22,7 @@ const ImageCardEdit = (props) => {
           }}
           formData={props.data}
           block={props.block}
-        />
+        /> */}
       </SidebarPortal>
     </>
   );
