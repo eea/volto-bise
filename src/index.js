@@ -7,7 +7,6 @@ import {
   installConnectedMap,
   installDataCatalogue,
   installTabsBlockExtensions,
-  installDataComponents,
   installImageCards,
   installFactsheetListingView,
 } from './components';
@@ -18,8 +17,6 @@ import MultiSelectWidget from './components/Widgets/MultiSelectWidget';
 import TextAlign from './components/Widgets/TextAlign';
 import ObjectListWidget from './components/Widgets/ObjectList';
 import AttachedImageWidget from './components/Widgets/AttachedImage';
-
-import blockdata from 'volto-bise/reducers/blockdata';
 
 import './slate-styles.css';
 import './box-styles.less';
@@ -94,11 +91,6 @@ const installStyles = (config) => {
 };
 
 export default (config) => {
-  config.addonReducers = {
-    ...config.addonReducers,
-    blockdata,
-  };
-
   config.settings.navDepth = 3;
 
   config.settings.allowed_cors_destinations = [
@@ -166,8 +158,6 @@ export default (config) => {
     },
   ];
 
-  delete config.blocks.blocksConfig.data_connected_block;
-  delete config.blocks.blocksConfig.auto_select_parameter;
   delete config.blocks.blocksConfig.data_connected_embed;
   delete config.blocks.blocksConfig.discodata_connector_block;
 
@@ -177,7 +167,6 @@ export default (config) => {
     installMaesViewer,
     installConnectedMap,
     installTabsBlockExtensions,
-    installDataComponents,
     installImageCards,
     installStyles,
     installFactsheetListingView,
