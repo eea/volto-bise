@@ -5,13 +5,17 @@
 
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Form, Input } from 'semantic-ui-react';
+import { Input, Button, Grid } from 'semantic-ui-react';
 import { compose } from 'redux';
 import { PropTypes } from 'prop-types';
-import { defineMessages, injectIntl } from 'react-intl';
+import { defineMessages, injectIntl, useIntl } from 'react-intl';
+
+import cx from 'classnames';
 
 import { Icon } from '@plone/volto/components';
-import zoomSVG from '@plone/volto/icons/zoom.svg';
+import zoomSVG from 'volto-bise/icons/search.svg';
+
+import { createPortal } from 'react-dom';
 
 const messages = defineMessages({
   search: {
@@ -20,7 +24,7 @@ const messages = defineMessages({
   },
   searchSite: {
     id: 'Search Site',
-    defaultMessage: 'Search',
+    defaultMessage: 'Search all site ...',
   },
 });
 
@@ -37,23 +41,33 @@ class SearchWidget extends Component {
    */
   static propTypes = {
     pathname: PropTypes.string.isRequired,
+    /**
+     * One of 'desktop' (the default) and 'mobile'.
+     */
+    displayMode: PropTypes.string.isRequired,
   };
 
   /**
    * Constructor
    * @method constructor
    * @param {Object} props Component properties
-   * @constructs WysiwygEditor
+   * @constructs SearchWidget
    */
   constructor(props) {
     super(props);
     this.onChangeText = this.onChangeText.bind(this);
-    this.onChangeSection = this.onChangeSection.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.state = {
       text: '',
       section: false,
+      searchPopupVisible: false,
     };
+
+    this.searchFormRef = React.createRef(null);
+    this.searchButtonRef = React.createRef(null);
+
+    this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   /**
@@ -70,31 +84,104 @@ class SearchWidget extends Component {
   }
 
   /**
-   * On change section
-   * @method onChangeSection
-   * @param {object} event Event object.
-   * @param {bool} checked Section checked.
-   * @returns {undefined}
-   */
-  onChangeSection(event, { checked }) {
-    this.setState({
-      section: checked,
-    });
-  }
-
-  /**
    * Submit handler
    * @method onSubmit
    * @param {event} event Event object.
    * @returns {undefined}
    */
-  onSubmit(event) {
-    const section = this.state.section ? `&path=${this.props.pathname}` : '';
-    this.props.history.push(
-      `/search?SearchableText=${this.state.text}${section}`,
-    );
+  onSubmit = (event) => {
     event.preventDefault();
-  }
+    this.props.history.push(`/search?SearchableText=${this.state.text}`);
+    this.closePopup();
+  };
+
+  openPopup = () => {
+    this.setState(
+      (state, props) => {
+        if (state.searchPopupVisible) {
+          return {};
+        }
+        return {
+          searchPopupVisible: true,
+        };
+      },
+      () => {
+        document.addEventListener('mousedown', this.handleClickOutside);
+        this.updateSizeAndPosition();
+      },
+    );
+  };
+
+  closePopup = () => {
+    this.setState(
+      (state, props) => {
+        if (!state.searchPopupVisible) {
+          return {};
+        }
+        return { searchPopupVisible: false };
+      },
+      () => {
+        document.removeEventListener('mousedown', this.handleClickOutside);
+      },
+    );
+  };
+
+  handleClickOutside = (event) => {
+    if (
+      this.searchFormRef.current &&
+      !this.searchFormRef.current.contains(event.target) &&
+      !this.searchButtonRef.current.ref.current.contains(event.target)
+    ) {
+      this.closePopup();
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  };
+
+  updateSizeAndPosition = () => {
+    const el = this.searchButtonRef.current.ref.current;
+
+    // better than .tools-search-wrapper or .navigation:
+    let nav = document.querySelector('.header');
+
+    // the 13px is hardcoded in another part of CSS
+    const y =
+      nav.getBoundingClientRect().height -
+      3 + // necessary but not understood
+      (this.props.displayMode === 'desktop' ? 13 : 0);
+
+    const rect = el.getBoundingClientRect();
+
+    this.searchFormRef.current.style.top = `${y}px`;
+    this.searchFormRef.current.style.right = `calc(100vw - ${
+      rect.left + rect.width
+    }px)`;
+
+    if (this.props.displayMode === 'mobile') {
+      this.searchFormRef.current.style.left = '0';
+      this.searchFormRef.current.style.width = '100vw';
+    }
+  };
+
+  handleResize = () => {
+    this.updateSizeAndPosition();
+  };
+
+  componentDidMount = () => {
+    window.addEventListener('resize', this.handleResize, false);
+  };
+
+  componentWillUnmount = () => {
+    window.removeEventListener('resize', this.handleResize);
+  };
+
+  handleClick = () => {
+    if (this.state.searchPopupVisible) {
+      this.closePopup();
+    } else {
+      this.openPopup();
+    }
+  };
 
   /**
    * Render method.
@@ -102,25 +189,130 @@ class SearchWidget extends Component {
    * @returns {string} Markup for the component.
    */
   render() {
+    const visible =
+      typeof this.state.searchPopupVisible === 'boolean' &&
+      this.state.searchPopupVisible;
+
     return (
-      <Form action="/search" onSubmit={this.onSubmit}>
-        <Form.Field className="searchbox">
-          <Input
-            aria-label={this.props.intl.formatMessage(messages.search)}
-            onChange={this.onChangeText}
-            name="SearchableText"
-            value={this.state.text}
-            transparent
-            placeholder={this.props.intl.formatMessage(messages.searchSite)}
-            title={this.props.intl.formatMessage(messages.search)}
-          />
-          <button aria-label={this.props.intl.formatMessage(messages.search)}>
-            <Icon name={zoomSVG} size="18px" />
-          </button>
-        </Form.Field>
-      </Form>
+      <>
+        {this.props.displayMode === 'mobile' && (
+          <Grid columns={1} id="search-widget-mobile-wrapper-grid">
+            <Grid.Column only="mobile" mobile={1}>
+              <div>
+                <SearchButton
+                  id="search-button-mobile"
+                  ref={this.searchButtonRef}
+                  onClick={this.handleClick}
+                />
+                {__CLIENT__ &&
+                  createPortal(
+                    <SearchBox
+                      onSubmit={this.onSubmit}
+                      searchFormRef={this.searchFormRef}
+                      visible={visible}
+                      id="search-widget-mobile-popup"
+                      onChangeText={this.onChangeText}
+                      text={this.state.text}
+                    ></SearchBox>,
+                    document.body,
+                  )}
+              </div>
+            </Grid.Column>
+          </Grid>
+        )}
+        {this.props.displayMode === 'desktop' && (
+          <Grid columns={1} className={this.props.className}>
+            <Grid.Column width={1}>
+              <div>
+                <SearchButton
+                  id="search-widget-toggle"
+                  ref={this.searchButtonRef}
+                  onClick={this.handleClick}
+                />
+                {__CLIENT__ &&
+                  createPortal(
+                    <SearchBox
+                      onSubmit={this.onSubmit}
+                      searchFormRef={this.searchFormRef}
+                      visible={visible}
+                      id="search-widget-popup"
+                      onChangeText={this.onChangeText}
+                      text={this.state.text}
+                    ></SearchBox>,
+                    document.body,
+                  )}
+              </div>
+            </Grid.Column>
+          </Grid>
+        )}
+      </>
     );
   }
 }
+
+export const SearchButton = React.forwardRef(({ id, onClick }, ref) => {
+  return (
+    <Button basic={true} id={id} ref={ref} onClick={onClick}>
+      <Icon name={zoomSVG} size="18px" />
+    </Button>
+  );
+});
+
+export const SearchBox = ({
+  onSubmit,
+  searchFormRef,
+  visible,
+  id,
+  onChangeText,
+  text,
+  className,
+}) => {
+  const intl = useIntl();
+
+  return (
+    <form
+      action="/search"
+      onSubmit={onSubmit}
+      id={id}
+      className={cx(className)}
+      ref={searchFormRef}
+      style={{
+        visibility: visible ? 'visible' : 'collapse',
+      }}
+    >
+      <div className="search-widget-box">
+        <Input
+          aria-label={intl.formatMessage(messages.search)}
+          onChange={onChangeText}
+          name="SearchableText"
+          value={text}
+          transparent
+          placeholder={intl.formatMessage(messages.searchSite)}
+          title={intl.formatMessage(messages.search)}
+          type="search"
+        />
+        <button aria-label={intl.formatMessage(messages.search)}>
+          <Icon name={zoomSVG} size="18px" />
+        </button>
+      </div>
+    </form>
+  );
+};
+
+export const TabletSearchWidget = ({ onSubmit, onChangeText, searchText }) => {
+  return (
+    <Grid columns={1} id="search-widget-tablet-wrapper-grid">
+      <Grid.Column only="tablet" tablet={1}>
+        <SearchBox
+          onSubmit={onSubmit}
+          visible={true}
+          id="search-widget-tablet"
+          onChangeText={onChangeText}
+          text={searchText}
+        ></SearchBox>
+      </Grid.Column>
+    </Grid>
+  );
+};
 
 export default compose(withRouter, injectIntl)(SearchWidget);

@@ -1,6 +1,6 @@
 import { readAsDataURL } from 'promise-file-reader';
 import { connect } from 'react-redux';
-import { Dimmer, Loader, Item, Message } from 'semantic-ui-react';
+import { Dimmer, Loader, Item, Message, Label } from 'semantic-ui-react';
 import Dropzone from 'react-dropzone';
 import React, { Component } from 'react';
 import { flattenToAppURL, getBaseUrl } from '@plone/volto/helpers';
@@ -30,6 +30,7 @@ export class UnconnectedAttachedImageWidget extends Component {
     this.state = {
       uploading: false,
       uid: uuid(),
+      errorMessage: null,
     };
 
     this.onDrop = this.onDrop.bind(this);
@@ -49,6 +50,7 @@ export class UnconnectedAttachedImageWidget extends Component {
     ) {
       this.setState({
         uploading: false,
+        errorMessage: null,
       });
 
       const url = this.props.requests[this.state.uid].data['@id'];
@@ -58,7 +60,7 @@ export class UnconnectedAttachedImageWidget extends Component {
 
   onDrop(acceptedFiles) {
     this.setState((state) => {
-      return { ...state, uploading: true };
+      return { ...state, uploading: true, errorMessage: null };
     });
 
     const promises = [];
@@ -66,6 +68,10 @@ export class UnconnectedAttachedImageWidget extends Component {
     acceptedFiles.forEach((file) => {
       const p = readAsDataURL(file).then((data) => {
         const fields = data.match(/^data:(.*);(.*),(.*)$/);
+
+        if (fields.length !== 4) {
+          throw new Error('Invalid image data');
+        }
 
         const payload = {
           '@type': 'Image',
@@ -86,11 +92,28 @@ export class UnconnectedAttachedImageWidget extends Component {
       promises.push(p);
     });
 
-    return Promise.all(promises).then(() => {
-      this.setState((state) => {
-        return { ...state, uploading: false };
-      });
-    });
+    return Promise.all(promises).then(
+      () => {
+        this.setState(
+          (state) => {
+            return { ...state, uploading: false, errorMessage: null };
+          },
+          () => {
+            if (typeof this.props.onChange === 'function') {
+              this.props.onChange(
+                this.props.id,
+                this.props.requests[this.state.uid].data?.['@id'] || '',
+              );
+            }
+          },
+        );
+      },
+      (err) => {
+        this.setState((state) => {
+          return { ...state, uploading: false, errorMessage: err.message };
+        });
+      },
+    );
   }
 
   render() {
@@ -129,6 +152,11 @@ export class UnconnectedAttachedImageWidget extends Component {
               );
             }}
           </Dropzone>
+          {this.state.errorMessage && this.state.errorMessage && (
+            <Label basic color="red" pointing>
+              {this.state.errorMessage}
+            </Label>
+          )}
         </div>
       </FormFieldWrapper>
     );

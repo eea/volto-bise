@@ -1,9 +1,4 @@
-export Placeholder from './theme/Placeholder/Placeholder';
 export ChildrenTabsView from './theme/ChildrenTabsView/ChildrenTabsView';
-export ConnectedChartBlockEdit from './theme/datablocks/ConnectedChart/ConnectedChartBlockEdit';
-export ConnectedChartBlockView from './theme/datablocks/ConnectedChart/ConnectedChartBlockView';
-export DataQueryFilterEdit from './theme/datablocks/DataQueryFilter/DataQueryFilterEdit';
-export DataQueryFilterView from './theme/datablocks/DataQueryFilter/DataQueryFilterView';
 export FactsheetDatabaseListing from './theme/FactsheetDatabaseListing/FactsheetDatabaseListing';
 export KeyFactsEdit from './Blocks/KeyFacts/KeyFactsEdit';
 export KeyFactsView from './Blocks/KeyFacts/KeyFactsView';
@@ -12,10 +7,8 @@ export MaesViewerView from './Blocks/MaesViewer/MaesViewerView';
 export TocNavigationView from './theme/TocNavigationView/TocNavigationView';
 
 export installFactsheetListingView from './Blocks/FactsheetsListing';
-export installBubbleChart from './theme/datablocks/BubbleChart';
 export installConnectedMap from './Blocks/ConnectedMap';
 export installDataCatalogue from './Blocks/DataCatalogue';
-export installDataComponents from './theme/datablocks';
 export installKeyFacts from './Blocks/KeyFacts';
 export installMaesViewer from './Blocks/MaesViewer';
 export installTabsBlockExtensions from './theme/TabsBlockExtensions';

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import loadable from '@loadable/component';
 import { Icon } from '@plone/volto/components';
+import { Link } from 'react-router-dom';
 
 import leftSVG from '@plone/volto/icons/left-key.svg';
 import rightSVG from '@plone/volto/icons/right-key.svg';
@@ -8,6 +9,8 @@ import cx from 'classnames';
 
 import 'slick-carousel/slick/slick.css';
 import { fixUrl, getPath } from 'volto-bise/utils';
+
+import { serializeNodes } from 'volto-slate/editor/render';
 
 // import { Placeholder } from 'semantic-ui-react';
 // import 'slick-carousel/slick/slick-theme.css';
@@ -49,14 +52,30 @@ class Carousel extends Component {
                 : {}
             }
           />
-          <div className="slide-overlay" />
+          <div className="slide-overlay"></div>
           <div className="ui container">
             <div className="slide-body">
-              <div className="slide-title">{card.title || ''}</div>
-              <div
-                className="slide-description"
-                dangerouslySetInnerHTML={{ __html: card.text?.data || '' }}
-              />
+              {card.link ? (
+                <Link to={card.link}>
+                  <div className="slide-title">{card.title || ''}</div>
+                </Link>
+              ) : (
+                <div className="slide-title">{card.title || ''}</div>
+              )}
+              {/* Incomplete backward-compatibility: */}
+              {card.text?.data ? (
+                <div
+                  className="slide-description"
+                  dangerouslySetInnerHTML={{ __html: card.text?.data || '' }}
+                />
+              ) : (
+                <div className="slide-description">
+                  {serializeNodes(card.text)}
+                </div>
+              )}
+            </div>
+            <div className="slide-copyright">
+              {serializeNodes(card.copyright)}
             </div>
           </div>
         </div>

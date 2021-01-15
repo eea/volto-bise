@@ -14,50 +14,138 @@ export const colorscale = [
   'rgb(227,120,180)',
 ];
 
-/**
- * Filters data. Given an object like:
- *
- * { Area: [...], Source: [...] }
- *
- * where each item in the list represents a table column value, returns a list
- * of objects, where each object represents the data for that index
- *
- */
-export function query(provider_data, country, filters) {
-  const res = [];
+const mapLongLevelNameToShort = (x) => {
+  const obj = {
+    'A - Marine habitats': 'Marine habitats',
+    'B - Coastal habitats': 'Coastal habitats',
+    'C - Inland surface waters': 'Inland waters',
+    'D - Mires, bogs and fens': 'Mires, bogs and fens',
+    'E - Grasslands and land dominated by forbs, mosses or lichens':
+      'Grassland',
+    'F - Heathland, scrub and tundra': 'Heathland',
+    'G - Woodland, forest and other wooded land': 'Woodlands',
+    'H - Inland unvegetated or sparsely vegetated habitats':
+      'Inland unvegetated or sparsely vegetated habitats',
+    'I - Arable land and market gardens': 'Cropland',
+    'J - constructed, industrial and other artificial habitats': 'Urban',
+  };
+  return obj[x] || x;
+};
 
-  const countries_row = provider_data['Country_name'];
+const filterGettingOriginalIndices = (a, fn) => {
+  return a
+    .map((c, i) => [c, i])
+    .filter(([c, i]) => fn(c, i))
+    .map(([, i]) => i);
+};
 
-  countries_row.forEach((name, index) => {
-    if (name === country) {
-      const truth = filters.map((f) => f(provider_data, index));
-      if (truth.every((t) => t)) {
-        const obj = {};
-        Object.keys(provider_data).forEach((k) => {
-          obj[k] = provider_data[k][index];
-        });
-        res.push(obj);
-      }
-    }
-  });
+class ProviderData {
+  static ecosystemColumnName = 'Ecosystem_level2';
+  static countryColumnName = 'Country_name';
 
-  return res;
+  /**
+   * Takes an object like:
+   *
+   * { Area: [...], Source: [...] }
+   *
+   * where each item in the lists represents a table column value.
+   */
+  constructor(data) {
+    this.data = data;
+  }
+
+  getColumnData(name) {
+    return this.data[name];
+  }
+
+  getUniqueColumnData(name) {
+    return _.uniq(this.data[name]);
+  }
+
+  getEcosystems() {
+    return this.getUniqueColumnData(ProviderData.ecosystemColumnName);
+  }
+
+  getCountries() {
+    return this.getUniqueColumnData(ProviderData.countryColumnName).concat(
+      'EU',
+    );
+  }
+
+  getCountriesColumn() {
+    return this.getColumnData(ProviderData.countryColumnName);
+  }
+
+  forEachCountryAndLevel(fn) {
+    const c = this.getCountries();
+    const e = this.getEcosystems();
+    c.forEach((country) => {
+      e.forEach((level) => {
+        fn(country, level);
+      });
+    });
+  }
+
+  getEcosystemForRowIndex(i) {
+    return this.data[ProviderData.ecosystemColumnName][i];
+  }
+
+  hasEcosystemAtRowIndex(i, ecosystem) {
+    return this.getEcosystemForRowIndex(i) === ecosystem;
+  }
+
+  getColumnNames() {
+    return _.keys(this.data);
+  }
+
+  getCellValue(columnName, rowIndex) {
+    return this.getColumnData(columnName)[rowIndex];
+  }
+
+  createRowObject(rowIndex) {
+    const obj = {};
+    this.getColumnNames().forEach((cn) => {
+      obj[cn] = this.getCellValue(cn, rowIndex);
+    });
+    return obj;
+  }
+
+  rowSatisfiesFilters(index, filters) {
+    const filtersResults = filters.map((f) => f(this.data, index));
+    return filtersResults.every((t) => t);
+  }
+
+  /**
+   * Filters the data. Given a country name and an array of filter functions
+   * which receive two parameters, provider_data and rowIndex, returns an array
+   * of objects containing the data for each matching row in the DataProvider.
+   */
+  query(country, filters) {
+    const countriesColumn = this.getCountriesColumn();
+    const filteredIndices = filterGettingOriginalIndices(
+      countriesColumn,
+      (c, i) => {
+        return c === country && this.rowSatisfiesFilters(i, filters);
+      },
+    );
+    const rowObjects = filteredIndices.map((i) => this.createRowObject(i));
+    return rowObjects;
+  }
 }
 
 export function mapByLevel(provider_data) {
-  const level2 = new Set(provider_data['Ecosystem_level2']);
-  const countries = new Set(provider_data['Country_name']);
-  const byLevel = Object.fromEntries(Array.from(level2).map((l) => [l, {}]));
-  countries.forEach((country) => {
-    level2.forEach((level) => {
-      const filters = [
-        (provider_data, index) =>
-          provider_data['Ecosystem_level2'][index] === level,
-      ];
-      const country_data = query(provider_data, country, filters);
-      byLevel[level][country] = country_data;
-    });
+  const pd = new ProviderData(provider_data);
+
+  const byLevel = _.fromPairs(pd.getEcosystems().map((l) => [l, {}]));
+
+  pd.forEachCountryAndLevel((country, level) => {
+    const filters = [
+      (provider_data, index) => pd.hasEcosystemAtRowIndex(index, level),
+    ];
+    const country_data = pd.query(country, filters);
+    byLevel[level][country] = country_data;
   });
+
   return byLevel;
 }
 
@@ -230,7 +318,7 @@ export function chartTileLayout(index, finalPercent) {
         y: 0.3,
         xanchor: 'right',
         yanchor: 'bottom',
-        text: `${finalPercent.toFixed(2)}%`,
+        text: `${Math.round(finalPercent).toFixed(0)}%`,
         showarrow: false,
       },
     ],
@@ -245,10 +333,10 @@ export function makeChartTiles(
 ) {
   if (!provider_data) return;
   const byLevel = mapByLevel(provider_data);
-  const { EUByLevelPercents } = mapToAllEU(provider_data, byLevel);
+  const { EUByLevel, EUByLevelPercents } = mapToAllEU(provider_data, byLevel);
 
-  const ecosystems = Array.from(new Set(provider_data['Ecosystem_level2']));
-  const countries = Array.from(new Set(provider_data['Country_name']));
+  const ecosystems = _.uniq(provider_data['Ecosystem_level2']);
+  const countries = _.uniq(provider_data['Country_name']);
 
   const byArea = Object.fromEntries(ecosystems.map((l) => [l, {}]));
   ecosystems.forEach((level) => {
@@ -260,6 +348,7 @@ export function makeChartTiles(
       );
       byArea[level][country] = total;
     });
+    byArea[level]['EU'] = EUByLevel[level];
   });
 
   const tiles = ecosystems
@@ -270,7 +359,7 @@ export function makeChartTiles(
         data: [
           makeTrace(level, byArea[level], index, focusOn, { hoverTemplate }),
         ],
-        title: level,
+        title: mapLongLevelNameToShort(level),
       };
     })
     .filter((c) => !!c);
