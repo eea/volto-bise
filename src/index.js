@@ -18,6 +18,11 @@ import TextAlign from './components/Widgets/TextAlign';
 import ObjectListWidget from './components/Widgets/ObjectList';
 import AttachedImageWidget from './components/Widgets/AttachedImage';
 
+import ThemeSelector from './components/Widgets/ThemeSelector';
+
+import Header from './customizations/volto/components/theme/Header/Header';
+import Footer from './customizations/volto/components/theme/Footer/Footer';
+
 import './slate-styles.css';
 import './box-styles.less';
 
@@ -139,6 +144,8 @@ export default (config) => {
     config.widgets.widget.attachedimage = AttachedImageWidget;
   }
 
+  config.widgets.id.theme = ThemeSelector;
+
   config.settings.pluggableStyles = [
     ...(config.settings.pluggableStyles || []),
     {
@@ -157,6 +164,14 @@ export default (config) => {
       cssClass: 'shaded-block',
     },
   ];
+
+  config.settings.themes = {
+    ...(config.settings.themes || {}),
+    default: {
+      Header: Header,
+      Footer: Footer,
+    },
+  };
 
   delete config.blocks.blocksConfig.data_connected_embed;
   delete config.blocks.blocksConfig.discodata_connector_block;

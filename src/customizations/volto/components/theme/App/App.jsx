@@ -22,8 +22,8 @@ import Error from '@plone/volto/error';
 
 import {
   // Breadcrumbs,
-  Footer,
-  Header,
+  Footer as DefaultFooter,
+  Header as DefaultHeader,
   Icon,
   OutdatedBrowser,
   AppExtras,
@@ -117,9 +117,22 @@ class App extends Component {
     const isCmsUI = isCmsUi(this.props.pathname);
     const ConnectionRefusedView = views.errorViews.ECONNREFUSED;
 
+    const Header =
+      settings.themes[this.props.content?.theme]?.Header || DefaultHeader;
+
+    const Footer =
+      settings.themes[this.props.content?.theme]?.Footer || DefaultFooter;
+
     return (
       <Fragment>
-        <BodyClass className={`view-${action}view`} />
+        <BodyClass
+          className={cx(
+            `view-${action}view`,
+            this.props.content?.theme
+              ? `${this.props.content?.theme}-theme`
+              : '',
+          )}
+        />
 
         {/* Body class depending on content type */}
         {this.props.content && this.props.content['@type'] && (
