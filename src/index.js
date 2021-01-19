@@ -18,8 +18,6 @@ import TextAlign from './components/Widgets/TextAlign';
 import ObjectListWidget from './components/Widgets/ObjectList';
 import AttachedImageWidget from './components/Widgets/AttachedImage';
 
-import ThemeSelector from './components/Widgets/ThemeSelector';
-
 import Header from './customizations/volto/components/theme/Header/Header';
 import Footer from './customizations/volto/components/theme/Footer/Footer';
 
@@ -143,8 +141,6 @@ export default (config) => {
   if (!config.widgets.widget.attachedimage) {
     config.widgets.widget.attachedimage = AttachedImageWidget;
   }
-
-  config.widgets.id.theme = ThemeSelector;
 
   config.settings.pluggableStyles = [
     ...(config.settings.pluggableStyles || []),
