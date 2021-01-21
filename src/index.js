@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { DefaultView } from '@plone/volto/components';
 
 import {
@@ -166,6 +168,7 @@ export default (config) => {
     default: {
       Header: Header,
       Footer: Footer,
+      Breadcrumbs: () => <></>,
     },
   };
 

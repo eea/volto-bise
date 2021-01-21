@@ -21,7 +21,7 @@ import { settings, views } from '~/config';
 import Error from '@plone/volto/error';
 
 import {
-  // Breadcrumbs,
+  Breadcrumbs as DefaultBreadcrumbs,
   Footer as DefaultFooter,
   Header as DefaultHeader,
   Icon,
@@ -108,6 +108,8 @@ class App extends Component {
 
     const Header = settings.themes[theme]?.Header || DefaultHeader;
     const Footer = settings.themes[theme]?.Footer || DefaultFooter;
+    const Breadcrumbs =
+      settings.themes[theme]?.Breadcrumbs || DefaultBreadcrumbs;
 
     return (
       <Fragment>
@@ -144,8 +146,8 @@ class App extends Component {
           {...this.props.content}
         />
 
-        {/* <Breadcrumbs pathname={path} />
-        <MultilingualRedirector pathname={this.props.pathname}></MultilingualRedirector> */}
+        <Breadcrumbs pathname={path} />
+        {/* <MultilingualRedirector pathname={this.props.pathname}></MultilingualRedirector> */}
 
         <Segment basic className="content-area">
           <main>
