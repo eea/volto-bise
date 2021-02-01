@@ -37,6 +37,8 @@ const installStyles = (config) => {
     ...(config.settings.plotlyChartsColorScale || []),
   ];
 
+  config.blocks.blocksConfig.columnsBlock =
+    config.blocks.blocksConfig.columnsBlock || {};
   config.blocks.blocksConfig.columnsBlock.available_colors = [
     '#3c8000',
     '#f4cf01',
@@ -73,6 +75,7 @@ const installStyles = (config) => {
     '#000000',
   ];
 
+  config.settings.slate = config.settings.slate || {};
   config.settings.slate.styleMenu = config.settings.slate.styleMenu || {};
   config.settings.slate.styleMenu.inlineStyles = [
     ...(config.settings.slate.styleMenu?.inlineStyles || []),
