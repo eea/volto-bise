@@ -9,7 +9,6 @@ import {
   installConnectedMap,
   installDataCatalogue,
   installTabsBlockExtensions,
-  installImageCards,
   installFactsheetListingView,
 } from './components';
 
@@ -184,7 +183,6 @@ export default (config) => {
     installMaesViewer,
     installConnectedMap,
     installTabsBlockExtensions,
-    installImageCards,
     installStyles,
     installFactsheetListingView,
   ].reduce((acc, apply) => apply(acc), config);
