@@ -9,21 +9,21 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { asyncConnect } from 'redux-connect';
 import { Segment } from 'semantic-ui-react';
-// import Raven from 'raven-js';
 import { renderRoutes } from 'react-router-config';
 import { Slide, ToastContainer, toast } from 'react-toastify';
 import split from 'lodash/split';
 import join from 'lodash/join';
 import trim from 'lodash/trim';
 import cx from 'classnames';
+
 import { settings, views } from '~/config';
-import * as Sentry from '@sentry/browser';
+
 import Error from '@plone/volto/error';
 
 import {
-  // Breadcrumbs,
-  Footer,
-  Header,
+  Breadcrumbs as DefaultBreadcrumbs,
+  Footer as DefaultFooter,
+  Header as DefaultHeader,
   Icon,
   OutdatedBrowser,
   AppExtras,
@@ -38,8 +38,9 @@ import {
 } from '@plone/volto/actions';
 
 import clearSVG from '@plone/volto/icons/clear.svg';
-
 // import MultilingualRedirector from '../MultilingualRedirector/MultilingualRedirector';
+
+import * as Sentry from '@sentry/browser';
 
 /**
  * @export
@@ -61,19 +62,6 @@ class App extends Component {
     error: null,
     errorInfo: null,
   };
-
-  /**
-   * ComponentDidMount
-   * @method ComponentDidMount
-   * @param {string} error  The error
-   * @param {string} info The info
-   * @returns {undefined}
-   */
-  // componentDidMount() {
-  //   if (__CLIENT__ && process.env.SENTRY_DSN) {
-  //     Raven.config(process.env.SENTRY_DSN).install();
-  //   }
-  // }
 
   /**
    * @method componentWillReceiveProps
@@ -113,13 +101,21 @@ class App extends Component {
     const path = getBaseUrl(this.props.pathname);
     const action = getView(this.props.pathname);
     const headerImage = this.props.content?.image?.download;
+    const theme = this.props.route?.theme || 'default';
 
     const isCmsUI = isCmsUi(this.props.pathname);
     const ConnectionRefusedView = views.errorViews.ECONNREFUSED;
 
+    const Header = settings.themes[theme]?.Header || DefaultHeader;
+    const Footer = settings.themes[theme]?.Footer || DefaultFooter;
+    const Breadcrumbs =
+      settings.themes[theme]?.Breadcrumbs || DefaultBreadcrumbs;
+
     return (
       <Fragment>
-        <BodyClass className={`view-${action}view`} />
+        <BodyClass
+          className={cx(`view-${action}view`, theme ? `${theme}-theme` : '')}
+        />
 
         {/* Body class depending on content type */}
         {this.props.content && this.props.content['@type'] && (
@@ -142,7 +138,6 @@ class App extends Component {
             'public-ui': !isCmsUI,
           })}
         />
-
         <Header
           actualPathName={this.props.pathname}
           navigationItems={this.props.navigation}
@@ -151,8 +146,8 @@ class App extends Component {
           {...this.props.content}
         />
 
-        {/* <Breadcrumbs pathname={path} />
-        <MultilingualRedirector pathname={this.props.pathname}></MultilingualRedirector> */}
+        <Breadcrumbs pathname={path} />
+        {/* <MultilingualRedirector pathname={this.props.pathname}></MultilingualRedirector> */}
 
         <Segment basic className="content-area">
           <main>
@@ -202,49 +197,6 @@ export const __test__ = connect(
   }),
   {},
 )(App);
-
-// export default compose(
-//   asyncConnect([
-//     {
-//       key: 'breadcrumbs',
-//       promise: ({ location, store: { dispatch } }) => {
-//         __SERVER__ &&
-//           !settings.minimizeNetworkFetch &&
-//           dispatch(getBreadcrumbs(getBaseUrl(location.pathname)));
-//       },
-//     },
-//     {
-//       key: 'content',
-//       promise: ({ location, store: { dispatch } }) =>
-//         __SERVER__ && dispatch(getContent(getBaseUrl(location.pathname))),
-//     },
-//     {
-//       key: 'navigation',
-//       promise: ({ location, store: { dispatch } }) =>
-//         __SERVER__ && dispatch(getNavigation(getBaseUrl(location.pathname))),
-//     },
-//     {
-//       key: 'types',
-//       promise: ({ location, store: { dispatch } }) =>
-//         __SERVER__ && dispatch(getTypes(getBaseUrl(location.pathname))),
-//     },
-//     {
-//       key: 'workflow',
-//       promise: ({ location, store: { dispatch } }) =>
-//         __SERVER__ &&
-//         !settings.minimizeNetworkFetch &&
-//         dispatch(getWorkflow(getBaseUrl(location.pathname))),
-//     },
-//   ]),
-//   connect(
-//     (state, props) => ({
-//       pathname: props.location.pathname,
-//       content: state.content.data,
-//       navigation: state.navigation.items,
-//     }),
-//     {},
-//   ),
-// )(App);
 
 export default compose(
   asyncConnect([

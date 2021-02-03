@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { DefaultView } from '@plone/volto/components';
 
 import {
@@ -7,7 +9,6 @@ import {
   installConnectedMap,
   installDataCatalogue,
   installTabsBlockExtensions,
-  installImageCards,
   installFactsheetListingView,
 } from './components';
 
@@ -17,6 +18,9 @@ import MultiSelectWidget from './components/Widgets/MultiSelectWidget';
 import TextAlign from './components/Widgets/TextAlign';
 import ObjectListWidget from './components/Widgets/ObjectList';
 import AttachedImageWidget from './components/Widgets/AttachedImage';
+
+import Header from './customizations/volto/components/theme/Header/Header';
+import Footer from './customizations/volto/components/theme/Footer/Footer';
 
 import './slate-styles.css';
 import './box-styles.less';
@@ -32,6 +36,8 @@ const installStyles = (config) => {
     ...(config.settings.plotlyChartsColorScale || []),
   ];
 
+  config.blocks.blocksConfig.columnsBlock =
+    config.blocks.blocksConfig.columnsBlock || {};
   config.blocks.blocksConfig.columnsBlock.available_colors = [
     '#3c8000',
     '#f4cf01',
@@ -68,6 +74,7 @@ const installStyles = (config) => {
     '#000000',
   ];
 
+  config.settings.slate = config.settings.slate || {};
   config.settings.slate.styleMenu = config.settings.slate.styleMenu || {};
   config.settings.slate.styleMenu.inlineStyles = [
     ...(config.settings.slate.styleMenu?.inlineStyles || []),
@@ -158,6 +165,15 @@ export default (config) => {
     },
   ];
 
+  config.settings.themes = {
+    ...(config.settings.themes || {}),
+    default: {
+      Header: Header,
+      Footer: Footer,
+      Breadcrumbs: () => <></>,
+    },
+  };
+
   delete config.blocks.blocksConfig.data_connected_embed;
   delete config.blocks.blocksConfig.discodata_connector_block;
 
@@ -167,7 +183,6 @@ export default (config) => {
     installMaesViewer,
     installConnectedMap,
     installTabsBlockExtensions,
-    installImageCards,
     installStyles,
     installFactsheetListingView,
   ].reduce((acc, apply) => apply(acc), config);
