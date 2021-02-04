@@ -63,9 +63,6 @@ class SearchWidget extends Component {
       searchPopupVisible: false,
     };
 
-    this.searchFormRef = React.createRef(null);
-    this.searchButtonRef = React.createRef(null);
-
     this.handleClickOutside = this.handleClickOutside.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
@@ -108,6 +105,7 @@ class SearchWidget extends Component {
       () => {
         document.addEventListener('mousedown', this.handleClickOutside);
         this.updateSizeAndPosition();
+        this.searchInputRef.current.focus();
       },
     );
   };
@@ -183,6 +181,10 @@ class SearchWidget extends Component {
     }
   };
 
+  searchInputRef = React.createRef(null);
+  searchFormRef = React.createRef(null);
+  searchButtonRef = React.createRef(null);
+
   /**
    * Render method.
    * @method render
@@ -213,6 +215,7 @@ class SearchWidget extends Component {
                       id="search-widget-mobile-popup"
                       onChangeText={this.onChangeText}
                       text={this.state.text}
+                      inputRef={this.searchInputRef}
                     ></SearchBox>,
                     document.body,
                   )}
@@ -238,6 +241,7 @@ class SearchWidget extends Component {
                       id="search-widget-popup"
                       onChangeText={this.onChangeText}
                       text={this.state.text}
+                      inputRef={this.searchInputRef}
                     ></SearchBox>,
                     document.body,
                   )}
@@ -266,6 +270,7 @@ export const SearchBox = ({
   onChangeText,
   text,
   className,
+  inputRef,
 }) => {
   const intl = useIntl();
 
@@ -290,6 +295,7 @@ export const SearchBox = ({
           placeholder={intl.formatMessage(messages.searchSite)}
           title={intl.formatMessage(messages.search)}
           type="search"
+          ref={inputRef}
         />
         <button aria-label={intl.formatMessage(messages.search)}>
           <Icon name={zoomSVG} size="18px" />
