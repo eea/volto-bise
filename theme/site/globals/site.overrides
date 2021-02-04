@@ -378,6 +378,8 @@ p > span:empty {
 #search-widget-mobile-wrapper-grid {
   margin-top: 0;
   margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 // BEGIN: Center the header in the full viewport width when the full viewport width
