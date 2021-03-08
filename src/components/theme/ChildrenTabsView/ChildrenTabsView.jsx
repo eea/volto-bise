@@ -5,7 +5,7 @@ import { Tab, Container } from 'semantic-ui-react';
 // import { Portal } from 'react-portal';
 // import { DefaultView } from '@plone/volto/components';
 
-import { settings, blocks } from '~/config';
+import config from '@plone/volto/registry';
 import {
   getBlocksFieldname,
   getBlocksLayoutFieldname,
@@ -17,16 +17,16 @@ const renderTab = (content) => {
   const blocksFieldname = getBlocksFieldname(content);
   const blocksLayoutFieldname = getBlocksLayoutFieldname(content);
   const location = content['@id']
-    .replace(settings.apiPath, '')
-    .replace(settings.internalApiPath, '');
+    .replace(config.settings.apiPath, '')
+    .replace(config.settings.internalApiPath, '');
 
   return hasBlocksData(content) ? (
     <div>
       {map(content[blocksLayoutFieldname].items, (block) => {
         const Block =
-          blocks.blocksConfig[content[blocksFieldname]?.[block]?.['@type']]?.[
-            'view'
-          ] || null;
+          config.blocks.blocksConfig[
+            content[blocksFieldname]?.[block]?.['@type']
+          ]?.['view'] || null;
         return Block !== null ? (
           <Block
             key={block}
@@ -50,7 +50,7 @@ const renderTab = (content) => {
           dangerouslySetInnerHTML={{
             __html: content.text.data.replace(
               /a href="([^"]*\.[^"]*)"/g,
-              `a href="${settings.apiPath}$1/download/file"`,
+              `a href="${config.settings.apiPath}$1/download/file"`,
             ),
           }}
         />

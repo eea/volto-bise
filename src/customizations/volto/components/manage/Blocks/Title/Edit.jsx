@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { stateFromHTML } from 'draft-js-import-html';
 import { Editor, DefaultDraftBlockRenderMap, EditorState } from 'draft-js';
 import { defineMessages, injectIntl } from 'react-intl';
-import { settings } from '~/config';
+import config from '@plone/volto/registry';
 
 import { SidebarPortal } from '@plone/volto/components';
 import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
@@ -132,7 +132,6 @@ class Edit extends Component {
     });
   }
 
-
   /**
    * Render method.
    * @method render
@@ -159,7 +158,7 @@ class Edit extends Component {
             }
             this.props.onSelectBlock(
               this.props.onAddBlock(
-                settings.defaultBlockType,
+                config.settings.defaultBlockType,
                 this.props.index + 1,
               ),
             );

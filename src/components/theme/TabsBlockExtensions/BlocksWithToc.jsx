@@ -6,7 +6,7 @@ import AnchorLink from 'react-anchor-link-smooth-scroll';
 import { defineMessages } from 'react-intl';
 
 import { map } from 'lodash';
-import { blocks } from '~/config';
+import config from '@plone/volto/registry';
 import { getBaseUrl } from '@plone/volto/helpers';
 
 const messages = defineMessages({
@@ -69,9 +69,9 @@ const BlocksWithToc = ({
           <Grid.Column width={9} className="toc-content">
             {map(blockIds, (blockId, index) => {
               const Block =
-                blocks.blocksConfig[blocksContent?.[blockId]?.['@type']]?.[
-                  'view'
-                ] || null;
+                config.blocks.blocksConfig[
+                  blocksContent?.[blockId]?.['@type']
+                ]?.['view'] || null;
               const block = blocksContent[blockId];
               if (block['@type'] !== 'slate' || !block.value) {
                 return (

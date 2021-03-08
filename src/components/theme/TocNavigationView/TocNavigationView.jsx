@@ -6,7 +6,7 @@ import {
   getBlocksLayoutFieldname,
   getBaseUrl,
 } from '@plone/volto/helpers';
-import { blocks } from '~/config';
+import config from '@plone/volto/registry';
 import { map } from 'lodash';
 import { Grid } from 'semantic-ui-react';
 import VisibilitySensor from 'react-visibility-sensor';
@@ -77,9 +77,9 @@ let BlocksWithToc = ({ blockIds, blocksContent, intl, content, location }) => {
           <Grid.Column width={9} className="toc-content">
             {map(blockIds, (blockId, index) => {
               const Block =
-                blocks.blocksConfig[blocksContent?.[blockId]?.['@type']]?.[
-                  'view'
-                ] || null;
+                config.blocks.blocksConfig[
+                  blocksContent?.[blockId]?.['@type']
+                ]?.['view'] || null;
               const block = blocksContent[blockId];
               if (block['@type'] !== 'slate' || !block.value) {
                 console.log('block not slate', block);
@@ -141,9 +141,9 @@ const TocNavView = ({ content, location, intl }) => {
     <div id="page-document" className="ui container">
       {map(preambleIds, (block) => {
         const Block =
-          blocks.blocksConfig[content[blocksFieldname]?.[block]?.['@type']]?.[
-            'view'
-          ] || null;
+          config.blocks.blocksConfig[
+            content[blocksFieldname]?.[block]?.['@type']
+          ]?.['view'] || null;
         return Block !== null ? (
           <Block
             key={block}

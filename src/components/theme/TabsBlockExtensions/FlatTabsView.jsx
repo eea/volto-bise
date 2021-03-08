@@ -6,7 +6,7 @@ import {
 } from '@eeacms/volto-tabs-block/Tabs/DefaultTabsRenderer';
 import { Tab, Menu } from 'semantic-ui-react';
 import { useIntl } from 'react-intl';
-import { blocks } from '~/config';
+import config from '@plone/volto/registry';
 import { getBaseUrl, getBlocksFieldname } from '@plone/volto/helpers';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
 
@@ -44,7 +44,7 @@ const FlatTabsView = (props) => {
       return (
         <section id={`section-${block}-${index}`}>
           {blocklist.map(([blockId, blockData]) => {
-            const Block = blocks.blocksConfig[blockData['@type']]?.view;
+            const Block = config.blocks.blocksConfig[blockData['@type']]?.view;
             return Block !== null ? (
               <>
                 <Block

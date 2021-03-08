@@ -4,7 +4,7 @@ import DefaultTabsRenderer, {
 } from '@eeacms/volto-tabs-block/Tabs/DefaultTabsRenderer';
 import { Tab } from 'semantic-ui-react';
 import { map } from 'lodash';
-import { blocks } from '~/config';
+import config from '@plone/volto/registry';
 import { getBaseUrl } from '@plone/volto/helpers';
 
 import BlocksWithToc from './BlocksWithToc';
@@ -50,7 +50,7 @@ const TabsTocNavigationView = (props) => {
         <Tab.Pane>
           {map(preambleIds, (block) => {
             const Block =
-              blocks.blocksConfig[
+              config.blocks.blocksConfig[
                 properties[blocksFieldname]?.[block]?.['@type']
               ]?.['view'] || null;
             return Block !== null ? (
@@ -80,7 +80,7 @@ const TabsTocNavigationView = (props) => {
       ) : (
         <Tab.Pane>
           {blocklist.map(([blockId, blockData]) => {
-            const Block = blocks.blocksConfig[blockData['@type']]?.view;
+            const Block = config.blocks.blocksConfig[blockData['@type']]?.view;
             return Block !== null ? (
               <>
                 <Block

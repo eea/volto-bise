@@ -16,7 +16,7 @@ import join from 'lodash/join';
 import trim from 'lodash/trim';
 import cx from 'classnames';
 
-import { settings, views } from '~/config';
+import config from '@plone/volto/registry';
 
 import Error from '@plone/volto/error';
 
@@ -104,12 +104,12 @@ class App extends Component {
     const theme = this.props.route?.theme || 'default';
 
     const isCmsUI = isCmsUi(this.props.pathname);
-    const ConnectionRefusedView = views.errorViews.ECONNREFUSED;
+    const ConnectionRefusedView = config.views.errorViews.ECONNREFUSED;
 
-    const Header = settings.themes[theme]?.Header || DefaultHeader;
-    const Footer = settings.themes[theme]?.Footer || DefaultFooter;
+    const Header = config.settings.themes[theme]?.Header || DefaultHeader;
+    const Footer = config.settings.themes[theme]?.Footer || DefaultFooter;
     const Breadcrumbs =
-      settings.themes[theme]?.Breadcrumbs || DefaultBreadcrumbs;
+      config.settings.themes[theme]?.Breadcrumbs || DefaultBreadcrumbs;
 
     return (
       <Fragment>
@@ -215,7 +215,10 @@ export default compose(
       promise: ({ location, store: { dispatch } }) =>
         __SERVER__ &&
         dispatch(
-          getNavigation(getBaseUrl(location.pathname), settings.navDepth),
+          getNavigation(
+            getBaseUrl(location.pathname),
+            config.settings.navDepth,
+          ),
         ),
     },
     {
