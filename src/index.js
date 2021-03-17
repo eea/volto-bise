@@ -163,6 +163,11 @@ export default (config) => {
       title: 'Shaded & Divided',
       cssClass: 'shaded-block',
     },
+    {
+      id: 'roundedBlock',
+      title: 'Rounded image',
+      cssClass: 'rounded-block',
+    },
   ];
 
   config.settings.themes = {

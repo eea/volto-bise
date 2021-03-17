@@ -1,3 +1,7 @@
+.style-preview {
+  line-height: 1.5em;
+}
+
 .border-block {
   padding: 0.7rem;
   border: 1px solid rgba(0, 0, 0, 0.2);
@@ -12,7 +16,6 @@
   padding: 1rem 0.8rem;
   border-top: 1px solid rgba(0, 0, 0, 0.2);
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  margin: 2rem 0;
 
   p {
     margin-bottom: 0 !important;
@@ -21,5 +24,47 @@
 
 .shaded-block {
   box-shadow: 0 7px 9px -12px rgba(0, 0, 0, 0.6),
-              0 -7px 9px -12px rgba(0, 0, 0, 0.6);
+    0 -7px 9px -12px rgba(0, 0, 0, 0.6);
+}
+
+.rounded-block.style-preview {
+  position: relative;
+  padding: 1rem 0.8rem;
+
+  &:after {
+    content: '';
+    position: absolute;
+    border-radius: 100%;
+    left: 0;
+    top: 0;
+    right: 0;
+    border: 1px solid #ddd;
+    height: 65px;
+    width: 65px;
+  }
+}
+
+.rounded-block {
+  .image {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    border-radius: 100%;
+    // box-shadow: 0 5px 10px -2px rgba(0, 0, 0, 0.6);
+
+    &:after {
+      display: block;
+      padding-bottom: 100%;
+      content: '';
+    }
+
+    img {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      height: 100% !important;
+      max-width: none !important;
+    }
+  }
 }
