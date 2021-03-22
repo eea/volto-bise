@@ -23,4 +23,6 @@
 
   @import 'factsheets';
   @import 'table';
+
+  @import 'search';
 }
