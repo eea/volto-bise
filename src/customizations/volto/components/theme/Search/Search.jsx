@@ -39,7 +39,7 @@ const PathBreadcrumb = ({ item }) => {
   bits.forEach((b) => {
     const x = [...items.slice(0, items.length).map((x) => x.title), b];
     items.push({
-      title: b || <Icon name={homeSVG} size="18px" />,
+      title: b,
       url: x.join('/') || '/',
     });
   });
@@ -50,7 +50,7 @@ const PathBreadcrumb = ({ item }) => {
         index > 0 && <Breadcrumb.Divider key={`divider-${item.url}`} />,
         <Breadcrumb.Section key={item.url}>
           <Link key={item.url} to={item.url} className="section">
-            {item.title}
+            {item.title || <Icon name={homeSVG} size="18px" />}
           </Link>
         </Breadcrumb.Section>,
       ])}
