@@ -168,6 +168,11 @@ export default (config) => {
       title: 'Rounded image',
       cssClass: 'rounded-block',
     },
+    {
+      id: 'mobileReversed',
+      title: 'Mobile reversed',
+      cssClass: 'mobile-reversed',
+    },
   ];
 
   config.settings.themes = {

@@ -1,3 +1,8 @@
+@type: extra;
+@element: custom;
+
+@import (multiple, reference, optional) '../../theme.config';
+
 .style-preview {
   line-height: 1.5em;
 }
@@ -69,6 +74,16 @@
       transform: translate(-50%, -50%);
       height: 100% !important;
       max-width: none !important;
+    }
+  }
+}
+
+.mobile-reversed {
+  @media only screen and (max-width: @largestMobileScreen) {
+    > div.columns-view {
+      > div.column-grid {
+        flex-direction: column-reverse;
+      }
     }
   }
 }
