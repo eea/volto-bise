@@ -12,18 +12,20 @@ import PropTypes from 'prop-types';
  * @extends Component
  */
 
-const View = ({ properties, data }) => {
+const View = ({ id, properties, data }) => {
   return (
     <>
-    {properties.image
-      ? ''
-      : [
-        (!data.hide_title
-          ? <h1 className="documentFirstHeading">{properties.title}</h1>
-          : ''
-        )
-      ]
-    }
+      {properties.image
+        ? ''
+        : [
+            !data.hide_title ? (
+              <h1 key={`header-${id}`} className="documentFirstHeading">
+                {properties.title}
+              </h1>
+            ) : (
+              ''
+            ),
+          ]}
     </>
   );
 };
