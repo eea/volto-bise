@@ -172,11 +172,11 @@ const RefinementList = (props) => {
 };
 
 const search_types = [
-  'article',
+  // 'article',
   'document',
-  'link',
+  // 'link',
   // 'site',
-  'news',
+  // 'news',
   // 'country',
   // 'biogen_region',
   'habitat',
