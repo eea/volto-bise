@@ -164,6 +164,16 @@ export default (config) => {
       cssClass: 'shaded-block',
     },
     {
+      id: 'padded',
+      title: 'Padded',
+      cssClass: 'padded',
+    },
+    {
+      id: 'marginless',
+      title: 'Marginless',
+      cssClass: 'marginless',
+    },
+    {
       id: 'roundedBlock',
       title: 'Rounded image',
       cssClass: 'rounded-block',
