@@ -24,12 +24,12 @@ import {
   SortingSelector,
   TermsQuery,
   ViewSwitcherHits,
-  ViewSwitcherToggle,
   DynamicRangeFilter,
-  CheckboxItemList,
   Tabs,
   MenuFilter,
   CheckboxItemComponent,
+  // ViewSwitcherToggle,
+  // CheckboxItemList,
   // MenuFilter,
   // RangeFilter,
   // TermQuery,
@@ -39,10 +39,10 @@ import {
   // TopBar,
   // FacetFilter,
 } from 'searchkit';
-import { Icon } from '@plone/volto/components';
-import tableSVG from '@plone/volto/icons/table.svg';
+// import { Icon } from '@plone/volto/components';
+// import tableSVG from '@plone/volto/icons/table.svg';
 
-import { GridItem, ListItem, TableView } from './Tiles';
+import { ListItem } from './Tiles'; //GridItem, TableView
 import './styles.less';
 
 /**
@@ -57,126 +57,126 @@ const BiogeographicalRegionOption = (props) => {
   return <CheckboxItemComponent {...props} />;
 };
 
-/**
- * Returns the label associated to a data type
- * @param {string} val
- */
-const valueToLabel = (val) => {
-  const data = [
-    { label: 'Documents', value: 'document' },
-    { label: 'Links', value: 'link' },
-    { label: 'Web Pages', value: 'article' },
-    { label: 'Species Info', value: 'species' },
-    { label: 'Habitat Types Info', value: 'habitat' },
-    { label: 'Sites Info', value: 'site' },
-    { label: 'Protected Area', value: 'protected_area' }, // hidden
-  ];
-  return data.filter((x) => x.value === val)[0].label;
-};
+// /**
+//  * Returns the label associated to a data type
+//  * @param {string} val
+//  */
+// const valueToLabel = (val) => {
+//   const data = [
+//     { label: 'Documents', value: 'document' },
+//     { label: 'Links', value: 'link' },
+//     { label: 'Web Pages', value: 'article' },
+//     { label: 'Species Info', value: 'species' },
+//     { label: 'Habitat Types Info', value: 'habitat' },
+//     { label: 'Sites Info', value: 'site' },
+//     { label: 'Protected Area', value: 'protected_area' }, // hidden
+//   ];
+//   return data.filter((x) => x.value === val)[0].label;
+// };
 
 /**
  * Displays a checkbox w/ a label that replaces the default data type string.
  * @param {object} props
  */
-const RefinementOption = (props) => {
-  return (
-    <div
-      role="checkbox"
-      onKeyPress={() => {}}
-      className={props.bemBlocks
-        .option()
-        .state({ selected: props.active })
-        .mix(props.bemBlocks.container('item'))}
-      tabIndex={0}
-      aria-checked={props.active}
-    >
-      <label style={{ flexGrow: 1 }}>
-        <input
-          type="checkbox"
-          onClick={(...args) => {
-            return props.onClick(...args);
-          }}
-          checked={props.active}
-          className="sk-item-list-option__checkbox"
-        />
-        <span className={props.bemBlocks.option('text')}>
-          {valueToLabel(props.label)}
-        </span>
-      </label>
-      {/* <div className={props.bemBlocks.option('count')}>{props.count}</div> */}
-    </div>
-  );
-};
-
-/**
- * Before showing the data types' filter sort its options well and the default
- * behavior is to all be checked (this is the same as when all are unchecked,
- * because the implicit operator is OR).
- * @param {object} props
- */
-const RefinementList = (props) => {
-  console.log('props.items', props.items);
-
-  const data = [
-    { order: 1, key: 'document' },
-    { order: 2, key: 'link' },
-    { order: 3, key: 'article' },
-    { order: 4, key: 'species' },
-    { order: 5, key: 'habitat' },
-    { order: 6, key: 'site' },
-    { order: 7, key: 'protected_area' }, // hidden
-  ];
-
-  let arr = [...props.items];
-  arr = arr.filter((x) => x.key !== 'protected_area');
-  arr = arr.sort((a, b) => {
-    console.log('A', a.key, 'B', b.key);
-
-    const ai = data.findIndex((x) => x.key === a.key);
-    const bi = data.findIndex((x) => x.key === b.key);
-    if (ai < 0 || isNaN(ai) || bi < 0 || isNaN(bi)) {
-      return 0;
-    }
-
-    return data[ai].order - data[bi].order;
-  });
-
-  let selection = [];
-  console.log('props.selectedItems', props.selectedItems);
-  if (Array.isArray(props.selectedItems)) {
-    const allKeys = arr.map((x) => x.key);
-    const activeCount = props.selectedItems.length;
-    let selectedItems = props.selectedItems.map((x) => x?.key);
-    if (activeCount === 0) {
-      selectedItems = allKeys;
-    } else {
-      selectedItems = props.selectedItems;
-      if (selectedItems.length === allKeys.length) {
-        selectedItems = [];
-
-        // TODO: do this in the selected filters view w/o reloading the page
-        const newLoc = window.location.href
-          .replace(/type\[\d+\]=[a-zA-Z0-9_]+/g, '')
-          .replace(/&&/g, '&')
-          .replace(/\?&/g, '?')
-          .replace(/[&?]$/, '');
-        if (newLoc !== window.location.href) {
-          window.location.href = newLoc;
-        }
-      }
-    }
-    selection = selectedItems;
-  }
-
-  return <CheckboxItemList {...props} items={arr} selectedItems={selection} />;
-};
+// const RefinementOption = (props) => {
+//   return (
+//     <div
+//       role="checkbox"
+//       onKeyPress={() => {}}
+//       className={props.bemBlocks
+//         .option()
+//         .state({ selected: props.active })
+//         .mix(props.bemBlocks.container('item'))}
+//       tabIndex={0}
+//       aria-checked={props.active}
+//     >
+//       <label style={{ flexGrow: 1 }}>
+//         <input
+//           type="checkbox"
+//           onClick={(...args) => {
+//             return props.onClick(...args);
+//           }}
+//           checked={props.active}
+//           className="sk-item-list-option__checkbox"
+//         />
+//         <span className={props.bemBlocks.option('text')}>
+//           {valueToLabel(props.label)}
+//         </span>
+//       </label>
+//       {/* <div className={props.bemBlocks.option('count')}>{props.count}</div> */}
+//     </div>
+//   );
+// };
+//
+// /**
+//  * Before showing the data types' filter sort its options well and the default
+//  * behavior is to all be checked (this is the same as when all are unchecked,
+//  * because the implicit operator is OR).
+//  * @param {object} props
+//  */
+// const RefinementList = (props) => {
+//   console.log('props.items', props.items);
+//
+//   const data = [
+//     { order: 1, key: 'document' },
+//     { order: 2, key: 'link' },
+//     { order: 3, key: 'article' },
+//     { order: 4, key: 'species' },
+//     { order: 5, key: 'habitat' },
+//     { order: 6, key: 'site' },
+//     { order: 7, key: 'protected_area' }, // hidden
+//   ];
+//
+//   let arr = [...props.items];
+//   arr = arr.filter((x) => x.key !== 'protected_area');
+//   arr = arr.sort((a, b) => {
+//     console.log('A', a.key, 'B', b.key);
+//
+//     const ai = data.findIndex((x) => x.key === a.key);
+//     const bi = data.findIndex((x) => x.key === b.key);
+//     if (ai < 0 || isNaN(ai) || bi < 0 || isNaN(bi)) {
+//       return 0;
+//     }
+//
+//     return data[ai].order - data[bi].order;
+//   });
+//
+//   let selection = [];
+//   console.log('props.selectedItems', props.selectedItems);
+//   if (Array.isArray(props.selectedItems)) {
+//     const allKeys = arr.map((x) => x.key);
+//     const activeCount = props.selectedItems.length;
+//     let selectedItems = props.selectedItems.map((x) => x?.key);
+//     if (activeCount === 0) {
+//       selectedItems = allKeys;
+//     } else {
+//       selectedItems = props.selectedItems;
+//       if (selectedItems.length === allKeys.length) {
+//         selectedItems = [];
+//
+//         // TODO: do this in the selected filters view w/o reloading the page
+//         const newLoc = window.location.href
+//           .replace(/type\[\d+\]=[a-zA-Z0-9_]+/g, '')
+//           .replace(/&&/g, '&')
+//           .replace(/\?&/g, '?')
+//           .replace(/[&?]$/, '');
+//         if (newLoc !== window.location.href) {
+//           window.location.href = newLoc;
+//         }
+//       }
+//     }
+//     selection = selectedItems;
+//   }
+//
+//   return <CheckboxItemList {...props} items={arr} selectedItems={selection} />;
+// };
 
 const search_types = [
   // 'article',
   'document',
-  // 'link',
+  'link',
   // 'site',
-  // 'news',
+  'news',
   // 'country',
   // 'biogen_region',
   'habitat',
@@ -191,17 +191,18 @@ const DataCatalogueView = (props) => {
     return new SearchkitManager(url);
   }, [url]);
 
-  // const searchkit = new SearchkitManager("/")
-  searchkit.addDefaultQuery((query) => {
-    return query.addQuery(
-      FilteredQuery({
-        filter: BoolShould([
-          TermsQuery('_type', search_types),
-          // TermQuery('colour', 'orange'),
-        ]),
-      }),
-    );
-  });
+  React.useEffect(() => {
+    searchkit.addDefaultQuery((query) => {
+      return query.addQuery(
+        FilteredQuery({
+          filter: BoolShould([
+            TermsQuery('_type', search_types),
+            // TermQuery('colour', 'orange'),
+          ]),
+        }),
+      );
+    });
+  }, [searchkit]);
 
   // searchkit.setQueryProcessor((plainQueryObject) => {
   //   console.log('QUERY', plainQueryObject);
@@ -276,17 +277,8 @@ const DataCatalogueView = (props) => {
 
                 <ViewSwitcherHits
                   hitsPerPage={12}
-                  highlightFields={['title', 'description']}
                   sourceFilter={[]}
                   hitComponents={[
-                    // {
-                    //   key: 'grid',
-                    //   title: 'Grid',
-                    //   itemComponent: withProps(GridItem, {
-                    //     data,
-                    //   }),
-                    //   defaultOption: true,
-                    // },
                     {
                       key: 'list',
                       title: 'List',
@@ -294,13 +286,6 @@ const DataCatalogueView = (props) => {
                         data,
                       }),
                     },
-                    // {
-                    //   key: 'table',
-                    //   title: <Icon name={tableSVG} size="18px" />,
-                    //   listComponent: withProps(TableView, {
-                    //     data,
-                    //   }),
-                    // },
                   ]}
                   scrollTo="body"
                 />
@@ -313,6 +298,7 @@ const DataCatalogueView = (props) => {
                 displayed, it lets the search results appear in the Hits
                 component for types that don't have the 'title' field. */}
                 <NoHits suggestionsField="title" />
+
                 <div style={{ display: 'none' }}>
                   <NoHits suggestionsField="name" />
                   {/* Uncommenting the following 2 lines breaks the search results
@@ -323,18 +309,9 @@ const DataCatalogueView = (props) => {
                 </div>
                 <Pagination showNumbers={true} />
               </LayoutResults>
+
               <SideBar>
                 <h4>Filter results</h4>
-
-                {/* <RefinementListFilter */}
-                {/*   id="type" */}
-                {/*   title="By Type" */}
-                {/*   field="_type" */}
-                {/*   size={10} */}
-                {/*   operator="OR" */}
-                {/*   // itemComponent={RefinementOption} */}
-                {/*   // listComponent={RefinementList} */}
-                {/* /> */}
 
                 <RefinementListFilter
                   id="countries"
@@ -394,13 +371,6 @@ const DataCatalogueView = (props) => {
                     return n;
                   }}
                 />
-
-                {/* <RefinementListFilter */}
-                {/*   id="bio_strategy" */}
-                {/*   title="By Biodiversity Strategy Targets" */}
-                {/*   field="targets.title" */}
-                {/*   size={4} */}
-                {/* /> */}
               </SideBar>
             </LayoutBody>
           </Layout>
@@ -412,3 +382,37 @@ const DataCatalogueView = (props) => {
   );
 };
 export default DataCatalogueView;
+/*
+
+                <RefinementListFilter
+                  id="type"
+                  title="By Type"
+                  field="_type"
+                  size={10}
+                  operator="OR"
+                  // itemComponent={RefinementOption}
+                  // listComponent={RefinementList}
+                />
+
+                <RefinementListFilter
+                  id="bio_strategy"
+                  title="By Biodiversity Strategy Targets"
+                  field="targets.title"
+                  size={4}
+                />
+                    // {
+                    //   key: 'grid',
+                    //   title: 'Grid',
+                    //   itemComponent: withProps(GridItem, {
+                    //     data,
+                    //   }),
+                    //   defaultOption: true,
+                    // },
+                    // {
+                    //   key: 'table',
+                    //   title: <Icon name={tableSVG} size="18px" />,
+                    //   listComponent: withProps(TableView, {
+                    //     data,
+                    //   }),
+                    // },
+*/
