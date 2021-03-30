@@ -122,9 +122,9 @@
         }
       }
 
-      .secondLevel-wrapper {
-        border-bottom: 1px solid #ededed!important;
-      }
+      // .secondLevel-wrapper {
+      //   border-bottom: 1px solid #ededed!important;
+      // }
     }
   }
 }
@@ -180,9 +180,9 @@
   border-bottom: none !important;
 }
 
-.navigation .ui.menu .dropdown .submenu {
-  padding-top : 1rem;
-}
+  // .navigation .ui.menu .dropdown .submenu {
+  //   padding-top : 1rem;
+  // }
 
 .ui.menu .ui.dropdown .menu > .item:hover {
   background-color: transparent!important;
