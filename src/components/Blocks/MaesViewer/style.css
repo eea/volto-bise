@@ -1,7 +1,7 @@
 .maes-viewer-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   margin: 3em 0;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
 .maes-viewer-grid .js-plotly-plot {
@@ -13,10 +13,10 @@
 }
 
 .maes-select-label {
-  font-weight: bold;
-  font-size: 19px;
-  margin-bottom: 1rem;
   display: inline-block;
+  margin-bottom: 1rem;
+  font-size: 19px;
+  font-weight: bold;
 }
 
 @media only screen and (min-width: 1440px) {
@@ -43,9 +43,9 @@
   }
 
   .maes-viewer-select {
+    margin-bottom: 3em;
     grid-column: 1/5;
     grid-row: 1/2;
-    margin-bottom: 3em;
   }
 
   .maes-viewer-charts {
@@ -57,8 +57,8 @@
 
 @media only screen and (max-width: 1282px) {
   .maes-viewer-select {
-    grid-column: 1/13;
     width: 100%;
     max-width: 320px;
+    grid-column: 1/13;
   }
 }

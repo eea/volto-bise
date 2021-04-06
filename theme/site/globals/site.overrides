@@ -1,18 +1,19 @@
 .siteroot .ui.basic.segment.content-area {
-  margin-top: 0;
   padding-top: 0;
+  margin-top: 0;
 }
 
 #page-add,
 #page-edit {
   .DraftEditor-root h1 {
-   margin: 0 !important;
- }
+    margin: 0 !important;
+  }
 }
 
 #view {
   .documentFirstHeading {
     border-bottom: none !important;
+
     &:before {
       border-bottom: none !important;
     }
@@ -27,14 +28,14 @@ p > span:empty {
   display: inline-block;
 
   &:before {
-    content: "\a0";
+    content: '\a0';
   }
 }
 
 .editor-toolbar-wrapper {
   position: sticky;
-  top: 80px;
   z-index: 2;
+  top: 80px;
 }
 
 /* Table of contents */
@@ -47,10 +48,10 @@ p > span:empty {
       padding: 0;
 
       a {
-        font-size: 17px;
-        padding: 0.5rem 0.7rem;
         display: block;
+        padding: 0.5rem 0.7rem;
         border-left: 2px solid lightgray;
+        font-size: 17px;
       }
 
       &:before {
@@ -86,8 +87,8 @@ p > span:empty {
 }
 
 .DraftEditor-root {
-  border: none;
   padding: 0;
+  border: none;
 }
 
 .contenttype-bise_factsheet {
@@ -174,16 +175,18 @@ p > span:empty {
   }
 }
 
-#search-widget-toggle, #search-button-mobile {
-  border-left: 1px solid #B8C6C8;
-  border-radius: 0 0 0 0;
+#search-widget-toggle,
+#search-button-mobile {
   padding-left: 1rem;
+  border-left: 1px solid #b8c6c8;
+  background-color: transparent !important;
+  border-radius: 0 0 0 0;
   color: #3c8000 !important;
   transform: scale(1.25);
-  background-color: transparent !important;
 
   svg {
     transition: transform 0.75s;
+
     &:hover {
       transform: scale(1.5);
     }
@@ -203,33 +206,36 @@ p > span:empty {
 
 #search-button-mobile {
   border: none;
+
   svg {
     height: 1.75rem !important;
   }
 }
 
-#search-widget-popup, #search-widget-tablet, #search-widget-mobile-popup {
+#search-widget-popup,
+#search-widget-tablet,
+#search-widget-mobile-popup {
+  z-index: 10;
+  right: 0;
+  display: block;
   width: 20vw;
   min-width: 18rem;
   box-sizing: border-box;
-  display:  block;
-  z-index: 10;
   padding: 1rem;
-  right: 0;
 
   .search-widget-box {
+    display: grid;
+    height: 2rem;
+    padding-left: 0.5rem;
     border: 0.1rem solid lightgray;
     border-radius: 1rem;
-    padding-left: 0.5rem;
-    height: 2rem;
-    display: grid;
     grid-template-columns: 1fr auto;
 
     div {
-      grid-row-start: 1;
-      grid-row-end: 2;
-      grid-column-start: 1;
       grid-column-end: 3;
+      grid-column-start: 1;
+      grid-row-end: 2;
+      grid-row-start: 1;
     }
 
     input {
@@ -237,24 +243,24 @@ p > span:empty {
     }
 
     button {
+
+      z-index: 1;
       border: 0;
       margin: 0;
       border-radius: 1rem;
-      font-size: small;
       cursor: pointer;
-      transition: background-color 0.5s;
+      font-size: small;
+      grid-column-end: 3;
 
       grid-column-start: 2;
-      grid-column-end: 3;
-      grid-row-start: 1;
       grid-row-end: 2;
-
-      user-select: none;
+      grid-row-start: 1;
+      transition: background-color 0.5s;
       -moz-user-select: none;
       -webkit-user-select: none;
       -ms-user-select: none;
 
-      z-index: 1;
+      user-select: none;
 
       &:hover svg {
         transform: rotate(30deg);
@@ -270,33 +276,33 @@ p > span:empty {
 
 #search-widget-tablet {
   position: static !important;
-  visibility: visible;
-  box-shadow: none;
-  -webkit-box-shadow: none;
   padding: 0;
   margin-right: 1rem;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  visibility: visible;
 
   .search-widget-box {
+    height: 3rem;
     padding: 0;
     background-color: transparent;
-    height: 3rem;
     border-radius: 1.5rem;
 
     input {
-      font-size: 1.25rem;
-      color: gray;
-      padding-left: 1rem !important;
       padding-right: 3rem !important;
+      padding-left: 1rem !important;
+      color: gray;
+      font-size: 1.25rem;
       text-overflow: ellipsis;
     }
 
     button {
-      color: green;
       background-color: transparent;
       border-radius: 1.5rem;
+      color: green;
 
       &:hover {
-        background-color: #EEE;
+        background-color: #eee;
       }
 
       svg {
@@ -306,32 +312,33 @@ p > span:empty {
   }
 }
 
-#search-widget-popup, #search-widget-mobile-popup {
+#search-widget-popup,
+#search-widget-mobile-popup {
   position: absolute !important;
+  z-index: 9999;
+  background-color: white;
+  box-shadow: 0 0 0.25rem grey;
+
+  visibility: collapse;
 
   @media only screen and (max-width: 1654px) {
     position: fixed !important;
   }
 
-  visibility: collapse;
-  box-shadow: 0 0 0.25rem grey;
-  background-color: white;
-  z-index: 9999;
-
   .search-widget-box {
-    background-color: #EEE;
     padding: 0;
+    background-color: #eee;
   }
 
   input {
-    padding-left: 0.5rem !important;
     padding-right: 2rem !important;
+    padding-left: 0.5rem !important;
     text-overflow: ellipsis;
   }
 
   button {
-    background-color: #3c8000;
     border: 0;
+    background-color: #3c8000;
     color: white;
 
     &:hover {
@@ -341,18 +348,18 @@ p > span:empty {
 }
 
 #search-widget-mobile-popup {
+  margin-top: 1.5rem;
   background-color: rgb(238, 238, 238);
   box-shadow: rgba(0, 0, 0, 0.2) 0px 0.25rem 0.25rem;
-  margin-top: 1.5rem;
 
   @media only screen and (min-width: 768px) {
     display: none;
   }
 
   .search-widget-box {
-    background-color: white;
-    margin: 0.5rem 2rem;
     height: 3rem;
+    margin: 0.5rem 2rem;
+    background-color: white;
     border-radius: 1.5rem;
 
     input {
@@ -371,15 +378,15 @@ p > span:empty {
 }
 
 #search-widget-tablet-wrapper-grid {
-  margin-bottom: -0.5rem;
   margin-right: unset;
+  margin-bottom: -0.5rem;
 }
 
 #search-widget-mobile-wrapper-grid {
   margin-top: 0;
+  margin-right: 0;
   margin-bottom: 0;
   margin-left: 0;
-  margin-right: 0;
 }
 
 // BEGIN: Center the header in the full viewport width when the full viewport width
@@ -401,7 +408,8 @@ p > span:empty {
 // END.
 
 #page-search {
-  .items_total, button {
+  .items_total,
+  button {
     color: rgba(0, 68, 0, 0.479);
   }
 

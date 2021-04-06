@@ -78,7 +78,6 @@ export default (props) => {
       layerView.watch('updating', (val) => {
         setMapIsUpdating(true);
         layerView.queryExtent().then((results) => {
-          console.log('results', results);
           if (results.count > 0) {
             setMapIsUpdating(false);
             view.goTo(results.extent);

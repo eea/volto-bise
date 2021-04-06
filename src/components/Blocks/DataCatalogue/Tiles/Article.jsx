@@ -11,7 +11,7 @@ export const ArticleListItem = ({ source, bemBlocks }) => {
           dangerouslySetInnerHTML={{ __html: source.title }}
         ></a>
       </h4>
-      {source.title != source.english_title && (
+      {source.title !== source.english_title && (
         <small
           className="cell-alternative-title"
           title="English title"

@@ -28,8 +28,8 @@ export const GridItem = (props) => {
   const { bemBlocks, result } = props;
   const source = extend({}, result._source, result.highlight);
   const fieldTitle = props.data?.tile_title || 'title';
-  const fieldDescription = props.data?.tile_description || 'description';
-  const fieldImage = props.data?.tile_image || 'depiction';
+  // const fieldDescription = props.data?.tile_description || 'description';
+  // const fieldImage = props.data?.tile_image || 'depiction';
   const fieldUrl = props.data?.tile_url || 'about';
   // const title = source[titleField];
   //
@@ -57,9 +57,8 @@ export const GridItem = (props) => {
 };
 
 export const ListItem = (props) => {
-  console.log('item', props);
   const { bemBlocks, result } = props;
-  let url = 'http://www.imdb.com/title/' + result._source.imdbId;
+  // let url = 'http://www.imdb.com/title/' + result._source.imdbId;
   const source = extend({}, result._source, result.highlight);
   const Item = listItemTypes[result._type];
 

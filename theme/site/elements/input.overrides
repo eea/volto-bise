@@ -3,11 +3,11 @@
 *******************************/
 
 .ui.form .searchbox.field button {
+  position: relative;
   padding: 0;
   border: 0;
   background: transparent;
-  color: #007EB1;
+  color: #007eb1;
   cursor: pointer;
   text-align: initial;
-  position: relative;
 }

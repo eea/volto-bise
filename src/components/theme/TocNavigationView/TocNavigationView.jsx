@@ -27,7 +27,6 @@ const splitBlocksByTOC = (blockIds, blocksContent) => {
 
     const content = blocksContent[blockId];
     if (!content.value) {
-      console.log('view wrong block', content);
       return false;
     }
     const blockType = content.value[0].type;
@@ -82,7 +81,6 @@ let BlocksWithToc = ({ blockIds, blocksContent, intl, content, location }) => {
                 ]?.['view'] || null;
               const block = blocksContent[blockId];
               if (block['@type'] !== 'slate' || !block.value) {
-                console.log('block not slate', block);
                 return null;
               }
               const blockType = block.value[0].type;

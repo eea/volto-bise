@@ -51,10 +51,11 @@
 
     .navigation {
       .hamburger-wrapper.mobile.only {
-        display: block!important;
+        display: block !important;
       }
+
       .ui.menu.large.screen.only {
-        display: none!important;
+        display: none !important;
       }
     }
 
@@ -72,10 +73,11 @@
 
     .navigation {
       .hamburger-wrapper.mobile.only {
-        display: block!important;
+        display: block !important;
       }
+
       .ui.menu.large.screen.only {
-        display: none!important;
+        display: none !important;
       }
     }
 
@@ -130,7 +132,6 @@ body.has-toolbar-collapsed.has-sidebar-collapsed {
   .contentWidth(@collapsedWidth + @collapsedWidth);
 }
 
-
 .drag.handle.wrapper {
   margin-left: -15px !important;
 }
@@ -154,8 +155,8 @@ body.has-toolbar-collapsed.has-sidebar-collapsed {
   // 1200
 
   .logo-nav-wrapper {
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 
     .logo {
       flex-grow: 1;
@@ -169,7 +170,7 @@ body.has-toolbar-collapsed.has-sidebar-collapsed {
       background: transparent;
 
       &.show {
-        background: #F1F0EE;
+        background: #f1f0ee;
       }
     }
   }

@@ -36,44 +36,53 @@ on 24th of september 2020 and then converted to LESS:
 .catalogue-cell {
   // margin: 2rem 0;
   .category {
-    font-size: 0.9em;
     color: #999;
+    font-size: 0.9em;
   }
+
   small {
     display: block;
   }
+
   .cell-source {
     color: #41b664;
   }
+
   .cell-footer {
-    color: #748284;
     margin-top: 0.5rem;
+    color: #748284;
   }
+
   .hits {
-    border-left: 3px solid #8ea04c;
     border-top: 1px solid #8ea04c;
-    font-size: 10px;
-    line-height: 10px;
+    border-left: 3px solid #8ea04c;
     -webkit-box-shadow: 1px 2px 2px 2px rgba(0, 0, 0, 0.3);
     box-shadow: 1px 2px 2px 2px rgba(0, 0, 0, 0.3);
+    font-size: 10px;
+    line-height: 10px;
   }
+
   p.hit {
+    margin-bottom: 0;
     background: #fff;
     color: #6b6b6b;
-    margin-bottom: 0;
   }
+
   em {
-    font-weight: bold;
     font-style: normal;
+    font-weight: bold;
   }
+
   .att-preview {
     ol {
       margin-top: 12px;
       margin-bottom: -5px;
       margin-left: -25px;
       list-style-type: none;
+
       li {
         color: #606060;
+
         em {
           padding: 1px 3px;
           color: #3b5705;
@@ -82,34 +91,40 @@ on 24th of september 2020 and then converted to LESS:
     }
   }
 }
+
 .cell-title {
+  margin-bottom: 0.25em;
   font-family: inherit;
   font-size: larger !important;
-  margin-bottom: 0.25em;
   font-weight: 400;
 }
+
 .cell-alternative-title {
   display: block;
+  padding-left: 1em;
+  border-left: solid #41b764;
+  margin: 0.5em 0;
+  color: #748284;
+  cursor: help;
   font-size: small;
   font-style: italic;
   line-height: 1.2;
-  margin: 0.5em 0;
-  padding-left: 1em;
-  border-left: solid #41b764;
-  color: #748284;
-  cursor: help;
+
   &:hover {
     color: inherit;
   }
 }
+
 .cell-document-type {
   font-size: x-small;
-  text-transform: uppercase;
   font-weight: 600;
+  text-transform: uppercase;
+
   &::before {
     content: '[';
     font: inherit;
   }
+
   &::after {
     content: ']';
     font: inherit;

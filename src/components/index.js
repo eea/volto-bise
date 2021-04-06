@@ -11,4 +11,3 @@ export installConnectedMap from './Blocks/ConnectedMap';
 export installDataCatalogue from './Blocks/DataCatalogue';
 export installKeyFacts from './Blocks/KeyFacts';
 export installMaesViewer from './Blocks/MaesViewer';
-export installTabsBlockExtensions from './theme/TabsBlockExtensions';

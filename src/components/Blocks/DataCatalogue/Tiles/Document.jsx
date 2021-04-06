@@ -19,7 +19,7 @@ export const DocumentListItem = ({ source, bemBlocks }) => {
           </sup>{' '}
           <span dangerouslySetInnerHTML={{ __html: source.title }}></span>
         </a>
-        {source.title != source.english_title && (
+        {source.title !== source.english_title && (
           <small
             className="cell-alternative-title"
             title="English title"
@@ -31,7 +31,7 @@ export const DocumentListItem = ({ source, bemBlocks }) => {
       <div className="cell-summary">
         {/* source.file_name.substring(source.file_name.lastIndexOf('/') + 1, source.file_name.length) */}
 
-        {source.highlight != undefined &&
+        {source.highlight !== undefined &&
           source.highlight.attachment.length > 0 && (
             <div className="att-preview">
               {/* <strong>Matches found in the document:</strong> */}

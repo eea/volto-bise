@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-target-blank */
 /**
  * Footer component.
  * @module components/theme/Footer/Footer
@@ -89,15 +90,19 @@ const Footer = ({ intl }) => (
                 <p>
                   The Biodiversity information system for Europe is a
                   partnership between <br /> the{' '}
-                  <a href="https://ec.europa.eu/"
-                     target="_blank"
-                     rel="noopener">
+                  <a
+                    href="https://ec.europa.eu/"
+                    target="_blank"
+                    rel="noopener"
+                  >
                     European Commission
                   </a>{' '}
                   and the{' '}
-                  <a href="https://www.eea.europa.eu/"
-                     target="_blank"
-                     rel="noopener">
+                  <a
+                    href="https://www.eea.europa.eu/"
+                    target="_blank"
+                    rel="noopener"
+                  >
                     European Environment Agency.
                   </a>
                 </p>{' '}

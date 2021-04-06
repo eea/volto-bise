@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 import loadable from '@loadable/component';
-const ImageGallery = loadable(() => import('react-image-gallery'));
-const ImageGalleryCss = loadable.lib(() => import('react-image-gallery/styles/css/image-gallery.css'));
 
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Placeholder } from 'semantic-ui-react';
-import { getBasePath } from '~/helpers';
 
 import slideIMG1 from '~/components/theme/Header/images/bise-slide.png';
 import slideIMG2 from '~/components/theme/Header/images/forest.jpg';
+const ImageGallery = loadable(() => import('react-image-gallery'));
+const ImageGalleryCss = loadable.lib(() =>
+  import('react-image-gallery/styles/css/image-gallery.css'),
+);
 
 const images = [
   {
@@ -28,7 +28,7 @@ const images = [
 ];
 
 class HomepageSlider extends Component {
-  renderSlide = images => {
+  renderSlide = (images) => {
     return (
       <div className="slider-slide">
         <LazyLoadImage

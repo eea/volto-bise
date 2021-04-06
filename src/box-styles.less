@@ -37,33 +37,33 @@
   padding: 1rem 0.8rem;
 
   &:after {
-    content: '';
     position: absolute;
-    border-radius: 100%;
-    left: 0;
     top: 0;
     right: 0;
-    border: 1px solid #ddd;
-    height: 65px;
+    left: 0;
     width: 65px;
+    height: 65px;
+    border: 1px solid #ddd;
+    border-radius: 100%;
+    content: '';
   }
 }
 
 .marginless {
   margin: 0;
   margin-top: 0;
+  margin-right: 0;
   margin-bottom: 0;
   margin-left: 0;
-  margin-right: 0;
 }
 
 div#view .ui.container > {
   .marginless {
     margin: 0;
     margin-top: 0;
+    margin-right: 0;
     margin-bottom: 0;
     margin-left: 0;
-    margin-right: 0;
   }
 }
 
@@ -76,11 +76,11 @@ div#view .ui.container > {
 
   .image {
     position: relative;
-    overflow: hidden;
     display: inline-block;
+    overflow: hidden;
     width: 90%;
-    border-radius: 100%;
     margin: 0.5em !important;
+    border-radius: 100%;
     // box-shadow: 0 5px 10px -2px rgba(0, 0, 0, 0.6);
 
     &:after {
@@ -91,11 +91,11 @@ div#view .ui.container > {
 
     img {
       position: absolute;
-      left: 50%;
       top: 50%;
-      transform: translate(-50%, -50%);
-      height: 100% !important;
+      left: 50%;
       max-width: none !important;
+      height: 100% !important;
+      transform: translate(-50%, -50%);
     }
   }
 }

@@ -5,7 +5,7 @@ const TitleSchema = {
     {
       id: 'default',
       title: 'Default',
-      fields: ['hide_title']
+      fields: ['hide_title'],
     },
   ],
 

@@ -3,7 +3,7 @@
  * @module components/theme/Search/Search
  */
 
-import { Breadcrumb, Segment } from 'semantic-ui-react';
+import { Breadcrumb } from 'semantic-ui-react';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';

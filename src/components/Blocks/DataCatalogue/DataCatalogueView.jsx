@@ -1,8 +1,6 @@
 import React from 'react';
 import withProps from 'decorate-component-with-props';
 
-import _ from 'lodash';
-
 import {
   ActionBar,
   ActionBarRow,

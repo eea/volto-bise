@@ -48,7 +48,10 @@ export const FlatObjectList = ({ id, value = [], schema, onChange }) => {
                   circular
                   size="mini"
                   onClick={() =>
-                    onChange(id, value.filter((v, i) => i !== index))
+                    onChange(
+                      id,
+                      value.filter((v, i) => i !== index),
+                    )
                   }
                 >
                   <VoltoIcon size="20px" name={deleteSVG} />
@@ -62,17 +65,8 @@ export const FlatObjectList = ({ id, value = [], schema, onChange }) => {
   );
 };
 
-export const ModalObjectListForm = props => {
-  const {
-    open,
-    title,
-    className,
-    onSave,
-    onCancel,
-    schema,
-    id,
-    value = [],
-  } = props;
+export const ModalObjectListForm = (props) => {
+  const { open, title, className, onSave, onCancel, id, value = [] } = props;
 
   const empty = {};
 
@@ -127,7 +121,7 @@ export const ModalObjectListForm = props => {
   );
 };
 
-const ObjectListWidget = props => {
+const ObjectListWidget = (props) => {
   // TODO: notice that the Fragment key={} might cause problems, need to test
   const [open, setOpen] = useState(false);
   const {
@@ -207,7 +201,7 @@ const ObjectListWidget = props => {
                 <VoltoIcon name={penSVG} size="18px" />
               </button>
 
-              {map(error, message => (
+              {map(error, (message) => (
                 <Label key={message} basic color="red" pointing>
                   {message}
                 </Label>
