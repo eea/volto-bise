@@ -1,0 +1,28 @@
+@import (multiple, reference, optional) '../../theme.config';
+@type: extra;
+@element: custom;
+
+.block-image.wrapper {
+  .title {
+    width: 50%;
+    font-weight: 600;
+
+    &:not(.has-color) {
+      color: @lightGreenColor;
+    }
+  }
+
+  > p.block.image.with-border {
+    border: 1px solid @lightGreenColor;
+    border-radius: 12px;
+    padding: 1rem;
+
+    &.rounded-border {
+      border-radius: 100%;
+    }
+
+    img {
+      border-radius: 6px;
+    }
+  }
+}

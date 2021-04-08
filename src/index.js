@@ -59,6 +59,7 @@ const installStyles = (config) => {
     '#f2a70e',
     '#f4cf01',
     '#ed1834',
+    '#264069',
     '#44a2d6',
     '#4e8fa6',
     '#8d8d8d',
