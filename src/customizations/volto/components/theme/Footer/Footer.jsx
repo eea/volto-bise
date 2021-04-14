@@ -84,7 +84,7 @@ const Footer = ({ intl }) => (
               mobile={16}
               tablet={16}
               computer={5}
-              style={{ marginBottom: '1.5em' }}
+              className="information"
             >
               <div>
                 <p>
@@ -131,7 +131,7 @@ const Footer = ({ intl }) => (
               mobile={16}
               tablet={16}
               computer={7}
-              style={{ marginBottom: '0.8rem' }}
+              className="other-information"
             >
               <div>
                 <p>Other European Information Systems</p>
