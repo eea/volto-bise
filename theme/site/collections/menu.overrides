@@ -33,7 +33,7 @@
   }
 
   .ui.secondary.pointing.menu .item {
-    padding: 0.85em 0.8em !important;
+    padding: 0.8em !important;
     border-bottom: none;
     margin: 0;
     text-transform: none !important;
@@ -51,7 +51,7 @@
     .firstLevel {
       padding: 1em 1.2em !important;
       color: @lightGreenColor;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 700 !important;
       line-height: 1;
 
@@ -75,6 +75,9 @@
       &:hover > a {
         color: @darkGreenColor!important;
       }
+    }
+    .menuActive.firstLevel {
+      color: @darkGreenColor;
     }
 
     div.item.firstLevel {
@@ -141,7 +144,7 @@
     border-bottom-style: none;
     margin: 0;
     color: @lightGreenColor;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     line-height: 1.5;
     white-space: normal;

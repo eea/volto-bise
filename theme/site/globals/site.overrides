@@ -194,11 +194,13 @@ p > span:empty {
 }
 
 #search-widget-toggle {
+  position: relative;
+  top: 13px; // this 13px value is hardcoded in another style file
+
   @media only screen and (max-width: 991px) {
     display: none;
   }
-  position: relative;
-  top: 13px; // this 13px value is hardcoded in another style file
+
   @media only screen and (max-width: 1654px) {
     top: 0;
   }
