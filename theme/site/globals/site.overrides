@@ -116,6 +116,10 @@ p > span:empty {
   }
 }
 
+.ui.form .field .wrapper>label {
+  font-weight: 600 !important;
+}
+
 @media only screen and (min-width: 767px) and (max-width: 846px) {
   .simple-data-table,
   .dotted-table-chart,
