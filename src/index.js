@@ -60,9 +60,11 @@ const installStyles = (config) => {
     '#f4cf01',
     '#ed1834',
     '#264069',
+    '#013C60',
     '#44a2d6',
     '#4e8fa6',
     '#8d8d8d',
+    '#636363',
     '#ffffff',
     '#f7f7f7',
     '#EFEFEF',
@@ -154,6 +156,11 @@ export default (config) => {
       cssClass: 'border-block',
     },
     {
+      id: 'horizontalLine',
+      title: 'Horizontal line',
+      cssClass: 'horizontal-line',
+    },
+    {
       id: 'dividedBlock',
       title: 'Divided',
       cssClass: 'divided-block',
@@ -182,6 +189,11 @@ export default (config) => {
       id: 'mobileReversed',
       title: 'Mobile reversed',
       cssClass: 'mobile-reversed',
+    },
+    {
+      id: 'relevantLink',
+      title: 'Relevant link',
+      cssClass: 'relevant-link',
     },
   ];
 
