@@ -3,11 +3,11 @@
  * @module components/theme/App/App
  */
 
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { asyncConnect } from 'redux-connect';
+import { asyncConnect } from '@plone/volto/helpers';
 import { Segment } from 'semantic-ui-react';
 import { renderRoutes } from 'react-router-config';
 import { Slide, ToastContainer, toast } from 'react-toastify';
@@ -15,8 +15,8 @@ import split from 'lodash/split';
 import join from 'lodash/join';
 import trim from 'lodash/trim';
 import cx from 'classnames';
-
 import config from '@plone/volto/registry';
+import { PluggablesProvider } from '@plone/volto/components/manage/Pluggable';
 
 import Error from '@plone/volto/error';
 
@@ -27,6 +27,7 @@ import {
   Icon,
   OutdatedBrowser,
   AppExtras,
+  SkipLinks,
 } from '@plone/volto/components';
 import { BodyClass, getBaseUrl, getView, isCmsUi } from '@plone/volto/helpers';
 import {
@@ -98,13 +99,14 @@ class App extends Component {
    * @returns {string} Markup for the component.
    */
   render() {
+    const { views } = config;
     const path = getBaseUrl(this.props.pathname);
     const action = getView(this.props.pathname);
     const headerImage = this.props.content?.image?.download;
     const theme = this.props.route?.theme || 'default';
 
     const isCmsUI = isCmsUi(this.props.pathname);
-    const ConnectionRefusedView = config.views.errorViews.ECONNREFUSED;
+    const ConnectionRefusedView = views.errorViews.ECONNREFUSED;
 
     const Header = config.settings.themes[theme]?.Header || DefaultHeader;
     const Footer = config.settings.themes[theme]?.Footer || DefaultFooter;
@@ -112,7 +114,7 @@ class App extends Component {
       config.settings.themes[theme]?.Breadcrumbs || DefaultBreadcrumbs;
 
     return (
-      <Fragment>
+      <PluggablesProvider>
         <BodyClass
           className={cx(`view-${action}view`, theme ? `${theme}-theme` : '')}
         />
@@ -138,6 +140,7 @@ class App extends Component {
             'public-ui': !isCmsUI,
           })}
         />
+        <SkipLinks />
         <Header
           actualPathName={this.props.pathname}
           navigationItems={this.props.navigation}
@@ -182,7 +185,7 @@ class App extends Component {
           }
         />
         <AppExtras {...this.props} />
-      </Fragment>
+      </PluggablesProvider>
     );
   }
 }

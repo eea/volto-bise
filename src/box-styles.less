@@ -131,3 +131,29 @@ div#view .ui.container > {
     }
   }
 }
+
+ul.n2k-list {
+  padding-left: 28px;
+
+  li {
+    position: relative;
+  }
+
+  li::marker {
+    content: '';
+  }
+
+  li:before {
+    background: url(./icons/plus.png);
+    content: '';
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    left: -28px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 1;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+}

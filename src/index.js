@@ -195,6 +195,11 @@ export default (config) => {
       title: 'Relevant link',
       cssClass: 'relevant-link',
     },
+    {
+      id: 'n2kList',
+      title: 'N2k list',
+      cssClass: 'n2k-list',
+    },
   ];
 
   config.settings.themes = {
