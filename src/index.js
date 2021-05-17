@@ -200,6 +200,11 @@ export default (config) => {
       title: 'N2k list',
       cssClass: 'n2k-list',
     },
+    {
+      id: 'n2kGreenBorder',
+      title: 'N2k green border',
+      cssClass: 'n2k-green-border',
+    },
   ];
 
   config.settings.themes = {
