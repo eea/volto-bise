@@ -54,6 +54,7 @@ const installStyles = (config) => {
   config.settings.available_colors = [
     '#1f6237',
     '#3c8000',
+    '#3B7F02',
     '#88c24f',
     '#77ba72',
     '#f2a70e',
