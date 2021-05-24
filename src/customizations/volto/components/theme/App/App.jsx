@@ -42,7 +42,7 @@ import clearSVG from '@plone/volto/icons/clear.svg';
 // import MultilingualRedirector from '../MultilingualRedirector/MultilingualRedirector';
 
 import * as Sentry from '@sentry/browser';
-
+import { StickyProvider } from '~/components';
 /**
  * @export
  * @class App
@@ -115,76 +115,78 @@ class App extends Component {
 
     return (
       <PluggablesProvider>
-        <BodyClass
-          className={cx(`view-${action}view`, theme ? `${theme}-theme` : '')}
-        />
-
-        {/* Body class depending on content type */}
-        {this.props.content && this.props.content['@type'] && (
+        <StickyProvider>
           <BodyClass
-            className={`contenttype-${this.props.content['@type']
-              .replace(' ', '-')
-              .toLowerCase()}`}
+            className={cx(`view-${action}view`, theme ? `${theme}-theme` : '')}
           />
-        )}
 
-        {/* Body class depending on sections */}
-        <BodyClass
-          className={cx({
-            [trim(join(split(this.props.pathname, '/'), ' section-'))]:
-              this.props.pathname !== '/',
-            siteroot: this.props.pathname === '/',
-            'is-authenticated': !!this.props.token,
-            'is-anonymous': !this.props.token,
-            'cms-ui': isCmsUI,
-            'public-ui': !isCmsUI,
-          })}
-        />
-        <SkipLinks />
-        <Header
-          actualPathName={this.props.pathname}
-          navigationItems={this.props.navigation}
-          pathname={path}
-          defaultHeaderImage={headerImage}
-          {...this.props.content}
-        />
-
-        <Breadcrumbs pathname={path} />
-        {/* <MultilingualRedirector pathname={this.props.pathname}></MultilingualRedirector> */}
-
-        <Segment basic className="content-area">
-          <main>
-            <div className="editor-toolbar-wrapper" />
-            <OutdatedBrowser />
-            {this.props.connectionRefused ? (
-              <ConnectionRefusedView />
-            ) : this.state.hasError ? (
-              <Error
-                message={this.state.error.message}
-                stackTrace={this.state.errorInfo.componentStack}
-              />
-            ) : (
-              renderRoutes(this.props.route.routes, {
-                staticContext: this.props.staticContext,
-              })
-            )}
-          </main>
-        </Segment>
-        <Footer />
-        <ToastContainer
-          position={toast.POSITION.BOTTOM_CENTER}
-          hideProgressBar
-          transition={Slide}
-          autoClose={5000}
-          closeButton={
-            <Icon
-              className="toast-dismiss-action"
-              name={clearSVG}
-              size="18px"
+          {/* Body class depending on content type */}
+          {this.props.content && this.props.content['@type'] && (
+            <BodyClass
+              className={`contenttype-${this.props.content['@type']
+                .replace(' ', '-')
+                .toLowerCase()}`}
             />
-          }
-        />
-        <AppExtras {...this.props} />
+          )}
+
+          {/* Body class depending on sections */}
+          <BodyClass
+            className={cx({
+              [trim(join(split(this.props.pathname, '/'), ' section-'))]:
+                this.props.pathname !== '/',
+              siteroot: this.props.pathname === '/',
+              'is-authenticated': !!this.props.token,
+              'is-anonymous': !this.props.token,
+              'cms-ui': isCmsUI,
+              'public-ui': !isCmsUI,
+            })}
+          />
+          <SkipLinks />
+          <Header
+            actualPathName={this.props.pathname}
+            navigationItems={this.props.navigation}
+            pathname={path}
+            defaultHeaderImage={headerImage}
+            {...this.props.content}
+          />
+
+          <Breadcrumbs pathname={path} />
+          {/* <MultilingualRedirector pathname={this.props.pathname}></MultilingualRedirector> */}
+
+          <Segment basic className="content-area">
+            <main>
+              <div className="editor-toolbar-wrapper" />
+              <OutdatedBrowser />
+              {this.props.connectionRefused ? (
+                <ConnectionRefusedView />
+              ) : this.state.hasError ? (
+                <Error
+                  message={this.state.error.message}
+                  stackTrace={this.state.errorInfo.componentStack}
+                />
+              ) : (
+                renderRoutes(this.props.route.routes, {
+                  staticContext: this.props.staticContext,
+                })
+              )}
+            </main>
+          </Segment>
+          <Footer />
+          <ToastContainer
+            position={toast.POSITION.BOTTOM_CENTER}
+            hideProgressBar
+            transition={Slide}
+            autoClose={5000}
+            closeButton={
+              <Icon
+                className="toast-dismiss-action"
+                name={clearSVG}
+                size="18px"
+              />
+            }
+          />
+          <AppExtras {...this.props} />
+        </StickyProvider>
       </PluggablesProvider>
     );
   }
