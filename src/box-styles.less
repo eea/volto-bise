@@ -116,18 +116,18 @@ div#view .ui.container > {
 }
 
 .relevant-link {
-  background: #fff;
-  border: 1px solid #E8E8E8;
-  border-radius: 12px;
   padding: 1.5rem 2rem;
-  color: #04A87D;
+  border: 1px solid #e8e8e8;
+  background: #fff;
+  border-radius: 12px;
+  color: #04a87d;
 
   a {
-    color: #04A87D;
+    color: #04a87d;
 
     &:hover {
-      color: #04A87D;
-      opacity: .9;
+      color: #04a87d;
+      opacity: 0.9;
     }
   }
 }
@@ -146,25 +146,25 @@ ul.n2k-list {
   }
 
   li:before {
-    background: url(./icons/plus.png);
-    content: '';
+    position: absolute;
+    top: 50%;
+    left: -28px;
     width: 18px;
     height: 18px;
-    position: absolute;
-    left: -28px;
-    top: 50%;
-    transform: translateY(-50%);
-    opacity: 1;
-    background-size: cover;
+    background: url(./icons/plus.png);
     background-repeat: no-repeat;
+    background-size: cover;
+    content: '';
+    opacity: 1;
+    transform: translateY(-50%);
   }
 }
 
 .n2k-green-border {
-  border: 1px solid #72A34A;
-  border-radius: 10px;
   padding: 1rem;
+  border: 1px solid #72a34a;
   margin-bottom: 1rem;
+  border-radius: 10px;
 
   > * {
     margin-bottom: 0 !important;

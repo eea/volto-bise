@@ -28,10 +28,13 @@
   ],
   "dependencies": {
     "@eeacms/volto-corsproxy": "2.1.2",
-    "@eeacms/volto-embed": "2.0.1",
     "@eeacms/volto-datablocks": "2.0.1",
+    "@eeacms/volto-embed": "2.0.1",
+    "esri-loader": "3.1.0",
     "plotly.js": "1.57.0",
+    "react-lazy-load-image-component": "1.5.1",
     "react-plotly.js": "~2.5.0",
+    "searchkit": "2.4.4",
     "volto-slate": "2.5.0"
   },
   "devDependencies": {
