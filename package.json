@@ -20,9 +20,17 @@
     "url": "git+https@github.com:eea/volto-bise.git"
   },
   "customizationsPath": "src/customizations",
+  "addons": [
+    "volto-slate:asDefault",
+    "@eeacms/volto-datablocks",
+    "@eeacms/volto-embed"
+  ],
   "dependencies": {
+    "@eeacms/volto-embed": "2.0.1",
+    "@eeacms/volto-datablocks": "2.0.1",
     "plotly.js": "1.57.0",
-    "react-plotly.js": "~2.5.0"
+    "react-plotly.js": "~2.5.0",
+    "volto-slate": "2.5.0"
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.9.5",
