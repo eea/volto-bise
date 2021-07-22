@@ -28,6 +28,8 @@ const messages = defineMessages({
   },
 });
 
+const dropdownBlacklist = ['/natura2000'];
+
 /**
  * Navigation container class.
  * @class Navigation
@@ -208,7 +210,9 @@ class Navigation extends Component {
           {this.props.items.map((item) => {
             const flatUrl = flattenToAppURL(item.url);
             const itemID = item.title.split(' ').join('-').toLowerCase();
-            return item.items && item.items.length ? (
+            return item.items &&
+              item.items.length &&
+              !dropdownBlacklist.includes(item.url) ? (
               <Dropdown
                 id={itemID}
                 className={
