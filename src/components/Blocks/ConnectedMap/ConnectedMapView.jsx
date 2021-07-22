@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Style } from '@plone/volto/components';
-import { PrivacyProtection } from 'volto-embed';
+import { PrivacyProtection } from '@eeacms/volto-embed';
 import { getProxiedExternalContent } from '@eeacms/volto-corsproxy/actions';
 import Webmap from './Webmap';
 

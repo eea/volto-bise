@@ -5,7 +5,7 @@ import { SidebarPortal } from '@plone/volto/components'; // EditBlock
 import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
 
 import MaesViewerSchema from './schema';
-import { connectBlockToProviderData } from 'volto-datablocks/hocs';
+import { connectBlockToProviderData } from '@eeacms/volto-datablocks/hocs';
 import MaesViewerView from './MaesViewerView';
 import { defaultHoverTemplate } from './constants';
 

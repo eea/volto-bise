@@ -23,7 +23,7 @@ import {
   Breadcrumbs,
 } from '@plone/volto/components';
 
-import HeaderImage from 'volto-bise/components/theme/Header/HeaderImage';
+import HeaderImage from '../../../../../components/theme/Header/HeaderImage';
 
 import { TabletSearchWidget } from '../SearchWidget/SearchWidget';
 

@@ -13,7 +13,7 @@ import { defineMessages, injectIntl, useIntl } from 'react-intl';
 import cx from 'classnames';
 
 import { Icon } from '@plone/volto/components';
-import zoomSVG from 'volto-bise/icons/search.svg';
+import zoomSVG from '../../../../../icons/search.svg';
 
 import { createPortal } from 'react-dom';
 

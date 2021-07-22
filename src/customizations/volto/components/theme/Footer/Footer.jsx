@@ -12,11 +12,11 @@ import LogoImage from '@plone/volto/components/theme/Logo/Logo.svg';
 
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
-import ecLogo from 'volto-bise/static/ec.png';
-import eeaLogo from 'volto-bise/static/eea.png';
-import fiseLogo from 'volto-bise/static/forest.svg';
-import ccaLogo from 'volto-bise/static/cca.svg';
-import wiseLogo from 'volto-bise/static/wise.png';
+import ecLogo from '../../../../../static/ec.png';
+import eeaLogo from '../../../../../static/eea.png';
+import fiseLogo from '../../../../../static/forest.svg';
+import ccaLogo from '../../../../../static/cca.svg';
+import wiseLogo from '../../../../../static/wise.png';
 
 // const messages = defineMessages({
 //   copyright: {

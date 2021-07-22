@@ -76,6 +76,7 @@
         color: @darkGreenColor!important;
       }
     }
+
     .menuActive.firstLevel {
       color: @darkGreenColor;
     }

@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { MapSchema, MapFiltersSchema } from './schema';
-import { addPrivacyProtectionToSchema } from 'volto-embed';
+import { addPrivacyProtectionToSchema } from '@eeacms/volto-embed';
 import { getProxiedExternalContent } from '@eeacms/volto-corsproxy/actions';
 
 class SchemaProvider extends Component {
