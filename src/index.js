@@ -209,6 +209,11 @@ export default (config) => {
       title: 'N2k green border',
       cssClass: 'n2k-green-border',
     },
+    {
+      id: 'n2kCircle',
+      title: 'N2k circle',
+      cssClass: 'n2k-circle',
+    },
   ];
 
   config.settings.themes = {
