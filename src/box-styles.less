@@ -172,19 +172,24 @@ ul.n2k-list {
 }
 
 .n2k-circle {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  justify-content: center;
-  align-items: center;
-  display: inline-flex;
-  background-color: #72a34a;
-  color: #fff;
-  padding: 1rem;
+  position: relative;
   margin-bottom: 1rem;
-}
+  border-radius: 50%;
+  color: #fff;
+  background-color: #72a34a;
+  text-align: center;
 
-.n2k-circle.style-preview {
-  width: 80px;
-  height: 80px;
+  > *, svg {
+    position: absolute;
+    padding: 2rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &:before {
+    content: "";
+    display: block;
+    padding-top: 100%;  /* initial ratio of 1:1*/
+  }
 }
