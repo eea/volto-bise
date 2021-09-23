@@ -174,22 +174,23 @@ ul.n2k-list {
 .n2k-circle {
   position: relative;
   margin-bottom: 1rem;
+  background-color: #72a34a;
   border-radius: 50%;
   color: #fff;
-  background-color: #72a34a;
   text-align: center;
 
-  > *, svg {
+  > *,
+  svg {
     position: absolute;
-    padding: 2rem;
     top: 50%;
     left: 50%;
+    padding: 2rem;
     transform: translate(-50%, -50%);
   }
 
   &:before {
-    content: "";
     display: block;
-    padding-top: 100%;  /* initial ratio of 1:1*/
+    padding-top: 100%; /* initial ratio of 1:1*/
+    content: '';
   }
 }
