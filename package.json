@@ -21,7 +21,7 @@
   },
   "customizationsPath": "src/customizations",
   "addons": [
-    "volto-slate",
+    "volto-slate:asDefault",
     "@eeacms/volto-corsproxy",
     "@eeacms/volto-datablocks",
     "@eeacms/volto-embed"
