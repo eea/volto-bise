@@ -21,21 +21,21 @@
   },
   "customizationsPath": "src/customizations",
   "addons": [
-    "volto-slate:asDefault",
+    "volto-slate",
     "@eeacms/volto-corsproxy",
     "@eeacms/volto-datablocks",
     "@eeacms/volto-embed"
   ],
   "dependencies": {
     "@eeacms/volto-corsproxy": "^2.1.2",
-    "@eeacms/volto-datablocks": "^2.0.1",
-    "@eeacms/volto-embed": "^2.0.1",
+    "@eeacms/volto-datablocks": "^2.0.12",
+    "@eeacms/volto-embed": "^2.0.4",
     "esri-loader": "3.1.0",
     "plotly.js": "1.57.0",
     "react-lazy-load-image-component": "1.5.1",
     "react-plotly.js": "~2.5.0",
     "searchkit": "2.4.4",
-    "volto-slate": "^2.5.0"
+    "volto-slate": "^4.0.3"
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.9.5",
