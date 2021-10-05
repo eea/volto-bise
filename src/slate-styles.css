@@ -8,6 +8,14 @@
   line-height: 30px;
 }
 
+.white-text {
+  color: #fff;
+}
+
+.n2k-green-text {
+  color: #3b7f02;
+}
+
 .dark-green-text {
   color: #1f6237;
 }

@@ -55,6 +55,7 @@ const installStyles = (config) => {
     '#1f6237',
     '#3c8000',
     '#3B7F02',
+    '#7AC943',
     '#88c24f',
     '#77ba72',
     '#f2a70e',
@@ -81,6 +82,8 @@ const installStyles = (config) => {
   config.settings.slate.styleMenu = config.settings.slate.styleMenu || {};
   config.settings.slate.styleMenu.inlineStyles = [
     ...(config.settings.slate.styleMenu?.inlineStyles || []),
+    { cssClass: 'white-text', label: 'White text' },
+    { cssClass: 'n2k-green-text', label: 'N2k green text' },
     { cssClass: 'primary-big-text', label: 'Big text' },
     { cssClass: 'medium-text', label: 'Medium text' },
     { cssClass: 'dark-green-text', label: 'Dark green text' },
@@ -205,6 +208,11 @@ export default (config) => {
       id: 'n2kGreenBorder',
       title: 'N2k green border',
       cssClass: 'n2k-green-border',
+    },
+    {
+      id: 'n2kCircle',
+      title: 'N2k circle',
+      cssClass: 'n2k-circle',
     },
   ];
 

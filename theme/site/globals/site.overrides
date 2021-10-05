@@ -116,7 +116,7 @@ p > span:empty {
   }
 }
 
-.ui.form .field .wrapper>label {
+.ui.form .field .wrapper > label {
   font-weight: 600 !important;
 }
 
