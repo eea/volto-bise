@@ -428,3 +428,7 @@ p > span:empty {
     }
   }
 }
+
+.stagingBanner {
+  display: none !important;
+}
