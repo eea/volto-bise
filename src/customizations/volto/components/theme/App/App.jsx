@@ -42,7 +42,7 @@ import clearSVG from '@plone/volto/icons/clear.svg';
 // import MultilingualRedirector from '../MultilingualRedirector/MultilingualRedirector';
 
 import * as Sentry from '@sentry/browser';
-import { StickyProvider } from '@eeacms/volto-bise/components';
+import { StickyProvider } from '~/components';
 /**
  * @export
  * @class App
