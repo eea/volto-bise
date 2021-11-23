@@ -89,13 +89,13 @@ pipeline {
     }
 
     // stage('Integration tests') {
-      when {
-        allOf {
-          environment name: 'CHANGE_ID', value: ''
-          not { branch 'master' }
-          not { changelog '.*^Automated release [0-9\\.]+$' }
-        }
-      }
+    //   when {
+    //     allOf {
+    //       environment name: 'CHANGE_ID', value: ''
+    //       not { branch 'master' }
+    //       not { changelog '.*^Automated release [0-9\\.]+$' }
+    //     }
+    //   }
     //   steps {
     //     parallel(
 
