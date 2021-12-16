@@ -14,9 +14,6 @@
 [![Bugs](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-bise-develop&metric=bugs)](https://sonarqube.eea.europa.eu/dashboard?id=volto-bise-develop)
 [![Duplicated Lines (%)](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-bise-develop&metric=duplicated_lines_density)](https://sonarqube.eea.europa.eu/dashboard?id=volto-bise-develop)
 
-
-[Volto](https://github.com/plone/volto) add-on
-
 [Volto](https://github.com/plone/volto) add-on
 
 ## Features
