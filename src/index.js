@@ -228,6 +228,8 @@ export default (config) => {
   delete config.blocks.blocksConfig.data_connected_embed;
   delete config.blocks.blocksConfig.discodata_connector_block;
 
+  return config;
+
   return [
     installDataCatalogue,
     installKeyFacts,

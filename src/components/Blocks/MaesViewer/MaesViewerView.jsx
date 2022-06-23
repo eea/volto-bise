@@ -1,4 +1,5 @@
 import React from 'react';
+import { compose } from 'redux';
 import cx from 'classnames';
 import loadable from '@loadable/component';
 
@@ -10,7 +11,7 @@ import {
 } from '@plone/volto/components/manage/Widgets/SelectStyling';
 
 import { serializeNodes } from 'volto-slate/editor/render';
-import { connectBlockToProviderData } from '@eeacms/volto-datablocks/hocs';
+import { connectToProviderData } from '@eeacms/volto-datablocks/hocs';
 import { makeChartTiles } from './utils';
 
 import './style.css';
@@ -132,4 +133,4 @@ const View = ({ data, provider_data, id, ...rest }) => {
   );
 };
 
-export default connectBlockToProviderData(View);
+export default compose(connectToProviderData)(View);
