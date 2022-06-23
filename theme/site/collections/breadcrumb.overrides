@@ -36,6 +36,12 @@
   }
 }
 
+.sidebar-container {
+  .ui.vertical.segment.breadcrumbs {
+    position: relative !important;
+  }
+}
+
 @media only screen and (max-width: 480px) {
   .ui.vertical.segment.breadcrumbs {
     right: 0;

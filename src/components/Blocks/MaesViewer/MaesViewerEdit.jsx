@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-
+import { compose } from 'redux';
 import cx from 'classnames';
 import { SidebarPortal } from '@plone/volto/components'; // EditBlock
 import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
 
 import MaesViewerSchema from './schema';
-import { connectBlockToProviderData } from '@eeacms/volto-datablocks/hocs';
+import { connectToProviderData } from '@eeacms/volto-datablocks/hocs';
 import MaesViewerView from './MaesViewerView';
 import { defaultHoverTemplate } from './constants';
 
@@ -61,4 +61,4 @@ class Edit extends Component {
   }
 }
 
-export default connectBlockToProviderData(Edit);
+export default compose(connectToProviderData)(Edit);
