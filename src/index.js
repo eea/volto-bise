@@ -24,6 +24,9 @@ import Footer from './customizations/volto/components/theme/Footer/Footer';
 import './slate-styles.css';
 import './box-styles.less';
 
+import TitleBlockEdit from './customizations/volto/components/manage/Blocks/Title/Edit';
+import TitleBlockView from './customizations/volto/components/manage/Blocks/Title/View';
+
 const installStyles = (config) => {
   config.settings.plotlyChartsColorScale = [
     '#ee252c',
@@ -227,6 +230,10 @@ export default (config) => {
 
   delete config.blocks.blocksConfig.data_connected_embed;
   delete config.blocks.blocksConfig.discodata_connector_block;
+
+  // TODO: Add volto-block-style
+  config.blocks.blocksConfig.title.edit = TitleBlockEdit;
+  config.blocks.blocksConfig.title.view = TitleBlockView;
 
   return [
     installDataCatalogue,
