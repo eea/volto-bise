@@ -246,3 +246,7 @@ div#view .ui.container > * {
 input.sk-search-box__text::placeholder {
   color: gray !important;
 }
+
+.slick-dots li {
+  margin-bottom: 0 !important;
+}

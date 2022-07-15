@@ -55,7 +55,7 @@ const FactsheetsListingView = (props) => {
                   <div
                     className="fdl-listing-section"
                     key={section['@id']}
-                    style={{ columns: data.columns || 3 }}
+                    style={{ columns: data.cols || 3 }}
                   >
                     {section.items?.map((item) => (
                       <div key={item['@id']}>

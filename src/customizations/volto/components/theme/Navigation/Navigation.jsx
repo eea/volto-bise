@@ -93,18 +93,18 @@ class Navigation extends Component {
   };
 
   /**
-   * Component will receive props
-   * @method componentWillReceiveProps
-   * @param {Object} nextProps Next properties
+   * Component did update
+   * @method componentDidUpdate
+   * @param {Object} prevProps Prev properties
    * @returns {undefined}
    */
-  componentDidUpdate(nextProps) {
+  componentDidUpdate(prevProps) {
     if (
-      nextProps.pathname !== this.props.pathname ||
-      nextProps.userToken !== this.props.userToken
+      prevProps.pathname !== this.props.pathname ||
+      prevProps.userToken !== this.props.userToken
     ) {
       this.props.getNavigation(
-        getBaseUrl(nextProps.pathname),
+        getBaseUrl(this.props.pathname),
         config.settings.navDepth,
       );
       this.closeMobileMenu();
