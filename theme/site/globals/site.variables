@@ -362,3 +362,36 @@
 /*---  Dark Tones  ---*/
 
 /*---  Light Tones  ---*/
+
+/*******************************
+        Inpage Navigation
+*******************************/
+@largeGap             : unit((20 / @emSize), rem);
+@darkCerulean         : #004B7F;
+
+@navBottom            : @largeGap;
+@navRight             : @largeGap;
+@navBackground        : @darkCerulean;
+@navColor             : @white;
+@navFontWeight        : @bold;
+
+/* Inpage navigation size */
+@tabletNavWidth       : 2.5rem;
+@tabletNavHeight      : 2.5rem;
+@computerNavWidth     : 4rem;
+@computerNavHeight    : 4rem;
+
+/* Desktop Icon */
+@inpageNavigationIconWidth : 100%;
+@inpageNavigationIconMarginRight : 0;
+@mobileInpageNavigationIconLineHeight : 2.75rem;
+@computerInpageNavigationIconLineHeight : 1.5rem;
+@mobileInpageNavigationIconFontSize : 2rem;
+@computerInpageNavigationIconFontSize : 1.9rem;
+
+/* Text */
+@inpageNavigationTextMarginTop : -22px;
+@inpageNavigationTextFontSize : 1.125rem;
+@inpageNavigationTextFontWeight : 900;
+@inpageNavigationTextAlign : center;
+@inpageNavigationTextFontVariant: small-caps;
