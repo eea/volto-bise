@@ -2,6 +2,8 @@ import React from 'react';
 
 import { DefaultView } from '@plone/volto/components';
 
+import InpageNavigation from './customizations/volto/components/theme/InpageNavigation/InpageNavigation';
+
 import {
   FactsheetDatabaseListing,
   installKeyFacts,
@@ -132,6 +134,14 @@ export default (config) => {
       // children_tabs_view: ChildrenTabsView,
     },
   };
+
+  config.settings.appExtras = [
+    ...(config.settings.appExtras || []),
+    {
+      match: '/**',
+      component: InpageNavigation,
+    },
+  ];
 
   config.widgets.widget.number = NumberWidget;
 
