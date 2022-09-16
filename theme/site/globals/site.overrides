@@ -451,6 +451,7 @@ p > span:empty {
   border-radius: @circularRadius;
   color: @navColor;
   font-weight: @navFontWeight;
+  z-index: 3 !important;
 
   &.hidden {
     display: none;
