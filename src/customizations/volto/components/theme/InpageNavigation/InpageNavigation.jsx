@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import { Container } from 'semantic-ui-react';
+import cx from 'classnames';
+import { Button, Container } from 'semantic-ui-react';
 import { Icon } from '@plone/volto/components';
 import UpSVG from '@plone/volto/icons/up-key.svg';
+import './styles.less';
 
 class InpageNavigation extends Component {
   constructor(props) {
     super(props);
     this.state = {
       scrollPosition: 0,
-      removeClass: 'hidden',
+      hidden: true,
     };
   }
 
@@ -17,9 +19,9 @@ class InpageNavigation extends Component {
     this.setState({ scrollPosition: position });
 
     if (this.state.scrollPosition > 50) {
-      return this.setState({ removeClass: '' });
+      return this.setState({ hidden: false });
     } else {
-      return this.setState({ removeClass: 'hidden' });
+      return this.setState({ hidden: true });
     }
   };
 
@@ -41,19 +43,10 @@ class InpageNavigation extends Component {
   render() {
     return (
       <Container>
-        <div
-          id="inpage-navigation"
-          onClick={this.onInpageNavigationClick}
-          role="none"
-          className={this.state.removeClass}
-        >
-          <div className="mobile tablet only">
-            <Icon name={UpSVG} />
-          </div>
-          <div className="tablet or lower hidden">
-            <Icon name={UpSVG} />
-            <div className="text">top</div>
-          </div>
+        <div className={cx('scroll-to-top', { hidden: this.state.hidden })}>
+          <Button size="small" onClick={this.onInpageNavigationClick} icon>
+            <Icon color="#FFF" name={UpSVG} size={32} />
+          </Button>
         </div>
       </Container>
     );
