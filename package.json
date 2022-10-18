@@ -24,12 +24,14 @@
     "volto-slate",
     "@eeacms/volto-corsproxy",
     "@eeacms/volto-datablocks",
-    "@eeacms/volto-embed"
+    "@eeacms/volto-embed",
+    "@eeacms/volto-n2k"
   ],
   "dependencies": {
     "@eeacms/volto-corsproxy": "^*",
     "@eeacms/volto-datablocks": "*",
     "@eeacms/volto-embed": "*",
+    "@eeacms/volto-n2k": "*",
     "volto-slate": "*",
     "esri-loader": "^3.3.0",
     "plotly.js": "^2.5.1",
