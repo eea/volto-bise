@@ -1,6 +1,6 @@
 {
   "name": "@eeacms/volto-bise",
-  "version": "1.1.9",
+  "version": "1.1.10",
   "description": "Volto theme and integration for BISE",
   "main": "src/index.js",
   "author": "European Environment Agency: IDM2 A-Team",
@@ -24,12 +24,14 @@
     "volto-slate",
     "@eeacms/volto-corsproxy",
     "@eeacms/volto-datablocks",
-    "@eeacms/volto-embed"
+    "@eeacms/volto-embed",
+    "@eeacms/volto-n2k"
   ],
   "dependencies": {
     "@eeacms/volto-corsproxy": "^*",
     "@eeacms/volto-datablocks": "*",
     "@eeacms/volto-embed": "*",
+    "@eeacms/volto-n2k": "*",
     "volto-slate": "*",
     "esri-loader": "^3.3.0",
     "plotly.js": "^2.5.1",
@@ -40,7 +42,8 @@
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.9.5",
-    "babel-plugin-transform-class-properties": "^6.24.1"
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "md5": "^2.3.0"
   },
   "scripts": {
     "release": "release-it",
