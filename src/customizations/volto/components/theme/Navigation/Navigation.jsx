@@ -332,16 +332,18 @@ class Navigation extends Component {
                 </Link>
               );
             })}
-          <Link
-            to={`/natura2000/${this.state.n2kLanguage}`}
-            className={
-              this.isActive(`/natura2000/${this.state.n2kLanguage}`)
-                ? 'item menuActive firstLevel'
-                : 'item firstLevel'
-            }
-          >
-            Natura 2000
-          </Link>
+          {__CLIENT__ && window.env.RAZZLE_HAS_N2K_SECTION && (
+            <Link
+              to={`/natura2000/${this.state.n2kLanguage}`}
+              className={
+                this.isActive(`/natura2000/${this.state.n2kLanguage}`)
+                  ? 'item menuActive firstLevel'
+                  : 'item firstLevel'
+              }
+            >
+              Natura 2000
+            </Link>
+          )}
         </Menu>
       </nav>
     );
