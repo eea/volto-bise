@@ -65,3 +65,4 @@
     "cypress:run": "make cypress-run",
     "cypress:open": "make cypress-open"
   }
+}
