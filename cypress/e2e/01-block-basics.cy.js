@@ -1,27 +1,22 @@
-import { setupBeforeEach, tearDownAfterEach } from '../support';
+import { slateBeforeEach, slateAfterEach } from '../support/e2e';
 
 describe('Blocks Tests', () => {
-  beforeEach(setupBeforeEach);
-  afterEach(tearDownAfterEach);
+  beforeEach(slateBeforeEach);
+  afterEach(slateAfterEach);
 
   it('Add Block: Empty', () => {
     // Change page title
-    cy.get('.documentFirstHeading > .public-DraftStyleDefault-block')
-      .clear()
-      .type('My Add-on Page')
-      .get('.documentFirstHeading span[data-text]')
-      .contains('My Add-on Page');
+    cy.clearSlateTitle();
+    cy.getSlateTitle().type('My Add-on Page');
 
-    cy.get('.documentFirstHeading > .public-DraftStyleDefault-block').type(
-      '{enter}',
-    );
+    cy.get('.documentFirstHeading').contains('My Add-on Page');
+
+    cy.getSlate().click();
 
     // Add block
-    cy.get('#toolbar').invoke('attr', 'style', 'opacity: 0');
     cy.get('.ui.basic.icon.button.block-add-button').first().click();
     cy.get('.blocks-chooser .title').contains('Media').click();
     cy.get('.content.active.media .button.image').contains('Image').click();
-    cy.get('#toolbar').invoke('attr', 'style', 'opacity: 1');
 
     // Save
     cy.get('#toolbar-save').click();
