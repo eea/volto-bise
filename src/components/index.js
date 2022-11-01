@@ -11,3 +11,5 @@ export { default as installConnectedMap } from './Blocks/ConnectedMap';
 export { default as installDataCatalogue } from './Blocks/DataCatalogue';
 export { default as installKeyFacts } from './Blocks/KeyFacts';
 export { default as installMaesViewer } from './Blocks/MaesViewer';
+
+export { StickyContext, StickyProvider } from './Sticky';

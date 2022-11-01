@@ -47,7 +47,7 @@ import clearSVG from '@plone/volto/icons/clear.svg';
 import WorkingCopyToastsFactory from '@plone/volto/components/manage/WorkingCopyToastsFactory/WorkingCopyToastsFactory';
 import LockingToastsFactory from '@plone/volto/components/manage/LockingToastsFactory/LockingToastsFactory';
 
-import { StickyProvider } from '~/components';
+import { StickyProvider } from '@eeacms/volto-bise/components';
 
 const Sentry = loadable.lib(
   () => import(/* webpackChunkName: "s_entry-browser" */ '@sentry/browser'), // chunk name avoids ad blockers
@@ -121,8 +121,8 @@ class App extends Component {
     const language =
       this.props.content?.language?.token ?? this.props.intl?.locale;
 
-    const Header = config.settings.themes[theme]?.Header || DefaultHeader;
-    const Footer = config.settings.themes[theme]?.Footer || DefaultFooter;
+    const Header = config.settings.themes?.[theme]?.Header || DefaultHeader;
+    const Footer = config.settings.themes?.[theme]?.Footer || DefaultFooter;
     const Breadcrumbs =
       config.settings.themes[theme]?.Breadcrumbs || DefaultBreadcrumbs;
 
