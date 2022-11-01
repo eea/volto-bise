@@ -8,6 +8,7 @@ import jwtDecode from 'jwt-decode';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import loadable from '@loadable/component';
 import { asyncConnect, Helmet } from '@plone/volto/helpers';
 import { Segment } from 'semantic-ui-react';
 import { renderRoutes } from 'react-router-config';
@@ -46,8 +47,12 @@ import clearSVG from '@plone/volto/icons/clear.svg';
 import WorkingCopyToastsFactory from '@plone/volto/components/manage/WorkingCopyToastsFactory/WorkingCopyToastsFactory';
 import LockingToastsFactory from '@plone/volto/components/manage/LockingToastsFactory/LockingToastsFactory';
 
-import * as Sentry from '@sentry/browser';
-import { StickyProvider } from '~/components';
+import { StickyProvider } from '@eeacms/volto-bise/components';
+
+const Sentry = loadable.lib(
+  () => import(/* webpackChunkName: "s_entry-browser" */ '@sentry/browser'), // chunk name avoids ad blockers
+);
+
 /**
  * @export
  * @class App
@@ -93,7 +98,7 @@ class App extends Component {
     this.setState({ hasError: true, error, errorInfo: info });
     if (__CLIENT__) {
       if (window?.env?.RAZZLE_SENTRY_DSN || __SENTRY__?.SENTRY_DSN) {
-        Sentry.captureException(error);
+        Sentry.load().then((mod) => mod.captureException(error));
       }
     }
   }
@@ -116,8 +121,8 @@ class App extends Component {
     const language =
       this.props.content?.language?.token ?? this.props.intl?.locale;
 
-    const Header = config.settings.themes[theme]?.Header || DefaultHeader;
-    const Footer = config.settings.themes[theme]?.Footer || DefaultFooter;
+    const Header = config.settings.themes?.[theme]?.Header || DefaultHeader;
+    const Footer = config.settings.themes?.[theme]?.Footer || DefaultFooter;
     const Breadcrumbs =
       config.settings.themes[theme]?.Breadcrumbs || DefaultBreadcrumbs;
 
@@ -242,6 +247,7 @@ export const fetchContent = async ({ store, location }) => {
         location,
         id,
         data,
+        blocksConfig,
       });
       if (!p?.length) {
         throw new Error(

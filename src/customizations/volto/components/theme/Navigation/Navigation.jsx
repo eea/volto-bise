@@ -12,8 +12,11 @@ import { Link } from 'react-router-dom';
 import { defineMessages, injectIntl } from 'react-intl';
 import { Menu, Dropdown } from 'semantic-ui-react';
 import cx from 'classnames';
-import { getBaseUrl, flattenToAppURL } from '@plone/volto/helpers';
-
+import {
+  getBaseUrl,
+  flattenToAppURL,
+  hasApiExpander,
+} from '@plone/volto/helpers';
 import { getNavigation } from '@plone/volto/actions';
 import config from '@plone/volto/registry';
 import { withLocalStorage } from '@eeacms/volto-n2k/hocs';
@@ -54,6 +57,10 @@ class Navigation extends Component {
     ).isRequired,
   };
 
+  static defaultProps = {
+    token: null,
+  };
+
   /**
    * Constructor
    * @method constructor
@@ -77,10 +84,13 @@ class Navigation extends Component {
    * @returns {undefined}
    */
   componentDidMount() {
-    this.props.getNavigation(
-      getBaseUrl(this.props.pathname),
-      config.settings.navDepth,
-    );
+    const { settings } = config;
+    if (!hasApiExpander('navigation', getBaseUrl(this.props.pathname))) {
+      this.props.getNavigation(
+        getBaseUrl(this.props.pathname),
+        settings.navDepth,
+      );
+    }
   }
 
   handleClickOutsideNav = (event) => {
@@ -95,20 +105,23 @@ class Navigation extends Component {
   };
 
   /**
-   * Component did update
-   * @method componentDidUpdate
-   * @param {Object} prevProps Prev properties
+   * Component will receive props
+   * @method componentWillReceiveProps
+   * @param {Object} nextProps Next properties
    * @returns {undefined}
    */
-  componentDidUpdate(prevProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    const { settings } = config;
     if (
-      prevProps.pathname !== this.props.pathname ||
-      prevProps.userToken !== this.props.userToken
+      nextProps.pathname !== this.props.pathname ||
+      nextProps.token !== this.props.token
     ) {
-      this.props.getNavigation(
-        getBaseUrl(this.props.pathname),
-        config.settings.navDepth,
-      );
+      if (!hasApiExpander('navigation', getBaseUrl(this.props.pathname))) {
+        this.props.getNavigation(
+          getBaseUrl(nextProps.pathname),
+          settings.navDepth,
+        );
+      }
       this.closeMobileMenu();
     }
 
@@ -332,18 +345,19 @@ class Navigation extends Component {
                 </Link>
               );
             })}
-          {__CLIENT__ && window.env.RAZZLE_HAS_N2K_SECTION && (
-            <Link
-              to={`/natura2000/${this.state.n2kLanguage}`}
-              className={
-                this.isActive(`/natura2000/${this.state.n2kLanguage}`)
-                  ? 'item menuActive firstLevel'
-                  : 'item firstLevel'
-              }
-            >
-              Natura 2000
-            </Link>
-          )}
+          {__CLIENT__ &&
+            (__DEVELOPMENT__ || window.env.RAZZLE_HAS_N2K_SECTION) && (
+              <Link
+                to={`/natura2000/${this.state.n2kLanguage}`}
+                className={
+                  this.isActive(`/natura2000/${this.state.n2kLanguage}`)
+                    ? 'item menuActive firstLevel'
+                    : 'item firstLevel'
+                }
+              >
+                Natura 2000
+              </Link>
+            )}
         </Menu>
       </nav>
     );
@@ -357,7 +371,7 @@ export default compose(
     (state) => {
       return {
         items: state.navigation.items,
-        userToken: state?.userSession?.token,
+        token: state?.userSession?.token,
       };
     },
     { getNavigation },
