@@ -21,7 +21,6 @@
   },
   "customizationsPath": "src/customizations",
   "addons": [
-    "volto-slate",
     "@eeacms/volto-corsproxy",
     "@eeacms/volto-datablocks",
     "@eeacms/volto-embed",
@@ -38,8 +37,7 @@
     "react-color": "^2.19.3",
     "react-lazy-load-image-component": "^1.5.1",
     "react-plotly.js": "^2.5.1",
-    "searchkit": "^2.4.4",
-    "volto-slate": "*"
+    "searchkit": "^2.4.4"
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.10.0",
