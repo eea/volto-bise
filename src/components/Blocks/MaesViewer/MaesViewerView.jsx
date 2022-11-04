@@ -10,7 +10,7 @@ import {
   selectTheme,
 } from '@plone/volto/components/manage/Widgets/SelectStyling';
 
-import { serializeNodes } from 'volto-slate/editor/render';
+import { serializeNodes } from '@plone/volto-slate/editor/render';
 import { connectToProviderData } from '@eeacms/volto-datablocks/hocs';
 import { makeChartTiles } from './utils';
 

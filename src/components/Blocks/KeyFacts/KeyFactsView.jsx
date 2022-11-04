@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
-import { serializeNodes } from 'volto-slate/editor/render';
+import { serializeNodes } from '@plone/volto-slate/editor/render';
 
 const View = ({ data }) => {
   const { message, message_link, message_link_text, lines } = data;
