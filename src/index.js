@@ -1,5 +1,7 @@
 import React from 'react';
 
+import installLink from '@plone/volto-slate/editor/plugins/AdvancedLink';
+
 import { DefaultView } from '@plone/volto/components';
 
 import InpageNavigation from './customizations/volto/components/theme/InpageNavigation/InpageNavigation';
@@ -244,6 +246,14 @@ export default (config) => {
   // TODO: Add volto-block-style
   config.blocks.blocksConfig.title.edit = TitleBlockEdit;
   config.blocks.blocksConfig.title.view = TitleBlockView;
+
+  // Install advanced link
+  config = installLink(config);
+  const toolbarButtons = config.settings.slate.toolbarButtons || [];
+  const linkIndex = toolbarButtons.indexOf('link');
+  const advancedLinkIndex = toolbarButtons.indexOf('a');
+  toolbarButtons.splice(linkIndex, 1, 'a');
+  toolbarButtons.splice(advancedLinkIndex, 1);
 
   return [
     installDataCatalogue,
