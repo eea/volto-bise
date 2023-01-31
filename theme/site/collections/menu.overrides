@@ -50,10 +50,14 @@
 
     .firstLevel {
       padding: 1em 1.2em !important;
-      color: @lightGreenColor;
+      color: @darkGreenColor;
       font-size: 17px;
       font-weight: 700 !important;
       line-height: 1;
+
+      a {
+        color: @darkGreenColor;
+      }
 
       @media (max-width: 848px) {
         border-color: transparent !important;
@@ -73,12 +77,16 @@
       }
 
       &:hover > a {
-        color: @darkGreenColor!important;
+        color: @lightGreenColor!important;
       }
     }
 
     .menuActive.firstLevel {
-      color: @darkGreenColor;
+      color: @lightGreenColor;
+
+      a {
+        color: @lightGreenColor;
+      }
     }
 
     div.item.firstLevel {
@@ -399,7 +407,7 @@
 
     .secondLevel:hover {
       background-color: transparent !important;
-      color: #3c8000;
+      color: #005248;
     }
 
     .secondLevel,

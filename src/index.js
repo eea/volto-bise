@@ -46,6 +46,7 @@ const installStyles = (config) => {
     config.blocks.blocksConfig.columnsBlock || {};
   config.blocks.blocksConfig.columnsBlock.available_colors = [
     '#3c8000',
+    '005248',
     '#f4cf01',
     '#ffffff',
     '#f7f7f7',
@@ -61,6 +62,7 @@ const installStyles = (config) => {
   config.settings.available_colors = [
     '#1f6237',
     '#3c8000',
+    '005248',
     '#3B7F02',
     '#7AC943',
     '#88c24f',
