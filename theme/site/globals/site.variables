@@ -42,8 +42,8 @@
 
 /*---  Theme colors  ---*/
 
-@lightGreenColor     : #3c8000;
-@darkGreenColor      : #003300;
+@lightGreenColor     : #00A390;
+@darkGreenColor      : #005248;
 
 /*-------------------
     Brand Colors

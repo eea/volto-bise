@@ -185,7 +185,7 @@ p > span:empty {
   border-left: 1px solid #b8c6c8;
   background-color: transparent !important;
   border-radius: 0 0 0 0;
-  color: #3c8000 !important;
+  color: #005248 !important;
   transform: scale(1.25);
 
   svg {
@@ -343,7 +343,7 @@ p > span:empty {
 
   button {
     border: 0;
-    background-color: #3c8000;
+    background-color: #005248;
     color: white;
 
     &:hover {
