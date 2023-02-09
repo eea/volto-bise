@@ -14,16 +14,9 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 import ecLogo from '../../../../../static/ec.png';
 import eeaLogo from '../../../../../static/eea.png';
+import wiseLogo from '../../../../../static/wise.svg';
 import fiseLogo from '../../../../../static/forest.svg';
-import ccaLogo from '../../../../../static/cca.svg';
-import wiseLogo from '../../../../../static/wise.png';
-
-// const messages = defineMessages({
-//   copyright: {
-//     id: 'Copyright',
-//     defaultMessage: 'Copyright',
-//   },
-// });
+import ccaLogo from '../../../../../static/climate_adapt.svg';
 
 /**
  * Component to display the footer.
