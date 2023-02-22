@@ -199,7 +199,6 @@ p > span:empty {
 
 #search-widget-toggle {
   position: relative;
-  top: 13px; // this 13px value is hardcoded in another style file
 
   @media only screen and (max-width: 991px) {
     display: none;
@@ -304,7 +303,7 @@ p > span:empty {
     button {
       background-color: transparent;
       border-radius: 1.5rem;
-      color: green;
+      color: #00a390;
 
       &:hover {
         background-color: #eee;
@@ -384,7 +383,6 @@ p > span:empty {
 
 #search-widget-tablet-wrapper-grid {
   margin-right: unset;
-  margin-bottom: -0.5rem;
 }
 
 #search-widget-mobile-wrapper-grid {
@@ -394,28 +392,14 @@ p > span:empty {
   margin-left: 0;
 }
 
-// BEGIN: Center the header in the full viewport width when the full viewport width
-// exceeds a limit (useful especially when the width of the header is bigger
-// than the width of the content area below it).
-@media only screen and (min-width: 1655px) {
-  #main .header-wrapper > .ui.container {
-    width: 100% !important;
-  }
-
-  #main .header-wrapper .tools-search-wrapper {
-    flex-grow: 0 !important;
-  }
-}
-
 #main .header-wrapper .logo {
   flex-grow: 0 !important;
 }
-// END.
 
 #page-search {
   .items_total,
   button {
-    color: rgba(0, 68, 0, 0.479);
+    color: rgba(0, 82, 72, 0.8);
   }
 
   h1 {

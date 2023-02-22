@@ -3,9 +3,7 @@
 *******************************/
 
 .ui.basic.segment.header-wrapper {
-  padding-right: 0;
-  padding-bottom: 0;
-  padding-left: 0;
+  padding: 0.5rem 0;
   margin-bottom: 0;
 }
 
@@ -16,7 +14,6 @@
 
   .logo-nav-wrapper {
     position: relative;
-    top: -6px;
     display: flex;
     flex-grow: 2;
 
@@ -25,8 +22,13 @@
     }
 
     .navigation {
+      height: 100%;
       // -ms-overflow-style: none; /* IE 10+ */
       // overflow-x: auto;
+
+      > * {
+        align-self: center;
+      }
 
       &::-webkit-scrollbar {
         height: 0; /* remove scrollbar space */
@@ -40,9 +42,6 @@
 
       @media only screen and (max-width: @largestTabletScreen) {
         overflow-x: initial;
-      }
-
-      .ui.secondary.pointing.menu {
       }
     }
   }
@@ -63,14 +62,16 @@
     flex-grow: 2;
     flex-wrap: nowrap;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
     margin-left: @huge;
+    height: 100%;;
+
+    @media only screen and (max-width: 1654px) {
+      justify-content: flex-end;
+    }
 
     & > * {
       display: flex;
-    }
-
-    .tools {
     }
 
     .search {
@@ -80,5 +81,12 @@
         }
       }
     }
+  }
+}
+
+.hamburger-wrapper {
+  .hamburger {
+    display: flex;
+    align-items: center;
   }
 }
