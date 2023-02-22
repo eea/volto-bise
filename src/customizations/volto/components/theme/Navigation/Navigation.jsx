@@ -347,16 +347,21 @@ class Navigation extends Component {
             })}
           {__CLIENT__ &&
             (__DEVELOPMENT__ || window.env.RAZZLE_HAS_N2K_SECTION) && (
-              <Link
-                to={`/natura2000/${this.state.n2kLanguage}`}
-                className={
-                  this.isActive(`/natura2000/${this.state.n2kLanguage}`)
-                    ? 'item menuActive firstLevel'
-                    : 'item firstLevel'
-                }
+              <div
+                id="natura2000"
+                className={cx('item firstLevel', {
+                  menuActive: this.isActive(
+                    `/natura2000/${this.state.n2kLanguage}`,
+                  ),
+                })}
+                role="listbox"
+                tabIndex={0}
+                aria-expanded={false}
               >
-                Natura 2000
-              </Link>
+                <Link to={`/natura2000/${this.state.n2kLanguage}`}>
+                  Natura 2000
+                </Link>
+              </div>
             )}
         </Menu>
       </nav>

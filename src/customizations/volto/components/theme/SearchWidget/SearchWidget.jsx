@@ -140,13 +140,9 @@ class SearchWidget extends Component {
     const el = this.searchButtonRef.current.ref.current;
 
     // better than .tools-search-wrapper or .navigation:
-    let nav = document.querySelector('.header');
+    let nav = document.querySelector('.header-wrapper');
 
-    // the 13px is hardcoded in another part of CSS
-    const y =
-      nav.getBoundingClientRect().height -
-      3 + // necessary but not understood
-      (this.props.displayMode === 'desktop' ? 13 : 0);
+    const y = nav.getBoundingClientRect().height;
 
     const rect = el.getBoundingClientRect();
 
