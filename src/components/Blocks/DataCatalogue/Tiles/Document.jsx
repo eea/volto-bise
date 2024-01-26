@@ -9,7 +9,7 @@ export const DocumentListItem = ({ source, bemBlocks }) => {
       <h4 className="cell-title">
         <a
           target="_blank"
-          rel="noreferrer"
+          rel="noopener"
           href={`${catalogueHost}${source.file_name}`}
         >
           <sup className="cell-document-type">

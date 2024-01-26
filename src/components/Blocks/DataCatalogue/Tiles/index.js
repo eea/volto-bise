@@ -44,7 +44,7 @@ export const GridItem = (props) => {
       {Item ? (
         <Item source={source} />
       ) : (
-        <a href={source[fieldUrl]} target="_blank" rel="noreferrer">
+        <a href={source[fieldUrl]} target="_blank" rel="noopener">
           <div
             data-qa="title"
             className={bemBlocks.item('title')}

@@ -4,7 +4,7 @@ export const HabitatListItem = ({ source, bemBlocks }) => {
   return (
     <div className="catalogue-cell">
       <h4 className="cell-title">
-        <a target="_blank" rel="noreferrer" href={source.uri}>
+        <a target="_blank" rel="noopener" href={source.uri}>
           {source.name}
         </a>
       </h4>

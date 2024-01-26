@@ -15,7 +15,7 @@ export const SpeciesListItem = ({ source }) => {
   return (
     <div className="catalogue-cell">
       <h4 className="cell-title">
-        <a target="_blank" href={source.uri} rel="noreferrer">
+        <a target="_blank" href={source.uri} rel="noopener">
           {source.scientific_name}
         </a>
       </h4>

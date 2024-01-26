@@ -6,7 +6,7 @@ export const ArticleListItem = ({ source, bemBlocks }) => {
       <h4 className={`cell-title ${bemBlocks.item('title')}`}>
         <a
           target="_blank"
-          rel="noreferrer"
+          rel="noopener"
           href={source.source_url}
           dangerouslySetInnerHTML={{ __html: source.title }}
         ></a>
