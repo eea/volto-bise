@@ -15,15 +15,8 @@ import { injectIntl } from 'react-intl';
  * @returns {string} Markup of the component.
  */
 const NumberWidget = (props) => {
-  const {
-    id,
-    value,
-    onChange,
-    defaultValue,
-    isDisabled,
-    maximum,
-    minimum,
-  } = props;
+  const { id, value, onChange, defaultValue, isDisabled, maximum, minimum } =
+    props;
 
   return (
     <FormFieldWrapper {...props}>

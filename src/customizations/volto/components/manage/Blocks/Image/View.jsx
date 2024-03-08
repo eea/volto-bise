@@ -79,6 +79,7 @@ const View = ({ data, detached }) => (
                   <a
                     target={data.openLinkInNewTab ? '_blank' : null}
                     href={data.href}
+                    rel="noopener"
                   >
                     {image}
                   </a>
