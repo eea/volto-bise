@@ -25,11 +25,8 @@ export const filterToWhereParams = (map_filters) => {
   return acc;
 };
 
-export default (props) => {
+const Webmap = (props) => {
   const { map_filters, map_service_url, layer, base_layer } = props;
-  const options = {
-    css: true,
-  };
   const mapRef = React.useRef();
   const [modules, setModules] = React.useState({});
   const [mapIsUpdating, setMapIsUpdating] = React.useState(false);
@@ -38,6 +35,10 @@ export default (props) => {
   // Load the ESRI JS API
   React.useEffect(() => {
     if (!modules_loaded.current) {
+      const options = {
+        css: true,
+      };
+
       modules_loaded.current = true;
       loadModules(MODULES, options).then((modules) => {
         const [Map, MapView, FeatureLayer, MapImageLayer] = modules;
@@ -49,7 +50,7 @@ export default (props) => {
         });
       });
     }
-  }, [setModules, options]);
+  }, [setModules]);
 
   const layer_url = layer ? `${map_service_url}/${layer}` : null;
 
@@ -112,3 +113,5 @@ export default (props) => {
     </div>
   );
 };
+
+export default Webmap;

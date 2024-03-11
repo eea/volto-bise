@@ -16,7 +16,7 @@ import image6 from './images/image-6.png';
 import image7 from './images/image-7.png';
 import image8 from './images/image-8.png';
 
-export default (props) => (
+const HomepageView = (props) => (
   <div>
     <div className="fp-explore-section">
       <div className="explore-section-wrapper fp-content">
@@ -238,3 +238,5 @@ export default (props) => (
     </div>
   </div>
 );
+
+export default HomepageView;

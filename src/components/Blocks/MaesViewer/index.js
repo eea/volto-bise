@@ -2,7 +2,7 @@ import codeSVG from '@plone/volto/icons/code.svg';
 import MaesViewerView from './MaesViewerView';
 import MaesViewerEdit from './MaesViewerEdit';
 
-export default (config) => {
+const config = (config) => {
   config.blocks.blocksConfig.maesviewer = {
     id: 'maesviewer',
     title: 'MAES Viewer',
@@ -20,3 +20,5 @@ export default (config) => {
   };
   return config;
 };
+
+export default config;

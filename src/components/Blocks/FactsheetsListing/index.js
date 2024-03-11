@@ -2,7 +2,7 @@ import codeSVG from '@plone/volto/icons/code.svg';
 import FactsheetsListingView from './FactsheetsListingView';
 import FactsheetsListingEdit from './FactsheetsListingEdit';
 
-export default (config) => {
+const config = (config) => {
   config.blocks.blocksConfig.biseFactsheetListing = {
     id: 'biseFactsheetListing',
     title: 'Factsheets Listing',
@@ -22,3 +22,5 @@ export default (config) => {
 
   return config;
 };
+
+export default config;

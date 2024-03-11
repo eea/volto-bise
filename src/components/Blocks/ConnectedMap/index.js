@@ -3,7 +3,7 @@ import ConnectedMapEdit from './ConnectedMapEdit';
 import ConnectedMapView from './ConnectedMapView';
 import SelectWidget from './SelectWidget';
 
-export default (config) => {
+const config = (config) => {
   config.blocks.blocksConfig.connectedmap = {
     id: 'connectedmap',
     title: 'Connected Map',
@@ -22,3 +22,5 @@ export default (config) => {
   config.widgets.widget.bise_select = SelectWidget;
   return config;
 };
+
+export default config;
