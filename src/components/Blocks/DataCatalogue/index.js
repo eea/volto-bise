@@ -2,7 +2,7 @@ import codeSVG from '@plone/volto/icons/code.svg';
 import DataCatalogueEdit from './DataCatalogueEdit';
 import DataCatalogueView from './DataCatalogueView';
 
-export default (config) => {
+const config = (config) => {
   config.blocks.blocksConfig.biseCatalogue = {
     id: 'biseCatalogue',
     title: 'Search Catalogue',
@@ -22,3 +22,5 @@ export default (config) => {
 
   return config;
 };
+
+export default config;

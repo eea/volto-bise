@@ -112,7 +112,7 @@ const installStyles = (config) => {
   return config;
 };
 
-export default (config) => {
+const config = (config) => {
   config.settings.navDepth = 3;
 
   config.settings.allowed_cors_destinations = [
@@ -266,3 +266,5 @@ export default (config) => {
     installFactsheetListingView,
   ].reduce((acc, apply) => apply(acc), config);
 };
+
+export default config;

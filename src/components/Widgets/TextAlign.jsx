@@ -14,7 +14,7 @@ const VALUE_MAP = [
   ['justify', alignJustifySVG],
 ];
 
-export default (props) => {
+const TextAlign = (props) => {
   const { value, onChange, id } = props;
   return (
     <FormFieldWrapper {...props}>
@@ -39,3 +39,5 @@ export default (props) => {
     </FormFieldWrapper>
   );
 };
+
+export default TextAlign;

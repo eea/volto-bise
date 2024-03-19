@@ -2,7 +2,7 @@ import codeSVG from '@plone/volto/icons/code.svg';
 import KeyFactsView from './KeyFactsView';
 import KeyFactsEdit from './KeyFactsEdit';
 
-export default (config) => {
+const config = (config) => {
   config.blocks.blocksConfig.keyfacts = {
     id: 'keyfacts',
     title: 'Key Facts',
@@ -20,3 +20,5 @@ export default (config) => {
   };
   return config;
 };
+
+export default config;
